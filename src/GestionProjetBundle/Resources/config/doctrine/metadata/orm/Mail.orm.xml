@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Mail" table="mail">
+    <indexes>
+      <index name="fk_Mail_Utilisateur1_idx" columns="emetteur"/>
+    </indexes>
+    <id name="idmail" type="bigint" column="idMail">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="objet" type="string" column="objet" length="255" nullable="true"/>
+    <field name="date" type="datetime" column="date" nullable="true"/>
+    <field name="contenu" type="text" column="contenu" nullable="true"/>
+    <field name="type" type="integer" column="type" nullable="true"/>
+    <field name="status" type="integer" column="status" nullable="true"/>
+    <many-to-one field="emetteur" target-entity="Utilisateur">
+      <join-columns>
+        <join-column name="emetteur" referenced-column-name="idUtilisateur"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="idutilisateur" target-entity="Utilisateur" inversed-by="idmail">
+      <join-table name="mail_utilisateur">
+        <join-columns>
+          <join-column name="idMail" referenced-column-name="idMail"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idUtilisateur" referenced-column-name="idUtilisateur"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="idressource" target-entity="Ressource" inversed-by="idmail">
+      <join-table name="mail_ressource">
+        <join-columns>
+          <join-column name="idMail" referenced-column-name="idMail"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idRessource" referenced-column-name="idRessource"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

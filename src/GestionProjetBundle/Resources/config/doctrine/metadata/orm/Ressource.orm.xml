@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Ressource" table="ressource">
+    <indexes>
+      <index name="fk_Ressource_Intervenant1_idx" columns="idIntervenant"/>
+    </indexes>
+    <id name="idressource" type="bigint" column="idRessource">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="reference" type="string" column="reference" length="255" nullable="true"/>
+    <field name="type" type="integer" column="type" nullable="true"/>
+    <field name="url" type="string" column="url" length="45" nullable="true"/>
+    <field name="description" type="text" column="description" nullable="true"/>
+    <field name="statut" type="integer" column="statut" nullable="true"/>
+    <many-to-one field="idintervenant" target-entity="Intervenant">
+      <join-columns>
+        <join-column name="idIntervenant" referenced-column-name="idIntervenant"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="idcourier" target-entity="Courier" inversed-by="idressource">
+      <join-table name="ressource_courier">
+        <join-columns>
+          <join-column name="idRessource" referenced-column-name="idRessource"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idCourier" referenced-column-name="idCourier"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="idmail" target-entity="Mail" mapped-by="idressource"/>
+  </entity>
+</doctrine-mapping>

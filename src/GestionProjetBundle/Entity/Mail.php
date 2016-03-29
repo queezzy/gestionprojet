@@ -1,0 +1,322 @@
+<?php
+
+namespace GestionProjetBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Mail
+ *
+ * @ORM\Table(name="mail", indexes={@ORM\Index(name="fk_Mail_Utilisateur1_idx", columns={"emetteur"})})
+ * @ORM\Entity
+ */
+class Mail
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idMail", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="objet", type="string", length=255, nullable=true)
+     */
+    private $objet;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenu", type="text", nullable=true)
+     */
+    private $contenu;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="type", type="integer", nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer", nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var \Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="emetteur", referencedColumnName="idUtilisateur")
+     * })
+     */
+    private $emetteur;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Ressource", inversedBy="idmail")
+     * @ORM\JoinTable(name="mail_ressource",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idMail", referencedColumnName="idMail")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idRessource", referencedColumnName="idRessource")
+     *   }
+     * )
+     */
+    private $idressource;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Utilisateur", inversedBy="idmail")
+     * @ORM\JoinTable(name="mail_utilisateur",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idMail", referencedColumnName="idMail")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idUtilisateur", referencedColumnName="idUtilisateur")
+     *   }
+     * )
+     */
+    private $idutilisateur;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idressource = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idutilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * Get idmail
+     *
+     * @return integer 
+     */
+    public function getIdmail()
+    {
+        return $this->idmail;
+    }
+
+    /**
+     * Set objet
+     *
+     * @param string $objet
+     * @return Mail
+     */
+    public function setObjet($objet)
+    {
+        $this->objet = $objet;
+
+        return $this;
+    }
+
+    /**
+     * Get objet
+     *
+     * @return string 
+     */
+    public function getObjet()
+    {
+        return $this->objet;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Mail
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set contenu
+     *
+     * @param string $contenu
+     * @return Mail
+     */
+    public function setContenu($contenu)
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    /**
+     * Get contenu
+     *
+     * @return string 
+     */
+    public function getContenu()
+    {
+        return $this->contenu;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Mail
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Mail
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set emetteur
+     *
+     * @param \GestionProjetBundle\Entity\Utilisateur $emetteur
+     * @return Mail
+     */
+    public function setEmetteur(\GestionProjetBundle\Entity\Utilisateur $emetteur = null)
+    {
+        $this->emetteur = $emetteur;
+
+        return $this;
+    }
+
+    /**
+     * Get emetteur
+     *
+     * @return \GestionProjetBundle\Entity\Utilisateur 
+     */
+    public function getEmetteur()
+    {
+        return $this->emetteur;
+    }
+
+    /**
+     * Add idressource
+     *
+     * @param \GestionProjetBundle\Entity\Ressource $idressource
+     * @return Mail
+     */
+    public function addIdressource(\GestionProjetBundle\Entity\Ressource $idressource)
+    {
+        $this->idressource[] = $idressource;
+
+        return $this;
+    }
+
+    /**
+     * Remove idressource
+     *
+     * @param \GestionProjetBundle\Entity\Ressource $idressource
+     */
+    public function removeIdressource(\GestionProjetBundle\Entity\Ressource $idressource)
+    {
+        $this->idressource->removeElement($idressource);
+    }
+
+    /**
+     * Get idressource
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdressource()
+    {
+        return $this->idressource;
+    }
+
+    /**
+     * Add idutilisateur
+     *
+     * @param \GestionProjetBundle\Entity\Utilisateur $idutilisateur
+     * @return Mail
+     */
+    public function addIdutilisateur(\GestionProjetBundle\Entity\Utilisateur $idutilisateur)
+    {
+        $this->idutilisateur[] = $idutilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove idutilisateur
+     *
+     * @param \GestionProjetBundle\Entity\Utilisateur $idutilisateur
+     */
+    public function removeIdutilisateur(\GestionProjetBundle\Entity\Utilisateur $idutilisateur)
+    {
+        $this->idutilisateur->removeElement($idutilisateur);
+    }
+
+    /**
+     * Get idutilisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdutilisateur()
+    {
+        return $this->idutilisateur;
+    }
+}

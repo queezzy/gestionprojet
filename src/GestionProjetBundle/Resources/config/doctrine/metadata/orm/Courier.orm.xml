@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Courier" table="courier">
+    <indexes>
+      <index name="fk_Courier_Intervenant1_idx" columns="emetteur"/>
+    </indexes>
+    <id name="idcourier" type="bigint" column="idCourier">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="type" type="integer" column="type" nullable="true"/>
+    <field name="date" type="datetime" column="date" nullable="true"/>
+    <field name="objet" type="text" column="objet" nullable="true"/>
+    <many-to-one field="emetteur" target-entity="Intervenant">
+      <join-columns>
+        <join-column name="emetteur" referenced-column-name="idIntervenant"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="idressource" target-entity="Ressource" mapped-by="idcourier"/>
+    <many-to-many field="idintervenant" target-entity="Intervenant" inversed-by="idcourier">
+      <join-table name="courier_intervenant">
+        <join-columns>
+          <join-column name="idCourier" referenced-column-name="idCourier"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idIntervenant" referenced-column-name="idIntervenant"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>
