@@ -53,37 +53,18 @@ class Courier
     private $emetteur;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Intervenant", inversedBy="idcourier")
-     * @ORM\JoinTable(name="courier_intervenant",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idCourier", referencedColumnName="idCourier")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
-     *   }
-     * )
-     */
-    private $idintervenant;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Ressource", mappedBy="idcourier")
-     */
-    private $idressource;
+    * @ORM\OneToMany(targetEntity="Courierenvoye", mappedBy="idcourier", cascade={"remove", "persist"})
+    */
+    private $courierenvoyes;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idintervenant = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idressource = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
-
+    
     /**
      * Get idcourier
      *
@@ -185,70 +166,40 @@ class Courier
     {
         return $this->emetteur;
     }
-
+    
     /**
-     * Add idintervenant
+     * Add courierenvoye
      *
-     * @param \GestionProjetBundle\Entity\Intervenant $idintervenant
+     * @param GestionProjetBundle\Entity\Courierenvoye $courierenvoye 
      * @return Courier
      */
-    public function addIdintervenant(\GestionProjetBundle\Entity\Intervenant $idintervenant)
+    public function addCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoye)
     {
-        $this->idintervenant[] = $idintervenant;
+        $this->courierenvoyes[] = $courierenvoye;
+        return $this;
+    }
+    
+    /**
+     * Get courierenvoyes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCourierenvoyes()
+    {
+        return $this->courierenvoyes;
+    }
+    
+    /**
+     * Set courierenvoyes
+     *
+     * @param \Doctrine\Common\Collections\Collection $courierenvoyes
+     * @return Courier
+     */
+    public function setCourierenvoyes(\Doctrine\Common\Collections\Collection $courierenvoyes = null)
+    {
+        $this->courierenvoyes = $courierenvoyes;
 
         return $this;
     }
-
-    /**
-     * Remove idintervenant
-     *
-     * @param \GestionProjetBundle\Entity\Intervenant $idintervenant
-     */
-    public function removeIdintervenant(\GestionProjetBundle\Entity\Intervenant $idintervenant)
-    {
-        $this->idintervenant->removeElement($idintervenant);
-    }
-
-    /**
-     * Get idintervenant
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdintervenant()
-    {
-        return $this->idintervenant;
-    }
-
-    /**
-     * Add idressource
-     *
-     * @param \GestionProjetBundle\Entity\Ressource $idressource
-     * @return Courier
-     */
-    public function addIdressource(\GestionProjetBundle\Entity\Ressource $idressource)
-    {
-        $this->idressource[] = $idressource;
-
-        return $this;
-    }
-
-    /**
-     * Remove idressource
-     *
-     * @param \GestionProjetBundle\Entity\Ressource $idressource
-     */
-    public function removeIdressource(\GestionProjetBundle\Entity\Ressource $idressource)
-    {
-        $this->idressource->removeElement($idressource);
-    }
-
-    /**
-     * Get idressource
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdressource()
-    {
-        return $this->idressource;
-    }
+    
 }

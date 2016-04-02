@@ -27,15 +27,5 @@
         </inverse-join-columns>
       </join-table>
     </many-to-many>
-    <many-to-many field="idressource" target-entity="Ressource" inversed-by="idmail">
-      <join-table name="mail_ressource">
-        <join-columns>
-          <join-column name="idMail" referenced-column-name="idMail"/>
-        </join-columns>
-        <inverse-join-columns>
-          <join-column name="idRessource" referenced-column-name="idRessource"/>
-        </inverse-join-columns>
-      </join-table>
-    </many-to-many>
   </entity>
 </doctrine-mapping>

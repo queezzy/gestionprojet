@@ -17,16 +17,5 @@
         <join-column name="idIntervenant" referenced-column-name="idIntervenant"/>
       </join-columns>
     </many-to-one>
-    <many-to-many field="idcourier" target-entity="Courier" inversed-by="idressource">
-      <join-table name="ressource_courier">
-        <join-columns>
-          <join-column name="idRessource" referenced-column-name="idRessource"/>
-        </join-columns>
-        <inverse-join-columns>
-          <join-column name="idCourier" referenced-column-name="idCourier"/>
-        </inverse-join-columns>
-      </join-table>
-    </many-to-many>
-    <many-to-many field="idmail" target-entity="Mail" mapped-by="idressource"/>
   </entity>
 </doctrine-mapping>

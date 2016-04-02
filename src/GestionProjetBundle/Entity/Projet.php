@@ -91,7 +91,24 @@ class Projet
      */
     private $statut;
 
-
+/**
+    * @ORM\OneToMany(targetEntity="Intervenant", mappedBy="idprojet", cascade={"remove", "persist"})
+    */
+    private $intervenants;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Tache", mappedBy="idprojet", cascade={"remove", "persist"})
+    */
+    private $taches;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->intervenants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taches = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get idprojet
@@ -331,5 +348,40 @@ class Projet
     public function getStatut()
     {
         return $this->statut;
+    }
+    
+    /**
+     * Add intervenant
+     *
+     * @param GestionProjetBundle\Entity\Intervenant $intervenant 
+     * @return Projet
+     */
+    public function addIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant)
+    {
+        $this->intervenants[] = $intervenant;
+        return $this;
+    }
+    
+    /**
+     * Get intervenants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIntervenants()
+    {
+        return $this->intervenants;
+    }
+    
+    /**
+     * Set intervenants
+     *
+     * @param \Doctrine\Common\Collections\Collection $intervenants
+     * @return Projet
+     */
+    public function setIntervenants(\Doctrine\Common\Collections\Collection $intervenants = null)
+    {
+        $this->intervenants = $intervenants;
+
+        return $this;
     }
 }

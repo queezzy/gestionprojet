@@ -31,6 +31,5 @@
         <join-column name="idAdresse" referenced-column-name="idAdresse"/>
       </join-columns>
     </many-to-one>
-    <many-to-many field="idcourier" target-entity="Courier" mapped-by="idintervenant"/>
   </entity>
 </doctrine-mapping>

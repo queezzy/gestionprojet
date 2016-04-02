@@ -99,14 +99,14 @@ class Utilisateur
      *
      * @ORM\ManyToMany(targetEntity="Mail", mappedBy="idutilisateur")
      */
-    private $idmail;
+    private $mails;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idmail = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mails = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -351,35 +351,35 @@ class Utilisateur
     }
 
     /**
-     * Add idmail
+     * Add mails
      *
-     * @param \GestionProjetBundle\Entity\Mail $idmail
+     * @param \GestionProjetBundle\Entity\Mail $mails
      * @return Utilisateur
      */
-    public function addIdmail(\GestionProjetBundle\Entity\Mail $idmail)
+    public function addMails(\GestionProjetBundle\Entity\Mail $mails)
     {
-        $this->idmail[] = $idmail;
+        $this->mails[] = $mails;
 
         return $this;
     }
 
     /**
-     * Remove idmail
+     * Remove mails
      *
-     * @param \GestionProjetBundle\Entity\Mail $idmail
+     * @param \GestionProjetBundle\Entity\Mail $mails
      */
-    public function removeIdmail(\GestionProjetBundle\Entity\Mail $idmail)
+    public function removeMail(\GestionProjetBundle\Entity\Mail $mails)
     {
-        $this->idmail->removeElement($idmail);
+        $this->mails->removeElement($mails);
     }
 
     /**
-     * Get idmail
+     * Get mails
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdmail()
+    public function getMails()
     {
-        return $this->idmail;
+        return $this->mails;
     }
 }

@@ -61,16 +61,21 @@ class Lot
      *
      * @ORM\ManyToMany(targetEntity="Tache", mappedBy="idlot")
      */
-    private $idtache;
+    private $taches;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Intervenant", mappedBy="idlot", cascade={"remove", "persist"})
+    */
+    private $intervenants;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idtache = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taches = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->intervenants = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get idlot
@@ -198,35 +203,84 @@ class Lot
     }
 
     /**
-     * Add idtache
+     * Add taches
      *
-     * @param \GestionProjetBundle\Entity\Tache $idtache
+     * @param \GestionProjetBundle\Entity\Tache $tache
      * @return Lot
      */
-    public function addIdtache(\GestionProjetBundle\Entity\Tache $idtache)
+    public function addTache(\GestionProjetBundle\Entity\Tache $tache)
     {
-        $this->idtache[] = $idtache;
+        $this->taches[] = $tache;
 
         return $this;
     }
 
     /**
-     * Remove idtache
+     * Remove tache
      *
-     * @param \GestionProjetBundle\Entity\Tache $idtache
+     * @param \GestionProjetBundle\Entity\Tache $tache
      */
-    public function removeIdtache(\GestionProjetBundle\Entity\Tache $idtache)
+    public function removeTache(\GestionProjetBundle\Entity\Tache $tache)
     {
-        $this->idtache->removeElement($idtache);
+        $this->taches->removeElement($tache);
     }
 
     /**
-     * Get idtache
+     * Get taches
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdtache()
+    public function getTaches()
     {
-        return $this->idtache;
+        return $this->taches;
     }
+    
+    /**
+     * Set taches
+     *
+     * @param \Doctrine\Common\Collections\Collection $taches
+     * @return Theme
+     */
+    public function setActualites(\Doctrine\Common\Collections\Collection $taches = null)
+    {
+        $this->taches = $taches;
+
+        return $this;
+    }
+    
+    /**
+     * Add intervenant
+     *
+     * @param GestionProjetBundle\Entity\Intervenant $intervenant 
+     * @return Lot
+     */
+    public function addIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant)
+    {
+        $this->intervenants[] = $intervenant;
+        return $this;
+    }
+    
+    /**
+     * Get intervenants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIntervenants()
+    {
+        return $this->intervenants;
+    }
+    
+    /**
+     * Set intervenants
+     *
+     * @param \Doctrine\Common\Collections\Collection $intervenants
+     * @return Lot
+     */
+    public function setIntervenants(\Doctrine\Common\Collections\Collection $intervenants = null)
+    {
+        $this->intervenants = $intervenants;
+
+        return $this;
+    }
+    
 }

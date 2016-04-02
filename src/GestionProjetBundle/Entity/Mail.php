@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Mail
  *
- * @ORM\Table(name="mail", indexes={@ORM\Index(name="fk_Mail_Utilisateur1_idx", columns={"emetteur"})})
+ * @ORM\Table(name="mail")
  * @ORM\Entity
  */
 class Mail
@@ -56,30 +56,6 @@ class Mail
      */
     private $status;
 
-    /**
-     * @var \Utilisateur
-     *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emetteur", referencedColumnName="idUtilisateur")
-     * })
-     */
-    private $emetteur;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Ressource", inversedBy="idmail")
-     * @ORM\JoinTable(name="mail_ressource",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idMail", referencedColumnName="idMail")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idRessource", referencedColumnName="idRessource")
-     *   }
-     * )
-     */
-    private $idressource;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -94,15 +70,14 @@ class Mail
      *   }
      * )
      */
-    private $idutilisateur;
+    private $utilisateurs;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idressource = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idutilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -230,93 +205,50 @@ class Mail
     {
         return $this->status;
     }
-
+    
     /**
-     * Set emetteur
+     * Add utilisateur
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $emetteur
+     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
      * @return Mail
      */
-    public function setEmetteur(\GestionProjetBundle\Entity\Utilisateur $emetteur = null)
+    public function addUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
     {
-        $this->emetteur = $emetteur;
+        $this->utilisateurs[] = $utilisateur;
 
         return $this;
     }
 
     /**
-     * Get emetteur
+     * Remove utilisateur
      *
-     * @return \GestionProjetBundle\Entity\Utilisateur 
+     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
      */
-    public function getEmetteur()
+    public function removeUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
     {
-        return $this->emetteur;
+        $this->utilisateurs->removeElement($utilisateur);
     }
 
     /**
-     * Add idressource
-     *
-     * @param \GestionProjetBundle\Entity\Ressource $idressource
-     * @return Mail
-     */
-    public function addIdressource(\GestionProjetBundle\Entity\Ressource $idressource)
-    {
-        $this->idressource[] = $idressource;
-
-        return $this;
-    }
-
-    /**
-     * Remove idressource
-     *
-     * @param \GestionProjetBundle\Entity\Ressource $idressource
-     */
-    public function removeIdressource(\GestionProjetBundle\Entity\Ressource $idressource)
-    {
-        $this->idressource->removeElement($idressource);
-    }
-
-    /**
-     * Get idressource
+     * Get utilisateur
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdressource()
+    public function getUtilisateurs()
     {
-        return $this->idressource;
+        return $this->utilisateurs;
     }
-
+    
     /**
-     * Add idutilisateur
+     * Set utilisateurs
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $idutilisateur
+     * @param \Doctrine\Common\Collections\Collection $utilisateurs
      * @return Mail
      */
-    public function addIdutilisateur(\GestionProjetBundle\Entity\Utilisateur $idutilisateur)
+    public function setUtilisateurs(\Doctrine\Common\Collections\Collection $utilisateurs = null)
     {
-        $this->idutilisateur[] = $idutilisateur;
+        $this->utilisateurs = $utilisateurs;
 
         return $this;
-    }
-
-    /**
-     * Remove idutilisateur
-     *
-     * @param \GestionProjetBundle\Entity\Utilisateur $idutilisateur
-     */
-    public function removeIdutilisateur(\GestionProjetBundle\Entity\Utilisateur $idutilisateur)
-    {
-        $this->idutilisateur->removeElement($idutilisateur);
-    }
-
-    /**
-     * Get idutilisateur
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdutilisateur()
-    {
-        return $this->idutilisateur;
     }
 }

@@ -51,9 +51,21 @@ class Theme
      * })
      */
     private $idprojet;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Actualite", mappedBy="idtheme", cascade={"remove", "persist"})
+    */
+    private $actualites;
 
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->actualites = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get idtheme
      *
@@ -154,5 +166,40 @@ class Theme
     public function getIdprojet()
     {
         return $this->idprojet;
+    }
+    
+    /**
+     * Add actualite
+     *
+     * @param GestionProjetBundle\Entity\Actualite $actualite 
+     * @return Theme
+     */
+    public function addActualite(\GestionProjetBundle\Entity\Actualite $actualite)
+    {
+        $this->actualites[] = $actualite;
+        return $this;
+    }
+    
+    /**
+     * Get actualites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActualites()
+    {
+        return $this->actualites;
+    }
+    
+    /**
+     * Set actualites
+     *
+     * @param \Doctrine\Common\Collections\Collection $actualites
+     * @return Theme
+     */
+    public function setActualites(\Doctrine\Common\Collections\Collection $actualites = null)
+    {
+        $this->actualites = $actualites;
+
+        return $this;
     }
 }

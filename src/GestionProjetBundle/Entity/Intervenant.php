@@ -101,21 +101,30 @@ class Intervenant
     private $idprojet;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Courier", mappedBy="idintervenant")
-     */
-    private $idcourier;
+    * @ORM\OneToMany(targetEntity="Calendrier", mappedBy="idintervenant", cascade={"remove", "persist"})
+    */
+    private $calendriers;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Courierenvoye", mappedBy="idintervenant", cascade={"remove", "persist"})
+    */
+    private $courierenvoyes;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Utilisateur", mappedBy="idintervenant", cascade={"remove", "persist"})
+    */
+    private $utilisateurs;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idcourier = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->calendriers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
-
+    
     /**
      * Get idintervenant
      *
@@ -355,37 +364,109 @@ class Intervenant
     {
         return $this->idprojet;
     }
-
+    
     /**
-     * Add idcourier
+     * Add calendrier
      *
-     * @param \GestionProjetBundle\Entity\Courier $idcourier
+     * @param GestionProjetBundle\Entity\Calendrier $calendrier 
      * @return Intervenant
      */
-    public function addIdcourier(\GestionProjetBundle\Entity\Courier $idcourier)
+    public function addCalendrier(\GestionProjetBundle\Entity\Calendrier $calendrier)
     {
-        $this->idcourier[] = $idcourier;
+        $this->calendriers[] = $calendrier;
+        return $this;
+    }
+    
+    /**
+     * Get calendriers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCalendriers()
+    {
+        return $this->calendriers;
+    }
+    
+    /**
+     * Set calendriers
+     *
+     * @param \Doctrine\Common\Collections\Collection $calendriers
+     * @return Intervenant
+     */
+    public function setCalendriers(\Doctrine\Common\Collections\Collection $calendriers = null)
+    {
+        $this->calendriers = $calendriers;
 
         return $this;
     }
-
+    
     /**
-     * Remove idcourier
+     * Add courierenvoye
      *
-     * @param \GestionProjetBundle\Entity\Courier $idcourier
+     * @param GestionProjetBundle\Entity\Courierenvoye $courierenvoye 
+     * @return Intervenant
      */
-    public function removeIdcourier(\GestionProjetBundle\Entity\Courier $idcourier)
+    public function addCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoye)
     {
-        $this->idcourier->removeElement($idcourier);
+        $this->courierenvoyes[] = $courierenvoye;
+        return $this;
     }
-
+    
     /**
-     * Get idcourier
+     * Get courierenvoyes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getIdcourier()
+    public function getCourierenvoyes()
     {
-        return $this->idcourier;
+        return $this->courierenvoyes;
+    }
+    
+    /**
+     * Set courierenvoyes
+     *
+     * @param \Doctrine\Common\Collections\Collection $courierenvoyes
+     * @return Intervenant
+     */
+    public function setCourierenvoyes(\Doctrine\Common\Collections\Collection $courierenvoyes = null)
+    {
+        $this->courierenvoyes = $courierenvoyes;
+
+        return $this;
+    }
+    
+    /**
+     * Add utilisateur
+     *
+     * @param GestionProjetBundle\Entity\Utilisateur $utilisateur 
+     * @return Intervenant
+     */
+    public function addUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateurs[] = $utilisateur;
+        return $this;
+    }
+    
+    /**
+     * Get utilisateurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUtilisateurs()
+    {
+        return $this->utilisateurs;
+    }
+    
+    /**
+     * Set utilisateurs
+     *
+     * @param \Doctrine\Common\Collections\Collection $utilisateurs
+     * @return Intervenant
+     */
+    public function setUtilisateurs(\Doctrine\Common\Collections\Collection $utilisateurs = null)
+    {
+        $this->utilisateurs = $utilisateurs;
+
+        return $this;
     }
 }
