@@ -10,6 +10,4 @@
 /vendor/
 /bin/
 /composer.phar
-/nbproject/private/
-/nbproject/
-nbproject
+/nbproject/private
