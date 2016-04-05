@@ -2,8 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Accueil</title>
+    <meta name="keywords" content="SPM, Services du Premier Ministre, Cameroun, Primature" />
+    <meta name="description" content="Services du Premier Ministre - Projet de réhabilitation et de mise à niveau du batiment abritant le Secrétariat général des services du Premier Ministre" />
+    <meta name="author" content="Zebess" />
+    <meta name="robots" content="noindex,nofollow,noarchive,noimageindex,notranslate" />
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <title>{% block title %}Accueil{% endblock %}</title>
+    
+    {% block stylesheets %}
     <!-- Bootstrap 3.3.4 -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     
@@ -12,7 +19,7 @@
     
     <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <link href="css/style1.css" rel="stylesheet" type="text/css" />
-    
+    {% endblock %}
   </head>
   <body class="skin-blue">
     <div class="row">
@@ -28,6 +35,7 @@
         
       </header>
       
+        {% block menu %}
         <!-- Menu Start -->
         <section class="navbar navbar-default navbar-top menu-block">
             <!-- Logo End -->
@@ -100,19 +108,24 @@
            </div>
         </section>
         <!-- Menu End -->
+        {% endblock %}
         
+      {% block contenu %} 
       <div class="row">
-        <!-- Content Wrapper. Contains page content -->
+        <!-- Block contenu  Start-->
+        
         <div class="col-md-12 main-contain">
           <!-- Content Header (Page header) -->
           <section class="content-header">
             <h1>
-              Accueil
-              <small><bold>Résumé du projet</bold></small>
+               {% block breadcrumbTitle %}
+                    Accueil
+               {% endblock %}
+              <small><bold>{% block breadcrumbDescription %}Résumé du projet{% endblock %}</bold></small>
             </h1>
             <ol class="breadcrumb">
               <li><a href="#"><i class="fa fa-dashboard"></i> Projet</a></li>
-              <li><a href="#">Accueil</a></li>
+              <li><a href="#">{% block breadcrumbPosition %}Accueil{% endblock %}</a></li>
             </ol>
           </section>
 
@@ -308,17 +321,23 @@
 
           </section>
           <!-- Main content End-->
-        </div><!-- /.content-wrapper -->
-      </div>
+        </div>
         
+        <!-- Block contenu End -->
+      </div>
+      {% endblock %} 
+        
+       {% block footer %}
       <div class="row">
         <footer class="footer">        
           <strong>Copyright &copy; 2016 <a href="">Zebess</a>.</strong> Tous droits réservés.
         </footer>     
       </div>
+       {% endblock %}
       <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
 
+    {% block js %}
     <!-- jQuery 2.1.4 -->
     <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
@@ -327,7 +346,7 @@
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src='plugins/fastclick/fastclick.min.js'></script>
-    
+    {% endblock %}
     
     
   </body>
