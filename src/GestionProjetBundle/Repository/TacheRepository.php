@@ -16,23 +16,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class TacheRepository extends EntityRepository{
     //put your code here
-    public function deleteTache($tache) {
+    public function deleteTache(\GestionProjetBundle\Entity\Tache $tache) {
         $em= $this->_em;
-        $em->getConnection()->beginTransaction();
-        try{
-            $em->remove($tache);
-            $em->flush();
-            $em->getConnection()->commit();
-        } catch (Exception $ex) {
-            $em->getConnection()->rollback();
-            $em->close();
-            throw $ex;
-        }
-    }
-
-
-    public function saveTache($tache) {
-        $em= $this->_em;
+        $tache->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($tache);
@@ -45,7 +31,23 @@ class TacheRepository extends EntityRepository{
         }
     }
 
-    public function updateTache($tache) {
+
+    public function saveTache(\GestionProjetBundle\Entity\Tache $tache) {
+        $em= $this->_em;
+        $tache->setStatut(1);
+        $em->getConnection()->beginTransaction();
+        try{
+            $em->persist($tache);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $ex;
+        }
+    }
+
+    public function updateTache(\GestionProjetBundle\Entity\Tache $tache) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

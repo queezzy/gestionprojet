@@ -17,7 +17,7 @@ class Intervenant
      *
      * @ORM\Column(name="idIntervenant", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idintervenant;
 
@@ -114,6 +114,11 @@ class Intervenant
     * @ORM\OneToMany(targetEntity="Utilisateur", mappedBy="idintervenant", cascade={"remove", "persist"})
     */
     private $utilisateurs;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Ressource", mappedBy="idintervenant", cascade={"remove", "persist"})
+    */
+    private $ressources;
 
     /**
      * Constructor
@@ -123,6 +128,7 @@ class Intervenant
         $this->calendriers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ressources = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -469,4 +475,29 @@ class Intervenant
 
         return $this;
     }
+    
+    /**
+     * Get ressources
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRessources()
+    {
+        return $this->ressources;
+    }
+    
+    /**
+     * Set ressources
+     *
+     * @param \Doctrine\Common\Collections\Collection $ressources
+     * @return Intervenant
+     */
+    public function setRessources(\Doctrine\Common\Collections\Collection $ressources = null)
+    {
+        $this->ressources = $ressources;
+
+        return $this;
+    }
+    
+    
 }

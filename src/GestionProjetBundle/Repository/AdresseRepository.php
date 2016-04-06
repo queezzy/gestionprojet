@@ -16,23 +16,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class AdresseRepository extends EntityRepository{
     //put your code here
-    public function deleteAdresse($adresse) {
+    public function deleteAdresse(\GestionProjetBundle\Entity\Adresse $adresse) {
         $em= $this->_em;
-        $em->getConnection()->beginTransaction();
-        try{
-            $em->remove($adresse);
-            $em->flush();
-            $em->getConnection()->commit();
-        } catch (Exception $ex) {
-            $em->getConnection()->rollback();
-            $em->close();
-            throw $ex;
-        }
-    }
-
-
-    public function saveAdresse($adresse) {
-        $em= $this->_em;
+        $adresse->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($adresse);
@@ -45,7 +31,23 @@ class AdresseRepository extends EntityRepository{
         }
     }
 
-    public function updateAdresse($adresse) {
+
+    public function saveAdresse(\GestionProjetBundle\Entity\Adresse $adresse) {
+        $em= $this->_em;
+        $adresse->setStatut(1);
+        $em->getConnection()->beginTransaction();
+        try{
+            $em->persist($adresse);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $ex;
+        }
+    }
+
+    public function updateAdresse(\GestionProjetBundle\Entity\Adresse $adresse) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

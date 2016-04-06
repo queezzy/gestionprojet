@@ -17,28 +17,36 @@ class Calendrier
      *
      * @ORM\Column(name="idCalendrier", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idcalendrier;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer", nullable=true)
+     * @ORM\Column(name="statut", type="integer", nullable=false)
      */
-    private $status;
+    private $statut;
 
     /**
      * @var \Intervenant
      *
      * @ORM\ManyToOne(targetEntity="Intervenant")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
+     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant", nullable=true)
      * })
      */
     private $idintervenant;
 
-
+    /**
+     * @var \Projet
+     *
+     * @ORM\ManyToOne(targetEntity="Projet")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idprojet", referencedColumnName="idProjet", nullable=true)
+     * })
+     */
+    private $idprojet;
 
     /**
      * Get idcalendrier
@@ -51,26 +59,26 @@ class Calendrier
     }
 
     /**
-     * Set status
+     * Set statut
      *
-     * @param integer $status
+     * @param integer $statut
      * @return Calendrier
      */
-    public function setStatus($status)
+    public function setStatut($statut)
     {
-        $this->status = $status;
+        $this->statut = $statut;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get statut
      *
      * @return integer 
      */
-    public function getStatus()
+    public function getStatut()
     {
-        return $this->status;
+        return $this->statut;
     }
 
     /**
@@ -82,6 +90,29 @@ class Calendrier
     public function setIdintervenant(\GestionProjetBundle\Entity\Intervenant $idintervenant = null)
     {
         $this->idintervenant = $idintervenant;
+
+        return $this;
+    }
+
+    /**
+     * Get idprojet
+     *
+     * @return \GestionProjetBundle\Entity\Projet 
+     */
+    public function getIdprojet()
+    {
+        return $this->idprojet;
+    }
+    
+    /**
+     * Set idprojet
+     *
+     * @param \GestionProjetBundle\Entity\Projet $idprojet
+     * @return Calendrier
+     */
+    public function setIdintervenant(\GestionProjetBundle\Entity\Projet $idprojet = null)
+    {
+        $this->idprojet = $idprojet;
 
         return $this;
     }

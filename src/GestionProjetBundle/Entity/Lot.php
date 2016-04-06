@@ -17,7 +17,7 @@ class Lot
      *
      * @ORM\Column(name="idLot", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idlot;
 
@@ -239,9 +239,9 @@ class Lot
      * Set taches
      *
      * @param \Doctrine\Common\Collections\Collection $taches
-     * @return Theme
+     * @return Lot
      */
-    public function setActualites(\Doctrine\Common\Collections\Collection $taches = null)
+    public function setTaches(\Doctrine\Common\Collections\Collection $taches = null)
     {
         $this->taches = $taches;
 

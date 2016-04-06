@@ -65,3 +65,15 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Fosuser Configuration
+fos_user:
+    db_driver: orm 
+    firewall_name: main 
+    user_class: GestionProjetBundle\Entity\Utilisateur
+    
+fos_message:
+    db_driver: orm
+    thread_class: GestionProjetBundle\Entity\Thread
+    message_class: GestionProjetBundle\Entity\Message
+    #spam_detector: fos_message.akismet_spam_detector

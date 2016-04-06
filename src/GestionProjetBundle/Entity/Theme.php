@@ -17,7 +17,7 @@ class Theme
      *
      * @ORM\Column(name="idTheme", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idtheme;
 

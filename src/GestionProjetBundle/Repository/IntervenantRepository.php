@@ -16,25 +16,35 @@ use Doctrine\ORM\EntityRepository;
  */
 class IntervenantRepository extends EntityRepository{
     //put your code here
-    public function deleteIntervenant($intervenant) {
+    public function deleteIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant) {
         $em= $this->_em;
+        $intervenant->setStatut(0);
+        $calendrier = new \GestionProjetBundle\Entity\Calendrier();
+        $courierenvoye = new \GestionProjetBundle\Entity\Courierenvoye();
+        $utilisateur = new \GestionProjetBundle\Entity\Utilisateur();
+        $ressource = new \GestionProjetBundle\Entity\Ressource();
+        $repositoryCalendrier = $em->getRepository("GestionProjetBundle:Calendrier");
+        $repositoryCourierenvoye = $em->getRepository("GestionProjetBundle:Courierenvoye");
+        $repositoryRessource = $em->getRepository("GestionProjetBundle:Ressource");
+        $userManager = $this->get('fos_user.user_manager');
         $em->getConnection()->beginTransaction();
         try{
-            $em->remove($intervenant);
-            $em->flush();
-            $em->getConnection()->commit();
-        } catch (Exception $ex) {
-            $em->getConnection()->rollback();
-            $em->close();
-            throw $ex;
-        }
-    }
-
-
-    public function saveIntervenant($intervenant) {
-        $em= $this->_em;
-        $em->getConnection()->beginTransaction();
-        try{
+            $calendriers = $intervenant->getCalendriers();
+            foreach ($calendriers as $calendrier) {
+                $repositoryCalendrier->deleteCalendrier($calendrier);
+            }
+            $couriersenvoyes = $intervenant->getCourierenvoyes();
+            foreach ($couriersenvoyes as $courierenvoye) {
+                $repositoryCourierenvoye->deleteCourierenvoye($courierenvoye);
+            }
+            $utilisateurs = $intervenant->getUtilisateurs();
+            foreach ($utilisateurs as $utilisateur) {
+                $userManager->deleteUser($utilisateur);
+            }
+            $ressources = $intervenant->getRessources();
+            foreach ($ressources as $ressource) {
+                $repositoryRessource->deleteRessource($ressource);
+            }
             $em->persist($intervenant);
             $em->flush();
             $em->getConnection()->commit();
@@ -45,10 +55,31 @@ class IntervenantRepository extends EntityRepository{
         }
     }
 
-    public function updateIntervenant($intervenant) {
+
+    public function saveIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant) {
         $em= $this->_em;
+        $repositoryAdresse = $em->getRepository("GestionProjetBundle:Adresse");
         $em->getConnection()->beginTransaction();
         try{
+            $repositoryAdresse->saveAdresse($intervenant->getIdadresse());
+            $intervenant->setIdadresse($repositoryAdresse->findOneBy(array("email" => $intervenant->getIdadresse()->getEmail())));
+            $em->persist($intervenant);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $ex;
+        }
+    }
+
+    public function updateIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant) {
+        $em= $this->_em;
+        $repositoryAdresse = $em->getRepository("GestionProjetBundle:Adresse");
+        $em->getConnection()->beginTransaction();
+        try{
+            $repositoryAdresse->updateAdresse($intervenant->getIdadresse());
+            $intervenant->setIdadresse($repositoryAdresse->findOneBy(array("email" => $intervenant->getIdadresse()->getEmail())));
             $em->persist($intervenant);
             $em->flush();
             $em->getConnection()->commit();

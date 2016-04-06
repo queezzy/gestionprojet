@@ -10,18 +10,18 @@ namespace GestionProjetBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 /**
- * Description of CalendrierRepository
+ * Description of CourierenvoyeRepository
  *
  * @author TONYE
  */
-class CalendrierRepository extends EntityRepository {
+class CourierenvoyeRepository extends EntityRepository{
     //put your code here
-    public function deleteCalendrier(\GestionProjetBundle\Entity\Calendrier $calendrier) {
+    public function deleteCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoye) {
         $em= $this->_em;
-        $calendrier->setStatut(0);
+        $courierenvoye->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
-            $em->persist($calendrier);
+            $em->persist($courierenvoye);
             $em->flush();
             $em->getConnection()->commit();
         } catch (Exception $ex) {
@@ -32,12 +32,12 @@ class CalendrierRepository extends EntityRepository {
     }
 
 
-    public function saveCalendrier(\GestionProjetBundle\Entity\Calendrier $calendrier) {
+    public function saveCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoye) {
         $em= $this->_em;
-        $calendrier->setStatut(1);
+        $courierenvoye->setStatut(1);
         $em->getConnection()->beginTransaction();
         try{
-            $em->persist($calendrier);
+            $em->persist($courierenvoye);
             $em->flush();
             $em->getConnection()->commit();
         } catch (Exception $ex) {
@@ -47,11 +47,11 @@ class CalendrierRepository extends EntityRepository {
         }
     }
 
-    public function updateCalendrier($calendrier) {
+    public function updateCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoye) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{
-            $em->persist($calendrier);
+            $em->persist($courierenvoye);
             $em->flush();
             $em->getConnection()->commit();
         } catch (Exception $ex) {
@@ -60,4 +60,5 @@ class CalendrierRepository extends EntityRepository {
             throw $ex;
         }
     }
+    
 }

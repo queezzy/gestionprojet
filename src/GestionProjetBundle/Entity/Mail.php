@@ -17,7 +17,7 @@ class Mail
      *
      * @ORM\Column(name="idMail", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idmail;
 
@@ -52,9 +52,9 @@ class Mail
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer", nullable=true)
+     * @ORM\Column(name="statut", type="integer", nullable=true)
      */
-    private $status;
+    private $statut;
 
 
     /**
@@ -184,26 +184,26 @@ class Mail
     }
 
     /**
-     * Set status
+     * Set statut
      *
-     * @param integer $status
+     * @param integer $statut
      * @return Mail
      */
-    public function setStatus($status)
+    public function setStatut($statut)
     {
-        $this->status = $status;
+        $this->statut = $statut;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get statut
      *
      * @return integer 
      */
-    public function getStatus()
+    public function getStatut()
     {
-        return $this->status;
+        return $this->statut;
     }
     
     /**

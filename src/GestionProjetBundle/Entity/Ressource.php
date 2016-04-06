@@ -17,7 +17,7 @@ class Ressource
      *
      * @ORM\Column(name="idRessource", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idressource;
 

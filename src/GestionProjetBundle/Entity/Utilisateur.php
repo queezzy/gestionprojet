@@ -3,6 +3,8 @@
 namespace GestionProjetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Utilisateur
@@ -10,16 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="fk_Utilisateur_Intervenant1_idx", columns={"idIntervenant"})})
  * @ORM\Entity
  */
-class Utilisateur
+class Utilisateur extends BaseUser implements ParticipantInterface
 {
     /**
      * @var integer
      *
      * @ORM\Column(name="idUtilisateur", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idutilisateur;
+    protected $id;
 
     /**
      * @var string
@@ -52,30 +54,16 @@ class Utilisateur
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
      */
     private $telephone;
-
+    
     /**
      * @var string
      *
-     * @ORM\Column(name="login", type="string", length=255, nullable=true)
+     * @ORM\Column(name="personnelcle", type="integer", nullable=true)
      */
-    private $login;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="motdepasse", type="string", length=255, nullable=true)
-     */
-    private $motdepasse;
+    private $personnelcle;
 
     /**
      * @var integer
@@ -100,6 +88,36 @@ class Utilisateur
      * @ORM\ManyToMany(targetEntity="Mail", mappedBy="idutilisateur")
      */
     private $mails;
+    
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="GestionProjetBundle\Entity\Message",
+     *   mappedBy="sender",
+     *   cascade={"all"}
+     * )
+     * @var Message[]|\Doctrine\Common\Collections\Collection
+     */
+    protected $message;
+    
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="GestionProjetBundle\Entity\MessageMetadata",
+     *   mappedBy="participant",
+     *   cascade={"all"}
+     * )
+     * @var MessageMetadata[]|\Doctrine\Common\Collections\Collection
+     */
+    protected $messagemetadata;
+    
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="GestionProjetBundle\Entity\ThreadMetadata",
+     *   mappedBy="participant",
+     *   cascade={"all"}
+     * )
+     * @var ThreadMetadata[]|\Doctrine\Common\Collections\Collection
+     */
+    protected $threadmetadata;
 
     /**
      * Constructor
@@ -212,28 +230,6 @@ class Utilisateur
         return $this->titre;
     }
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return Utilisateur
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
 
     /**
      * Set telephone
@@ -259,51 +255,28 @@ class Utilisateur
     }
 
     /**
-     * Set login
+     * Set personnelcle
      *
-     * @param string $login
+     * @param integer $personnelcle
      * @return Utilisateur
      */
-    public function setLogin($login)
+    public function setPersonnelcle($personnelcle)
     {
-        $this->login = $login;
+        $this->personnelcle = $personnelcle;
 
         return $this;
     }
 
     /**
-     * Get login
+     * Get personnelcle
      *
-     * @return string 
+     * @return integer 
      */
-    public function getLogin()
+    public function getInteger()
     {
-        return $this->login;
+        return $this->personnelcle;
     }
-
-    /**
-     * Set motdepasse
-     *
-     * @param string $motdepasse
-     * @return Utilisateur
-     */
-    public function setMotdepasse($motdepasse)
-    {
-        $this->motdepasse = $motdepasse;
-
-        return $this;
-    }
-
-    /**
-     * Get motdepasse
-     *
-     * @return string 
-     */
-    public function getMotdepasse()
-    {
-        return $this->motdepasse;
-    }
-
+    
     /**
      * Set statut
      *

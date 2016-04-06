@@ -16,11 +16,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjetRepository extends EntityRepository{
     //put your code here
-    public function deleteProjet($projet) {
+    public function deleteProjet(\GestionProjetBundle\Entity\Projet $projet) {
         $em= $this->_em;
+        $projet->setStatut(0);
+        $intervenant = new \GestionProjetBundle\Entity\Intervenant();
+        $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
         $em->getConnection()->beginTransaction();
         try{
-            $em->remove($projet);
+            $intervenants = $projet->getIntervenants();
+            foreach ($intervenants as $intervenant) {
+                $repositoryIntervenant->deleteIntervenant($intervenant);
+            }
+            $em->persist($projet);
             $em->flush();
             $em->getConnection()->commit();
         } catch (Exception $ex) {
@@ -31,7 +38,7 @@ class ProjetRepository extends EntityRepository{
     }
 
 
-    public function saveProjet($projet) {
+    public function saveProjet(\GestionProjetBundle\Entity\Projet $projet) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{
@@ -45,7 +52,7 @@ class ProjetRepository extends EntityRepository{
         }
     }
 
-    public function updateProjet($projet) {
+    public function updateProjet(\GestionProjetBundle\Entity\Projet $projet) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

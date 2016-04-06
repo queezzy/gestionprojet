@@ -17,7 +17,7 @@ class Projet
      *
      * @ORM\Column(name="idProjet", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idprojet;
 
@@ -97,9 +97,14 @@ class Projet
     private $intervenants;
     
     /**
-    * @ORM\OneToMany(targetEntity="Tache", mappedBy="idprojet", cascade={"remove", "persist"})
+    * @ORM\OneToMany(targetEntity="Calendrier", mappedBy="idprojet", cascade={"remove", "persist"})
     */
-    private $taches;
+    private $calendriers;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Theme", mappedBy="idprojet", cascade={"remove", "persist"})
+    */
+    private $themes;
     
     /**
      * Constructor
@@ -107,7 +112,7 @@ class Projet
     public function __construct()
     {
         $this->intervenants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->taches = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -381,6 +386,76 @@ class Projet
     public function setIntervenants(\Doctrine\Common\Collections\Collection $intervenants = null)
     {
         $this->intervenants = $intervenants;
+
+        return $this;
+    }
+    
+    /**
+     * Add calendrier
+     *
+     * @param GestionProjetBundle\Entity\Calendrier $calendrier
+     * @return Projet
+     */
+    public function addCalendrier(\GestionProjetBundle\Entity\Calendrier $calendrier)
+    {
+        $this->calendriers[] = $calendrier;
+        return $this;
+    }
+    
+    /**
+     * Get calendriers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCalendriers()
+    {
+        return $this->calendriers;
+    }
+    
+    /**
+     * Set calendriers
+     *
+     * @param \Doctrine\Common\Collections\Collection $calendriers
+     * @return Projet
+     */
+    public function setCalendriers(\Doctrine\Common\Collections\Collection $calendriers = null)
+    {
+        $this->calendriers = $calendriers;
+
+        return $this;
+    }
+    
+    /**
+     * Add theme
+     *
+     * @param GestionProjetBundle\Entity\Theme $theme
+     * @return Projet
+     */
+    public function addTheme(\GestionProjetBundle\Entity\Theme $theme)
+    {
+        $this->themes[] = $theme;
+        return $this;
+    }
+    
+    /**
+     * Get themes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getThemes()
+    {
+        return $this->themes;
+    }
+    
+    /**
+     * Set themes
+     *
+     * @param \Doctrine\Common\Collections\Collection $themes
+     * @return Projet
+     */
+    public function setThemes(\Doctrine\Common\Collections\Collection $themes = null)
+    {
+        $this->themes = $themes;
 
         return $this;
     }
