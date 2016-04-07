@@ -16,23 +16,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class LotRepository extends EntityRepository{
     //put your code here
-    public function deleteLot($lot) {
+    public function deleteLot(\GestionProjetBundle\Entity\Lot $lot) {
         $em= $this->_em;
-        $em->getConnection()->beginTransaction();
-        try{
-            $em->remove($lot);
-            $em->flush();
-            $em->getConnection()->commit();
-        } catch (Exception $ex) {
-            $em->getConnection()->rollback();
-            $em->close();
-            throw $ex;
-        }
-    }
-
-
-    public function saveLot($lot) {
-        $em= $this->_em;
+        $lot->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($lot);
@@ -45,7 +31,23 @@ class LotRepository extends EntityRepository{
         }
     }
 
-    public function updateLot($lot) {
+
+    public function saveLot(\GestionProjetBundle\Entity\Lot $lot) {
+        $em= $this->_em;
+        $lot->setStatut(1);
+        $em->getConnection()->beginTransaction();
+        try{
+            $em->persist($lot);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $ex;
+        }
+    }
+
+    public function updateLot(\GestionProjetBundle\Entity\Lot $lot) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

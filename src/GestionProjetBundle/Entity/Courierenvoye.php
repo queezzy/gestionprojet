@@ -17,10 +17,17 @@ class Courierenvoye
      *
      * @ORM\Column(name="idCourierEnvoye", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idcourierenvoye;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="statut", type="integer", nullable=true)
+     */
+    private $statut;
+    
     /**
      * @var \Courier
      *
@@ -130,5 +137,28 @@ class Courierenvoye
     public function getIdressource()
     {
         return $this->idressource;
+    }
+    
+    /**
+     * Set statut
+     *
+     * @param integer $statut
+     * @return Courierenvoye
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return integer 
+     */
+    public function getStatut()
+    {
+        return $this->statut;
     }
 }

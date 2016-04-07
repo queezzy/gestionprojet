@@ -16,8 +16,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class MailRepository extends EntityRepository{
     //put your code here
-    public function deleteMail($mail) {
+    public function deleteMail(\GestionProjetBundle\Entity\Mail $mail) {
         $em= $this->_em;
+        $mail->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
             $em->remove($mail);
@@ -31,8 +32,9 @@ class MailRepository extends EntityRepository{
     }
 
 
-    public function saveMail($mail) {
+    public function saveMail(\GestionProjetBundle\Entity\Mail $mail) {
         $em= $this->_em;
+        $mail->setStatut(1);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($mail);
@@ -45,7 +47,7 @@ class MailRepository extends EntityRepository{
         }
     }
 
-    public function updateMail($mail) {
+    public function updateMail(\GestionProjetBundle\Entity\Mail $mail) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

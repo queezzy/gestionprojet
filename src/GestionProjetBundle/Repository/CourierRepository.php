@@ -16,23 +16,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class CourierRepository extends EntityRepository{
     //put your code here
-    public function deleteCourier($courier) {
+    public function deleteCourier(\GestionProjetBundle\Entity\Courier $courier) {
         $em= $this->_em;
-        $em->getConnection()->beginTransaction();
-        try{
-            $em->remove($courier);
-            $em->flush();
-            $em->getConnection()->commit();
-        } catch (Exception $ex) {
-            $em->getConnection()->rollback();
-            $em->close();
-            throw $ex;
-        }
-    }
-
-
-    public function saveCourier($courier) {
-        $em= $this->_em;
+        $courier->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($courier);
@@ -45,7 +31,23 @@ class CourierRepository extends EntityRepository{
         }
     }
 
-    public function updateCourier($courier) {
+
+    public function saveCourier(\GestionProjetBundle\Entity\Courier $courier) {
+        $em= $this->_em;
+        $courier->setStatut(1);
+        $em->getConnection()->beginTransaction();
+        try{
+            $em->persist($courier);
+            $em->flush();
+            $em->getConnection()->commit();     
+        } catch (Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $ex;
+        }
+    }
+
+    public function updateCourier(\GestionProjetBundle\Entity\Courier $courier) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

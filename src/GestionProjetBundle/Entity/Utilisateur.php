@@ -5,6 +5,8 @@ namespace GestionProjetBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 
 /**
@@ -13,14 +15,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="fk_Utilisateur_Intervenant1_idx", columns={"idIntervenant"})})
  * @ORM\Entity
  */
-class Utilisateur extends BaseUser
+
+class Utilisateur extends BaseUser implements ParticipantInterface
 {
     /**
      * @var integer
      *
      * @ORM\Column(name="idUtilisateur", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
@@ -52,15 +55,21 @@ class Utilisateur extends BaseUser
      */
     private $titre;
 
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
      */
     private $telephone;
-
    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="personnelcle", type="integer", nullable=true)
+     */
+    private $personnelcle;
+
     /**
      * @var integer
      *
@@ -92,6 +101,36 @@ class Utilisateur extends BaseUser
     
     private $actualites;
     
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="GestionProjetBundle\Entity\Message",
+     *   mappedBy="sender",
+     *   cascade={"all"}
+     * )
+     * @var Message[]|\Doctrine\Common\Collections\Collection
+     */
+    protected $message;
+    
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="GestionProjetBundle\Entity\MessageMetadata",
+     *   mappedBy="participant",
+     *   cascade={"all"}
+     * )
+     * @var MessageMetadata[]|\Doctrine\Common\Collections\Collection
+     */
+    protected $messagemetadata;
+    
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="GestionProjetBundle\Entity\ThreadMetadata",
+     *   mappedBy="participant",
+     *   cascade={"all"}
+     * )
+     * @var ThreadMetadata[]|\Doctrine\Common\Collections\Collection
+     */
+    protected $threadmetadata;
 
     /**
      * Constructor
@@ -205,7 +244,6 @@ class Utilisateur extends BaseUser
         return $this->titre;
     }
 
-    
 
     /**
      * Set telephone
@@ -230,10 +268,31 @@ class Utilisateur extends BaseUser
         return $this->telephone;
     }
 
-   
+ 
 
+    /**
+     * Set personnelcle
+     *
+     * @param integer $personnelcle
+     * @return Utilisateur
+     */
+    public function setPersonnelcle($personnelcle)
+    {
+        $this->personnelcle = $personnelcle;
+
+        return $this;
+    }
+
+    /**
+     * Get personnelcle
+     *
+     * @return integer 
+     */
+    public function getPersonnelcle()
+    {
+        return $this->personnelcle;
+    }
     
-
     /**
      * Set statut
      *

@@ -6,6 +6,7 @@
     ],
     "hash": "7ac151cf2e9e29c5b50daaaab6db2e27",
     "content-hash": "658f7bb0e31813c4c2ce93638ef32f8e",
+
     "packages": [
         {
             "name": "adesigns/calendar-bundle",
@@ -829,6 +830,7 @@
             "time": "2015-10-28 15:08:39"
         },
         {
+
             "name": "friendsofsymfony/user-bundle",
             "version": "dev-master",
             "source": {

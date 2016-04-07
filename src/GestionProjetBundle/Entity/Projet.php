@@ -17,7 +17,7 @@ class Projet
      *
      * @ORM\Column(name="idProjet", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idprojet;
 
@@ -97,9 +97,14 @@ class Projet
     private $intervenants;
     
     /**
-    * @ORM\OneToMany(targetEntity="Tache", mappedBy="idprojet", cascade={"remove", "persist"})
+    * @ORM\OneToOne(targetEntity="Calendrier", mappedBy="idprojet", cascade={"remove", "persist"})
     */
-    private $taches;
+    private $calendrier;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Theme", mappedBy="idprojet", cascade={"remove", "persist"})
+    */
+    private $themes;
     
     /**
      * Constructor
@@ -107,7 +112,7 @@ class Projet
     public function __construct()
     {
         $this->intervenants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->taches = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -395,36 +400,39 @@ class Projet
         $this->intervenants->removeElement($intervenants);
     }
 
+    
     /**
-     * Add taches
+     * Add theme
      *
-     * @param \GestionProjetBundle\Entity\Tache $taches
+     * @param GestionProjetBundle\Entity\Theme $theme
      * @return Projet
      */
-    public function addTach(\GestionProjetBundle\Entity\Tache $taches)
+    public function addTheme(\GestionProjetBundle\Entity\Theme $theme)
     {
-        $this->taches[] = $taches;
-
+        $this->themes[] = $theme;
         return $this;
     }
-
+    
     /**
-     * Remove taches
+     * Get themes
      *
-     * @param \GestionProjetBundle\Entity\Tache $taches
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function removeTach(\GestionProjetBundle\Entity\Tache $taches)
+    public function getThemes()
     {
-        $this->taches->removeElement($taches);
+        return $this->themes;
     }
-
+    
     /**
-     * Get taches
+     * Set themes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param \Doctrine\Common\Collections\Collection $themes
+     * @return Projet
      */
-    public function getTaches()
+    public function setThemes(\Doctrine\Common\Collections\Collection $themes = null)
     {
-        return $this->taches;
+        $this->themes = $themes;
+
+        return $this;
     }
 }

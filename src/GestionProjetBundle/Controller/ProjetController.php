@@ -2,154 +2,191 @@
 
 namespace GestionProjetBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use GestionProjetBundle\Entity\Projet;
-use GestionProjetBundle\Form\ProjetType;
 
-/**
- * Projet controller.
- *
- * @Route("/")
- */
-class ProjetController extends Controller
+
+
+class ProjetController extends Controller 
 {
     /**
-     * Lists all Projet entities.
-     *
-     * @Route("/", name="projet_admin_index")
-     * @Method("GET")
+     * @Route("/")
+     * @Template()
+     * @param Request $request
      */
-    public function indexAction()
-    {
+    public function indexAction(Request $request) {
+        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
 
-        $projets = $em->getRepository('GestionProjetBundle:Projet')->findAll();
-
-        return $this->render('Projet/index.html.twig', array(
-            'projets' => $projets,
-        ));
+        $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
+        /*//$repositoryCalendrier = $em->getRepository("GestionProjetBundle:Calendrier");
+        $repositoryAcualite = $em->getRepository("GestionProjetBundle:Actualite");
+        $intervenant = array();
+        $calendriers = array();
+        $actualites = array();*/
+        //selectionne le seul projet actif
+        $projet = $repositoryProjet->findByOne(array("status" => 1));
+        /*if($projet){
+            //intervenants du projet
+            $interventions = $projet->getIntervenants();
+            //les calendriers du projet
+            $calendriers = $projet->getCalendriers();
+            //les 10 actualités les plus recentes du projet
+            $actualites = $repositoryAcualite->findRecentsActualites($projet);
+        }*/
+        
+        return $this->render('GestionProjetBundle:Projets:projet.html.twig', array('projet' => $projet));
     }
     
     /**
-     * Lists all Projet entities.
-     *
-     * @Route("/calendrier", name="projet_calendrier")
-     * @Method("GET")
+     * @Route("/accueil")
+     * @Template()
+     * @param Request $request
      */
-    public function calendrierAction()
-    {
-       
-        return $this->render('GestionProjetBundle:Projet:testcalendrier.html.twig');
+    public function projetAction(Request $request) {
+        $this->indexAction($request);
     }
-
+    
     /**
-     * Creates a new Projet entity.
-     *
-     * @Route("/new", name="projet_admin_new")
-     * @Method({"GET", "POST"})
+     * @Route("/add-projet")
+     * @Template()
+     * @param Request $request
      */
-    public function newAction(Request $request)
-    {
+    public function addProjetAction(Request $request){
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $projet = new Projet();
-        $form = $this->createForm('GestionProjetBundle\Form\ProjetType', $projet);
+        $form = $this->createForm(new ProjetType(), $projet);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($projet);
-            $em->flush();
-
-            return $this->redirectToRoute('projet_admin_show', array('id' => $projet->getId()));
+        $response = new JsonResponse();
+        $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
+        $user = $this->getUser();
+        if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
+            if($request->isMethod('POST')){
+                if($form->isValid()){           
+                   try {
+                       $repositoryProjet->saveProjet($projet);
+                       $message = $this->get('translator')->trans('Projet.created_success', array(), "GestionProjetBundle");
+                       $messages[] = array("letype" => "success", "message" => $message);
+                       $messages[] = array("id" => $projet->getId(), "nom" => $projet->getNom(), "lot" => $projet->getIdlot()->getNom(), "localisation" => $projet->getIdadresse()->getIdadresse(), "email" => $projet->getIdadresse()->getEmail(), "telephone" => $projet->getIdadresse()->getTelephone());
+                       return $response->setData(array("data" => $messages));
+                       //$request->getSession()->getFlashBag()->add('message', $message);
+                      // return $this->redirect($this->generateUrl('gp_projets'));
+                   } catch (Exception $ex){
+                       $message = $this->get('translator')->trans('Projet.created_failure', array(), "GestionProjetBundle");
+                       //$request->getSession()->getFlashBag()->add('message', $message);
+                       $messages[] = array("letype" => "error", "message" => $message);
+                       return $response->setData(array("data" => $messages));
+                       //return $this->render('GestionProjetBundle:Projets:add.html.twig', array('form' => $form->createView()));
+                   }
+               }else{
+                   return $this->render('GestionProjetBundle:Projets:add.html.twig', array('form' => $form->createView()));
+               }
+            }
+        }else{
+            $message = $message = $this->get('translator')->trans('Projet.access_denied', array(), "GestionProjetBundle");
+            $messages[] = array("letype" => "error", "message" => $message);
+            return $response->setData(array("data" => $messages));
         }
-
-        return $this->render('projet/new.html.twig', array(
-            'projet' => $projet,
-            'form' => $form->createView(),
-        ));
     }
-
+    
     /**
-     * Finds and displays a Projet entity.
-     *
-     * @Route("/{id}", name="projet_admin_show")
-     * @Method("GET")
+     * @Route("/update-projet/{id}")
+     * @Template()
      */
-    public function showAction(Projet $projet)
-    {
-        $deleteForm = $this->createDeleteForm($projet);
-
-        return $this->render('projet/show.html.twig', array(
-            'projet' => $projet,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Projet entity.
-     *
-     * @Route("/{id}/edit", name="projet_admin_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Projet $projet)
-    {
-        $deleteForm = $this->createDeleteForm($projet);
-        $editForm = $this->createForm('GestionProjetBundle\Form\ProjetType', $projet);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($projet);
-            $em->flush();
-
-            return $this->redirectToRoute('projet_admin_edit', array('id' => $projet->getId()));
+    public function updateProjetAction(Projet $projet){
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-
-        return $this->render('projet/edit.html.twig', array(
-            'projet' => $projet,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a Projet entity.
-     *
-     * @Route("/{id}", name="projet_admin_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Projet $projet)
-    {
-        $form = $this->createDeleteForm($projet);
+        $form = $this->createForm(new ProjetType(), $projet);
+        $request = $this->get("request");
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($projet);
-            $em->flush();
+        $response = new JsonResponse();
+        $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
+        $user = $this->getUser();
+        if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
+            if($request->isMethod('POST')){
+                if($form->isValid()){           
+                   try {
+                       $repositoryProjet->updateProjet($projet);
+                       
+                       $message = $this->get('translator')->trans('Projet.updated_success', array(), "GestionProjetBundle");
+                       $messages[] = array("letype" => "success", "message" => $message);
+                       
+                       return $response->setData(array("data" => $messages));
+                       //$request->getSession()->getFlashBag()->add('message', $message);
+                      // return $this->redirect($this->generateUrl('gp_projets'));
+                   } catch (Exception $ex){
+                       $message = $this->get('translator')->trans('Projet.updated_failure', array(), "GestionProjetBundle");
+                       //$request->getSession()->getFlashBag()->add('message', $message);
+                       $messages[] = array("letype" => "error", "message" => $message);
+                       return $response->setData(array("data" => $messages));
+                       //return $this->render('GestionProjetBundle:Projets:add.html.twig', array('form' => $form->createView()));
+                   }
+               }else{
+                   return $this->render('GestionProjetBundle:Projets:add.html.twig', array('form' => $form->createView()));
+               }
+            }
+        }else{
+            $message = $message = $this->get('translator')->trans('Projet.access_denied', array(), "GestionProjetBundle");
+            $messages[] = array("letype" => "error", "message" => $message);
+            return $response->setData(array("data" => $messages));
         }
-
-        return $this->redirectToRoute('projet_admin_index');
     }
-
+    
     /**
-     * Creates a form to delete a Projet entity.
-     *
-     * @param Projet $projet The Projet entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @Route("/delete-projet")
+     * @Template()
      */
-    private function createDeleteForm(Projet $projet)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('projet_admin_delete', array('id' => $projet->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+    public function deleteProjetAction(Projet $projet) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        $request = $this->get("request");
+        $user = new Utilisateur();
+        $response = new JsonResponse();
+        $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
+        if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
+            if ($request->isMethod('POST')) {
+                $user = $this->getUser();
+                try{
+                    $repositoryProjet->deleteProjet($projet);
+                    $message = $message = $this->get('translator')->trans('Projet.deleted_success', array(), "GestionProjetBundle");
+                    $messages[] = array("letype" => "sucess", "message" => $message);
+                    return $response->setData(array("data" => $messages));
+                } catch (Exception $ex) {
+                    $message = $message = $this->get('translator')->trans('Projet.deleted_failure', array(), "GestionProjetBundle");
+                    $messages[] = array("letype" => "sucess", "message" => $message);
+                    return $response->setData(array("data" => $messages));
+                }                
+            }
+        }else {
+            $message = $message = $this->get('translator')->trans('Projet.access_denied', array(), "GestionProjetBundle");
+            $messages[] = array("letype" => "error", "message" => $message);
+            return $response->setData(array("data" => $messages));
+        }
     }
     
+    /**
+     * @Route("/get-projet/{id}")
+     * @Template()
+     */
+    public function getProjetAction(Projet $projet) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        return $this->render('GestionProjetBundle:Projets:view.html.twig', array('projet' => $projet));
+    }
     
-    
+
 }

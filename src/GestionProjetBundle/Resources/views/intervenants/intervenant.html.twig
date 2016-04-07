@@ -1,0 +1,11 @@
+{# empty Twig template #}
+<h3>Formulaire d'annonce</h3>
+
+<div class="well">
+ {{ form(form) }}
+ {% for flash_message in app.session.flashbag.get('notice') %}
+    <div class="flash-notice">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+</div>

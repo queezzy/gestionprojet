@@ -76,3 +76,9 @@ fos_user:
     #profile:
     #    form:
     #        type: GestionProjetBundle\Form\ProfileType
+
+fos_message:
+    db_driver: orm
+    thread_class: GestionProjetBundle\Entity\Thread
+    message_class: GestionProjetBundle\Entity\Message
+    #spam_detector: fos_message.akismet_spam_detector

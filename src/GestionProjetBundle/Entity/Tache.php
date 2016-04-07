@@ -17,7 +17,7 @@ class Tache
      *
      * @ORM\Column(name="idTache", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idtache;
 

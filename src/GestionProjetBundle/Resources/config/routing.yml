@@ -1,0 +1,53 @@
+gp_index:
+    pattern: /
+    defaults: { _controller: GestionProjetBundle:Projet:index }
+    options:
+        expose: true
+
+gp_accueil:
+    pattern: /accueil
+    defaults: { _controller: GestionProjetBundle:Projet:accueil }
+    options:
+        expose: true
+
+gp_projet_add:
+    pattern: /add-projet
+    defaults: { _controller: GestionProjetBundle:Projet:addprojet }
+    options:
+        expose: true
+        
+gp_projet_update:
+    pattern: /update-projet
+    defaults: { _controller: GestionProjetBundle:Projet:updateprojet }
+    options:
+        expose: true
+        
+gp_projet_delete:
+    pattern: /delete-projet
+    defaults: { _controller: GestionProjetBundle:Projet:deleteprojet }
+    options:
+        expose: true
+
+gp_intervenant:
+    pattern: /intervenants
+    defaults: { _controller: GestionProjetBundle:Intervenants:intervenants }
+    options:
+        expose: true
+        
+gp_intervenant_add:
+    pattern: /add-intervenant
+    defaults: { _controller: GestionProjetBundle:Intervenant:addintervenant }
+    options:
+        expose: true
+
+gp_intervenant_update:
+    pattern: /update-intervenant
+    defaults: { _controller: GestionProjetBundle:Intervenant:updateintervenant }
+    options:
+        expose: true
+        
+gp_intervenant_delete:
+    pattern: /delete-intervenant
+    defaults: { _controller: GestionProjetBundle:Intervenant:deleteintervenant }
+    options:
+        expose: true

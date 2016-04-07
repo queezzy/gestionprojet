@@ -16,10 +16,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class ThemeRepository extends EntityRepository{
     //put your code here
-    public function deleteTheme($theme) {
+    public function deleteTheme(\GestionProjetBundle\Entity\Theme $theme) {
         $em= $this->_em;
+        $theme->setStatut(0);
+        $actualite = new \GestionProjetBundle\Entity\Actualite();
+        $repositoryActualite = $em->getRepository("GestionProjetBundle:Actualite");
         $em->getConnection()->beginTransaction();
         try{
+            $actualites = $theme->getActualites();
+            foreach ($actualites as $actualite) {
+                $repositoryActualite->deleteIntervenant($actualite);
+            }
             $em->remove($theme);
             $em->flush();
             $em->getConnection()->commit();
@@ -31,8 +38,9 @@ class ThemeRepository extends EntityRepository{
     }
 
 
-    public function saveTheme($theme) {
+    public function saveTheme(\GestionProjetBundle\Entity\Theme $theme) {
         $em= $this->_em;
+        $theme->setStatut(1);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($theme);
@@ -45,7 +53,7 @@ class ThemeRepository extends EntityRepository{
         }
     }
 
-    public function updateTheme($theme) {
+    public function updateTheme(\GestionProjetBundle\Entity\Theme $theme) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

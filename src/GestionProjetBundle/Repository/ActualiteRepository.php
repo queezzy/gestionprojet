@@ -16,23 +16,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class ActualiteRepository extends EntityRepository{
     //put your code here
-    public function deleteActualite($actualite) {
+    public function deleteActualite(\GestionProjetBundle\Entity\Actualite $actualite) {
         $em= $this->_em;
-        $em->getConnection()->beginTransaction();
-        try{
-            $em->remove($actualite);
-            $em->flush();
-            $em->getConnection()->commit();
-        } catch (Exception $ex) {
-            $em->getConnection()->rollback();
-            $em->close();
-            throw $ex;
-        }
-    }
-
-
-    public function saveActualite($actualite) {
-        $em= $this->_em;
+        $actualite->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($actualite);
@@ -45,7 +31,23 @@ class ActualiteRepository extends EntityRepository{
         }
     }
 
-    public function updateActualite($actualite) {
+
+    public function saveActualite(\GestionProjetBundle\Entity\Actualite $actualite) {
+        $em= $this->_em;
+        $actualite->setStatut(1);
+        $em->getConnection()->beginTransaction();
+        try{
+            $em->persist($actualite);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $ex;
+        }
+    }
+
+    public function updateActualite(\GestionProjetBundle\Entity\Actualite $actualite) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{
@@ -56,6 +58,16 @@ class ActualiteRepository extends EntityRepository{
             $em->getConnection()->rollback();
             $em->close();
             throw $ex;
+        }
+    }
+    
+    public function findRecentsActualites(\GestionProjetBundle\Entity\Projet $projet){
+        try{
+            return $this->_em->createQuery('SELECT a FROM GestionProjetBundle:Actualite a JOIN a.idtheme t JOIN t.idprojet p WHERE p.idprojet = :idprojet ORDER BY a.datepublication LIMIT 10')
+                    ->setParameter("idprojet", $projet->getIdprojet())
+                    ->getResult();
+        } catch (NoResultException $ex) {
+            return null;
         }
     }
 }

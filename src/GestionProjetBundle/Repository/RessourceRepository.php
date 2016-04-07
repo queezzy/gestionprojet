@@ -16,23 +16,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class RessourceRepository extends EntityRepository{
     //put your code here
-    public function deleteRessource($ressource) {
+    public function deleteRessource(\GestionProjetBundle\Entity\Ressource $ressource) {
         $em= $this->_em;
-        $em->getConnection()->beginTransaction();
-        try{
-            $em->remove($ressource);
-            $em->flush();
-            $em->getConnection()->commit();
-        } catch (Exception $ex) {
-            $em->getConnection()->rollback();
-            $em->close();
-            throw $ex;
-        }
-    }
-
-
-    public function saveRessource($ressource) {
-        $em= $this->_em;
+        $ressource->setStatut(0);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($ressource);
@@ -45,7 +31,23 @@ class RessourceRepository extends EntityRepository{
         }
     }
 
-    public function updateRessource($ressource) {
+
+    public function saveRessource(\GestionProjetBundle\Entity\Ressource $ressource) {
+        $em= $this->_em;
+        $ressource->setStatut(1);
+        $em->getConnection()->beginTransaction();
+        try{
+            $em->persist($ressource);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $ex;
+        }
+    }
+
+    public function updateRessource(\GestionProjetBundle\Entity\Ressource $ressource) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
         try{

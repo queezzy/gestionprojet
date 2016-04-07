@@ -17,7 +17,7 @@ class Courier
      *
      * @ORM\Column(name="idCourier", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idcourier;
 
@@ -41,7 +41,21 @@ class Courier
      * @ORM\Column(name="objet", type="text", nullable=true)
      */
     private $objet;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenu", type="text", nullable=true)
+     */
+    private $objet;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="statut", type="integer", nullable=true)
+     */
+    private $statut;
+    
     /**
      * @var \Intervenant
      *
@@ -211,5 +225,28 @@ class Courier
     public function removeCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoyes)
     {
         $this->courierenvoyes->removeElement($courierenvoyes);
+        
+    }
+    /**
+     * Set statut
+     *
+     * @param integer $statut
+     * @return Courier
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return integer 
+     */
+    public function getStatut()
+    {
+        return $this->statut;
     }
 }

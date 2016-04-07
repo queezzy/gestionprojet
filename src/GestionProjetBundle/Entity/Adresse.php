@@ -17,7 +17,7 @@ class Adresse
      *
      * @ORM\Column(name="idAdresse", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idadresse;
 

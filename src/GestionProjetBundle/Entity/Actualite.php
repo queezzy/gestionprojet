@@ -17,7 +17,7 @@ class Actualite
      *
      * @ORM\Column(name="idActualite", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idactualite;
 
