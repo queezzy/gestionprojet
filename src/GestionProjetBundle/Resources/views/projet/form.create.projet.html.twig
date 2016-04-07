@@ -1,0 +1,85 @@
+{# Formulaire de création d'un projet #}
+
+<form role="form">
+    <div class="box-body">
+       {# Code du projet #} 
+      <div class="form-group">
+        <label for="codeprojet">Code du projet</label>
+        <input type="text" class="form-control" id="" placeholder="Code du projet">
+      </div>
+      
+      {# Intitulé du projet #} 
+      <div class="form-group">
+        <label for="intituleprojet">Intitule du projet</label>
+        <input type="text" class="form-control" id="" placeholder="Intitulé">
+      </div>
+      
+      {# Description du projet #}
+       <textarea class="ckeditor" name="description" rows="10" cols="50">
+          
+       </textarea>
+      
+      {# Date début #} 
+      <div class="form-group">
+        <label>Date début</label>
+        <div class="input-append date datetimepicker">
+            <input data-format="yyyy/MM/dd hh:mm:ss" type="text"></input>
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+        </div>
+      </div>
+      
+      {# Date fin #} 
+      <div class="form-group">
+        <label>Date Fin</label>
+        <div class="input-append date datetimepicker">
+            <input data-format="yyyy/MM/dd hh:mm:ss" type="text"></input>
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+        </div>
+      </div>
+      
+      {# Budget #} 
+      <div class="form-group">
+        <label for="intituleprojet">Budget</label>
+        <input type="number" class="form-control" id="" placeholder="Budget">
+      </div>
+      
+      {# Demandeur #} 
+      <div class="form-group">
+        <label for="intituleprojet">Demandeur</label>
+        <input type="text" class="form-control" id="" placeholder="Demandeur">
+      </div>
+      
+      {# Evolution attendue #} 
+      <div class="form-group">
+        <label for="intituleprojet">Evolution attendue</label>
+        <div class="input-append" data-role="acknowledge-input">
+            <input class="input-xlarge" type="text" data-type="decimal" placeholder="Decimal Required" required="required"></input>
+            <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
+                <i class="icon-ok fa fa-check"></i>
+            </div>
+        </div>
+      </div>
+      
+      {# Evolution en cours #} 
+      <div class="form-group">
+        <label for="intituleprojet">Evolution en cours</label>
+        <div class="input-append" data-role="acknowledge-input">
+            <input class="input-xlarge" type="text" data-type="decimal" placeholder="Decimal Required" required="required"></input>
+            <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
+                <i class="icon-ok fa fa-check"></i>
+            </div>
+        </div>
+      </div>
+      
+    </div><!-- /.box-body -->
+
+    <div class="box-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
