@@ -55,4 +55,37 @@ class Message extends BaseMessage
     protected $metadata;
     
     
+
+    /**
+     * Add metadata
+     *
+     * @param \GestionProjetBundle\Entity\MessageMetadata $metadata
+     * @return Message
+     */
+    public function addMetadatum(\GestionProjetBundle\Entity\MessageMetadata $metadata)
+    {
+        $this->metadata[] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * Remove metadata
+     *
+     * @param \GestionProjetBundle\Entity\MessageMetadata $metadata
+     */
+    public function removeMetadatum(\GestionProjetBundle\Entity\MessageMetadata $metadata)
+    {
+        $this->metadata->removeElement($metadata);
+    }
+
+    /**
+     * Get metadata
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
 }

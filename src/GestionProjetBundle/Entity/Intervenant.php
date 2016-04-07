@@ -4,6 +4,11 @@ namespace GestionProjetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
  * Intervenant
  *
@@ -84,10 +89,8 @@ class Intervenant
     /**
      * @var \Adresse
      *
-     * @ORM\ManyToOne(targetEntity="Adresse")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idAdresse", referencedColumnName="idAdresse")
-     * })
+     * @ORM\OneToOne(targetEntity="Adresse",cascade={"persist"})
+     
      */
     private $idadresse;
 
@@ -130,6 +133,11 @@ class Intervenant
     * @ORM\OneToMany(targetEntity="Ressource", mappedBy="idintervenant", cascade={"remove", "persist"})
     */
     private $ressources;
+    
+    /**
+     * @<ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
+     */
+    private $idcalendrier ;
 
     /**
      * Constructor
@@ -582,5 +590,28 @@ class Intervenant
         // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
         // le document/image dans la vue.
         return 'uploads/imagesintervenants';
+    }
+
+    /**
+     * Add ressources
+     *
+     * @param \GestionProjetBundle\Entity\Ressource $ressources
+     * @return Intervenant
+     */
+    public function addRessource(\GestionProjetBundle\Entity\Ressource $ressources)
+    {
+        $this->ressources[] = $ressources;
+
+        return $this;
+    }
+
+    /**
+     * Remove ressources
+     *
+     * @param \GestionProjetBundle\Entity\Ressource $ressources
+     */
+    public function removeRessource(\GestionProjetBundle\Entity\Ressource $ressources)
+    {
+        $this->ressources->removeElement($ressources);
     }
 }

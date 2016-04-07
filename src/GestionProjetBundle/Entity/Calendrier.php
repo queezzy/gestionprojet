@@ -28,17 +28,7 @@ class Calendrier
      */
     private $statut;
 
-    /**
-     * @var \Intervenant
-     *
-     * @ORM\ManyToOne(targetEntity="Intervenant")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant", nullable=true)
-     * })
-     */
-    private $idintervenant;
-
-
+   
      /**
      * @var \DateTime
      *
@@ -53,15 +43,7 @@ class Calendrier
      */
     private $datefin;
 
-    /**
-     * @var \Projet
-     *
-     * @ORM\ManyToOne(targetEntity="Projet")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idprojet", referencedColumnName="idProjet", nullable=true)
-     * })
-     */
-    private $idprojet;
+    
 
     /**
      * Get idcalendrier
@@ -94,52 +76,6 @@ class Calendrier
     public function getStatut()
     {
         return $this->statut;
-    }
-
-    /**
-     * Set idintervenant
-     *
-     * @param \GestionProjetBundle\Entity\Intervenant $idintervenant
-     * @return Calendrier
-     */
-    public function setIdintervenant(\GestionProjetBundle\Entity\Intervenant $idintervenant = null)
-    {
-        $this->idintervenant = $idintervenant;
-
-        return $this;
-    }
-
-    /**
-     * Get idprojet
-     *
-     * @return \GestionProjetBundle\Entity\Projet 
-     */
-    public function getIdprojet()
-    {
-        return $this->idprojet;
-    }
-    
-    /**
-     * Set idprojet
-     *
-     * @param \GestionProjetBundle\Entity\Projet $idprojet
-     * @return Calendrier
-     */
-    public function setIdprojet(\GestionProjetBundle\Entity\Projet $idprojet = null)
-    {
-        $this->idprojet = $idprojet;
-
-        return $this;
-    }
-
-    /**
-     * Get idintervenant
-     *
-     * @return \GestionProjetBundle\Entity\Intervenant 
-     */
-    public function getIdintervenant()
-    {
-        return $this->idintervenant;
     }
 
     /**

@@ -47,7 +47,7 @@ class Courier
      *
      * @ORM\Column(name="contenu", type="text", nullable=true)
      */
-    private $objet;
+    private $contenu;
 
     /**
      * @var integer
@@ -248,5 +248,28 @@ class Courier
     public function getStatut()
     {
         return $this->statut;
+    }
+
+    /**
+     * Set contenu
+     *
+     * @param string $contenu
+     * @return Courier
+     */
+    public function setContenu($contenu)
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    /**
+     * Get contenu
+     *
+     * @return string 
+     */
+    public function getContenu()
+    {
+        return $this->contenu;
     }
 }

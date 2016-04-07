@@ -4,6 +4,9 @@ namespace GestionProjetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
  * Ressource
  *
@@ -17,7 +20,7 @@ class Ressource
      *
      * @ORM\Column(name="idRessource", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idressource;
 
@@ -35,10 +38,11 @@ class Ressource
      */
     private $type;
 
-    /**
-     * @var string
+     /**
+     * @ORM\Column(name="url",type="string")
      *
-     * @ORM\Column(name="url", type="string", length=45, nullable=true)
+     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
+     * @Assert\File(mimeTypes={ "application/pdf" })
      */
     private $url;
 

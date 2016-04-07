@@ -17,28 +17,18 @@ class Calendrier
      *
      * @ORM\Column(name="idCalendrier", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idcalendrier;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer", nullable=true)
+     * @ORM\Column(name="statut", type="integer", nullable=false)
      */
-    private $status;
+    private $statut;
 
-    /**
-     * @var \Intervenant
-     *
-     * @ORM\ManyToOne(targetEntity="Intervenant")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
-     * })
-     */
-    private $idintervenant;
-
-
+   
      /**
      * @var \DateTime
      *
@@ -53,6 +43,7 @@ class Calendrier
      */
     private $datefin;
 
+    
 
     /**
      * Get idcalendrier
@@ -65,48 +56,71 @@ class Calendrier
     }
 
     /**
-     * Set status
+     * Set statut
      *
-     * @param integer $status
+     * @param integer $statut
      * @return Calendrier
      */
-    public function setStatus($status)
+    public function setStatut($statut)
     {
-        $this->status = $status;
+        $this->statut = $statut;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get statut
      *
      * @return integer 
      */
-    public function getStatus()
+    public function getStatut()
     {
-        return $this->status;
+        return $this->statut;
     }
 
     /**
-     * Set idintervenant
+     * Set datedebut
      *
-     * @param \GestionProjetBundle\Entity\Intervenant $idintervenant
+     * @param \DateTime $datedebut
      * @return Calendrier
      */
-    public function setIdintervenant(\GestionProjetBundle\Entity\Intervenant $idintervenant = null)
+    public function setDatedebut($datedebut)
     {
-        $this->idintervenant = $idintervenant;
+        $this->datedebut = $datedebut;
 
         return $this;
     }
 
     /**
-     * Get idintervenant
+     * Get datedebut
      *
-     * @return \GestionProjetBundle\Entity\Intervenant 
+     * @return \DateTime 
      */
-    public function getIdintervenant()
+    public function getDatedebut()
     {
-        return $this->idintervenant;
+        return $this->datedebut;
+    }
+
+    /**
+     * Set datefin
+     *
+     * @param \DateTime $datefin
+     * @return Calendrier
+     */
+    public function setDatefin($datefin)
+    {
+        $this->datefin = $datefin;
+
+        return $this;
+    }
+
+    /**
+     * Get datefin
+     *
+     * @return \DateTime 
+     */
+    public function getDatefin()
+    {
+        return $this->datefin;
     }
 }

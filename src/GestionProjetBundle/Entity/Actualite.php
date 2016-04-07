@@ -223,4 +223,27 @@ class Actualite
     {
         return $this->idtheme;
     }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
+     * @return Actualite
+     */
+    public function setUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \GestionProjetBundle\Entity\Utilisateur 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
 }

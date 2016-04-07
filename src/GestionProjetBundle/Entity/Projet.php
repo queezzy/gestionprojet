@@ -97,9 +97,9 @@ class Projet
     private $intervenants;
     
     /**
-    * @ORM\OneToOne(targetEntity="Calendrier", mappedBy="idprojet", cascade={"remove", "persist"})
+    * @ORM\OneToOne(targetEntity="Calendrier", cascade={"remove", "persist"})
     */
-    private $calendrier;
+    private $idcalendrier;
     
     /**
     * @ORM\OneToMany(targetEntity="Theme", mappedBy="idprojet", cascade={"remove", "persist"})
@@ -434,5 +434,38 @@ class Projet
         $this->themes = $themes;
 
         return $this;
+    }
+
+    /**
+     * Set idcalendrier
+     *
+     * @param \GestionProjetBundle\Entity\Calendrier $idcalendrier
+     * @return Projet
+     */
+    public function setIdcalendrier(\GestionProjetBundle\Entity\Calendrier $idcalendrier = null)
+    {
+        $this->idcalendrier = $idcalendrier;
+
+        return $this;
+    }
+
+    /**
+     * Get idcalendrier
+     *
+     * @return \GestionProjetBundle\Entity\Calendrier 
+     */
+    public function getIdcalendrier()
+    {
+        return $this->idcalendrier;
+    }
+
+    /**
+     * Remove themes
+     *
+     * @param \GestionProjetBundle\Entity\Theme $themes
+     */
+    public function removeTheme(\GestionProjetBundle\Entity\Theme $themes)
+    {
+        $this->themes->removeElement($themes);
     }
 }
