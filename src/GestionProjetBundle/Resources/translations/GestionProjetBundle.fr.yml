@@ -1,0 +1,22 @@
+Intervention:
+    access_denied: Vous n'avez des droits requis pour effectuer cette action.
+    exist_already: Un intervenant avec cet email existe déjà.
+    created_success: Intervenant créé avec success.
+    created_failure: Echec de la création de l'intervenant.
+    updated_success: Intervenant mis à jour avec success.
+    updated_failure: Echec de la mise à jour de l'intervenant.
+    updated_id_incorrect: Identifiant incorrect.
+    deleted_success: Intervenant supprimé avec succès.
+    deleted_failure: Echec de la suppression de l'intervenant.
+
+Projet:
+    access_denied: Vous n'avez des droits requis pour effectuer cette action.
+    exist_already: Un projet avec ce code existe déjà.
+    created_success: Projet créé avec success.
+    created_failure: Echec de la création du projet.
+    updated_success: Projet mis à jour avec success.
+    updated_failure: Echec de la mise à jour du projet.
+    updated_id_incorrect: Identifiant incorrect.
+    deleted_success: Projet supprimé avec succès.
+    deleted_failure: Echec de la suppression du projet.
+    

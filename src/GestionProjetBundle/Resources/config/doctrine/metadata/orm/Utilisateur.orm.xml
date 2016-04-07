@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Utilisateur" table="utilisateur">
+    <indexes>
+      <index name="fk_Utilisateur_Intervenant1_idx" columns="idIntervenant"/>
+    </indexes>
+    <id name="idutilisateur" type="bigint" column="idUtilisateur">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nom" type="string" column="nom" length="255" nullable="true"/>
+    <field name="prenom" type="string" column="prenom" length="255" nullable="true"/>
+    <field name="fonction" type="string" column="fonction" length="255" nullable="true"/>
+    <field name="titre" type="string" column="titre" length="255" nullable="true"/>
+    <field name="email" type="string" column="email" length="255" nullable="true"/>
+    <field name="telephone" type="string" column="telephone" length="255" nullable="true"/>
+    <field name="login" type="string" column="login" length="255" nullable="true"/>
+    <field name="motdepasse" type="string" column="motdepasse" length="255" nullable="true"/>
+    <field name="statut" type="integer" column="statut" nullable="true"/>
+    <many-to-one field="idintervenant" target-entity="Intervenant">
+      <join-columns>
+        <join-column name="idIntervenant" referenced-column-name="idIntervenant"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="idmail" target-entity="Mail" mapped-by="idutilisateur"/>
+  </entity>
+</doctrine-mapping>

@@ -1,13 +1,92 @@
 <!DOCTYPE html>
+{# Template général de l'application #}
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="SPM, Services du Premier Ministre, Cameroun, Primature" />
+    <meta name="description" content="Services du Premier Ministre - Projet de réhabilitation et de mise à niveau du batiment abritant le Secrétariat général des services du Premier Ministre" />
+    <meta name="author" content="Zebess" />
+    <meta name="robots" content="noindex,nofollow,noarchive,noimageindex,notranslate" />
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <title>{% block title %}Accueil{% endblock %}</title>
+    
+    {% block stylesheets %}
+    <!-- Bootstrap 3.3.4 -->
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    
+    <!-- Theme style -->
+    <link href="{{asset('css/AdminLTE.css')}}" rel="stylesheet" type="text/css" />    
+    <link href="{{asset('css/_all-skins.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('css/style1.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    {% endblock %}
+    
+  </head>
+  <body class="skin-blue">
+    <div class="row">
+      
+      <header class="main-header clearfix">
+        <!-- Logo Start -->
+        <div class="row head">
+            <h2>PROJET DE RÉHABILITATION ET DE MISE À 
+                NIVEAU DU BÂTIMENT ABRITANT LE SECRÉTARIAT GÉNÉRAL 
+                DES SERVICES DU PREMIER MINISTRE</h2>
+        </div> 
+        <!-- Logo End -->
+        
+      </header>
+      
+        {% block menu %}
+            {# Réservé au menu#}
+        {% endblock %}
+        
+        
+        {% block contenu %}
+            {# Réservé au contenu des pages#}
+        {% endblock %}
+        
+       {% block footer %}
+      <div class="row">
+        <footer class="footer">        
+          <strong>Copyright &copy; 2016 <a href="">Zebess</a>.</strong> Tous droits réservés.
+        </footer>     
+      </div>
+       {% endblock %}
+      <div class='control-sidebar-bg'></div>
+    </div><!-- ./wrapper -->
+
+    {% block js %}
+    <!-- jQuery 2.1.4 -->
+    <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>    
+    <!-- SlimScroll -->
+    <script src="{{asset('js/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="{{asset('js/fastclick.min.js')}}" type="text/javascript"></script>
+    <!-- ckeditor -->
+    <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+    <!-- bootstrap-acknolegdement for decimal number in inputs -->
+    <script src="{{asset('js/bootstrap-acknowledgement.js')}}" type="text/javascript"></script>
+    <script>
+      $(function () {
+        CKEDITOR.replace('.ckeditor');
+        $('.datetimepicker').datetimepicker({
+            language: 'en',
+            pick12HourFormat: true
+          });
+      });
+        $().ready(function() {
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+        });
+    </script>
+    {% endblock %}
+    
+    
+  </body>
 </html>

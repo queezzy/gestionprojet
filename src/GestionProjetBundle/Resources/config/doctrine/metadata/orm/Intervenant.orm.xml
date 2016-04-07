@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Intervenant" table="intervenant">
+    <indexes>
+      <index name="fk_Intervenant_Projet1_idx" columns="idProjet"/>
+      <index name="fk_Intervenant_Adresse1_idx" columns="idAdresse"/>
+      <index name="fk_Intervenant_Lot1_idx" columns="idLot"/>
+    </indexes>
+    <id name="idintervenant" type="bigint" column="idIntervenant">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nom" type="string" column="nom" length="255" nullable="true"/>
+    <field name="evolutionattendu" type="string" column="evolutionAttendu" length="255" nullable="true"/>
+    <field name="evolutionencours" type="string" column="evolutionEncours" length="255" nullable="true"/>
+    <field name="description" type="text" column="description" nullable="true"/>
+    <field name="presentation" type="text" column="presentation" nullable="true"/>
+    <field name="rolemission" type="text" column="roleMission" nullable="true"/>
+    <field name="statut" type="integer" column="statut" nullable="true"/>
+    <many-to-one field="idprojet" target-entity="Projet">
+      <join-columns>
+        <join-column name="idProjet" referenced-column-name="idProjet"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idlot" target-entity="Lot">
+      <join-columns>
+        <join-column name="idLot" referenced-column-name="idLot"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idadresse" target-entity="Adresse">
+      <join-columns>
+        <join-column name="idAdresse" referenced-column-name="idAdresse"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
