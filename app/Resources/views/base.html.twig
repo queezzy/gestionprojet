@@ -23,11 +23,14 @@
     {% endblock %}
     
   </head>
-  <body class="skin-blue">
+  <body>
     <div class="row">
       
       <header class="main-header clearfix">
         <!-- Logo Start -->
+        <div class="row barniere">
+            <img src="{{asset('images/header.png')}}" alt="Barnière" />
+        </div>
         <div class="row head">
             <h2>PROJET DE RÉHABILITATION ET DE MISE À 
                 NIVEAU DU BÂTIMENT ABRITANT LE SECRÉTARIAT GÉNÉRAL 
@@ -47,15 +50,14 @@
         {% endblock %}
         
        {% block footer %}
-      <div class="row">
-        <footer class="footer">        
-          <strong>Copyright &copy; 2016 <a href="">Zebess</a>.</strong> Tous droits réservés.
-        </footer>     
-      </div>
+            
        {% endblock %}
       <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
-
+    <footer class="footer" style="background-color: black">        
+          <strong>Copyright &copy; 2016 <a href="">Zebess</a>.</strong> Tous droits réservés.
+    </footer> 
+    </body>
     {% block js %}
     <!-- jQuery 2.1.4 -->
     <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
@@ -88,5 +90,4 @@
     {% endblock %}
     
     
-  </body>
 </html>

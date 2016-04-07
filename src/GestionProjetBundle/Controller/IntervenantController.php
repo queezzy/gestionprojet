@@ -27,7 +27,7 @@ use GestionProjetBundle\Form\IntervenantType;
  *
  * @author TONYE
  */
-class IntervenantsController extends Controller {
+class IntervenantController extends Controller {
 
     //put your code here
     /**

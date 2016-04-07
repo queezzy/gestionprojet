@@ -1,6 +1,6 @@
 <?php
 
-namespace GestionProjetBundle\Entity;
+namespace UserBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -77,9 +77,9 @@ class Utilisateur extends BaseUser implements ParticipantInterface
     private $statut;
 
     /**
-     * @var \Intervenant
+     * @var \GestionProjetBundle\Intervenant
      *
-     * @ORM\ManyToOne(targetEntity="Intervenant")
+     * @ORM\ManyToOne(targetEntity="\GestionProjetBundle\Entity\Intervenant")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
      * })
@@ -89,12 +89,12 @@ class Utilisateur extends BaseUser implements ParticipantInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Mail", mappedBy="utilisateurs")
+     * @ORM\ManyToMany(targetEntity="\GestionProjetBundle\Entity\Mail", mappedBy="utilisateurs")
      */
     private $mails;
     
      /**
-     *@ORM\OneToMany(targetEntity="Actualite",mappedBy="utilisateur")
+     *@ORM\OneToMany(targetEntity="\GestionProjetBundle\Entity\Actualite",mappedBy="utilisateur")
      
      */
     

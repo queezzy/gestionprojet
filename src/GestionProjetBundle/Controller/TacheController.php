@@ -13,13 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use GestionProjetBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Tache;
-use GestionProjetBundle\Entity\Projet;
-use GestionProjetBundle\Entity\Lot;
-use GestionProjetBundle\Entity\Adresse;
 use GestionProjetBundle\Form\TacheType;
 
 /**
@@ -27,7 +22,7 @@ use GestionProjetBundle\Form\TacheType;
  *
  * @author TONYE
  */
-class TachesController extends Controller {
+class TacheController extends Controller {
 
     //put your code here
     /**

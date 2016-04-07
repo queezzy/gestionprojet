@@ -33,7 +33,7 @@ class MessageMetadata extends BaseMessageMetadata
     protected $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GestionProjetBundle\Entity\Utilisateur")
+     * @ORM\ManyToOne(targetEntity="GestionProjetBundle\Entity\Utilisateur",inversedBy="messagemetadata")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $participant;

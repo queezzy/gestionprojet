@@ -26,7 +26,7 @@ use GestionProjetBundle\Form\CourierType;
  *
  * @author TONYE
  */
-class CouriersController extends Controller {
+class CourrierController extends Controller {
 
     //put your code here
     /**
@@ -34,7 +34,7 @@ class CouriersController extends Controller {
      * @Template()
      * @param Request $request
      */
-    public function couriersAction(Request $request) {
+    public function courriersAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -50,7 +50,7 @@ class CouriersController extends Controller {
      * @Template()
      * @param Request $request
      */
-    public function addCourierAction(Request $request){
+    public function addCourrierAction(Request $request){
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -94,7 +94,7 @@ class CouriersController extends Controller {
      * @Route("/update-courier/{id}")
      * @Template()
      */
-    public function updateCourierAction(Courier $courier){
+    public function updateCourrierAction(Courier $courier){
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -137,7 +137,7 @@ class CouriersController extends Controller {
      * @Route("/get-courier/{id}")
      * @Template()
      */
-    public function getCourierAction(Courier $courier) {
+    public function getCourrierAction(Courier $courier) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
@@ -148,7 +148,7 @@ class CouriersController extends Controller {
      * @Route("/delete-courier")
      * @Template()
      */
-    public function deleteCourierAction(Courier $courier) {
+    public function deleteCourrierAction(Courier $courier) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }

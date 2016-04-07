@@ -125,7 +125,7 @@ class Intervenant
     private $courierenvoyes;
     
     /**
-    * @ORM\OneToMany(targetEntity="Utilisateur", mappedBy="idintervenant", cascade={"remove", "persist"})
+    * @ORM\OneToMany(targetEntity="\UserBundle\Entity\Utilisateur", mappedBy="idintervenant", cascade={"remove", "persist"})
     */
     private $utilisateurs;
     

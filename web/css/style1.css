@@ -3,14 +3,18 @@
     text-align: center;
     background-color: #1B4F08;
     opacity: 0.7;
-    color: #fff; 
-    margin-top: 10%;
+    color: #fff;
 }
 
 .head img {
     width: 80%;
 }
-/*  Style for the menu End */
+
+.barniere img {
+    width: 100%;
+    overflow: hidden;
+}
+/*  Style for the header End */
 
 
 /*  Style for the menu Start */
@@ -21,6 +25,7 @@
 
 ul.nav li a {
     font-size : 1.3em;
+    color: 
 }
 
 ul.nav li a:hover{
@@ -41,14 +46,13 @@ ul.nav li a:hover{
 
 
 
-/* Main contain Style Start #ecf0f5  3A9D23 22780F*/
+/* Main contain Style Start   3A9D23 22780F*/
 
 
 .skin-blue {
-    background-color: #1B4F08;
+    background-color: #ecf0f5;
     background-attachment: scroll;
     padding: 0.3%;
-    background-image:url(../images/backgrnd.jpg);
     background-repeat:no-repeat;
     
 }
