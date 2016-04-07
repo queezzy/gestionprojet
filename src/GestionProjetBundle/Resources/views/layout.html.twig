@@ -1,0 +1,22 @@
+{# empty Twig template #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        {% block stylesheets %}
+            
+        {% endblock %}
+    </head>
+    <body>
+        {% include('IMInterventionBundle::header.html.twig') %}
+        {% block content %}{% endblock %}     
+        {% include('IMInterventionBundle::footer.html.twig') %}
+        {% block javascripts %}
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        {% endblock %}
+    </body>
+</html>
