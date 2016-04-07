@@ -384,4 +384,47 @@ class Projet
 
         return $this;
     }
+
+    /**
+     * Remove intervenants
+     *
+     * @param \GestionProjetBundle\Entity\Intervenant $intervenants
+     */
+    public function removeIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenants)
+    {
+        $this->intervenants->removeElement($intervenants);
+    }
+
+    /**
+     * Add taches
+     *
+     * @param \GestionProjetBundle\Entity\Tache $taches
+     * @return Projet
+     */
+    public function addTach(\GestionProjetBundle\Entity\Tache $taches)
+    {
+        $this->taches[] = $taches;
+
+        return $this;
+    }
+
+    /**
+     * Remove taches
+     *
+     * @param \GestionProjetBundle\Entity\Tache $taches
+     */
+    public function removeTach(\GestionProjetBundle\Entity\Tache $taches)
+    {
+        $this->taches->removeElement($taches);
+    }
+
+    /**
+     * Get taches
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTaches()
+    {
+        return $this->taches;
+    }
 }

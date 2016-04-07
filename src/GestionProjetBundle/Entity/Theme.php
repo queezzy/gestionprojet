@@ -202,4 +202,14 @@ class Theme
 
         return $this;
     }
+
+    /**
+     * Remove actualites
+     *
+     * @param \GestionProjetBundle\Entity\Actualite $actualites
+     */
+    public function removeActualite(\GestionProjetBundle\Entity\Actualite $actualites)
+    {
+        $this->actualites->removeElement($actualites);
+    }
 }

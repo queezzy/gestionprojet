@@ -39,6 +39,20 @@ class Calendrier
     private $idintervenant;
 
 
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDebut", type="datetime", nullable=true)
+     */
+    private $datedebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateFin", type="datetime", nullable=true)
+     */
+    private $datefin;
+
 
     /**
      * Get idcalendrier
@@ -94,5 +108,51 @@ class Calendrier
     public function getIdintervenant()
     {
         return $this->idintervenant;
+    }
+
+    /**
+     * Set datedebut
+     *
+     * @param \DateTime $datedebut
+     * @return Calendrier
+     */
+    public function setDatedebut($datedebut)
+    {
+        $this->datedebut = $datedebut;
+
+        return $this;
+    }
+
+    /**
+     * Get datedebut
+     *
+     * @return \DateTime 
+     */
+    public function getDatedebut()
+    {
+        return $this->datedebut;
+    }
+
+    /**
+     * Set datefin
+     *
+     * @param \DateTime $datefin
+     * @return Calendrier
+     */
+    public function setDatefin($datefin)
+    {
+        $this->datefin = $datefin;
+
+        return $this;
+    }
+
+    /**
+     * Get datefin
+     *
+     * @return \DateTime 
+     */
+    public function getDatefin()
+    {
+        return $this->datefin;
     }
 }

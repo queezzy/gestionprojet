@@ -12,7 +12,7 @@ use GestionProjetBundle\Form\ProjetType;
 /**
  * Projet controller.
  *
- * @Route("/projet_admin")
+ * @Route("/")
  */
 class ProjetController extends Controller
 {
@@ -28,9 +28,21 @@ class ProjetController extends Controller
 
         $projets = $em->getRepository('GestionProjetBundle:Projet')->findAll();
 
-        return $this->render('projet/index.html.twig', array(
+        return $this->render('Projet/index.html.twig', array(
             'projets' => $projets,
         ));
+    }
+    
+    /**
+     * Lists all Projet entities.
+     *
+     * @Route("/calendrier", name="projet_calendrier")
+     * @Method("GET")
+     */
+    public function calendrierAction()
+    {
+       
+        return $this->render('GestionProjetBundle:Projet:testcalendrier.html.twig');
     }
 
     /**
@@ -137,4 +149,7 @@ class ProjetController extends Controller
             ->getForm()
         ;
     }
+    
+    
+    
 }

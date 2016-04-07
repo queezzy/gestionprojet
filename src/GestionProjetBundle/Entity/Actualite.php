@@ -66,6 +66,14 @@ class Actualite
      */
     private $idtheme;
 
+    /**
+     * @var \Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="Utilisateur",inversedBy="actualites")
+     
+     */
+    private $utilisateur;
+
 
 
     /**

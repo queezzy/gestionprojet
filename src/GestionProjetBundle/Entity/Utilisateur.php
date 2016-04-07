@@ -2,7 +2,10 @@
 
 namespace GestionProjetBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
+
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * Utilisateur
@@ -10,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="fk_Utilisateur_Intervenant1_idx", columns={"idIntervenant"})})
  * @ORM\Entity
  */
-class Utilisateur
+class Utilisateur extends BaseUser
 {
     /**
      * @var integer
@@ -19,7 +22,7 @@ class Utilisateur
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idutilisateur;
+    protected $id;
 
     /**
      * @var string
@@ -49,13 +52,7 @@ class Utilisateur
      */
     private $titre;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     */
-    private $email;
-
+    
     /**
      * @var string
      *
@@ -63,20 +60,7 @@ class Utilisateur
      */
     private $telephone;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=255, nullable=true)
-     */
-    private $login;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="motdepasse", type="string", length=255, nullable=true)
-     */
-    private $motdepasse;
-
+   
     /**
      * @var integer
      *
@@ -97,27 +81,36 @@ class Utilisateur
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Mail", mappedBy="idutilisateur")
+     * @ORM\ManyToMany(targetEntity="Mail", mappedBy="utilisateurs")
      */
     private $mails;
+    
+     /**
+     *@ORM\OneToMany(targetEntity="Actualite",mappedBy="utilisateur")
+     
+     */
+    
+    private $actualites;
+    
 
     /**
      * Constructor
      */
     public function __construct()
     {
+        parent::__construct();
         $this->mails = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
     /**
-     * Get idutilisateur
+     * Get id
      *
      * @return integer 
      */
-    public function getIdutilisateur()
+    public function getId()
     {
-        return $this->idutilisateur;
+        return $this->id;
     }
 
     /**
@@ -212,28 +205,7 @@ class Utilisateur
         return $this->titre;
     }
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return Utilisateur
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+    
 
     /**
      * Set telephone
@@ -258,51 +230,9 @@ class Utilisateur
         return $this->telephone;
     }
 
-    /**
-     * Set login
-     *
-     * @param string $login
-     * @return Utilisateur
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
+   
 
-        return $this;
-    }
-
-    /**
-     * Get login
-     *
-     * @return string 
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
-    /**
-     * Set motdepasse
-     *
-     * @param string $motdepasse
-     * @return Utilisateur
-     */
-    public function setMotdepasse($motdepasse)
-    {
-        $this->motdepasse = $motdepasse;
-
-        return $this;
-    }
-
-    /**
-     * Get motdepasse
-     *
-     * @return string 
-     */
-    public function getMotdepasse()
-    {
-        return $this->motdepasse;
-    }
+    
 
     /**
      * Set statut
@@ -381,5 +311,18 @@ class Utilisateur
     public function getMails()
     {
         return $this->mails;
+    }
+
+    /**
+     * Add mails
+     *
+     * @param \GestionProjetBundle\Entity\Mail $mails
+     * @return Utilisateur
+     */
+    public function addMail(\GestionProjetBundle\Entity\Mail $mails)
+    {
+        $this->mails[] = $mails;
+
+        return $this;
     }
 }

@@ -202,4 +202,14 @@ class Courier
         return $this;
     }
     
+
+    /**
+     * Remove courierenvoyes
+     *
+     * @param \GestionProjetBundle\Entity\Courierenvoye $courierenvoyes
+     */
+    public function removeCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoyes)
+    {
+        $this->courierenvoyes->removeElement($courierenvoyes);
+    }
 }

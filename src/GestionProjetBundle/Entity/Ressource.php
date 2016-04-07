@@ -35,10 +35,11 @@ class Ressource
      */
     private $type;
 
-    /**
-     * @var string
+     /**
+     * @ORM\Column(name="url",type="string")
      *
-     * @ORM\Column(name="url", type="string", length=45, nullable=true)
+     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
+     * @Assert\File(mimeTypes={ "application/pdf" })
      */
     private $url;
 
@@ -262,4 +263,14 @@ class Ressource
         return $this;
     }
     
+
+    /**
+     * Remove courierenvoyes
+     *
+     * @param \GestionProjetBundle\Entity\Courierenvoye $courierenvoyes
+     */
+    public function removeCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoyes)
+    {
+        $this->courierenvoyes->removeElement($courierenvoyes);
+    }
 }

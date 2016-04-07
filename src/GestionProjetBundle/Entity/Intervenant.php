@@ -469,4 +469,34 @@ class Intervenant
 
         return $this;
     }
+
+    /**
+     * Remove calendriers
+     *
+     * @param \GestionProjetBundle\Entity\Calendrier $calendriers
+     */
+    public function removeCalendrier(\GestionProjetBundle\Entity\Calendrier $calendriers)
+    {
+        $this->calendriers->removeElement($calendriers);
+    }
+
+    /**
+     * Remove courierenvoyes
+     *
+     * @param \GestionProjetBundle\Entity\Courierenvoye $courierenvoyes
+     */
+    public function removeCourierenvoye(\GestionProjetBundle\Entity\Courierenvoye $courierenvoyes)
+    {
+        $this->courierenvoyes->removeElement($courierenvoyes);
+    }
+
+    /**
+     * Remove utilisateurs
+     *
+     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateurs
+     */
+    public function removeUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateurs)
+    {
+        $this->utilisateurs->removeElement($utilisateurs);
+    }
 }

@@ -283,4 +283,37 @@ class Lot
         return $this;
     }
     
+
+    /**
+     * Add taches
+     *
+     * @param \GestionProjetBundle\Entity\Tache $taches
+     * @return Lot
+     */
+    public function addTach(\GestionProjetBundle\Entity\Tache $taches)
+    {
+        $this->taches[] = $taches;
+
+        return $this;
+    }
+
+    /**
+     * Remove taches
+     *
+     * @param \GestionProjetBundle\Entity\Tache $taches
+     */
+    public function removeTach(\GestionProjetBundle\Entity\Tache $taches)
+    {
+        $this->taches->removeElement($taches);
+    }
+
+    /**
+     * Remove intervenants
+     *
+     * @param \GestionProjetBundle\Entity\Intervenant $intervenants
+     */
+    public function removeIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenants)
+    {
+        $this->intervenants->removeElement($intervenants);
+    }
 }
