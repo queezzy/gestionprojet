@@ -101,9 +101,8 @@ body {
 }
 .main-footer {
   background: #fff;
-  padding: 15px;
   color: #444;
-  border-top: 1px solid #d2d6de;
+  padding: 2%;
 }
 /* Fixed layout */
 .fixed .main-header,
@@ -299,7 +298,7 @@ a:focus {
 }
 .content-header {
   position: relative;
-  padding: 15px 15px 0 15px;
+  padding: 1%;
 }
 .content-header > h1 {
   margin: 0;
@@ -316,11 +315,12 @@ a:focus {
   background: transparent;
   margin-top: 0px;
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: 1.1em;
+  font-weight: bold;
   padding: 7px 5px;
   position: absolute;
   top: 15px;
-  right: 10px;
+  right: 15px;
   border-radius: 2px;
 }
 .content-header > .breadcrumb > li > a {
@@ -571,7 +571,6 @@ a:focus {
   .sidebar-mini.sidebar-collapse .content-wrapper,
   .sidebar-mini.sidebar-collapse .right-side,
   .sidebar-mini.sidebar-collapse .main-footer {
-    margin-left: 50px!important;
     z-index: 840;
   }
   .sidebar-mini.sidebar-collapse .main-sidebar {
