@@ -41,6 +41,13 @@ class Courier
      * @ORM\Column(name="objet", type="text", nullable=true)
      */
     private $objet;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenu", type="text", nullable=true)
+     */
+    private $objet;
 
     /**
      * @var integer

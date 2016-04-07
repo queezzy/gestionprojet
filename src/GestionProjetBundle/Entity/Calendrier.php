@@ -110,7 +110,7 @@ class Calendrier
      * @param \GestionProjetBundle\Entity\Projet $idprojet
      * @return Calendrier
      */
-    public function setIdintervenant(\GestionProjetBundle\Entity\Projet $idprojet = null)
+    public function setIdprojet(\GestionProjetBundle\Entity\Projet $idprojet = null)
     {
         $this->idprojet = $idprojet;
 

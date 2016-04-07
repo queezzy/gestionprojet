@@ -58,11 +58,10 @@ class IntervenantRepository extends EntityRepository{
 
     public function saveIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant) {
         $em= $this->_em;
-        $repositoryAdresse = $em->getRepository("GestionProjetBundle:Adresse");
+        $intervenant->setStatut(1);
+        $intervenant->upload();
         $em->getConnection()->beginTransaction();
         try{
-            $repositoryAdresse->saveAdresse($intervenant->getIdadresse());
-            $intervenant->setIdadresse($repositoryAdresse->findOneBy(array("email" => $intervenant->getIdadresse()->getEmail())));
             $em->persist($intervenant);
             $em->flush();
             $em->getConnection()->commit();
@@ -75,11 +74,8 @@ class IntervenantRepository extends EntityRepository{
 
     public function updateIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant) {
         $em= $this->_em;
-        $repositoryAdresse = $em->getRepository("GestionProjetBundle:Adresse");
         $em->getConnection()->beginTransaction();
         try{
-            $repositoryAdresse->updateAdresse($intervenant->getIdadresse());
-            $intervenant->setIdadresse($repositoryAdresse->findOneBy(array("email" => $intervenant->getIdadresse()->getEmail())));
             $em->persist($intervenant);
             $em->flush();
             $em->getConnection()->commit();

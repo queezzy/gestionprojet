@@ -71,6 +71,17 @@ class Intervenant
     private $statut;
 
     /**
+    * @var \Symfony\Component\HttpFoundation\File\UploadedFile
+    * @Assert\File(maxSize="2M")
+    */
+    public $file;
+    
+    /**
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+    
+    /**
      * @var \Adresse
      *
      * @ORM\ManyToOne(targetEntity="Adresse")
@@ -499,5 +510,48 @@ class Intervenant
         return $this;
     }
     
-    
+    function getFile() {
+        return $this->file;
+    }
+
+    function getUrl() {
+        return $this->url;
+    }
+
+    function setFile(\Symfony\Component\HttpFoundation\File\UploadedFile $file) {
+        $this->file = $file;
+    }
+
+    function setUrl($url) {
+        $this->url = $url;
+    }
+
+
+    public function upload(){
+        // la propriété « file » peut être vide si le champ n'est pas requis
+        if (null === $this->file) {
+            return;
+        }
+        $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
+        // définit la propriété « path » comme étant le nom de fichier où vous
+        // avez stocké le fichier
+        $this->url = $this->file->getClientOriginalName();
+        // « nettoie » la propriété « file » comme vous n'en aurez plus besoin
+        $this->file = null;
+    }
+    public function getAbsoluteUrl(){
+        return null === $this->url ? null : $this->getUploadRootDir().'/'.$this->url;
+    }
+    public function getWebUrl(){
+        return null === $this->url ? null : $this->getUploadDir().'/'.$this->url;
+    }
+    protected function getUploadRootDir(){
+        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+    protected function getUploadDir(){
+        // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
+        // le document/image dans la vue.
+        return 'uploads/imagesintervenants';
+    }
 }
