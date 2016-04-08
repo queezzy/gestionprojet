@@ -1,29 +1,33 @@
 {# Formulaire de création d'un projet #}
 
-<form role="form">
+ {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
     <div class="box-body">
        {# Code du projet #} 
       <div class="form-group">
-        <label for="codeprojet">Code du projet</label>
-        <input type="text" class="form-control" id="" placeholder="Code du projet">
+        {{ form_label(form.code, "Code du projet") }}
+        {{ form_errors(form.code) }}
+        {{ form_widget(form.code, {'attr': {'class': 'form-control','placeholder':'Code du projet'}}) }}
       </div>
       
       {# Intitulé du projet #} 
       <div class="form-group">
-        <label for="intituleprojet">Intitule du projet</label>
-        <input type="text" class="form-control" id="" placeholder="Intitulé">
+        {{ form_label(form.intitule, "Intitule") }}
+        {{ form_errors(form.intitule) }}
+        {{ form_widget(form.intitule, {'attr': {'class': 'form-control', 'placeholder':'Intitulé'}}) }}
       </div>
       
       {# Description du projet #}
-       <textarea class="ckeditor" name="description" rows="10" cols="50">
-          
-       </textarea>
+        {{ form_label(form.intitule, "Description") }}
+        {{ form_errors(form.intitule) }}
+        {{ form_widget(form.intitule, {'attr': {'class': 'ckeditor', 'row':'10', 'cols':'50'}}) }}
       
       {# Date début #} 
       <div class="form-group">
-        <label>Date début</label>
+        {{ form_label(form.datedebut, "Date debut") }}
+        {{ form_errors(form.datedebut) }}
         <div class="input-append date datetimepicker">
-            <input data-format="yyyy/MM/dd hh:mm:ss" type="text"></input>
+            {{ form_widget(form.datedebut, {'attr': {'data-format': 'yyyy/MM/dd hh:mm:ss', 'type':'text'}}) }}
             <span class="add-on">
               <i data-time-icon="icon-time" data-date-icon="icon-calendar">
               </i>
@@ -33,9 +37,10 @@
       
       {# Date fin #} 
       <div class="form-group">
-        <label>Date Fin</label>
+        {{ form_label(form.datedebut, "Date fin") }}
+        {{ form_errors(form.datedebut) }}
         <div class="input-append date datetimepicker">
-            <input data-format="yyyy/MM/dd hh:mm:ss" type="text"></input>
+           {{ form_widget(form.datedebut, {'attr': {'data-format': 'yyyy/MM/dd hh:mm:ss', 'type':'text'}}) }}
             <span class="add-on">
               <i data-time-icon="icon-time" data-date-icon="icon-calendar">
               </i>
@@ -45,21 +50,25 @@
       
       {# Budget #} 
       <div class="form-group">
-        <label for="intituleprojet">Budget</label>
-        <input type="number" class="form-control" id="" placeholder="Budget">
+        {{ form_label(form.budget, "Budget") }}
+        {{ form_errors(form.budget) }}
+        {{ form_widget(form.budget, {'attr': {'class': 'form-control', 'placeholder':'Budget'}}) }}
       </div>
       
       {# Demandeur #} 
       <div class="form-group">
-        <label for="intituleprojet">Demandeur</label>
-        <input type="text" class="form-control" id="" placeholder="Demandeur">
+        {{ form_label(form.demandeur, "Demandeur") }}
+        {{ form_errors(form.demandeur) }}
+        {{ form_widget(form.demandeur, {'attr': {'class': 'form-control', 'placeholder':'Demandeur'}}) }}
       </div>
       
       {# Evolution attendue #} 
       <div class="form-group">
+        {{ form_label(form.evolutionattendu, "Evolution attendue") }}
+        {{ form_errors(form.evolutionattendu) }}
         <label for="intituleprojet">Evolution attendue</label>
         <div class="input-append" data-role="acknowledge-input">
-            <input class="input-xlarge" type="text" data-type="decimal" placeholder="Decimal Required" required="required"></input>
+            {{ form_widget(form.evolutionattendu, {'attr': {'class':'input-xlarge', 'type':'text', 'placeholder':'Demandeur', 'data-type':'decimal', 'required':'required'}}) }}
             <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
                 <i class="icon-ok fa fa-check"></i>
             </div>
@@ -68,9 +77,10 @@
       
       {# Evolution en cours #} 
       <div class="form-group">
-        <label for="intituleprojet">Evolution en cours</label>
+        {{ form_label(form.evolutionencours, "Evolution en cours") }}
+        {{ form_errors(form.evolutionencours) }}
         <div class="input-append" data-role="acknowledge-input">
-            <input class="input-xlarge" type="text" data-type="decimal" placeholder="Decimal Required" required="required"></input>
+           {{ form_widget(form.evolutionencours, {'attr': {'class': 'input-xlarge', 'type':'text', 'placeholder':'Demandeur', 'data-type':'decimal', 'required':'required'}}) }}
             <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
                 <i class="icon-ok fa fa-check"></i>
             </div>
@@ -82,4 +92,4 @@
     <div class="box-footer">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
-</form>
+{{ form_end(form) }}

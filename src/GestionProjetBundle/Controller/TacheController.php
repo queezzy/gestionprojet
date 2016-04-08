@@ -27,7 +27,7 @@ use GestionProjetBundle\Form\TacheType;
  *
  * @author TONYE
  */
-class TachesController extends Controller {
+class TacheController extends Controller {
 
     //put your code here
     /**

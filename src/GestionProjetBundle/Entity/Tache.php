@@ -57,16 +57,6 @@ class Tache
     private $statut;
 
     /**
-     * @var \Projet
-     *
-     * @ORM\ManyToOne(targetEntity="Projet")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idProjet", referencedColumnName="idProjet")
-     * })
-     */
-    private $idprojet;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Lot", inversedBy="idtache")
@@ -213,29 +203,6 @@ class Tache
     public function getStatut()
     {
         return $this->statut;
-    }
-
-    /**
-     * Set idprojet
-     *
-     * @param \GestionProjetBundle\Entity\Projet $idprojet
-     * @return Tache
-     */
-    public function setIdprojet(\GestionProjetBundle\Entity\Projet $idprojet = null)
-    {
-        $this->idprojet = $idprojet;
-
-        return $this;
-    }
-
-    /**
-     * Get idprojet
-     *
-     * @return \GestionProjetBundle\Entity\Projet 
-     */
-    public function getIdprojet()
-    {
-        return $this->idprojet;
     }
 
     /**

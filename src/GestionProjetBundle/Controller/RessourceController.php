@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use GestionProjetBundle\Form\RessourceType;
 /**
  * Description of RessourceControlle
  *
@@ -22,7 +23,7 @@ class RessourceController extends Controller {
     public function newActualiteAction(Request $request)
     {
         $ressource = new Ressource();
-        $form = $this->createForm(RessourceType::class, $ressource);
+        $form = $this->createForm(new RessourceType(), $ressource);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

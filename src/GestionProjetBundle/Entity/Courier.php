@@ -59,7 +59,7 @@ class Courier
     /**
      * @var \Intervenant
      *
-     * @ORM\ManyToOne(targetEntity="Intervenant")
+     * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="couriers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="emetteur", referencedColumnName="idIntervenant")
      * })

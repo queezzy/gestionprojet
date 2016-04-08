@@ -26,7 +26,7 @@ use GestionProjetBundle\Form\CourierType;
  *
  * @author TONYE
  */
-class CouriersController extends Controller {
+class CourierController extends Controller {
 
     //put your code here
     /**

@@ -20,7 +20,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="idUtilisateur", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -79,7 +79,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
     /**
      * @var \Intervenant
      *
-     * @ORM\ManyToOne(targetEntity="Intervenant")
+     * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="utilisateurs")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
      * })

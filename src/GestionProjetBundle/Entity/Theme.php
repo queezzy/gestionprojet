@@ -45,7 +45,7 @@ class Theme
     /**
      * @var \Projet
      *
-     * @ORM\ManyToOne(targetEntity="Projet")
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="themes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idProjet", referencedColumnName="idProjet")
      * })

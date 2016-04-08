@@ -63,7 +63,7 @@ class Ressource
     /**
      * @var \Intervenant
      *
-     * @ORM\ManyToOne(targetEntity="Intervenant")
+     * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="ressources")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
      * })

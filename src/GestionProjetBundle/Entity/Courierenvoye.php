@@ -31,7 +31,7 @@ class Courierenvoye
     /**
      * @var \Courier
      *
-     * @ORM\ManyToOne(targetEntity="Courier")
+     * @ORM\ManyToOne(targetEntity="Courier", inversedBy="courierenvoyes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idCourier", referencedColumnName="idCourier")
      * })
@@ -41,7 +41,7 @@ class Courierenvoye
     /**
      * @var \Intervenant
      *
-     * @ORM\ManyToOne(targetEntity="Intervenant")
+     * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="courierenvoyes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
      * })
@@ -51,7 +51,7 @@ class Courierenvoye
     /**
      * @var \Ressource
      *
-     * @ORM\ManyToOne(targetEntity="Ressource")
+     * @ORM\ManyToOne(targetEntity="Ressource", , inversedBy="courierenvoyes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idRessource", referencedColumnName="idRessource")
      * })

@@ -59,7 +59,7 @@ class Actualite
     /**
      * @var \Theme
      *
-     * @ORM\ManyToOne(targetEntity="Theme")
+     * @ORM\ManyToOne(targetEntity="Theme", inversedBy="actualites")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idTheme", referencedColumnName="idTheme")
      * })
@@ -70,7 +70,9 @@ class Actualite
      * @var \Utilisateur
      *
      * @ORM\ManyToOne(targetEntity="Utilisateur",inversedBy="actualites")
-     
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * })
      */
     private $utilisateur;
 

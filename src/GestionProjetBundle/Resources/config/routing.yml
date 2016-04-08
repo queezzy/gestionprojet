@@ -51,3 +51,76 @@ gp_intervenant_delete:
     defaults: { _controller: GestionProjetBundle:Intervenant:deleteintervenant }
     options:
         expose: true
+        
+gp_tache:
+    pattern: /taches
+    defaults: { _controller: GestionProjetBundle:Taches:taches }
+    options:
+        expose: true
+        
+gp_tache_add:
+    pattern: /add-tache
+    defaults: { _controller: GestionProjetBundle:Taches:addtache }
+    options:
+        expose: true
+
+gp_tache_update:
+    pattern: /update-tache
+    defaults: { _controller: GestionProjetBundle:Taches:updatetache }
+    options:
+        expose: true
+        
+gp_tache_delete:
+    pattern: /delete-tache
+    defaults: { _controller: GestionProjetBundle:Taches:deletetache }
+    options:
+        expose: true
+        
+        
+gp_lot:
+    pattern: /lots
+    defaults: { _controller: GestionProjetBundle:Lots:lots }
+    options:
+        expose: true
+        
+gp_lot_add:
+    pattern: /add-lot
+    defaults: { _controller: GestionProjetBundle:Lots:addlot }
+    options:
+        expose: true
+
+gp_lot_update:
+    pattern: /update-lot
+    defaults: { _controller: GestionProjetBundle:Lots:updatelot }
+    options:
+        expose: true
+        
+gp_lot_delete:
+    pattern: /delete-lot
+    defaults: { _controller: GestionProjetBundle:Lots:deletelot }
+    options:
+        expose: true
+        
+gp_courier:
+    pattern: /couriers
+    defaults: { _controller: GestionProjetBundle:Couriers:couriers }
+    options:
+        expose: true
+        
+gp_courier_add:
+    pattern: /add-courier
+    defaults: { _controller: GestionProjetBundle:Courier:addcourier }
+    options:
+        expose: true
+
+gp_courier_update:
+    pattern: /update-courier
+    defaults: { _controller: GestionProjetBundle:Courier:updatecourier }
+    options:
+        expose: true
+        
+gp_courier_delete:
+    pattern: /delete-courier
+    defaults: { _controller: GestionProjetBundle:Courier:deletecourier }
+    options:
+        expose: true

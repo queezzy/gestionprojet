@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use GestionProjetBundle\Entity\Projet;
+use GestionProjetBundle\Form\ProjetType;
 
 
 
@@ -22,9 +23,9 @@ class ProjetController extends Controller
      */
     public function indexAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
+        }*/
         $em = $this->getDoctrine()->getManager();
 
         $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
@@ -44,7 +45,7 @@ class ProjetController extends Controller
             $actualites = $repositoryAcualite->findRecentsActualites($projet);
         }*/
         
-        return $this->render('GestionProjetBundle:Projets:projet.html.twig', array('projet' => $projet));
+        return $this->render('GestionProjetBundle:Projet:projet.html.twig', array('projet' => $projet));
     }
     
     /**
@@ -62,17 +63,17 @@ class ProjetController extends Controller
      * @param Request $request
      */
     public function addProjetAction(Request $request){
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
+        }*/
         $projet = new Projet();
         $form = $this->createForm(new ProjetType(), $projet);
         $form->handleRequest($request);
         $response = new JsonResponse();
         $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
-        $user = $this->getUser();
-        if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
-            if($request->isMethod('POST')){
+        //$user = $this->getUser();
+       // if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
+            //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
                        $repositoryProjet->saveProjet($projet);
@@ -90,14 +91,14 @@ class ProjetController extends Controller
                        //return $this->render('GestionProjetBundle:Projets:add.html.twig', array('form' => $form->createView()));
                    }
                }else{
-                   return $this->render('GestionProjetBundle:Projets:add.html.twig', array('form' => $form->createView()));
+                   return $this->render('GestionProjetBundle:Projet:form.create.projet.html.twig', array('form' => $form->createView()));
                }
-            }
-        }else{
+           // }
+        /*}else{
             $message = $message = $this->get('translator')->trans('Projet.access_denied', array(), "GestionProjetBundle");
             $messages[] = array("letype" => "error", "message" => $message);
             return $response->setData(array("data" => $messages));
-        }
+        }*/
     }
     
     /**

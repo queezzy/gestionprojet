@@ -5,6 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+namespace GestionProjetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,7 +17,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use GestionProjetBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Lot;
 use GestionProjetBundle\Entity\Projet;
-use GestionProjetBundle\Entity\Lot;
 use GestionProjetBundle\Entity\Adresse;
 use GestionProjetBundle\Form\LotType;
 
@@ -25,7 +25,7 @@ use GestionProjetBundle\Form\LotType;
  *
  * @author TONYE
  */
-class LotsController extends Controller {
+class LotController extends Controller {
 
     //put your code here
     /**
