@@ -40,7 +40,7 @@
         <section class="navbar navbar-default navbar-top menu-block">
             <!-- Logo End -->
             <div class="row">               
-                <div class="col-md-11 col-md-offset-1"> 
+                <div class="col-md-9 col-md-offset-2"> 
                     <!-- Menu start -->
                     <ul class="nav navbar-nav navbar-left treeview treeview-menu">
                       <li class="active">
@@ -131,7 +131,9 @@
 
           <!-- Main content Start-->
           <section class="content">
+            {% block contenupage %}
             <div class="row">
+                
                 <!-- Left Panel start-->
                 <div class="col-md-3">
                     <!-- Présentation du projet start -->
@@ -317,8 +319,9 @@
                     </div>
                     <!-- Actualités du projet end -->
                 </div>
+                
             </div>
-
+            {% endblock %}
           </section>
           <!-- Main content End-->
         </div>

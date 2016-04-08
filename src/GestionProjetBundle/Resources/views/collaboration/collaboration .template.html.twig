@@ -1,0 +1,134 @@
+{# Page Collaboration du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Collaboration{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Collaboration
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Communications des parties prenantes
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Collaboration
+{% endblock %}
+
+{% block contenupage %}
+<div class="row">
+        
+<!-- Historique start-->
+<div class="col-sm-4">                  
+    <div class="box box-primary">
+        <div class="box-header">
+          <h3>Historique</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+
+            <tbody>
+                {% for historique in liste_historiques %}
+                    <tr>
+                        <td class="item">
+                            <div class="product-img col-md-2">
+                              <img src="{{asset('images/default-50x50.gif')}}" alt="logo"/>
+                            </div>
+                            <div class="product-info col-md-10">
+                              <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                              <div class="product-description">
+                                Samsung 32" 1080p 60Hz LED Smart HDTV.
+                              </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td class="item">
+                            <div class="product-img col-md-2">
+                              <img src="{{asset('images/default-50x50.gif')}}" alt="logo"/>
+                            </div>
+                            <div class="product-info col-md-10">
+                              <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                              <div class="product-description">
+                                Samsung 32" 1080p 60Hz LED Smart HDTV.
+                              </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}   
+              
+            </tbody>
+
+          </table>
+        </div><!-- /.box-body -->
+      </div>
+</div>
+<!-- Historique end-->
+
+<!-- Envoyer message start-->
+    <div class="col-sm-8">                  
+      <div class="box box-primary">
+          <div class="box-header">
+              <h3>Envoyer un message</h3>
+          </div><!-- /.box-header -->
+          <form role="form">
+              <div class="box-body">
+                  <div class="col-sm-8">
+                      <div class="form-group">
+                          <label for="">Objet</label>
+                          <input type="text" class="form-control" placeholder="Objet du message">
+                      </div>
+                      <textarea id="ckeditor" rows="10" cols="70" class="collab-message">
+
+                      </textarea>
+                      <div class="form-group">
+                          <label for="">Attacher un fichier</label>
+                          <input type="file" id="exampleInputFile">
+                      </div>
+                  </div>
+                  <div class="col-sm-4">
+                      <label>Destinataires</label>
+                      <select class="form-control" MULTIPLE>
+                          {% for destinataire in liste_destinataires %}
+                            <option>Dest. 1</option>
+                          {% else %}
+                            <option>Defaut</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+
+              </div>
+              <div class="box-footer">
+                  <button type="submit" class="btn btn-success pull-right">Envoyer</button>
+              </div>
+          </form>
+      </div>
+    </div>
+<!-- Envoyer un message end-->
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+    <script>
+      $(function () {
+        // Replace the <textarea id="ckeditor"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('ckeditor');
+      });
+    </script>
+{% endblock %}
