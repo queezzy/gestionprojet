@@ -1,1 +1,41 @@
 {# Template liste du courrier recu #}
+
+<div class="row">
+<!-- Document start-->
+<div class="box">
+<div class="box-header">
+  <h3 class="box-title">Liste du courrier reçu</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table class="data-table table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Objet</th>
+        <th>Emetteur</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    {% for courrier in liste_courrier %}
+      <tr>
+        <td>Trident</td>
+        <td>Internet</td>
+        <td>Win 95+</td>
+        <td> 4</td>
+      </tr>
+    {% else %}
+      <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td> -</td>
+      </tr>
+    {% endfor %}      
+    </tbody>
+  </table>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 

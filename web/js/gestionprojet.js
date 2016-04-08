@@ -24,3 +24,5 @@ $(".inputfile").change(function(){
 function hello(){
     alert("hello");
 }
+
+$(".data-table").DataTable();
