@@ -1,0 +1,219 @@
+{# Page Evolution du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Evolution{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Evolution
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Niveau d'évolution du projet
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Evolution
+{% endblock %}
+
+{% block contenupage %}
+<div class="row">
+    <!-- General evolution start-->
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Niveau d'avancement global</h3>                    
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-8">
+              <p class="text-center">
+                <strong>Evolution: 30 Mars, 2016 - 01 Avril, 2016</strong>
+              </p>
+              <div class="chart">
+                <!-- Sales Chart Canvas -->
+                <canvas id="salesChart" height="200"></canvas>
+              </div><!-- /.chart-responsive -->
+            </div><!-- /.col -->
+            <div class="col-md-4">
+              <p class="text-center">
+                <strong>Détails</strong>
+              </p>
+              <div class="progress-group">
+                <span class="progress-text">Attendu</span>
+                <span class="progress-number"><b>30</b>/100</span>
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-aqua" style="width: 30%"></div>
+                </div>
+              </div><!-- /.progress-group -->
+              <div class="progress-group">
+                <span class="progress-text">Réalisé</span>
+                <span class="progress-number"><b>25</b>/100</span>
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-red" style="width: 25%"></div>
+                </div>
+              </div><!-- /.progress-group -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- ./box-body -->
+        <div class="box-footer">
+          <div class="row">
+            <div class="col-sm-3 col-xs-6">
+              <div class="description-block border-right">
+                <span class="description-percentage text-aqua"><i class="fa fa-caret-up"></i> 30%</span>
+                <h5 class="description-header">--</h5>
+                <span class="description-text">Niveau attendu</span>
+              </div><!-- /.description-block -->
+            </div><!-- /.col -->
+            <div class="col-sm-3 col-xs-6">
+              <div class="description-block border-right">
+                <span class="description-percentage text-red"><i class="fa fa-caret-left"></i> 25%</span>
+                <h5 class="description-header">--</h5>
+                <span class="description-text">Niveau atteint</span>
+              </div><!-- /.description-block -->
+            </div><!-- /.col -->
+            <div class="col-sm-3 col-xs-6">
+              <div class="description-block border-right">
+                <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> --</span>
+                <h5 class="description-header">--</h5>
+                <span class="description-text">--</span>
+              </div><!-- /.description-block -->
+            </div><!-- /.col -->
+            <div class="col-sm-3 col-xs-6">
+              <div class="description-block">
+                <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> --</span>
+                <h5 class="description-header">--</h5>
+                <span class="description-text">--</span>
+              </div><!-- /.description-block -->
+            </div>
+          </div><!-- /.row -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+    </div>
+    <!-- General evolution end-->
+</div><!-- /.row --> 
+
+<div class="row">              
+  <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Niveau d'avancement par intervenants</h3>                    
+          </div><!-- /.box-header -->
+          <div class="box-body">
+              <div class="col-sm-4">
+                  <div class="box box-default">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Intervenant 1</h3>                    
+                      </div><!-- /.box-header -->
+                      <div class="box-body">
+                         <div class="progress-group">
+                              <span class="progress-text">Attendu</span>
+                              <span class="progress-number"><b>30</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-aqua" style="width: 30%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                          <div class="progress-group">
+                              <span class="progress-text">Réalisé</span>
+                              <span class="progress-number"><b>25</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-red" style="width: 25%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                      </div>
+                  </div>
+              </div>  
+
+              <div class="col-sm-4">
+                  <div class="box box-default">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Intervenant 2</h3>                    
+                      </div><!-- /.box-header -->
+                      <div class="box-body">
+                         <div class="progress-group">
+                              <span class="progress-text">Attendu</span>
+                              <span class="progress-number"><b>30</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-aqua" style="width: 30%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                          <div class="progress-group">
+                              <span class="progress-text">Réalisé</span>
+                              <span class="progress-number"><b>25</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-red" style="width: 25%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                      </div>
+                  </div>
+              </div> 
+
+              <div class="col-sm-4">
+                  <div class="box box-default">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Intervenant 3</h3>                    
+                      </div><!-- /.box-header -->
+                      <div class="box-body">
+                         <div class="progress-group">
+                              <span class="progress-text">Attendu</span>
+                              <span class="progress-number"><b>30</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-aqua" style="width: 30%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                          <div class="progress-group">
+                              <span class="progress-text">Réalisé</span>
+                              <span class="progress-number"><b>25</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-red" style="width: 25%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                      </div>
+                  </div>
+              </div> 
+
+              <div class="col-sm-4">
+                  <div class="box box-default">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Intervenant 4</h3>                    
+                      </div><!-- /.box-header -->
+                      <div class="box-body">
+                         <div class="progress-group">
+                              <span class="progress-text">Attendu</span>
+                              <span class="progress-number"><b>30</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-aqua" style="width: 30%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                          <div class="progress-group">
+                              <span class="progress-text">Réalisé</span>
+                              <span class="progress-number"><b>25</b>/100</span>
+                              <div class="progress sm">
+                                <div class="progress-bar progress-bar-red" style="width: 25%"></div>
+                              </div>
+                          </div><!-- /.progress-group -->
+                      </div>
+                  </div>
+              </div> 
+          </div>
+        </div>
+   </div>             
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
+{% endblock %}

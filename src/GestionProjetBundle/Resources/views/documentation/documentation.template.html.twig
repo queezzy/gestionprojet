@@ -1,0 +1,282 @@
+{# Page Documentation du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Documentation{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Documentation
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Documentation du projet
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Documentation
+{% endblock %}
+
+{% block contenupage %}
+  <!-- Documents administratifs start-->
+<div class="col-md-8">
+    <div class="box box-success">
+        <!-- /.box-header start -->
+      <div class="box-header with-border">
+        <h3 class="box-title">Documents administratifs</h3>                      
+      </div>
+        <!-- /.box-header end -->
+
+        <!-- /.box-body start-->
+      <div class="box-body">
+          <table  class="data-table table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Référence</th>
+                    <th>Type</th>
+                    <th>URL</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                {% for intervenant in liste_intervenants %}
+                    <tr>
+                      <td>Trident</td>
+                      <td>Internet</td>
+                      <td>Win 95+</td>
+                      <td> 4</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td> -</td>
+                    </tr>
+                {% endfor %}    
+              </tbody>
+            </table>
+      </div>
+        <!-- /.box-body end -->
+    </div>
+</div>
+<!-- Documents administratifs end-->
+
+<!-- Courrier start-->
+<div class="col-md-4">
+    <div class="box box-success">
+        <!-- /.box-header start -->
+      <div class="box-header with-border">
+        <h3 class="box-title">Courriers</h3>                      
+      </div>
+        <!-- /.box-header end -->
+
+        <!-- /.box-body start-->
+      <div class="box-body">
+          <div class="box box-primary">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Courriers-Envoyés</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+                  <table  class="data-table table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Objet</th>
+                        <th>Emetteur</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <!--{% for courrierR in liste_courrierE %}-->
+                        <tr>
+                          <td>Trident</td>
+                          <td>Internet</td>
+                          <td>Win 95+</td>
+                          <td> 4</td>
+                        </tr>
+                    <!--{% else %}-->
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td> -</td>
+                    </tr>
+                  <!--{% endfor %} -->     
+                  </tbody>
+                </table>
+              </div>
+                <!-- /.box-body end -->
+          </div>
+
+          <div class="box box-primary">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Courriers-Reçus</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+                  <table  class="data-table table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Objet</th>
+                        <th>Emetteur</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <!--{% for courrierR in liste_courrierR %}-->
+                        <tr>
+                          <td>Trident</td>
+                          <td>Internet</td>
+                          <td>Win 95+</td>
+                          <td> 4</td>
+                        </tr>
+                    <!--{% else %}-->
+                        <tr>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td> -</td>
+                        </tr>
+                  <!--{% endfor %} -->     
+                  </tbody>
+                </table>
+              </div>
+                <!-- /.box-body end -->
+          </div>
+      </div>
+        <!-- /.box-body end -->
+    </div>
+</div>
+<!-- Courrier end-->
+
+<!-- Documents d'exécution start-->
+<div class="col-md-4">
+    <div class="box box-success">
+        <!-- /.box-header start -->
+      <div class="box-header with-border">
+        <h3 class="box-title">Documents d'exécution</h3>                      
+      </div>
+        <!-- /.box-header end -->
+
+        <!-- /.box-body start-->
+      <div class="box-body">
+          <div class="box box-primary">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Validés</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+                  <table  class="data-table table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Référence</th>
+                        <th>Type</th>
+                        <th>URL</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <!--{% for docV in liste_docV %}-->
+                        <tr>
+                          <td>Trident</td>
+                          <td>Internet</td>
+                          <td>Win 95+</td>
+                          <td> 4</td>
+                        </tr>
+                    <!--{% else %}-->
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td> -</td>
+                    </tr>
+                  <!--{% endfor %} -->     
+                  </tbody>
+                </table>
+              </div>
+                <!-- /.box-body end -->
+          </div>
+
+          <div class="box box-primary">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Non validés</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+                  <table  class="data-table table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Référence</th>
+                        <th>Type</th>
+                        <th>URL</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <!--{% for docNV in liste_docNV %}-->
+                        <tr>
+                          <td>Trident</td>
+                          <td>Internet</td>
+                          <td>Win 95+</td>
+                          <td> 4</td>
+                        </tr>
+                    <!--{% else %}-->
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td> -</td>
+                    </tr>
+                  <!--{% endfor %} -->     
+                  </tbody>
+                </table>
+              </div>
+                <!-- /.box-body end -->
+          </div>
+      </div>
+        <!-- /.box-body end -->
+    </div>
+</div>
+<!-- Documents d'exécution end-->  
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $(".data-table").DataTable();
+      });
+    </script>
+{% endblock %}

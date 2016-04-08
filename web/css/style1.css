@@ -1,16 +1,19 @@
-/*  Style for the header Start */
+/*  Style for the header Start web folder*/
 .head {
     text-align: center;
     background-color: #1B4F08;
     opacity: 0.7;
     color: #fff; 
-    margin-top: 10%;
+}
+
+.barniere img{
+    width: 100%;
 }
 
 .head img {
     width: 80%;
 }
-/*  Style for the menu End */
+/*  Style for the header End */
 
 
 /*  Style for the menu Start */
@@ -19,12 +22,29 @@
     padding: 5%;
 }
 
-ul.nav li a {
-    font-size : 1.3em;
+ul.nav {
+    margin-left: 4%;
 }
 
-ul.nav li a:hover{
-    color: #555 !important;
+ul.nav li {
+    font-size : 1.3em;
+    font-weight: bold;
+    background-color: #1B4F08;
+    color: #fff;
+}
+
+ul.nav li:hover{
+    background-color: #ecf0f5;
+    color: #1B4F08;
+}
+
+ul.nav li a:hover {
+    color: #1B4F08 !important;
+}
+
+ul.nav li.active {
+   color:  #1B4F08 !important;
+   font-weight: bold;
 }
 
 .navbar {
@@ -36,6 +56,11 @@ ul.nav li a:hover{
     margin-top: 10%;
 }
 
+.info {
+    font-weight: bold;
+    padding-top: 8px;
+}
+
 /*  Style for the menu End */
 
 
@@ -45,23 +70,32 @@ ul.nav li a:hover{
 
 
 .skin-blue {
-    background-color: #1B4F08;
-    background-attachment: scroll;
+    background-color: #ecf0f5;
     padding: 0.3%;
-    background-image:url(../images/backgrnd.jpg);
     background-repeat:no-repeat;
     
 }
 
+.img-preview {
+    background-color: #fff;
+    width: 80%;
+    padding-left: 10%;
+    height: 275px;
+    overflow: hidden;
+}
+
+.img-preview img {
+    width: 100%;
+}
 /* Main contain Style End*/
 
 
 /*  Footer style Start */
 .footer {
-    background-color: #fff;
+    background-color: #1B4F08;
     text-align: center;
     border-top: 1px solid #d2d6de;
-    color: #444;
+    color: #fff;
     padding: 1.5%;
     opacity: 0.8;
 }
