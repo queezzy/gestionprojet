@@ -13,7 +13,7 @@
 <section class="navbar navbar-default navbar-top menu-block">
     <!-- Logo End -->
     <div class="row">               
-        <div class="col-md-11 col-md-offset-1"> 
+        <div class="col-md-9 col-md-offset-1"> 
             <!-- Menu start -->
             <ul class="nav navbar-nav navbar-left treeview treeview-menu">
               <li class="active">
@@ -65,24 +65,59 @@
               </li>
             </ul>
             <!-- Menu end -->
-
-            <!-- Sidebar user panel Start-->
-            <div class="pull-right info">
-              <!--div class="pull-left image">
-                <img src="" class="img-circle" alt="User Image" />
-              </div-->
-              <div class="info">
-                <p>Administrateur</p>
-              </div>
-            </div>
-            <!-- Sidebar user panel End-->
-
         </div> 
+        <!-- Sidebar user panel Start-->
+        <div class="pull-right info col-md-2">
+          <!--div class="pull-left image">
+            <img src="" class="img-circle" alt="User Image" />
+          </div-->
+          <div class="info">
+            <p> {% block utilisateur %}Administrateur{% endblock %}</p>
+          </div>
+        </div>
+        <!-- Sidebar user panel End-->
    </div>
 </section>
 <!-- Menu End -->
 {% endblock %}
 
+{% block contenu %} 
+      <div class="row">
+        <!-- Block contenu  Start-->
+        
+        <div class="col-md-12 main-contain">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <h1>
+               {% block breadcrumbTitle %}
+                    Accueil
+               {% endblock %}
+              <small><bold>{% block breadcrumbDescription %}Résumé du projet{% endblock %}</bold></small>
+            </h1>
+            <ol class="breadcrumb">
+              <li><a href="#"><i class="fa fa-dashboard"></i> Projet</a></li>
+              <li><a href="#">{% block breadcrumbPosition %}Accueil{% endblock %}</a></li>
+            </ol>
+          </section>
+
+          
+          <!-- Main content Start-->
+          <section class="content">
+            {% block contenupage %}
+            <div class="row">
+                
+                
+                
+            </div>
+            {% endblock %}
+          </section>
+          <!-- Main content End-->
+          
+        </div>
+        
+        <!-- Block contenu End -->
+      </div>
+{% endblock %}
 
 {% block js %}
     {{ parent()}}

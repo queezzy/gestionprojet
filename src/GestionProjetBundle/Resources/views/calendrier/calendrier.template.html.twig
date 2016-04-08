@@ -1,0 +1,36 @@
+{# Page Calendrier du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Calendrier{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Calendrier
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Planing des activités
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Calendrier
+{% endblock %}
+
+{% block contenupage %}
+    
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+{% endblock %}
