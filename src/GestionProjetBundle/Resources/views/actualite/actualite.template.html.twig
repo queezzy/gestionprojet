@@ -1,0 +1,260 @@
+{# Page d'Actualites du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+    <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Actualité
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Actualités du projet
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Actualités
+{% endblock %}
+
+{% block contenupage %}
+<div class="row">              
+    <!-- Actualité start-->
+    <div class="col-sm-8">                  
+        <div class="box box-primary">
+            <div class="box-header">
+              <h3>Actualités</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+
+                <tbody>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Xbox One <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Xbox One Console Bundle with Halo Master Chief Collection.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="item">
+                        <div class="product-img col-md-2">
+                          <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                        </div>
+                        <div class="product-info col-md-10">
+                          <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                          <div class="product-description">
+                            Samsung 32" 1080p 60Hz LED Smart HDTV.
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                      <th>
+                          <div class="col-sm-2 pull-right">
+                              <button class="btn btn-success" id="ajouterActualiteButton">Ajouter</button>
+                          </div>
+                      </th>                              
+                  </tr>
+                </tfoot>
+              </table>
+            </div><!-- /.box-body -->
+          </div>
+    </div>
+    <!-- Actualité end-->
+
+    <!-- Thèmes start-->
+        <div class="col-sm-4">                  
+          <div class="box box-primary">
+              <div class="box-header">
+                  <h3>Thèmes</h3>
+              </div><!-- /.box-header -->
+              <div class="box-body">
+
+              </div>
+          </div>
+        </div>
+    <!-- Thèmes end-->
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+{% endblock %}

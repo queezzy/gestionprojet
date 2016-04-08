@@ -1,0 +1,36 @@
+{# Page Documentation du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Documentation{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Documentation
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Documentation du projet
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Documentation
+{% endblock %}
+
+{% block contenupage %}
+    
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+{% endblock %}

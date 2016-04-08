@@ -10,299 +10,211 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
-{% block menu %}
-<!-- Menu Start -->
-<section class="navbar navbar-default navbar-top menu-block">
-    <!-- Logo End -->
-    <div class="row">               
-        <div class="col-md-9 col-md-offset-2"> 
-            <!-- Menu start -->
-            <ul class="nav navbar-nav navbar-left treeview treeview-menu">
-              <li class="active">
-                <a href="#">
-                  <i class="fa fa-dashboard"></i> <span>Accueil</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-files-o"></i>
-                  <span>Evolution</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-th"></i> 
-                  <span>Calendrier</span> 
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-pie-chart"></i>
-                  <span>Actualités</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-laptop"></i>
-                  <span>Documentation</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-edit"></i>
-                  <span>Utilisateurs</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-table"></i> 
-                  <span>Collaboration</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-calendar"></i> 
-                  <span>Intervenants</span>
-                </a>
-              </li>
-            </ul>
-            <!-- Menu end -->
-
-            <!-- Sidebar user panel Start-->
-            <div class="pull-right info">
-              <!--div class="pull-left image">
-                <img src="" class="img-circle" alt="User Image" />
-              </div-->
-              <div class="info">
-                <p>Administrateur</p>
-              </div>
-            </div>
-            <!-- Sidebar user panel End-->
-
-        </div> 
-   </div>
-</section>
-<!-- Menu End -->
+{% block utilisateur %}
+    {{parent()}}
 {% endblock %}
 
-{% block contenu %} 
-      <div class="row">
-        <!-- Block contenu  Start-->
-        
-        <div class="col-md-12 main-contain">
-          <!-- Content Header (Page header) -->
-          <section class="content-header">
-            <h1>
-               {% block breadcrumbTitle %}
-                    Accueil
-               {% endblock %}
-              <small><bold>{% block breadcrumbDescription %}Résumé du projet{% endblock %}</bold></small>
-            </h1>
-            <ol class="breadcrumb">
-              <li><a href="#"><i class="fa fa-dashboard"></i> Projet</a></li>
-              <li><a href="#">{% block breadcrumbPosition %}Accueil{% endblock %}</a></li>
-            </ol>
-          </section>
-            
-          {% block contenupage %}
-          <!-- Main content Start-->
-          <section class="content">
-            <div class="row">
-                <!-- Left Panel start-->
-                <div class="col-md-3">
-                    <!-- Présentation du projet start -->
-                    <div class="box box-primary">
-                        <!-- /.box-header start -->
-                      <div class="box-header with-border">
-                        <h3 class="box-title">Présentation</h3>                      
-                      </div>
-                        <!-- /.box-header end -->
+{% block breadcrumbTitle %}
+    Accueil
+{% endblock %}
 
-                        <!-- /.box-body start-->
-                      <div class="box-body">
+{% block breadcrumbDescription %}
+   Résumé du projet
+{% endblock %}
 
-                      </div>
-                        <!-- /.box-body end -->
-                    </div>
-                    <!-- Présentation du projet end -->
+{% block breadcrumbPosition %}
+   Accueil
+{% endblock %}
 
-                    <!-- Intervenants du projet start -->
-                    <div class="box box-primary">
-                        <!-- /.box-header start -->
-                      <div class="box-header with-border">
-                        <h3 class="box-title">Intervenants</h3>                      
-                      </div>
-                        <!-- /.box-header end -->
+{% block contenupage %}
+<div class="row">
+    <!-- Left Panel start-->
+    <div class="col-md-3">
+        <!-- Présentation du projet start -->
+        <div class="box box-primary">
+            <!-- /.box-header start -->
+          <div class="box-header with-border">
+            <h3 class="box-title">Présentation</h3>                      
+          </div>
+            <!-- /.box-header end -->
 
-                        <!-- /.box-body start-->
-                      <div class="box-body">
-                          <ul class="users-list clearfix">
-                              <li>
-                                <img src="dist/img/user1-128x128.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">Alexander Pierce</a>
-                                <span class="users-list-date">Today</span>
-                              </li>
-                              <li>
-                                <img src="dist/img/user8-128x128.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">Norman</a>
-                                <span class="users-list-date">Yesterday</span>
-                              </li>
-                              <li>
-                                <img src="dist/img/user7-128x128.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">Jane</a>
-                                <span class="users-list-date">12 Jan</span>
-                              </li>
-                              <li>
-                                <img src="dist/img/user6-128x128.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">John</a>
-                                <span class="users-list-date">12 Jan</span>
-                              </li>
-                              <li>
-                                <img src="dist/img/user2-160x160.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">Alexander</a>
-                                <span class="users-list-date">13 Jan</span>
-                              </li>
-                              <li>
-                                <img src="dist/img/user5-128x128.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">Sarah</a>
-                                <span class="users-list-date">14 Jan</span>
-                              </li>
-                              <li>
-                                <img src="dist/img/user4-128x128.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">Nora</a>
-                                <span class="users-list-date">15 Jan</span>
-                              </li>
-                              <li>
-                                <img src="dist/img/user3-128x128.jpg" alt="User Image"/>
-                                <a class="users-list-name" href="#">Nadia</a>
-                                <span class="users-list-date">15 Jan</span>
-                              </li>
-                            </ul><!-- /.users-list -->
+            <!-- /.box-body start-->
+          <div class="box-body">
 
-
-                          <div class="box-footer text-center">
-                            <a href="javascript::" class="uppercase">Plus de détails</a>
-                          </div><!-- /.box-footer -->
-
-                      </div>
-                        <!-- /.box-body end -->
-                    </div>
-                    <!-- Intervenants du projet end -->
-                </div>
-                <!-- Left Panel end-->
-
-                <!-- Central Panel start-->
-                <div class="col-md-6">
-                    <!-- Calendrier start -->
-                    <div class="box box-success">
-                        <!-- /.box-header start -->
-                      <div class="box-header with-border">
-                        <h3 class="box-title">Calendrier</h3>                      
-                      </div>
-                        <!-- /.box-header end -->
-
-                        <!-- /.box-body start-->
-                      <div class="box-body">
-
-                      </div>
-                        <!-- /.box-body end -->
-                    </div>
-                    <!-- Calendrier end -->
-
-                    <!-- Evolution start -->
-                    <div class="box box-success">
-                        <!-- /.box-header start -->
-                      <div class="box-header with-border">
-                        <h3 class="box-title">Evolution</h3>                      
-                      </div>
-                        <!-- /.box-header end -->
-
-                        <!-- /.box-body start-->
-                      <div class="box-body">
-
-                      </div>
-                        <!-- /.box-body end -->
-                    </div>
-                    <!-- Evolution end -->
-
-                </div>
-                <!-- Central Panel end-->
-                
-                <div class="col-md-3">
-                    <!-- Actualités du projet start -->
-                    <div class="box box-primary">
-                        <!-- /.box-header start -->
-                      <div class="box-header with-border">
-                        <h3 class="box-title">Actualités</h3>                      
-                      </div>
-                        <!-- /.box-header end -->
-
-                        <!-- /.box-body start-->
-                      <div class="box-body">
-                        <ul class="products-list product-list-in-box">
-                          <li class="item">
-                            <div class="product-img">
-                              <img src="dist/img/default-50x50.gif" alt="Product Image"/>
-                            </div>
-                            <div class="product-info">
-                              <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
-                              <span class="product-description">
-                                Samsung 32" 1080p 60Hz LED Smart HDTV.
-                              </span>
-                            </div>
-                          </li><!-- /.item -->
-                          <li class="item">
-                            <div class="product-img">
-                              <img src="dist/img/default-50x50.gif" alt="Product Image"/>
-                            </div>
-                            <div class="product-info">
-                              <a href="javascript::;" class="product-title">Bicycle <span class="label label-info pull-right">$700</span></a>
-                              <span class="product-description">
-                                26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                              </span>
-                            </div>
-                          </li><!-- /.item -->
-                          <li class="item">
-                            <div class="product-img">
-                              <img src="dist/img/default-50x50.gif" alt="Product Image"/>
-                            </div>
-                            <div class="product-info">
-                              <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
-                              <span class="product-description">
-                                Xbox One Console Bundle with Halo Master Chief Collection.
-                              </span>
-                            </div>
-                          </li><!-- /.item -->
-                          <li class="item">
-                            <div class="product-img">
-                              <img src="dist/img/default-50x50.gif" alt="Product Image"/>
-                            </div>
-                            <div class="product-info">
-                              <a href="javascript::;" class="product-title">PlayStation 4 <span class="label label-success pull-right">$399</span></a>
-                              <span class="product-description">
-                                PlayStation 4 500GB Console (PS4)
-                              </span>
-                            </div>
-                          </li><!-- /.item -->
-                        </ul>
-                      </div>
-                        <!-- /.box-body end -->
-                      <div class="box-footer text-center">
-                          <a href="javascript::;" class="uppercase">Plus d'actualités</a>
-                      </div>
-                    </div>
-                    <!-- Actualités du projet end -->
-                </div>
-            </div>
-
-          </section>
-          <!-- Main content End-->
-          {% endblock %}
+          </div>
+            <!-- /.box-body end -->
         </div>
-        
-        <!-- Block contenu End -->
-      </div>
-      {% endblock %}
+        <!-- Présentation du projet end -->
+
+        <!-- Intervenants du projet start -->
+        <div class="box box-primary">
+            <!-- /.box-header start -->
+          <div class="box-header with-border">
+            <h3 class="box-title">Intervenants</h3>                      
+          </div>
+            <!-- /.box-header end -->
+
+            <!-- /.box-body start-->
+          <div class="box-body">
+              <ul class="users-list clearfix">
+                  <li>
+                    <img src="dist/img/user1-128x128.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">Alexander Pierce</a>
+                    <span class="users-list-date">Today</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user8-128x128.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">Norman</a>
+                    <span class="users-list-date">Yesterday</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user7-128x128.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">Jane</a>
+                    <span class="users-list-date">12 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user6-128x128.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">John</a>
+                    <span class="users-list-date">12 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user2-160x160.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">Alexander</a>
+                    <span class="users-list-date">13 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user5-128x128.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">Sarah</a>
+                    <span class="users-list-date">14 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user4-128x128.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">Nora</a>
+                    <span class="users-list-date">15 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user3-128x128.jpg" alt="User Image"/>
+                    <a class="users-list-name" href="#">Nadia</a>
+                    <span class="users-list-date">15 Jan</span>
+                  </li>
+                </ul><!-- /.users-list -->
+
+
+              <div class="box-footer text-center">
+                <a href="javascript::" class="uppercase">Plus de détails</a>
+              </div><!-- /.box-footer -->
+
+          </div>
+            <!-- /.box-body end -->
+        </div>
+        <!-- Intervenants du projet end -->
+    </div>
+    <!-- Left Panel end-->
+
+    <!-- Central Panel start-->
+    <div class="col-md-6">
+        <!-- Calendrier start -->
+        <div class="box box-success">
+            <!-- /.box-header start -->
+          <div class="box-header with-border">
+            <h3 class="box-title">Calendrier</h3>                      
+          </div>
+            <!-- /.box-header end -->
+
+            <!-- /.box-body start-->
+          <div class="box-body">
+
+          </div>
+            <!-- /.box-body end -->
+        </div>
+        <!-- Calendrier end -->
+
+        <!-- Evolution start -->
+        <div class="box box-success">
+            <!-- /.box-header start -->
+          <div class="box-header with-border">
+            <h3 class="box-title">Evolution</h3>                      
+          </div>
+            <!-- /.box-header end -->
+
+            <!-- /.box-body start-->
+          <div class="box-body">
+
+          </div>
+            <!-- /.box-body end -->
+        </div>
+        <!-- Evolution end -->
+
+    </div>
+    <!-- Central Panel end-->
+
+    <div class="col-md-3">
+        <!-- Actualités du projet start -->
+        <div class="box box-primary">
+            <!-- /.box-header start -->
+          <div class="box-header with-border">
+            <h3 class="box-title">Actualités</h3>                      
+          </div>
+            <!-- /.box-header end -->
+
+            <!-- /.box-body start-->
+          <div class="box-body">
+            <ul class="products-list product-list-in-box">
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                  <span class="product-description">
+                    Samsung 32" 1080p 60Hz LED Smart HDTV.
+                  </span>
+                </div>
+              </li><!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">Bicycle <span class="label label-info pull-right">$700</span></a>
+                  <span class="product-description">
+                    26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                  </span>
+                </div>
+              </li><!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
+                  <span class="product-description">
+                    Xbox One Console Bundle with Halo Master Chief Collection.
+                  </span>
+                </div>
+              </li><!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">PlayStation 4 <span class="label label-success pull-right">$399</span></a>
+                  <span class="product-description">
+                    PlayStation 4 500GB Console (PS4)
+                  </span>
+                </div>
+              </li><!-- /.item -->
+            </ul>
+          </div>
+            <!-- /.box-body end -->
+          <div class="box-footer text-center">
+              <a href="javascript::;" class="uppercase">Plus d'actualités</a>
+          </div>
+        </div>
+        <!-- Actualités du projet end -->
+    </div>
+</div>
+{% endblock %}
 
 {% block js %}
     {{ parent()}}
