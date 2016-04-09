@@ -91,6 +91,18 @@ ul.nav li.active {
 .img-preview img {
     width: 100%;
 }
+
+.modal {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+    overflow: scroll;
+}
+
+.modal-body {
+    background-color: #ecf0f5 !important;
+}
 /* Main contain Style End*/
 
 
