@@ -2,21 +2,21 @@
 
 namespace UserBundle\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Utilisateur
  *
  * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="fk_Utilisateur_Intervenant1_idx", columns={"idIntervenant"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
+class Utilisateur extends BaseUser implements ParticipantInterface {
 
-class Utilisateur extends BaseUser implements ParticipantInterface
-{
     /**
      * @var integer
      *
@@ -54,18 +54,17 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      */
     private $titre;
 
-
     /**
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
      */
     private $telephone;
-   
+
     /**
      * @var string
      *
-     * @ORM\Column(name="personnelcle", type="boolean", nullable=true)
+     * @ORM\Column(name="personnelcle", type="boolean", nullable=false)
      */
     private $personnelcle;
 
@@ -92,14 +91,12 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @ORM\ManyToMany(targetEntity="\GestionProjetBundle\Entity\Mail", mappedBy="utilisateurs")
      */
     private $mails;
-    
-     /**
-     *@ORM\OneToMany(targetEntity="\GestionProjetBundle\Entity\Actualite",mappedBy="utilisateur")
-     
+
+    /**
+     * @ORM\OneToMany(targetEntity="\GestionProjetBundle\Entity\Actualite",mappedBy="utilisateur")
+
      */
-    
     private $actualites;
-    
 
     /**
      * @ORM\OneToMany(
@@ -110,7 +107,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @var Message[]|\Doctrine\Common\Collections\Collection
      */
     protected $message;
-    
+
     /**
      * @ORM\OneToMany(
      *   targetEntity="GestionProjetBundle\Entity\MessageMetadata",
@@ -120,7 +117,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @var MessageMetadata[]|\Doctrine\Common\Collections\Collection
      */
     protected $messagemetadata;
-    
+
     /**
      * @ORM\OneToMany(
      *   targetEntity="GestionProjetBundle\Entity\ThreadMetadata",
@@ -132,24 +129,33 @@ class Utilisateur extends BaseUser implements ParticipantInterface
     protected $threadmetadata;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true) 
+     */
+    private $path;
+
+    /**
+     * @Assert\File(maxSize="6000000") 
+     */
+    private $file;
+    
+    private $temp;
+
+    /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->mails = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->statut=1;
-        $this->personnelcle=false;
+        $this->statut = 1;
+        $this->personnelcle = false;
     }
-
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -159,8 +165,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param string $nom
      * @return Utilisateur
      */
-    public function setNom($nom)
-    {
+    public function setNom($nom) {
         $this->nom = $nom;
 
         return $this;
@@ -171,8 +176,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return string 
      */
-    public function getNom()
-    {
+    public function getNom() {
         return $this->nom;
     }
 
@@ -182,8 +186,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param string $prenom
      * @return Utilisateur
      */
-    public function setPrenom($prenom)
-    {
+    public function setPrenom($prenom) {
         $this->prenom = $prenom;
 
         return $this;
@@ -194,8 +197,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return string 
      */
-    public function getPrenom()
-    {
+    public function getPrenom() {
         return $this->prenom;
     }
 
@@ -205,8 +207,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param string $fonction
      * @return Utilisateur
      */
-    public function setFonction($fonction)
-    {
+    public function setFonction($fonction) {
         $this->fonction = $fonction;
 
         return $this;
@@ -217,8 +218,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return string 
      */
-    public function getFonction()
-    {
+    public function getFonction() {
         return $this->fonction;
     }
 
@@ -228,8 +228,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param string $titre
      * @return Utilisateur
      */
-    public function setTitre($titre)
-    {
+    public function setTitre($titre) {
         $this->titre = $titre;
 
         return $this;
@@ -240,11 +239,9 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return string 
      */
-    public function getTitre()
-    {
+    public function getTitre() {
         return $this->titre;
     }
-
 
     /**
      * Set telephone
@@ -252,8 +249,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param string $telephone
      * @return Utilisateur
      */
-    public function setTelephone($telephone)
-    {
+    public function setTelephone($telephone) {
         $this->telephone = $telephone;
 
         return $this;
@@ -264,12 +260,9 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return string 
      */
-    public function getTelephone()
-    {
+    public function getTelephone() {
         return $this->telephone;
     }
-
- 
 
     /**
      * Set personnelcle
@@ -277,8 +270,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param integer $personnelcle
      * @return Utilisateur
      */
-    public function setPersonnelcle($personnelcle)
-    {
+    public function setPersonnelcle($personnelcle) {
         $this->personnelcle = $personnelcle;
 
         return $this;
@@ -289,19 +281,17 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return integer 
      */
-    public function getPersonnelcle()
-    {
+    public function getPersonnelcle() {
         return $this->personnelcle;
     }
-    
+
     /**
      * Set statut
      *
      * @param integer $statut
      * @return Utilisateur
      */
-    public function setStatut($statut)
-    {
+    public function setStatut($statut) {
         $this->statut = $statut;
 
         return $this;
@@ -312,8 +302,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return integer 
      */
-    public function getStatut()
-    {
+    public function getStatut() {
         return $this->statut;
     }
 
@@ -323,8 +312,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param \GestionProjetBundle\Entity\Intervenant $idintervenant
      * @return Utilisateur
      */
-    public function setIdintervenant(\GestionProjetBundle\Entity\Intervenant $idintervenant = null)
-    {
+    public function setIdintervenant(\GestionProjetBundle\Entity\Intervenant $idintervenant = null) {
         $this->idintervenant = $idintervenant;
 
         return $this;
@@ -335,8 +323,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return \GestionProjetBundle\Entity\Intervenant 
      */
-    public function getIdintervenant()
-    {
+    public function getIdintervenant() {
         return $this->idintervenant;
     }
 
@@ -346,8 +333,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param \GestionProjetBundle\Entity\Mail $mails
      * @return Utilisateur
      */
-    public function addMails(\GestionProjetBundle\Entity\Mail $mails)
-    {
+    public function addMails(\GestionProjetBundle\Entity\Mail $mails) {
         $this->mails[] = $mails;
 
         return $this;
@@ -358,8 +344,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @param \GestionProjetBundle\Entity\Mail $mails
      */
-    public function removeMail(\GestionProjetBundle\Entity\Mail $mails)
-    {
+    public function removeMail(\GestionProjetBundle\Entity\Mail $mails) {
         $this->mails->removeElement($mails);
     }
 
@@ -368,8 +353,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMails()
-    {
+    public function getMails() {
         return $this->mails;
     }
 
@@ -379,8 +363,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param \GestionProjetBundle\Entity\Mail $mails
      * @return Utilisateur
      */
-    public function addMail(\GestionProjetBundle\Entity\Mail $mails)
-    {
+    public function addMail(\GestionProjetBundle\Entity\Mail $mails) {
         $this->mails[] = $mails;
 
         return $this;
@@ -392,8 +375,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param \GestionProjetBundle\Entity\Actualite $actualites
      * @return Utilisateur
      */
-    public function addActualite(\GestionProjetBundle\Entity\Actualite $actualites)
-    {
+    public function addActualite(\GestionProjetBundle\Entity\Actualite $actualites) {
         $this->actualites[] = $actualites;
 
         return $this;
@@ -404,8 +386,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @param \GestionProjetBundle\Entity\Actualite $actualites
      */
-    public function removeActualite(\GestionProjetBundle\Entity\Actualite $actualites)
-    {
+    public function removeActualite(\GestionProjetBundle\Entity\Actualite $actualites) {
         $this->actualites->removeElement($actualites);
     }
 
@@ -414,8 +395,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getActualites()
-    {
+    public function getActualites() {
         return $this->actualites;
     }
 
@@ -425,8 +405,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param \GestionProjetBundle\Entity\Message $message
      * @return Utilisateur
      */
-    public function addMessage(\GestionProjetBundle\Entity\Message $message)
-    {
+    public function addMessage(\GestionProjetBundle\Entity\Message $message) {
         $this->message[] = $message;
 
         return $this;
@@ -437,8 +416,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @param \GestionProjetBundle\Entity\Message $message
      */
-    public function removeMessage(\GestionProjetBundle\Entity\Message $message)
-    {
+    public function removeMessage(\GestionProjetBundle\Entity\Message $message) {
         $this->message->removeElement($message);
     }
 
@@ -447,8 +425,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMessage()
-    {
+    public function getMessage() {
         return $this->message;
     }
 
@@ -458,8 +435,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param \GestionProjetBundle\Entity\MessageMetadata $messagemetadata
      * @return Utilisateur
      */
-    public function addMessagemetadatum(\GestionProjetBundle\Entity\MessageMetadata $messagemetadata)
-    {
+    public function addMessagemetadatum(\GestionProjetBundle\Entity\MessageMetadata $messagemetadata) {
         $this->messagemetadata[] = $messagemetadata;
 
         return $this;
@@ -470,8 +446,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @param \GestionProjetBundle\Entity\MessageMetadata $messagemetadata
      */
-    public function removeMessagemetadatum(\GestionProjetBundle\Entity\MessageMetadata $messagemetadata)
-    {
+    public function removeMessagemetadatum(\GestionProjetBundle\Entity\MessageMetadata $messagemetadata) {
         $this->messagemetadata->removeElement($messagemetadata);
     }
 
@@ -480,8 +455,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMessagemetadata()
-    {
+    public function getMessagemetadata() {
         return $this->messagemetadata;
     }
 
@@ -491,8 +465,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * @param \GestionProjetBundle\Entity\ThreadMetadata $threadmetadata
      * @return Utilisateur
      */
-    public function addThreadmetadatum(\GestionProjetBundle\Entity\ThreadMetadata $threadmetadata)
-    {
+    public function addThreadmetadatum(\GestionProjetBundle\Entity\ThreadMetadata $threadmetadata) {
         $this->threadmetadata[] = $threadmetadata;
 
         return $this;
@@ -503,8 +476,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @param \GestionProjetBundle\Entity\ThreadMetadata $threadmetadata
      */
-    public function removeThreadmetadatum(\GestionProjetBundle\Entity\ThreadMetadata $threadmetadata)
-    {
+    public function removeThreadmetadatum(\GestionProjetBundle\Entity\ThreadMetadata $threadmetadata) {
         $this->threadmetadata->removeElement($threadmetadata);
     }
 
@@ -513,8 +485,114 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getThreadmetadata()
-    {
+    public function getThreadmetadata() {
         return $this->threadmetadata;
     }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Utilisateur
+     */
+    public function setPath($path) {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath() {
+        return $this->path;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return object
+     */
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * Get the file used for profile picture uploads
+     * 
+     * @return UploadedFile
+     */
+    public function getFile() {
+
+        return $this->file;
+    }
+
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/uploads/profils';
+    }
+
+    /**
+     * @ORM\PrePersist() 
+     * @ORM\PreUpdate() 
+     */
+    public function preUpload() {
+        if (null !== $this->getFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename . '.' . $this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * Generates a 32 char long random filename
+     * 
+     * @return string
+     */
+    public function generateRandomProfilePictureFilename() {
+        $count = 0;
+        do {
+            $generator = new SecureRandom();
+            $random = $generator->nextBytes(16);
+            $randomString = bin2hex($random);
+            $count++;
+        } while (file_exists($this->getUploadRootDir() . '/' . $randomString . '.' . $this->getFile()->guessExtension()) && $count < 50);
+
+        return $randomString;
+    }
+
+    /**
+     * @ORM\PostPersist() 
+     * @ORM\PostUpdate() 
+     */
+    public function upload() {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            //unlink($this->getUploadRootDir().'/'.$this->temp);
+            //ou je renomme
+            rename($this->getUploadRootDir() . '/' . $this->temp, $this->getUploadRootDir() . '/old' . $this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
 }

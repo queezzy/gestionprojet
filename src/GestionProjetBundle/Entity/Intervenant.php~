@@ -11,9 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Intervenant
- *
- * @ORM\Table(name="intervenant")
+ * 
  * @ORM\Entity
+ * @ORM\Table(name="intervenant", indexes={@ORM\Index(name="fk_Intervenant_Projet1_idx", columns={"idProjet"}), @ORM\Index(name="fk_Intervenant_Adresse1_idx", columns={"idAdresse"}), @ORM\Index(name="fk_Intervenant_Lot1_idx", columns={"idLot"})})
+ * 
  */
 class Intervenant
 {
@@ -87,7 +88,9 @@ class Intervenant
     private $url;
     
     /**
+     * @var \Adresse 
      * @ORM\OneToOne(targetEntity="Adresse",cascade={"persist"})
+     * @ORM\JoinColumn(name="idAdresse", referencedColumnName="idAdresse")
      */
     private $idadresse;
 
@@ -460,10 +463,10 @@ class Intervenant
     /**
      * Add utilisateur
      *
-     * @param GestionProjetBundle\Entity\Utilisateur $utilisateur 
+     * @param UserBundle\Entity\Utilisateur $utilisateur 
      * @return Intervenant
      */
-    public function addUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
+    public function addUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
         $this->utilisateurs[] = $utilisateur;
         return $this;
@@ -515,9 +518,9 @@ class Intervenant
     /**
      * Remove utilisateurs
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateurs
+     * @param \UserBundle\Entity\Utilisateur $utilisateurs
      */
-    public function removeUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateurs)
+    public function removeUtilisateur(\UserBundle\Entity\Utilisateur $utilisateurs)
     {
         $this->utilisateurs->removeElement($utilisateurs);
     }

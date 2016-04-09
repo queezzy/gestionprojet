@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use GestionProjetBundle\Entity\Utilisateur;
+use UserBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Intervenant;
 use GestionProjetBundle\Entity\Projet;
 use GestionProjetBundle\Entity\Lot;

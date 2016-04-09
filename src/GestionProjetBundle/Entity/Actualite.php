@@ -227,10 +227,10 @@ class Actualite
     /**
      * Set utilisateur
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
+     * @param \UserBundle\Entity\Utilisateur $utilisateur
      * @return Actualite
      */
-    public function setUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur = null)
+    public function setUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur = null)
     {
         $this->utilisateur = $utilisateur;
 
@@ -240,7 +240,7 @@ class Actualite
     /**
      * Get utilisateur
      *
-     * @return \GestionProjetBundle\Entity\Utilisateur 
+     * @return \UserBundle\Entity\Utilisateur 
      */
     public function getUtilisateur()
     {

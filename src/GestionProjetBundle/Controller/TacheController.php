@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use GestionProjetBundle\Entity\Utilisateur;
+use UserBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Tache;
 use GestionProjetBundle\Form\TacheType;
 

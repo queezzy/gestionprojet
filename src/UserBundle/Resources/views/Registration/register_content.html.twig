@@ -15,8 +15,10 @@
    }
    google.maps.event.addDomListener(window, 'load', initialize);
 </script>#}
-
-
+ <div class="row">
+        <!-- Block contenu  Start-->
+        
+        <div class="col-md-12 main-contain">
 <form role="form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
         
    <div class="box-body">
@@ -58,7 +60,7 @@
                   {{ form_widget(form.titre,{'attr':{'class':'form-control'}})}}
                 </div>
                 <div class="form-group">
-                  {{ form_label(form.idintervenant,"Nom d'utilisateur") }}
+                  {{ form_label(form.idintervenant,"Intervenant") }}
                   {{ form_errors(form.idintervenant)}}
                   {{ form_widget(form.idintervenant,{'attr':{'class':'form-control'}})}}
                    {# <label for="">Entreprise</label>
@@ -112,22 +114,26 @@
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="img-thumbnail img-responsive img-preview">
                     
                     <img alt="" src="" id="preview-image" width="100%"/>
                 </div>
                 <div class="form-group">
-                    <label for="">Photo de profil</label>
-                    <input type="file" id="" class="inputfile">
+                    {{ form_label(form.file, "Photo de profil")}}
+                    {{ form_widget(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
+                    <!--input type="file" id="" class="inputfile"-->
+                    
                     <p class="help-block">Sélectionner une photo de profil.</p>
                 </div>
             </div>
 
         </div>
     </div>
-    <div class="box-footer">
-      <button type="reset" class="btn btn-danger pull-left">Annuler</button>
+    <div class="box-footer pull-right">
+      <button type="reset" class="btn btn-danger pull-left">Reinitialiser</button>
       <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
     </div>
 </form>
+</div>
+</div>

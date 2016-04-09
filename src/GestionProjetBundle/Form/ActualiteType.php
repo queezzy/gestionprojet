@@ -20,7 +20,10 @@ class ActualiteType extends AbstractType
             ->add('contenu')
             ->add('description')
             ->add('statut')
-            ->add('idtheme')
+            ->add('idtheme','entity',array(
+                'class'=> 'GestionProjetBundle\Entity\Theme',
+                'property' => 'nom'
+            ))
         ;
     }
     

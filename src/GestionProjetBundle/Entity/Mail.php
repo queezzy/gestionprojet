@@ -209,10 +209,10 @@ class Mail
     /**
      * Add utilisateur
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
+     * @param \UserBundle\Entity\Utilisateur $utilisateur
      * @return Mail
      */
-    public function addUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
+    public function addUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
         $this->utilisateurs[] = $utilisateur;
 
@@ -222,9 +222,9 @@ class Mail
     /**
      * Remove utilisateur
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
+     * @param \UserBundle\Entity\Utilisateur $utilisateur
      */
-    public function removeUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
+    public function removeUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
         $this->utilisateurs->removeElement($utilisateur);
     }

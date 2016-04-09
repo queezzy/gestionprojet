@@ -1,6 +1,11 @@
-{% extends "::base.html.twig" %}
+{% extends "GestionProjetBundle::page.template.html.twig" %}
 
-{% block contenu %} 
+
+{% block contenupage %} 
+     <div class="row">
+        <!-- Block contenu  Start-->
+        
+        <div class="col-md-12 main-contain">
      <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
@@ -26,5 +31,8 @@
             {% block fos_user_content %}
             {% endblock fos_user_content %}
         </div>
+        </div>
+        </div>
+    
     
 {% endblock %}

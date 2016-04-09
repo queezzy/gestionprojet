@@ -21,6 +21,9 @@ class RegistrationType extends AbstractType
             ->add('titre')
             ->add('telephone')
             ->add('personnelcle')
+            ->add('file',null,array(
+                'attr' => array('class'=>'inputfile')
+            ))
             ->add('idintervenant','entity',array(
                 'class'=> 'GestionProjetBundle\Entity\Intervenant',
                 'property' => 'nom'

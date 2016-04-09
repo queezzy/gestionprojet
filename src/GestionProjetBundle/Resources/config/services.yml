@@ -2,3 +2,9 @@ services:
 #    gestion_projet.example:
 #        class: GestionProjetBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
+
+#     gestionprojetbundle.calendar_listener:
+#         class: GestionProjetBundle\EventListener\CalendarEventListener
+#         arguments: ["@doctrine.orm.entity_manager"]
+#         tags:
+#             - { name: kernel.event_listener, event: calendar.load_events, method: loadEvents}

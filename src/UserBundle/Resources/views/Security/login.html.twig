@@ -9,11 +9,12 @@
     {# Fichiers css en plus #}
     <link href="{{asset('css/icheck-blue.css')}}" rel="stylesheet" type="text/css" />
 {% endblock %}
-
+{% block menu %}
+{% endblock %}    
 {% block contenu %}
-    
-    <div class="login-page">
-    <div class="login-box col-md-offset-3 col-md-4">
+ <body class="hold-transition login-page">
+    <div class="login-page space">
+    <div class="login-box ">
       <!-- Platform Name start -->
       <div class="login-logo">
         <a href="#"><b>Gestion Projet</b></a>
@@ -38,7 +39,7 @@
           </div>
           <div class="row">
             <div class="col-xs-8">    
-              <div class="checkbox icheck">
+              <div class="checkbox">
                 <label>
                   <input type="checkbox" id="remember_me" name="_remember_me" value="on">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
                 </label>
@@ -60,6 +61,7 @@
     </div><!-- /.login-box -->
 
   </div>
+</body>
 {% endblock %}
 
 
