@@ -1,0 +1,41 @@
+{# Template liste des 10 dernières actualités pour l'accueil #}
+
+
+<div class="row">
+<!-- Document start-->
+<div class="box-primary">
+<div class="box-header">
+  <h3 class="box-title">Liste des actualités</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <ul class="products-list product-list-in-box">
+    {% for actualite in actualites %}
+        <li class="item">
+          <div class="product-img">
+            <img src="images/default-50x50.gif" alt="logo"/>
+          </div>
+          <div class="product-info">
+            <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+            <span class="product-description">
+              Samsung 32" 1080p 60Hz LED Smart HDTV.
+            </span>
+          </div>
+        </li>
+    {% else %}
+        <li class="item">
+          <div class="product-img">
+            <img src="images/default-50x50.gif" alt="logo"/>
+          </div>
+          <div class="product-info">
+            <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+            <span class="product-description">
+              Samsung 32" 1080p 60Hz LED Smart HDTV.
+            </span>
+          </div>
+        </li>
+    {% endfor %} 
+  </ul>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 
