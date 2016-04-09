@@ -67,9 +67,9 @@ class Actualite
     private $idtheme;
 
     /**
-     * @var \Utilisateur
+     * @var \UserBundle\Entity\Utilisateur
      *
-     * @ORM\ManyToOne(targetEntity="Utilisateur",inversedBy="actualites")
+     * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\Utilisateur",inversedBy="actualites")
      
      */
     private $utilisateur;

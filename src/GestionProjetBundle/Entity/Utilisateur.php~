@@ -20,7 +20,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="idUtilisateur", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -382,5 +382,137 @@ class Utilisateur extends BaseUser implements ParticipantInterface
         $this->mails[] = $mails;
 
         return $this;
+    }
+
+    /**
+     * Add actualites
+     *
+     * @param \GestionProjetBundle\Entity\Actualite $actualites
+     * @return Utilisateur
+     */
+    public function addActualite(\GestionProjetBundle\Entity\Actualite $actualites)
+    {
+        $this->actualites[] = $actualites;
+
+        return $this;
+    }
+
+    /**
+     * Remove actualites
+     *
+     * @param \GestionProjetBundle\Entity\Actualite $actualites
+     */
+    public function removeActualite(\GestionProjetBundle\Entity\Actualite $actualites)
+    {
+        $this->actualites->removeElement($actualites);
+    }
+
+    /**
+     * Get actualites
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActualites()
+    {
+        return $this->actualites;
+    }
+
+    /**
+     * Add message
+     *
+     * @param \GestionProjetBundle\Entity\Message $message
+     * @return Utilisateur
+     */
+    public function addMessage(\GestionProjetBundle\Entity\Message $message)
+    {
+        $this->message[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Remove message
+     *
+     * @param \GestionProjetBundle\Entity\Message $message
+     */
+    public function removeMessage(\GestionProjetBundle\Entity\Message $message)
+    {
+        $this->message->removeElement($message);
+    }
+
+    /**
+     * Get message
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * Add messagemetadata
+     *
+     * @param \GestionProjetBundle\Entity\MessageMetadata $messagemetadata
+     * @return Utilisateur
+     */
+    public function addMessagemetadatum(\GestionProjetBundle\Entity\MessageMetadata $messagemetadata)
+    {
+        $this->messagemetadata[] = $messagemetadata;
+
+        return $this;
+    }
+
+    /**
+     * Remove messagemetadata
+     *
+     * @param \GestionProjetBundle\Entity\MessageMetadata $messagemetadata
+     */
+    public function removeMessagemetadatum(\GestionProjetBundle\Entity\MessageMetadata $messagemetadata)
+    {
+        $this->messagemetadata->removeElement($messagemetadata);
+    }
+
+    /**
+     * Get messagemetadata
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessagemetadata()
+    {
+        return $this->messagemetadata;
+    }
+
+    /**
+     * Add threadmetadata
+     *
+     * @param \GestionProjetBundle\Entity\ThreadMetadata $threadmetadata
+     * @return Utilisateur
+     */
+    public function addThreadmetadatum(\GestionProjetBundle\Entity\ThreadMetadata $threadmetadata)
+    {
+        $this->threadmetadata[] = $threadmetadata;
+
+        return $this;
+    }
+
+    /**
+     * Remove threadmetadata
+     *
+     * @param \GestionProjetBundle\Entity\ThreadMetadata $threadmetadata
+     */
+    public function removeThreadmetadatum(\GestionProjetBundle\Entity\ThreadMetadata $threadmetadata)
+    {
+        $this->threadmetadata->removeElement($threadmetadata);
+    }
+
+    /**
+     * Get threadmetadata
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getThreadmetadata()
+    {
+        return $this->threadmetadata;
     }
 }

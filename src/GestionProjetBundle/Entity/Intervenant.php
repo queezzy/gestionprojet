@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Intervenant
  *
- * @ORM\Table(name="intervenant", indexes={@ORM\Index(name="fk_Intervenant_Projet1_idx", columns={"idProjet"}), @ORM\Index(name="fk_Intervenant_Adresse1_idx", columns={"idAdresse"}), @ORM\Index(name="fk_Intervenant_Lot1_idx", columns={"idLot"})})
+ * @ORM\Table(name="intervenant")
  * @ORM\Entity
  */
 class Intervenant
@@ -87,10 +87,7 @@ class Intervenant
     private $url;
     
     /**
-     * @var \Adresse
-     *
      * @ORM\OneToOne(targetEntity="Adresse",cascade={"persist"})
-     
      */
     private $idadresse;
 
@@ -135,7 +132,7 @@ class Intervenant
     private $ressources;
     
     /**
-     * @<ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
      */
     private $idcalendrier ;
 
@@ -613,5 +610,28 @@ class Intervenant
     public function removeRessource(\GestionProjetBundle\Entity\Ressource $ressources)
     {
         $this->ressources->removeElement($ressources);
+    }
+
+    /**
+     * Set idcalendrier
+     *
+     * @param \GestionProjetBundle\Entity\Calendrier $idcalendrier
+     * @return Intervenant
+     */
+    public function setIdcalendrier(\GestionProjetBundle\Entity\Calendrier $idcalendrier = null)
+    {
+        $this->idcalendrier = $idcalendrier;
+
+        return $this;
+    }
+
+    /**
+     * Get idcalendrier
+     *
+     * @return \GestionProjetBundle\Entity\Calendrier 
+     */
+    public function getIdcalendrier()
+    {
+        return $this->idcalendrier;
     }
 }

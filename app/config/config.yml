@@ -70,12 +70,12 @@ fos_user:
     db_driver:  orm
     firewall_name:  main
     user_class: UserBundle\Entity\Utilisateur
-    #registration:
-    #    form:
-    #        type: GestionProjetBundle\Form\RegistrationType
-    #profile:
-    #    form:
-    #        type: GestionProjetBundle\Form\ProfileType
+    registration:
+        form:
+            type: UserBundle\Form\RegistrationType
+    profile:
+        form:
+            type: UserBundle\Form\ProfileType
 
 fos_message:
     db_driver: orm

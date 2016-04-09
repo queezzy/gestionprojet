@@ -39,7 +39,7 @@ class Message extends BaseMessage
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GestionProjetBundle\Entity\Utilisateur",inversedBy="message")
+     * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\Utilisateur",inversedBy="message")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $sender;

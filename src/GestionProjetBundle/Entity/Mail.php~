@@ -60,7 +60,7 @@ class Mail
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Utilisateur", inversedBy="mails")
+     * @ORM\ManyToMany(targetEntity="\UserBundle\Entity\Utilisateur", inversedBy="mails")
      * @ORM\JoinTable(name="mail_utilisateur",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idMail", referencedColumnName="idMail")

@@ -1,4 +1,4 @@
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
+{#<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
 <script type="text/javascript">
    function initialize() {
        
@@ -14,203 +14,120 @@
       
    }
    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+</script>#}
 
 
-<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+<form role="form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
         
-    
-        <fieldset>
-        <legend>Creation de compte</legend>
+   <div class="box-body">
         <div class="row">
-            <div class="form-group col-sm-3">
-                  {{ form_label(form.username,"Nom d'utilisateur") }}
-                   {{ form_errors(form.username)}}
-                  {{ form_widget(form.username,{'attr':{'class':'form-control'}})}}
-                {#<label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email">#}
-              </div>
-              
-              <div class="form-group col-sm-3">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="">Civilité</label>
+                    <select class="form-control">
+                        <option>M.</option>
+                        <option>Mme</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    {#<label for="">Nom</label>
+                    
+                    <input type="text" class="form-control" id="" placeholder="Nom">#}
+                    
+                  {{ form_label(form.nom,"Nom") }}
+                  {{ form_errors(form.nom)}}
+                  {{ form_widget(form.nom,{'attr':{'class':'form-control'}})}}
+                </div>
+                <div class="form-group">
+                    {#<label for="">Prénom</label>
+                    <input type="text" class="form-control" id="" placeholder="Prénom">#}
+                  {{ form_label(form.prenom,"Prénom") }}
+                  {{ form_errors(form.prenom)}}
+                  {{ form_widget(form.prenom,{'attr':{'class':'form-control'}})}}
+                </div>
+                <div class="form-group">
+                    {#<label for="">Fonction</label>
+                    <input type="text" class="form-control" id="" placeholder="Fonction">#}
+                  {{ form_label(form.fonction,"Fonction") }}
+                  {{ form_errors(form.fonction)}}
+                  {{ form_widget(form.fonction,{'attr':{'class':'form-control'}})}}
+                </div>
+                <div class="form-group">
+                  {{ form_label(form.titre,"Titre") }}
+                  {{ form_errors(form.titre)}}
+                  {{ form_widget(form.titre,{'attr':{'class':'form-control'}})}}
+                </div>
+                <div class="form-group">
+                  {{ form_label(form.idintervenant,"Nom d'utilisateur") }}
+                  {{ form_errors(form.idintervenant)}}
+                  {{ form_widget(form.idintervenant,{'attr':{'class':'form-control'}})}}
+                   {# <label for="">Entreprise</label>
+                    <select class="form-control">
+                        {% for intervenant in liste_intervenants %}
+                            <option>Nom de l'intervenant</option>
+                        {% else %}
+                            <option>Defaut</option>
+                        {% endfor %}   
+                    </select>#}
+                </div>
+                <div class="form-group">
                   {{ form_label(form.email,"Email") }}
-                   {{ form_errors(form.email)}}
+                  {{ form_errors(form.email)}}
                   {{ form_widget(form.email,{'attr':{'class':'form-control'}})}}
-                {#<label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email">#}
-              </div>
-              
-               <div class="form-group col-sm-3" >
-                {{ form_label(form.plainPassword.first,"Mot de passe") }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.telephone,"Telephone") }}
+                  {{ form_errors(form.telephone)}}
+                  {{ form_widget(form.telephone,{'attr':{'class':'form-control'}})}}
+                </div>
+                
+                <div class="form-group">
+                    
+                 {{ form_label(form.personnelcle,"Personnel Cle") }}
+                 {{ form_errors(form.personnelcle)}}
+                 {{ form_widget(form.personnelcle,{'attr':{'class':'form-control'}})}}
+                </div>
+                <div class="form-group">
+                   
+                   {{ form_label(form.username,"Nom d'utilisateur") }}
+                  {{ form_errors(form.username)}}
+                  {{ form_widget(form.username,{'attr':{'class':'form-control'}})}}
+                </div>
+                <div class="form-group">
+                    
+                  {{ form_label(form.plainPassword.first,"Mot de passe") }}
                  {{ form_errors(form.plainPassword.first)}}
                   {{ form_widget(form.plainPassword.first,{'attr':{'class':'form-control'}})}}
-                {#<label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email">#}
-              </div>      
-              <div class="form-group col-sm-3" >
-                {{ form_label(form.plainPassword.second,"Confirmation du mot de passe" )}}
+                </div>
+                <div class="form-group">
+                   
+                  {{ form_label(form.plainPassword.second,"Confirmation mot de passe") }}
                  {{ form_errors(form.plainPassword.second)}}
-                  {{ form_widget(form.plainPassword.second,{'attr':{'class':'form-control' }} ) }}
-                {#<label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email">#}
-              </div>      
-              
-        </div>
-        
-        <div class="row">
-              <div class="form-group col-sm-3">
-                {{ form_label(form.nom,"Nom : ") }}
-                {{ form_errors(form.nom)}}
-                {{ form_widget(form.nom,{'attr':{'class':'form-control'}})}}
-               {# <label for="nom">Nom:</label>
-                <input type="text" class="form-control" id="nom" name="nom">#}
-              </div>
-              <div class="form-group col-sm-3">
-                {{ form_label(form.prenom,"Prenom : ") }}
-                {{ form_errors(form.prenom)}}
-                {{ form_widget(form.prenom,{'attr':{'class':'form-control'}})}}
-               {# <label for="prenom">Prenom:</label>
-                <input type="text" class="form-control" id="prenom" name="prenom">#}
-              </div>
-             <div class="form-group col-sm-3">
-               {{ form_label(form.birthdate,"Date de naissance") }}
-                {{ form_errors(form.birthdate)}}
-                {{ form_widget(form.birthdate,{'attr':{'class':'form-control'}})}}
-              </div>
-              <div class="form-group col-sm-3">
-               {{ form_label(form.role,"Qu'est ce qui decrit au mieux votre role : ") }}
-                {{ form_errors(form.role)}}
-                {{ form_widget(form.role,{'attr':{'class':'form-control'}})}}
-              </div>
-             {# <div class="form-group col-sm-2">
-                <label for="number">Numero CISSP:</label>
-                <input type="text" class="form-control" id="number" name="number">
-              </div>#}
-        </div>
-        <div class="row">
-              <div class="form-group col-sm-3">
-                 {{ form_label(form.job,"Profession : ") }}
-                {{ form_errors(form.job)}}
-                {{ form_widget(form.job,{'attr':{'class':'form-control'}})}}
-                {#<label for="profession">Profession:</label>
-                <input type="text" class="form-control" id="profession" name="profession">#}
-              </div>
-              <div class="form-group col-sm-3">
-                {{ form_label(form.institution,"Compagnie/Employeur : ") }}
-                {{ form_errors(form.institution)}}
-                {{ form_widget(form.institution,{'attr':{'class':'form-control'}})}}
-                {#<label for="companie">Companie/Employeur:</label>
-                <input type="text" class="form-control" id="companie" name="companie">#}
-              </div>
-              <div class="form-group col-sm-2">
-                {{ form_label(form.telephone,"Téléphone : ") }}
-                {{ form_errors(form.telephone)}}
-                {{ form_widget(form.telephone,{'attr':{'class':'form-control'}})}}
-                  
-                {#<label for="telephone">Télephone:</label>
-                <input type="text" class="form-control" id="telephone" name="telephone">#}
-              </div>
-              <div class="form-group col-sm-2">
-                {{ form_label(form.fax,"Fax : ") }}
-                {{ form_errors(form.fax)}}
-                {{ form_widget(form.fax,{'attr':{'class':'form-control'}})}}
-                {#<label for="fax">Fax:</label>
-                <input type="text" class="form-control" id="fax" name="fax">#}
-              </div>
-        </div>
-        <div class="row">
-            
-            <h4>Adresse 1:</h4>
-             <div class="form-group col-sm-12">
-                {{ form_label(form.adresse1,"Adresse 1 : ") }}
-                {{ form_errors(form.adresse1)}}
-                {{ form_widget(form.adresse1,{'attr':{'class':'form-control','autocomplete':'on','placeholder':'Ville,Pays'}})}}
+                  {{ form_widget(form.plainPassword.second,{'attr':{'class':'form-control'}})}}
+                </div>
                 
-               {# <label for="adresse1">Adresse N°1:</label>
-                <input type="email" class="form-control" id="adresse1" name="adresse1">#}
-              </div>
-              
-              {#<div class="form-group col-sm-4">
-               {{ form_label(form.adresse2.ville,"Ville : ") }}
-                {{ form_errors(form.adresse2.ville)}}
-                {{ form_widget(form.adresse2.ville,{'attr':{'class':'form-control'}})}}
-                <label for="adresse1">Adresse N°1:</label>
-                <input type="email" class="form-control" id="adresse1" name="adresse1">
-              </div>
-              <div class="form-group col-sm-4">
-                {{ form_label(form.adresse2.codepostal,"Code Postal : ") }}
-                {{ form_errors(form.adresse2.codepostal)}}
-                {{ form_widget(form.adresse2.codepostal,{'attr':{'class':'form-control'}})}}
-                <label for="adresse1">Adresse N°1:</label>
-                <input type="email" class="form-control" id="adresse1" name="adresse1">
-              </div>#}
-              
-        </div>
-        
-        <div class="row">
-            
-            <h4>Adresse 2:</h4>
-              <div class="form-group col-sm-12">
-                {{ form_label(form.adresse2,"Adresse 2 : ") }}
-                {{ form_errors(form.adresse2)}}
-                {{ form_widget(form.adresse2,{'attr':{'class':'form-control','autocomplete':'on','placeholder':'Ville,Pays'}})}}
-               {# <label for="adresse1">Adresse N°1:</label>
-                <input type="email" class="form-control" id="adresse1" name="adresse1">#}
-              </div>
-              
-              {#<div class="form-group col-sm-4">
-               {{ form_label(form.adresse2.ville,"Ville : ") }}
-                {{ form_errors(form.adresse2.ville)}}
-                {{ form_widget(form.adresse2.ville,{'attr':{'class':'form-control'}})}}
-                <label for="adresse1">Adresse N°1:</label>
-                <input type="email" class="form-control" id="adresse1" name="adresse1">
-              </div>
-              <div class="form-group col-sm-4">
-                {{ form_label(form.adresse2.codepostal,"Code Postal : ") }}
-                {{ form_errors(form.adresse2.codepostal)}}
-                {{ form_widget(form.adresse2.codepostal,{'attr':{'class':'form-control'}})}}
-                <label for="adresse1">Adresse N°1:</label>
-                <input type="email" class="form-control" id="adresse1" name="adresse1">
-              </div>#}
-              
-        </div>
-        <div class="row">
-              <div class="form-group col-sm-3">
-                {{ form_label(form.denomination  ,"Votre Statut : ") }}
-                {{ form_errors(form.denomination)}}
-                {{ form_widget(form.denomination,{'attr':{'class':'form-control'}})}}
-                {#<label for="ville">Ville:</label>
-                <input type="text" class="form-control" id="ville" name="ville">#}
-              </div>
-              <div class="form-group col-sm-3">
-                {{ form_label(form.description  ,"Comment avez vous entendu parler de kratos : ") }}
-                {{ form_errors(form.description)}}
-                {{ form_widget(form.description,{'attr':{'class':'form-control'}})}}
-                {#<label for="region">Région:</label>
-                <select name="region" id="region">
-                    <option value="">1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>#}
-              </div>
-              <div class="form-group col-sm-2">
-                {{ form_label(form.situation  ,"Statut Matrimonial : ") }}
-                {{ form_errors(form.situation)}}
-                {{ form_widget(form.situation,{'attr':{'class':'form-control'}})}}
-                {#<label for="code">Code postal:</label>
-                <input type="text" class="form-control" id="code" name="code">#}
-              </div>
-               <div class="form-group col-sm-2">
-                {{form_rest(form)}}
-              </div>
-              
-        </div>
-       
-        </fieldset>
-        <div class="center" style="padding-top: 10px;">
-      <button type="submit" class="btn btn-success">Creer</button>
-      <button type="reset" class="btn">Reinitialiser</button>
+                <div class="form-group">
+                    {{form_rest(form)}}
+                </div>
 
+            </div>
+
+            <div class="col-md-4">
+                <div class="img-thumbnail img-responsive img-preview">
+                    
+                    <img alt="" src="" id="preview-image" width="100%"/>
+                </div>
+                <div class="form-group">
+                    <label for="">Photo de profil</label>
+                    <input type="file" id="" class="inputfile">
+                    <p class="help-block">Sélectionner une photo de profil.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="box-footer">
+      <button type="reset" class="btn btn-danger pull-left">Annuler</button>
+      <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
     </div>
 </form>
