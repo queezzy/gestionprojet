@@ -1,0 +1,42 @@
+{# Template liste des évènements #}
+
+
+<div class="row">
+<!-- Document start-->
+<div class="box">
+<div class="box-header">
+  <h3 class="box-title">Liste des évènements</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table class="data-table table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Titre évènement</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    {% for evenement in liste_evenement %}
+      <tr>
+        <td>Trident</td>
+        <td>Internet</td>
+        <td>Win 95+</td>
+        <td> 4</td>
+      </tr>
+    {% else %}
+      <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td> -</td>
+      </tr>
+    {% endfor %}      
+    </tbody>
+  </table>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 

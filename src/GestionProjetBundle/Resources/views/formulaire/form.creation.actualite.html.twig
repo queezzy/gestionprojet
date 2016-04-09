@@ -1,0 +1,35 @@
+{# Formulaire de création d'une actualité #}
+<form role="form">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Thème</label>
+                    <select class="form-control">
+                        {% for theme in liste_theme %}
+                            <option>Nom thème</option>
+                        {% else %}
+                            <option>Défaut</option>
+                        {% endfor %}   
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Titre</label>
+                    <input type="text" class="form-control" id="" placeholder="Titre">
+                </div>
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <input type="text" class="form-control" id="" placeholder="Description">
+                </div>
+                <div class="form-group">
+                    <label for="">Contenu</label>
+                    <input type="text" class="form-control" id="" placeholder="Contenu">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+      <button type="reset" class="btn btn-danger pull-left">Annuler</button>
+      <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+    </div>
+</form>
