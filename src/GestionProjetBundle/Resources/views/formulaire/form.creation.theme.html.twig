@@ -1,0 +1,31 @@
+{# Formulaire de création d'un thème #}
+<form role="form">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Projet</label>
+                    <select class="form-control">
+                        {% for projet in liste_projet %}
+                            <option>Nom projet</option>
+                        {% else %}
+                            <option>Défaut</option>
+                        {% endfor %}   
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Nom du thème</label>
+                    <input type="text" class="form-control" id="" placeholder="Nom thème">
+                </div>
+                <div class="form-group">
+                    <label for="">Description du thème</label>
+                    <input type="text" class="form-control" id="" placeholder="Description thème">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+      <button type="reset" class="btn btn-danger pull-left">Annuler</button>
+      <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+    </div>
+</form>

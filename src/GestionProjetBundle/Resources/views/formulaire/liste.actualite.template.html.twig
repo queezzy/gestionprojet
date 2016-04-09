@@ -1,0 +1,42 @@
+{# Template liste des actualités #}
+
+
+<div class="row">
+<!-- Document start-->
+<div class="box">
+<div class="box-header">
+  <h3 class="box-title">Liste des actualités</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table class="data-table table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Thème</th>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Contenu</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    {% for actualite in actualite %}
+      <tr>
+        <td>Trident</td>
+        <td>Internet</td>
+        <td>Win 95+</td>
+        <td> 4</td>
+      </tr>
+    {% else %}
+      <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td> -</td>
+      </tr>
+    {% endfor %}      
+    </tbody>
+  </table>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 
