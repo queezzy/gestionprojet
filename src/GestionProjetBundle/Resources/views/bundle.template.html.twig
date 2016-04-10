@@ -23,7 +23,7 @@
               </li>
               <li>
                 <a href="#">
-                  <i class="fa fa-files-o"></i>
+                  <i class="fa fa-pie-chart"></i>
                   <span>Evolution</span>
                 </a>
               </li>
@@ -71,8 +71,13 @@
           <!--div class="pull-left image">
             <img src="" class="img-circle" alt="User Image" />
           </div-->
-          <div class="info">
-            <p>Administrateur</p>
+          <div class="info dropdown">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="center-block center"><bold>{% block contenu %}Admin{% endblock %}</bold></li>
+                    <li><a href="#"><i class="fa fa-eye"></i>Voir profil</a></li>
+                    <li><a href="#"><i class="fa fa-lock"></i>Se déconnecter</a></li>
+                </ul>
           </div>
         </div>
         <!-- Sidebar user panel End-->
