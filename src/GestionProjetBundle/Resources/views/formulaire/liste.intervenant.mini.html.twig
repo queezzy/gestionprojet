@@ -1,0 +1,29 @@
+{# Template liste des 10 dernier intervenants pour l'accueil #}
+
+
+<div class="row">
+<!-- Document start-->
+<div class="box box-primary">
+<div class="box-header">
+  <h3 class="box-title">Liste des intervenant</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <ul class="users-list clearfix">
+    {% for actualite in actualites %}
+        <li>
+            <img src="images/default-50x50.gif" alt="logo"/>
+            <a class="users-list-name" href="#">Alexander Pierce</a>
+            <span class="users-list-date">Today</span>
+        </li>
+    {% else %}
+        <li>
+            <img src="images/default-50x50.gif" alt="logo"/>
+            <a class="users-list-name" href="#">Alexander Pierce</a>
+            <span class="users-list-date">Today</span>
+        </li>
+    {% endfor %} 
+  </ul>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 
