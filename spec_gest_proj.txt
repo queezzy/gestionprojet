@@ -1,0 +1,27 @@
+affichage d'une actualite,
+affichage d'un thème
+ajouter une actualite
+pouvoir cliquer sur une actualite
+modifier une actualite
+invalider une actualite
+
+
+affichage d'un thème,
+affichage d'un thème
+ajouter un thème
+pouvoir cliquer sur une thème
+modifier une thème
+invalider une thème
+affichages des actualites d'un thème
+
+Afficher une ressource
+modifier une ressource
+ajouter une ressource
+
+formulaire d'envoi de mail
+
+formulaire ajout d'un evenement (calendrier)
+formulaire modification d'un evenement (calendrier)
+
+
+NB: Avec les js qui vont avec. Mon job doit juste celui de vous fournir les routes qui appeleront mes contrôleurs

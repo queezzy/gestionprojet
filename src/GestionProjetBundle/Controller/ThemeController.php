@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GestionProjetBundle\Form\ThemeType;
 use GestionProjetBundle\Entity\Theme;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class ThemeController extends Controller
 {

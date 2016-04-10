@@ -3,7 +3,7 @@
 
 <div class="row">
 <!-- Document start-->
-<div class="box">
+<div class="box box-primary">
 <div class="box-header">
   <h3 class="box-title">Liste des actualités</h3>
 </div><!-- /.box-header -->
@@ -15,16 +15,19 @@
         <th>Titre</th>
         <th>Description</th>
         <th>Contenu</th>
+        
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       
-    {% for actualite in actualite %}
+    {% for actualite in actualites %}
       <tr>
-        <td>Trident</td>
-        <td>Internet</td>
-        <td>Win 95+</td>
-        <td> 4</td>
+        <td>{{actualite.idtheme.nom}}</td>
+        <td>{{actualite.titre}}</td>
+        <td>{{ actualite.description }}</td>
+        <td>{{actualite.contenu}}</td>
+        
       </tr>
     {% else %}
       <tr>

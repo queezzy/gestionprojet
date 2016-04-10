@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Theme
  *
  * @ORM\Table(name="theme", indexes={@ORM\Index(name="fk_Theme_Projet1_idx", columns={"idProjet"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\ThemeRepository")
  */
 class Theme
 {

@@ -87,10 +87,7 @@ class ActualiteController extends Controller {
     
             }
     
-     /**
-     * @Route("/actualites", name="gestion_projet_actualite_all")
-      *@Method({"GET"})
-     */
+    
     public function getAllActualitesAction(){
         
             $em = $this->getDoctrine()->getManager();
@@ -98,10 +95,23 @@ class ActualiteController extends Controller {
             $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
             
             try {
-                $actualites = $actu_repo->findByStatut(0);
+                $actualites = $actu_repo->findByStatut(1);
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             }
+
+
+
+            return $this->render('GestionProjetBundle:formulaire:liste.actualite.template.html.twig',array("actualites"=>$actualites));
+    }
+    
+     /**
+     * @Route("/actualites", name="gestion_projet_actualite_all")
+      *@Method({"GET"})
+     */
+    public function getActualitesAction(){
+        
+            
 
 
 
