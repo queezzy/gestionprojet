@@ -45,7 +45,7 @@ class IntervenantController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
         $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
-        return $this->render('GestionProjetBundle:intervenants:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView()));
+        return $this->render('GestionProjetBundle:Intervenants:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView()));
     }
 
     /**
@@ -144,7 +144,7 @@ class IntervenantController extends Controller {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        return $this->render('GestionProjetBundle:Intervenants:view.html.twig', array('intervenant' => $intervenant));
+        return $this->render('GestionProjetBundle:Intervenants:form.intervenant.html.twig', array('intervenant' => $intervenant));
     }
     
     /**

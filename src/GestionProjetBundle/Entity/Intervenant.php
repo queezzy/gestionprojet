@@ -75,16 +75,17 @@ class Intervenant
      */
     private $statut;
 
-    /**
-    * @var \Symfony\Component\HttpFoundation\File\UploadedFile
-    * @Assert\File(maxSize="2M")
-    */
-    public $file;
-    
-    /**
-     * @ORM\Column(name="url", type="string", length=255)
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true) 
      */
-    private $url;
+    private $path;
+
+    /**
+     * @Assert\File(maxSize="6000000") 
+     */
+    private $file;
+    
+    private $temp;
     
     /**
      * @var \Adresse
@@ -129,13 +130,6 @@ class Intervenant
     */
     private $ressources;
     
-    /**
-     * @var \Calendrier
-     *
-     * @ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
-     */
-    private $idcalendrier;
-
     /**
      * Constructor
      */
@@ -498,51 +492,7 @@ class Intervenant
         return $this;
     }
     
-    function getFile() {
-        return $this->file;
-    }
-
-    function getUrl() {
-        return $this->url;
-    }
-
-    function setFile(\Symfony\Component\HttpFoundation\File\UploadedFile $file) {
-        $this->file = $file;
-    }
-
-    function setUrl($url) {
-        $this->url = $url;
-    }
-
-
-    public function upload(){
-        // la propriété « file » peut être vide si le champ n'est pas requis
-        if (null === $this->file) {
-            return;
-        }
-        $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
-        // définit la propriété « path » comme étant le nom de fichier où vous
-        // avez stocké le fichier
-        $this->url = $this->file->getClientOriginalName();
-        // « nettoie » la propriété « file » comme vous n'en aurez plus besoin
-        $this->file = null;
-    }
-    public function getAbsoluteUrl(){
-        return null === $this->url ? null : $this->getUploadRootDir().'/'.$this->url;
-    }
-    public function getWebUrl(){
-        return null === $this->url ? null : $this->getUploadDir().'/'.$this->url;
-    }
-    protected function getUploadRootDir(){
-        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-    protected function getUploadDir(){
-        // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
-        // le document/image dans la vue.
-        return 'uploads/imagesintervenants';
-    }
-
+    
     /**
      * Add ressources
      *
@@ -565,27 +515,113 @@ class Intervenant
     {
         $this->ressources->removeElement($ressources);
     }
-
+    
     /**
-     * Set idcalendrier
+     * Set path
      *
-     * @param \GestionProjetBundle\Entity\Calendrier $idcalendrier
+     * @param string $path
      * @return Intervenant
      */
-    public function setIdcalendrier(\GestionProjetBundle\Entity\Calendrier $idcalendrier = null)
+    public function setPath($path)
     {
-        $this->idcalendrier = $idcalendrier;
+        $this->path = $path;
 
         return $this;
     }
 
     /**
-     * Get idcalendrier
+     * Get path
      *
-     * @return \GestionProjetBundle\Entity\Calendrier 
+     * @return string 
      */
-    public function getIdcalendrier()
+    public function getPath()
     {
-        return $this->idcalendrier;
+        return $this->path;
+    }
+    
+    /**
+     * @param UploadedFile $file
+     * @return object
+     */
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * Get the file used for profile picture uploads
+     * 
+     * @return UploadedFile
+     */
+    public function getFile() {
+
+        return $this->file;
+    }
+
+     protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/uploads/intervenants';
+    }
+
+
+    /**
+     * @ORM\PrePersist() 
+     * @ORM\PreUpdate() 
+     */
+    public function preUpload() {
+        if (null !== $this->getFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename . '.' . $this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * Generates a 32 char long random filename
+     * 
+     * @return string
+     */
+    public function generateRandomProfilePictureFilename() {
+        $count = 0;
+        do {
+            $generator = new SecureRandom();
+            $random = $generator->nextBytes(16);
+            $randomString = bin2hex($random);
+            $count++;
+        } while (file_exists($this->getUploadRootDir() . '/' . $randomString . '.' . $this->getFile()->guessExtension()) && $count < 50);
+
+        return $randomString;
+    }
+
+    /**
+     * @ORM\PostPersist() 
+     * @ORM\PostUpdate() 
+     */
+    public function upload() {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            //unlink($this->getUploadRootDir().'/'.$this->temp);
+            //ou je renomme
+            rename($this->getUploadRootDir() . '/' . $this->temp, $this->getUploadRootDir() . '/old' . $this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
     }
 }

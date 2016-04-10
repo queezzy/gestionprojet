@@ -42,7 +42,7 @@ gp_projet_delete:
 
 gp_intervenant:
     pattern: /intervenants
-    defaults: { _controller: GestionProjetBundle:Intervenants:intervenants }
+    defaults: { _controller: GestionProjetBundle:Intervenant:intervenants }
     options:
         expose: true
         
@@ -66,29 +66,28 @@ gp_intervenant_delete:
         
 gp_tache:
     pattern: /taches
-    defaults: { _controller: GestionProjetBundle:Taches:taches }
+    defaults: { _controller: GestionProjetBundle:Tache:taches }
     options:
         expose: true
         
 gp_tache_add:
     pattern: /add-tache
-    defaults: { _controller: GestionProjetBundle:Taches:addtache }
+    defaults: { _controller: GestionProjetBundle:Tache:addtache }
     options:
         expose: true
 
 gp_tache_update:
     pattern: /update-tache
-    defaults: { _controller: GestionProjetBundle:Taches:updatetache }
+    defaults: { _controller: GestionProjetBundle:Tache:updatetache }
     options:
         expose: true
         
 gp_tache_delete:
-    pattern: /delete-tache
-    defaults: { _controller: GestionProjetBundle:Taches:deletetache }
+    pattern: /delete-tache/{id}
+    defaults: { _controller: GestionProjetBundle:Tache:deletetache }
     options:
         expose: true
-        
-        
+    
 gp_lot:
     pattern: /lots
     defaults: { _controller: GestionProjetBundle:Lots:lots }
@@ -108,7 +107,7 @@ gp_lot_update:
         expose: true
         
 gp_lot_delete:
-    pattern: /delete-lot
+    pattern: /delete-lot/{id}
     defaults: { _controller: GestionProjetBundle:Lots:deletelot }
     options:
         expose: true

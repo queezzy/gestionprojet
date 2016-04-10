@@ -1,41 +1,41 @@
 
-$('#nouvelintervenant').click(function () {
+$('#nouvellot').click(function () {
     $('#myAlert').remove();
-    $('#block_table_intervenants').hide();
-    $('#block_form_intervenant').show();
+    $('#block_table_lots').hide();
+    $('#block_form_lot').show();
 });
 $('#close_form').click(function (e) {
     e.preventDefault();
-    window.location.replace(Routing.generate('gp_intervenant'));
+    window.location.replace(Routing.generate('gp_lot'));
 });
-/*('#form_intervenant').submit(function (e) {
+/*('#form_lot').submit(function (e) {
     e.preventDefault();
     $('#myAlert').remove();
     var donnees = $(this).serialize();
-    if ($('#intervenant_id').val() === "") {
+    if ($('#lot_id').val() === "") {
         $.ajax({
             type: 'post',
-            url: Routing.generate('gp_intervenant_add'),
+            url: Routing.generate('gp_lot_add'),
             data: donnees
         });
     } 
 });*/
 
-function edit_intervenant(id_intervenant, gp_route) {
+function edit_lot(id_lot, gp_route) {
     $('#myAlert').remove();
     //la route pour faire le get by id
-    var url = Routing.generate('gp_intervenant_get', {id: id_intervenant});
-    $('#action-edit'+id_intervenant).hide();
-    $('#action-delete'+id_intervenant).hide();
-    $('#loader-edit-delete'+id_intervenant).show();
-    $('#block_form_intervenant').load(url, function () {
-        $('#action-edit'+id_intervenant).show();
-        $('#action-delete'+id_intervenant).show();
-        $('#loader-edit-delete'+id_intervenant).hide();
-        $('#block_table_intervenants').hide();
-        $('#block_form_intervenant').show();
-        /*$('#form_intervenant').submit(function (e){
-            var id_intervenant = parseInt($('#intervenant_id').val());
+    var url = Routing.generate('gp_lot_get', {id: id_lot});
+    $('#action-edit'+id_lot).hide();
+    $('#action-delete'+id_lot).hide();
+    $('#loader-edit-delete'+id_lot).show();
+    $('#block_form_lot').load(url, function () {
+        $('#action-edit'+id_lot).show();
+        $('#action-delete'+id_lot).show();
+        $('#loader-edit-delete'+id_lot).hide();
+        $('#block_table_lots').hide();
+        $('#block_form_lot').show();
+        /*$('#form_lot').submit(function (e){
+            var id_lot = parseInt($('#lot_id').val());
             e.preventDefault();
             $('#myAlert').remove();
             var donnees = $(this).serialize();
@@ -43,7 +43,7 @@ function edit_intervenant(id_intervenant, gp_route) {
                 type: 'post',
                 data: donnees,
                 //la route pour faire le update by id
-                url: Routing.generate(gp_route, {id: id_intervenant}),
+                url: Routing.generate(gp_route, {id: id_lot}),
                 dataType: 'json',
                 beforeSend: function () {
                     $('#actions').hide();
@@ -58,7 +58,7 @@ function edit_intervenant(id_intervenant, gp_route) {
                                     '<a href="#" class="close" data-dismiss="alert">&times;</a>'
                                     + data.message +
                                     '</div>';
-                            $('#message_intervenant').html(child);
+                            $('#message_lot').html(child);
                         }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -68,21 +68,21 @@ function edit_intervenant(id_intervenant, gp_route) {
                             '<a href="#" class="close" data-dismiss="alert">&times;</a>'
                             + 'EXCEPTION' +
                             '</div>';
-                    $('#message_intervenant').append(child);
+                    $('#message_lot').append(child);
                 }
             });
         });*/
         $('#close_form').click(function (e) {
             e.preventDefault();
-            window.location.replace(Routing.generate('gp_intervenant'));
+            window.location.replace(Routing.generate('gp_lot'));
         });
     });
 }
 
-function delete_intervenant(id_intervenant) {
+function delete_lot(id_lot) {
     $('#myAlert').remove();
-    if (confirm('Voulez-vous vraiment supprimer ce intervenant')) {
-        execute_delete_intervenant(id_intervenant);
+    if (confirm('Voulez-vous vraiment supprimer ce lot')) {
+        execute_delete_lot(id_lot);
     }
 }
 
@@ -91,29 +91,29 @@ $("#confirmModalNo").click(function (e) {
 });
 
 $("#confirmModalYes").click(function (e) {
-    var id_intervenant = parseInt($('#idintervenanttodelete').val());
+    var id_lot = parseInt($('#idlottodelete').val());
     $("#confirmModal").modal("hide");
-    execute_delete(id_intervenant);
+    execute_delete(id_lot);
 });
 
-function execute_delete_intervenant(id_intervenant) {
+function execute_delete_lot(id_lot) {
     $.ajax({
         type: 'post',
-        url: Routing.generate('gp_intervenant_delete', {id : id_intervenant}),
+        url: Routing.generate('gp_lot_delete', {id : id_lot}),
         dataType: 'json',
         beforeSend: function () {
-            $('#action-edit'+id_intervenant).hide();
-            $('#action-delete'+id_intervenant).hide();
-            $('#loader-edit-delete'+id_intervenant).show();
+            $('#action-edit'+id_lot).hide();
+            $('#action-delete'+id_lot).hide();
+            $('#loader-edit-delete'+id_lot).show();
         },
         success: function (data, textStatus, jqXHR) {
-            $('#action-edit'+id_intervenant).show();
-            $('#action-delete'+id_intervenant).show();
-            $('#loader-edit-delete'+id_intervenant).hide();
+            $('#action-edit'+id_lot).show();
+            $('#action-delete'+id_lot).show();
+            $('#loader-edit-delete'+id_lot).hide();
             var child = "";
             var lignetable = "";
                 if (data[0].letype === "success") {
-                    $('#lignetable' + id_intervenant).remove(lignetable);
+                    $('#lignetable' + id_lot).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +
                             '<a href="#" class="close" data-dismiss="alert">&times;</a>'
                             + data.message +
@@ -130,22 +130,22 @@ function execute_delete_intervenant(id_intervenant) {
                 }, 4000);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            $('#action-edit'+id_intervenant).show();
-            $('#action-delete'+id_intervenant).show();
-            $('#loader-edit-delete'+id_intervenant).hide();
+            $('#action-edit'+id_lot).show();
+            $('#action-delete'+id_lot).show();
+            $('#loader-edit-delete'+id_lot).hide();
             var child = '<div id="myAlert" class="alert alert-danger">' +
                     '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                    + 'Echec de le suppression du intervenant' +
+                    + 'Echec de le suppression du lot' +
                     '</div>';
             $('#message_success').html(child);
         }
     });
 }
 
-function show_details(id_intervenant) {
-    $('#block_form_intervenant').hide();
-    $('#block_table_intervenants').show();
-    $('#table_intervenants').hide();
+function show_details(id_lot) {
+    $('#block_form_lot').hide();
+    $('#block_table_lots').show();
+    $('#table_lots').hide();
     $('#loader-details').show();
-    window.location.replace(Routing.generate('gp_intervenant_details', {idintervenant: id_intervenant}));
+    window.location.replace(Routing.generate('gp_lot_details', {idlot: id_lot}));
 }

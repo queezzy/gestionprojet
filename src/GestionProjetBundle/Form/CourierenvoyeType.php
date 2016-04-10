@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LotType extends AbstractType
+class CourierenvoyeType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,12 +15,10 @@ class LotType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('datedebut', 'date')
-            ->add('datefin', 'date')
-            ->add('description')
             ->add('statut')
-            ->add('taches')
+            ->add('idcourier')
+            ->add('idintervenant')
+            ->add('idressource')
         ;
     }
     
@@ -30,7 +28,7 @@ class LotType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GestionProjetBundle\Entity\Lot'
+            'data_class' => 'GestionProjetBundle\Entity\Courierenvoye'
         ));
     }
 }

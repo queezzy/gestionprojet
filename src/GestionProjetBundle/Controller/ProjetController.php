@@ -86,14 +86,20 @@ class ProjetController extends Controller
     /**
      * @Route("/update-projet")
      * @Template()
+     * @param Request $request
      */
     public function updateprojetAction(Request $request){
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
-        $idprojet = (int)htmlspecialchars(trim($request->get("projet_id")));       
+        $projet = new Projet();
+        $data = htmlspecialchars(trim($request->request->get('form'))); 
+        $idprojet = $data['id'];
         $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
-        $projet = $repositoryProjet->find($idprojet);
+        $id = (int)$idprojet;
+        echo($idprojet + " " +$id);
+        return $this->render('GestionProjetBundle:Intervenants:intervenant.html.twig', array('id' => $id, 'idprojet' => $idprojet));
+        /*$projet = $repositoryProjet->find(4);
         $form = $this->createForm(new ProjetType(), $projet); 
         $form->handleRequest($request);
         $user = $this->getUser();
@@ -118,7 +124,7 @@ class ProjetController extends Controller
                     $display_tab =0;
                     return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
-            }
+            }*/
        /* }else{
             $message = $message = $this->get('translator')->trans('Projet.access_denied', array(), "GestionProjetBundle");
             $messages[] = array("letype" => "error", "message" => $message);

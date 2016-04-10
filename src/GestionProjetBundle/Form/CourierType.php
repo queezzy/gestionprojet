@@ -15,11 +15,16 @@ class CourierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type')
-            ->add('date', 'datetime')
+            //->add('type')
+            //->add('date', 'datetime')
             ->add('objet')
-            ->add('statut')
-            ->add('emetteur')
+            ->add('contenu')
+            ->add('courierenvoyes', 'collection',
+                    array('type' => new CourierenvoyeType(),
+                        'allow_add' => true,
+                        'allow_delete' => true))
+            //->add('statut')
+            //->add('emetteur')
         ;
     }
     

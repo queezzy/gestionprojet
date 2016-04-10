@@ -38,14 +38,14 @@ class Courier
     /**
      * @var string
      *
-     * @ORM\Column(name="objet", type="text", nullable=true)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
     private $objet;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="contenu", type="text", nullable=true)
+     * @ORM\Column(name="contenu", type="text", nullable=false)
      */
     private $contenu;
 

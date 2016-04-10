@@ -1,0 +1,91 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Ajout d'un lot</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                
+                <form id="form_lot" method="post" action="{{ path("gp_tache_add") }}" class="form-horizontal form-label-left" novalidate>
+                    <span class="section">Informations sur le lot</span>
+                    <div class="item form-group">
+                        <input id="idlot" value="" name="idlot" type="hidden">
+                        {{form_widget(form.id)}}
+                        {{form_widget(form._token)}}
+                    </div>
+
+                    <div class="item form-group">           
+                        {{ form_label(form.nom, "Nom du lot", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.nom) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Nom du lot', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                         {{ form_label(form.datedebut, "Date debut", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}   
+                         {{ form_errors(form.datedebut) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                               {{ form_widget(form.datedebut) }}
+                        </div>              
+                    </div>
+
+                      {# Date fin #} 
+                      <div class="item form-group">
+                         {{ form_label(form.datefin, "Date fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                         {{ form_errors(form.datefin) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                               {{ form_widget(form.datefin) }}
+                        </div>              
+                    </div>			
+                    <div class="item form-group">
+                        {{ form_label(form.idprojet, "Code du projet", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idprojet) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idprojet, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Code du projet'}}) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.idlot, "Nom du lot", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idlot) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idlot, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Nom du lot'}}) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.description) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    {% if app.session.flashbag.get('message_failure') %}										
+                    <div id="message_lot">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/gestionlot/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
