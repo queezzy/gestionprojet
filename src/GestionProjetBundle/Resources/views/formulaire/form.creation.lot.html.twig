@@ -1,48 +1,11 @@
-{# Formulaire de création d'un lot #}
+{# Formulaire d'affichage d'une actualité #}
 
-<form role="form">
-    <div class="box-body">
-       {# Code du projet #} 
-      <div class="form-group">
-        <label for="codeprojet">Nom du lot</label>
-        <input type="text" class="form-control" id="" placeholder="Code du projet">
-      </div>
-      
-      {# Date début #} 
-      <div class="form-group">
-        <label>Date début</label>
-        <div class="input-append date datetimepicker">
-            <input data-format="yyyy/MM/dd hh:mm:ss" type="text"></input>
-            <span class="add-on">
-              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-              </i>
-            </span>
-        </div>
-      </div>
-      
-      {# Date fin #} 
-      <div class="form-group">
-        <label>Date Fin</label>
-        <div class="input-append date datetimepicker">
-            <input data-format="yyyy/MM/dd hh:mm:ss" type="text"></input>
-            <span class="add-on">
-              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-              </i>
-            </span>
-        </div>
-      </div>
-      
-      {#
-            
-      {# Description du lot #}
-       <textarea class="ckeditor" name="description" rows="10" cols="50">
-          
-       </textarea>
-      
-      
-    </div><!-- /.box-body -->
-
-    <div class="box-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
+<div class="product-img col-md-2">
+    <img src="dist/img/default-50x50.gif" alt="Product Image"/>
+</div>
+<div class="product-info col-md-10">
+    <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+    <div class="product-description">
+      Samsung 32" 1080p 60Hz LED Smart HDTV.
     </div>
-</form>
+</div>
