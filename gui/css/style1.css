@@ -1,11 +1,11 @@
 /*   Test ui file      */
 
 
-/*  Style for the header Start */
+/*  Style for the header Start #1B4F08 */
 .head {
     text-align: center;
-    background-color: #1B4F08;
-    opacity: 0.7;
+    background-color: #3A9D23;
+    opacity: 0.9;
     color: #fff; 
 }
 
@@ -27,6 +27,7 @@
 
 ul.nav {
     margin-left: 4%;
+    opacity: 0.9;
 }
 
 ul.nav li {
@@ -36,26 +37,26 @@ ul.nav li {
 }
 
 ul.nav li.active {
-   background-color: #1B4F08 !important;
+   background-color: #3A9D23 !important;
    color: #ecf0f5 !important;
 }
 
 ul.nav li.active a{
-   background-color: #1B4F08 !important;
+   background-color: #3A9D23 !important;
    color: #ecf0f5 !important;
 }
 
 ul.nav li:hover{
     background-color: #ecf0f5;
-    color: #1B4F08;
+    color: #3A9D23;
 }
 
 ul.nav li a:hover {
-    color: #1B4F08 !important;
+    color: #3A9D23 !important;
 }
 
 ul.nav li.active a:hover{
-   background-color: #1B4F08 !important;
+   background-color: #3A9D23 !important;
    color: #ecf0f5 !important;
 }
 
