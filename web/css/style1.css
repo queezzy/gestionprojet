@@ -110,6 +110,11 @@ ul.nav li.active a:hover{
 .modal-body {
     background-color: #ecf0f5 !important;
 }
+
+
+.box i {
+    margin-left: 10px;
+}
 /* Main contain Style End*/
 
 

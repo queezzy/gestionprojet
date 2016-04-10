@@ -6,37 +6,40 @@
 <div class="box box-primary">
 <div class="box-header">
     {# ajouter le thème à la place de la variable theme #}
-  <h3 class="box-title">Liste des actualités {{ theme }}</h3>
+  <h3 class="box-title">Liste des actualités</h3><a class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
 </div><!-- /.box-header -->
 <div class="box-body">
-  <table class="data-table table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Thème</th>
-        <th>Titre</th>
-        <th>Description</th>
-        <th>Contenu</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-    {% for actualite in actualite %}
-      <tr>
-        <td>Trident</td>
-        <td>Internet</td>
-        <td>Win 95+</td>
-        <td> 4</td>
-      </tr>
+  <ul class="products-list product-list-in-box">
+    {% for actualite in actualites %}
+        <li class="item">
+          <div class="row col-md-12">
+            <div class="product-img col-md-2">
+              <img src="images/default-50x50.gif" alt="Product Image"/>
+            </div>
+            <div class="product-img col-md-10">                
+                <div class="product-img col-md-12">
+                    <h4>Titre</h4>
+                </div>
+                <div class="product-img col-md-12">
+                    <h4>Thème</h4>
+                </div>
+                <div class="product-info col-md-12">
+                    <p>Description</p> 
+                    <p>Date</p> 
+                </div>
+                <div class="row product-description col-md-3 pull-right">
+                    <a><i class="fa fa-eye"></i>Voir</a>
+                    <a><i class="fa fa-edit"></i>Modifier</a>
+                </div>
+            </div>                      
+          </div>
+        </li>
     {% else %}
-      <tr>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td> -</td>
-      </tr>
-    {% endfor %}      
-    </tbody>
-  </table>
+        <li class="item">
+          Pas d'actualités disponible!
+        </li>
+    {% endfor %} 
+  </ul>
 </div><!-- /.box-body -->
 </div>
 <!-- Intervenants end-->

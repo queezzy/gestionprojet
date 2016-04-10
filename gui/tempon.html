@@ -11,6 +11,7 @@
     <!-- Theme style -->
     <link href="dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap-multiselect.css">
     
     <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <link href="css/style1.css" rel="stylesheet" type="text/css" />
@@ -47,7 +48,7 @@
                       </li>
                       <li>
                         <a href="#">
-                          <i class="fa fa-files-o"></i>
+                          <i class="fa fa-pie-chart"></i>
                           <span>Evolution</span>
                         </a>
                       </li>
@@ -95,8 +96,13 @@
                   <!--div class="pull-left image">
                     <img src="" class="img-circle" alt="User Image" />
                   </div-->
-                  <div class="info">
-                    <p>Administrateur</p>
+                  <div class="info dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="center-block center"><bold>Admin</bold></li>
+                            <li><a href="#"><i class="fa fa-eye"></i>Voir profil</a></li>
+                            <li><a href="#"><i class="fa fa-lock"></i>Se déconnecter</a></li>
+                        </ul>
                   </div>
                 </div>
                 <!-- Sidebar user panel End-->
@@ -125,39 +131,41 @@
                 <!--div class=""-->
                 
                 <!-- Test contain start-->
-                
-<div class="box box-primary">
+               <div class="box box-primary">
     <div class="box-header">
-        <h3>Ressource</h3>
+        <h3>Envoyer un mail</h3>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row col-md-12">
             <div class="product-img col-md-12">
-                <div class="product-img col-md-2">
-                    <img src="dist/img/default-50x50.gif" alt="Logo intervenant"/>
-                    <h4>Nom intervenant</h4>
+                <div class="form-group">
+                    <label>Destinataire(s)</label>
+                    <select class="form-control multiselect" multiple="multiple">
+                        
+                            <option value="valeur"> Destinataire</option>
+                        
+                            <option value="Défaut"> Défaut</option>
+                        
+                    </select>
                 </div>
-                <div class="product-img col-md-2">
-                    <h4>Reférence</h4>
+                
+                <div class="form-group">
+                  <label for="">Objet</label>
+                  <input type="text" class="form-control" id="" placeholder="Objet du message">
                 </div>
-                <div class="product-img col-md-2">
-                    <h4>Type</h4>
+                <div class="form-group">
+                  <label for="">Message</label>
+                  <textarea class="ckeditor" name="ckeditor" rows="10" cols="50">
+                  </textarea>
                 </div>
-                <div class="product-img col-md-2">
-                    <h4>URL</h4>
-                </div>
-            </div>
-            <div class="product-info col-md-12">
-                <p>Description</p>                
-            </div>            
+            </div>          
         </div>
     </div>
     <div class="box-footer">
-      <button class="btn btn-success pull-right">Modifier</button>
-      <button class="btn btn-danger pull-left">Supprimer</button>
+      <button type="submit" class="btn btn-success pull-right">Envoyer</button>
+      <button type="reset" class="btn btn-danger pull-left">Annuler</button>
     </div>
 </div>
-                
                 <!-- Test contain end-->
                 
              <!--/div-->  
@@ -189,10 +197,8 @@
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
     <script src="js/evolution.js" type="text/javascript"></script>
     <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
-    <script src="plugins/input-mask/jquery.inputmask.js"></script>
-    <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>    
-    <script src="plugin/datepicker/bootstrap-datepicker.js"></script>
+    
+    <script src="plugins/bootstrap-multiselect.js"></script>
     <script>
       $(function () {
         // Replace the <textarea id="ckeditor"> with a CKEditor
@@ -222,6 +228,7 @@
             }
         }
 
+        $('.multiselect').multiselect();
         $(".inputfile").change(function(){
             readURL(this);
         });

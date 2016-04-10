@@ -21,6 +21,8 @@
     <link href="{{asset('css/_all-skins.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('css/style1.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="{{asset('css/bootstrap-multiselect.css')}}" rel="stylesheet" type="text/css" />    
+    
     {% endblock %}
     
   </head>
@@ -73,6 +75,7 @@
     <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
     <!-- bootstrap-acknolegdement for decimal number in inputs -->
     <script src="{{asset('js/bootstrap-acknowledgement.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/bootstrap-multiselect.js')}}" type="text/javascript"></script>    
     <script src="{{asset('js/gestionprojet.js')}}" type="text/javascript"></script>
     <script>
       $(function () {
@@ -81,13 +84,17 @@
             language: 'en',
             pick12HourFormat: true
           });
-        $('.multiselect').multiselect();
+        
       });
         $().ready(function() {
             $().acknowledgeinput({
                 success_color: '#00FF00',
                 danger_color: '#FF0000',
                 update_on: 'keyup'
+            });
+            $('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de contenu ...'
             });
         });
         $(".datemask").inputmask("yyyy/mm/dd", {"placeholder": "yyyy/mm/dd"});
