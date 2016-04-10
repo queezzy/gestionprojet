@@ -8,18 +8,18 @@ use Doctrine\ORM\Mapping as ORM;
  * Lot
  *
  * @ORM\Table(name="lot")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\LotRepository")
  */
 class Lot
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idLot", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idlot;
+    private $id;
 
     /**
      * @var string
@@ -59,7 +59,7 @@ class Lot
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Tache", mappedBy="idlot")
+     * @ORM\ManyToMany(targetEntity="Tache", mappedBy="lots")
      */
     private $taches;
     
@@ -82,9 +82,9 @@ class Lot
      *
      * @return integer 
      */
-    public function getIdlot()
+    public function getId()
     {
-        return $this->idlot;
+        return $this->id;
     }
 
     /**

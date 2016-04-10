@@ -1,0 +1,285 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Projets{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Projets
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Projets
+{% endblock %}
+
+{% block contenupage %}
+{% if display_tab == 1 %}
+<div class="row" >
+{% else %}
+<div class="row" style="display: none;">
+{% endif %}
+    <div class="col-md-12" id="block_table_projets">
+        {% if app.session.flashbag.get('message_success') %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div>
+        {% elseif app.session.flashbag.get('message_delete_failure')  %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div> <!-- /controls -->
+        {% endif %}
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel"> 
+                <div class="x_title">
+                    <h2>Projets</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="table_projets">
+                        <button id='nouvelprojet' class ="btn btn-success"><i class="fa fa-plus"></i> Ajouter</button>
+                        <table id="example" class="table table-striped responsive-utilities jambo_table">
+                            <thead>
+                                <tr class="headings">
+                                    <th>Code</th>
+                                    <th>Date debut</th>
+                                    <th>Date fin</th>
+                                    <th>Demandeur</th>
+                                    <th>budget</th>
+                                    <th>Evolution attendue</th>
+                                    <th>Evolution en cours</th>
+                                    <th class=" no-link last"><span class="nobr">Actions</span>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbodyprojets">
+                                {%if liste_projets%}
+                                    {%for projet in liste_projets%}
+                                        <tr id="lignetable{{projet.id}}" class="odd pointer" style="cursor: pointer;">                      
+                                            <td onclick="show_details({{projet.id}})" class=" ">{{projet.code}}</td>
+                                            <td onclick="show_details({{projet.id}})" class=" ">{{projet.datedebut|date('d/m/Y')}}</td>
+                                            <td onclick="show_details({{projet.id}})" class=" ">{{projet.datefin|date('d/m/Y')}}</td>
+                                            <td onclick="show_details({{projet.id}})" class=" ">{{projet.demandeur}}</td>
+                                            <td onclick="show_details({{projet.id}})" class=" ">{{projet.budget}}</td>
+                                            <td onclick="show_details({{projet.id}})" class=" ">{{projet.evolutionattendu}}</td>
+                                            <td onclick="show_details({{projet.id}})" class=" ">{{projet.evolutionencours}}</td>
+                                            <td class=" last">
+                                                <a id="action-edit{{projet.id}}" onclick="edit_projet({{projet.id}},'gp_projet_update')" style="cursor: pointer;"><i class="icon-edit icon-yellow">Edit</i></a>
+                                                <a id="action-delete{{projet.id}}" onclick="delete_projet({{projet.id}})" style="cursor: pointer;"><i class="icon-trash icon-green">Delete</i></a>
+                                                <a id="loader-edit-delete{{projet.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+                                            </td>
+                                        </tr>
+                                    {%endfor%} 
+                                {%endif%} 
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="loader-details" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/gestionprojet/images/ajax-loader-details.gif')}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+    </div>
+</div>
+{% if display_tab == 1 %}
+<div class="row" style="display: none;" id="block_form_projet">
+{% else %}
+<div class="row" id="block_form_projet">
+{% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Ajout d'un projet</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                
+                <form id="form_projet" method="post" action="{{ path("gp_projet_add") }}" class="form-horizontal form-label-left" novalidate>
+                    <span class="section">Informations sur le projet</span>
+                    <div class="item form-group">
+                        <input id="idprojet" value="" name="idprojet" type="hidden">
+                        {{form_widget(form._token)}}
+                    </div>
+
+                    <div class="item form-group">           
+                        {{ form_label(form.code, "Code du projet", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.code) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.code, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Code du projet', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.intitule, "Intitule", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.intitule) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.intitule, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Intitule'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                         {{ form_label(form.datedebut, "Date debut", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}   
+                         {{ form_errors(form.datedebut) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                               {{ form_widget(form.datedebut) }}
+                        </div>              
+                    </div>
+
+                      {# Date fin #} 
+                      <div class="item form-group">
+                         {{ form_label(form.datefin, "Date fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                         {{ form_errors(form.datefin) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                               {{ form_widget(form.datefin) }}
+                        </div>              
+                    </div>			
+           
+                    <div class="item form-group">
+                        {{ form_label(form.budget, "Budget", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.budget) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.budget, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Budget'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.demandeur, "Demandeur", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.demandeur) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.demandeur, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Demandeur'}}) }}
+                        </div>
+                    </div>
+                         
+                     <div class="form-group">
+                        {{ form_label(form.evolutionattendu, "Evolution attendue", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionattendu) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.evolutionattendu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                            
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.evolutionencours, "Evolution en cours", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionencours) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.evolutionencours, {'attr': {'class':'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                           
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.description) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.statut, "", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.statut) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.statut, {'attr': {'required':'required'}}) }}
+                           
+                        </div>
+                    </div>
+                    {% if app.session.flashbag.get('message_failure') %}										
+                    <div id="message_projet">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>                  
+<div class="modal hide fade" id="confirmModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4>Confirmation de la suppression</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" class="span3" id="idprojettodelete" name="idsemaine"  value="">
+        <p>La suppression de cet projet supprimera aussi les défaillances qui lui sont associées</p>
+        <p>Confirmez-vous cette suppression ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="confirmModalNo">Non</button>
+        <button  class="btn btn-primary" id="confirmModalYes">Oui</button>
+    </div>
+</div>
+<div class="modal hide fade" id="alertModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p id="message_alert"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="ok">OK</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_projet.js')}}"></script>
+    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script>
+      $(function () {
+        $("#listeprojets").DataTable();
+      });
+    </script>
+{% endblock %}{# empty Twig template #}

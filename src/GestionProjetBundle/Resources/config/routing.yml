@@ -6,7 +6,13 @@ gp_index:
 
 gp_accueil:
     pattern: /accueil
-    defaults: { _controller: GestionProjetBundle:Projet:accueil }
+    defaults: { _controller: GestionProjetBundle:Default:accueil }
+    options:
+        expose: true
+        
+gp_projet_admin:
+    pattern: /projets-admin
+    defaults: { _controller: GestionProjetBundle:Projet:projet }
     options:
         expose: true
 
@@ -22,8 +28,14 @@ gp_projet_update:
     options:
         expose: true
         
+gp_projet_get:
+    pattern: /get-projet/{id}
+    defaults: { _controller: GestionProjetBundle:Projet:getprojet }
+    options:
+        expose: true
+
 gp_projet_delete:
-    pattern: /delete-projet
+    pattern: /delete-projet/{id} 
     defaults: { _controller: GestionProjetBundle:Projet:deleteprojet }
     options:
         expose: true

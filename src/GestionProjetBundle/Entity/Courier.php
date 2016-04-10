@@ -7,19 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Courier
  *
- * @ORM\Table(name="courier", indexes={@ORM\Index(name="fk_Courier_Intervenant1_idx", columns={"emetteur"})})
- * @ORM\Entity
+ * @ORM\Table(name="courier")
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\CourierRepository")
  */
 class Courier
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idCourier", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idcourier;
+    private $id;
 
     /**
      * @var integer
@@ -61,7 +61,7 @@ class Courier
      *
      * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="couriers")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emetteur", referencedColumnName="idIntervenant")
+     *   @ORM\JoinColumn(name="emetteur", referencedColumnName="id")
      * })
      */
     private $emetteur;
@@ -80,13 +80,13 @@ class Courier
     }
     
     /**
-     * Get idcourier
+     * Get id
      *
      * @return integer 
      */
-    public function getIdcourier()
+    public function getId()
     {
-        return $this->idcourier;
+        return $this->id;
     }
 
     /**

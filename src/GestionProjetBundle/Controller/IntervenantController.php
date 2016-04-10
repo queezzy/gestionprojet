@@ -37,13 +37,15 @@ class IntervenantController extends Controller {
      */
     public function intervenantsAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+       /* if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
+        }*/
+        $intervenant = new Intervenant();
+        $form = $this->createForm(new IntervenantType(), $intervenant);
         $em = $this->getDoctrine()->getManager();
         $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
-        $intervenants = $repositoryIntervenant->findBy(array("status" => 1));
-        return $this->render('GestionProjetBundle:intervenant:intervenant.html.twig', array('intervenants' => $intervenants));
+        $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
+        return $this->render('GestionProjetBundle:intervenants:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView()));
     }
 
     /**
@@ -69,7 +71,7 @@ class IntervenantController extends Controller {
                        $intervenant = $repositoryIntervenant->findOneBy(array("nom" => $intervenant->getNom(), "idadresse" => $intervenant->getIdadresse()));
                        $message = $this->get('translator')->trans('Intervenant.created_success', array(), "GestionProjetBundle");
                        $messages[] = array("letype" => "success", "message" => $message);
-                       $messages[] = array("id" => $intervenant->getId(), "nom" => $intervenant->getNom(), "lot" => $intervenant->getIdlot()->getNom(), "localisation" => $intervenant->getIdadresse()->getIdadresse(), "email" => $intervenant->getIdadresse()->getEmail(), "telephone" => $intervenant->getIdadresse()->getTelephone());
+                       $messages[] = array("id" => $intervenant->getId(), "logo" => $intervenant->getWebUrl(), "nom" => $intervenant->getNom(), "lot" => $intervenant->getIdlot()->getNom(), "localisation" => $intervenant->getIdadresse()->getIdadresse(), "email" => $intervenant->getIdadresse()->getEmail(), "telephone" => $intervenant->getIdadresse()->getTelephone());
                        return $response->setData(array("data" => $messages));
                        //$request->getSession()->getFlashBag()->add('message', $message);
                       // return $this->redirect($this->generateUrl('gp_intervenants'));

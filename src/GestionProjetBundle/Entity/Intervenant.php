@@ -12,19 +12,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Intervenant
  *
- * @ORM\Table(name="intervenant", indexes={@ORM\Index(name="fk_Intervenant_Projet1_idx", columns={"idProjet"}), @ORM\Index(name="fk_Intervenant_Adresse1_idx", columns={"idAdresse"}), @ORM\Index(name="fk_Intervenant_Lot1_idx", columns={"idLot"})})
- * @ORM\Entity
+ * @ORM\Table(name="intervenant")
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\IntervenantRepository")
  */
 class Intervenant
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idIntervenant", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idintervenant;
+    private $id;
 
     /**
      * @var string
@@ -99,7 +99,7 @@ class Intervenant
      *
      * @ORM\ManyToOne(targetEntity="Lot")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idLot", referencedColumnName="idLot")
+     *   @ORM\JoinColumn(name="idLot", referencedColumnName="id")
      * })
      */
     private $idlot;
@@ -107,18 +107,13 @@ class Intervenant
     /**
      * @var \Projet
      *
-     * @ORM\ManyToOne(targetEntity="Projet")
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="intervenants")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idProjet", referencedColumnName="idProjet")
+     *   @ORM\JoinColumn(name="idProjet", referencedColumnName="id")
      * })
      */
     private $idprojet;
 
-    /**
-    * @ORM\OneToMany(targetEntity="Calendrier", mappedBy="idintervenant", cascade={"remove", "persist"})
-    */
-    private $calendriers;
-    
     /**
     * @ORM\OneToMany(targetEntity="Courierenvoye", mappedBy="idintervenant", cascade={"remove", "persist"})
     */
@@ -135,29 +130,30 @@ class Intervenant
     private $ressources;
     
     /**
-     * @<ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
+     * @var \Calendrier
+     *
+     * @ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
      */
-    private $idcalendrier ;
+    private $idcalendrier;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->calendriers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ressources = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
-     * Get idintervenant
+     * Get id
      *
      * @return integer 
      */
-    public function getIdintervenant()
+    public function getId()
     {
-        return $this->idintervenant;
+        return $this->id;
     }
 
     /**
@@ -391,41 +387,6 @@ class Intervenant
     }
     
     /**
-     * Add calendrier
-     *
-     * @param GestionProjetBundle\Entity\Calendrier $calendrier 
-     * @return Intervenant
-     */
-    public function addCalendrier(\GestionProjetBundle\Entity\Calendrier $calendrier)
-    {
-        $this->calendriers[] = $calendrier;
-        return $this;
-    }
-    
-    /**
-     * Get calendriers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCalendriers()
-    {
-        return $this->calendriers;
-    }
-    
-    /**
-     * Set calendriers
-     *
-     * @param \Doctrine\Common\Collections\Collection $calendriers
-     * @return Intervenant
-     */
-    public function setCalendriers(\Doctrine\Common\Collections\Collection $calendriers = null)
-    {
-        $this->calendriers = $calendriers;
-
-        return $this;
-    }
-    
-    /**
      * Add courierenvoye
      *
      * @param GestionProjetBundle\Entity\Courierenvoye $courierenvoye 
@@ -493,16 +454,6 @@ class Intervenant
         $this->utilisateurs = $utilisateurs;
 
         return $this;
-    }
-
-    /**
-     * Remove calendriers
-     *
-     * @param \GestionProjetBundle\Entity\Calendrier $calendriers
-     */
-    public function removeCalendrier(\GestionProjetBundle\Entity\Calendrier $calendriers)
-    {
-        $this->calendriers->removeElement($calendriers);
     }
 
     /**
@@ -613,5 +564,28 @@ class Intervenant
     public function removeRessource(\GestionProjetBundle\Entity\Ressource $ressources)
     {
         $this->ressources->removeElement($ressources);
+    }
+
+    /**
+     * Set idcalendrier
+     *
+     * @param \GestionProjetBundle\Entity\Calendrier $idcalendrier
+     * @return Intervenant
+     */
+    public function setIdcalendrier(\GestionProjetBundle\Entity\Calendrier $idcalendrier = null)
+    {
+        $this->idcalendrier = $idcalendrier;
+
+        return $this;
+    }
+
+    /**
+     * Get idcalendrier
+     *
+     * @return \GestionProjetBundle\Entity\Calendrier 
+     */
+    public function getIdcalendrier()
+    {
+        return $this->idcalendrier;
     }
 }

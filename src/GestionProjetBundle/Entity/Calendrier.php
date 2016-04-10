@@ -7,19 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Calendrier
  *
- * @ORM\Table(name="calendrier", indexes={@ORM\Index(name="fk_Calendrier_Intervenant1_idx", columns={"idIntervenant"})})
- * @ORM\Entity
+ * @ORM\Table(name="calendrier")
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\CalendrierRepository")
  */
 class Calendrier
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idCalendrier", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idcalendrier;
+    private $id;
 
     /**
      * @var integer
@@ -46,18 +46,18 @@ class Calendrier
     
 
     /**
-     * Get idcalendrier
+     * Get id
      *
      * @return integer 
      */
-    public function getIdcalendrier()
+    public function getId()
     {
-        return $this->idcalendrier;
+        return $this->id;
     }
 
     /**
      * Set statut
-     *
+     * 
      * @param integer $statut
      * @return Calendrier
      */

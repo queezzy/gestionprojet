@@ -10,19 +10,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Ressource
  *
- * @ORM\Table(name="ressource", indexes={@ORM\Index(name="fk_Ressource_Intervenant1_idx", columns={"idIntervenant"})})
- * @ORM\Entity
+ * @ORM\Table(name="ressource")
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\RessourceRepository")
  */
 class Ressource
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idRessource", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idressource;
+    private $id;
 
     /**
      * @var string
@@ -65,7 +65,7 @@ class Ressource
      *
      * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="ressources")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
+     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="id")
      * })
      */
     private $idintervenant;
@@ -84,13 +84,13 @@ class Ressource
     }
 
     /**
-     * Get idressource
+     * Get id
      *
      * @return integer 
      */
-    public function getIdressource()
+    public function getId()
     {
-        return $this->idressource;
+        return $this->id;
     }
 
     /**

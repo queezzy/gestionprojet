@@ -27,61 +27,254 @@
 {% endblock %}
 
 {% block contenupage %}
-<div class="row">
-<!-- Intervenants start-->
-<div class="box box-success">
-<div class="box-header">
-  <h3 class="box-title">Liste des intervenants</h3>
-</div><!-- /.box-header -->
-<div class="box-body">
-  <table id="listeintervenants" class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Logo</th>
-        <th>Nom</th>
-        <th>Lot</th>
-        <th>Localisation</th>
-        <th>Email</th>
-        <th>Téléphone</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-    {% for intervenant in liste_intervenants %}
-      <tr>
-        <td>Trident</td>
-        <td>Internet
-          Explorer 4.0</td>
-        <td>Win 95+</td>
-        <td> 4</td>
-        <td>X</td>
-        <td> 4</td>
-        <td>X</td>
-      </tr>
-    {% else %}
-      <tr>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td> -</td>
-        <td>-</td>
-        <td> -</td>
-        <td>-</td>
-      </tr>
-    {% endfor %}      
-    </tbody>
-  </table>
-</div><!-- /.box-body -->
-</div>
-<!-- Intervenants end-->
-</div><!-- /.row --> 
+<div class="row" id="block_table_intervenants">
+    <div id="message_success">
 
+    </div> <!-- /controls -->
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel"> 
+            <div class="x_title">
+                <h2>Intervenants</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="table_intervenants">
+                    <button id='nouvelintervenant' class ="btn btn-success"><i class="fa fa-plus"></i> Ajouter</button>
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>
+                                    <input type="checkbox" class="tableflat">
+                                </th>
+                                <th>Logo</th>
+                                <th>Nom</th>
+                                <th>Lot</th>
+                                <th>Localisation</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th class=" no-link last"><span class="nobr">Actions</span>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbodyintervenants">
+                            {%if liste_intervenants%}
+                                {%for intervenant in liste_intervenants%}
+                                    <tr id="lignetable{{intervenant.id}}" class="odd pointer" style="cursor: pointer;">
+                                        <td class="a-center ">
+                                            <input type="checkbox" class="tableflat">
+                                        </td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.url}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.nom}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idlot.nom}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.lieu}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.email}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.telephone}}</td>
+                                        <td class=" last">
+                                            <a id="action-edit{{intervenant.id}}" onclick="edit_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="glyphicon glyphicon-edit"></i></a>
+                                            <a id="action-delete{{intervenant.id}}" onclick="delete_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="glyphicon glyphicon-trash"></i></a>
+                                            <a id="loader-edit-delete{{intervenant.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/dtintervenant/images/ajax-loader-edit-delete.gif')}}"></a>
+                                        </td>
+                                    </tr>
+                                {%endfor%} 
+                            {%endif%} 
+                        </tbody>
+                    </table>
+                </div>
+                <div id="loader-details" style="display: none; margin-left: 50%;">
+                    <img src="{{asset('bundles/dtintervenant/images/ajax-loader-details.gif')}}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+</div>
+
+<div class="row" style="display: none;" id="block_form_intervenant">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Ajout d'un intervenant</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                
+                <form id="form_intervenant" class="form-horizontal form-label-left" novalidate>
+                    <span class="section">Informations sur l'intervenant</span>
+                    <div class="item form-group">
+                        <input id="idintervenant" value="" name="idintervenant" type="hidden">
+                    </div>
+
+                    <div class="item form-group">           
+                        {{ form_label(form.nom, "Nom", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.nom) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Nom', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.telephone, "Telephone", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.telephone) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.telephone, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Telephone'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.email, "Email", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.email) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.email, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Email'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.latitude, "Latitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.latitude) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.latitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Latitude'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.longitude, "Longitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.longitude) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.longitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Longitude'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.boitepostale, "Boite de postale", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.boitepostale) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.boitepostale, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Boite postale'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.lieu, "Lieu", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.lieu) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.lieu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Lieu'}}) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.file, "Logo", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.file) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.file) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.idprojet, "Code du projet", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idprojet) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idprojet, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Code du projet'}}) }}
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        {{ form_label(form.evolutionattendu, "Evolution attendue", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionattendu) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.evolutionattendu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                            
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.evolutionencours, "Evolution en cours", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionencours) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.evolutionencours, {'attr': {'class':'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                           
+                        </div>
+                    </div>
+                    	
+                    <div class="item form-group">
+                        {{ form_label(form.presentation, "Presentation", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.presentation) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.presentation, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.rolemission, "Rôle et mission", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.rolemission) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.rolemission, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.description) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    										
+                    <div id="message_intervenant">
+                    </div> 
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/dtintervenant/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal hide fade" id="confirmModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4>Confirmation de la suppression</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" class="span3" id="idintervenanttodelete" name="idsemaine"  value="">
+        <p>La suppression de cet intervenant supprimera aussi les défaillances qui lui sont associées</p>
+        <p>Confirmez-vous cette suppression ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="confirmModalNo">Non</button>
+        <button  class="btn btn-primary" id="confirmModalYes">Oui</button>
+    </div>
+</div>
+<div class="modal hide fade" id="alertModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p id="message_alert"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="ok">OK</button>
+    </div>
+</div>
 {% endblock %}
 
 {% block js %}
     {{ parent()}}
     {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_intervenant.js')}}"></script>
     <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>

@@ -7,19 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Actualite
  *
- * @ORM\Table(name="actualite", indexes={@ORM\Index(name="fk_Actualite_Theme_idx", columns={"idTheme"})})
- * @ORM\Entity
+ * @ORM\Table(name="actualite")
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\ActualiteRepository")
  */
 class Actualite
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idActualite", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idactualite;
+    private $id;
 
     /**
      * @var string
@@ -61,7 +61,7 @@ class Actualite
      *
      * @ORM\ManyToOne(targetEntity="Theme", inversedBy="actualites")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idTheme", referencedColumnName="idTheme")
+     *   @ORM\JoinColumn(name="idTheme", referencedColumnName="id")
      * })
      */
     private $idtheme;
@@ -79,13 +79,13 @@ class Actualite
 
 
     /**
-     * Get idactualite
+     * Get id
      *
      * @return integer 
      */
-    public function getIdactualite()
+    public function getId()
     {
-        return $this->idactualite;
+        return $this->id;
     }
 
     /**

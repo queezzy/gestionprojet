@@ -41,6 +41,7 @@ class ProjetRepository extends EntityRepository{
     public function saveProjet(\GestionProjetBundle\Entity\Projet $projet) {
         $em= $this->_em;
         $em->getConnection()->beginTransaction();
+        $projet->setStatut(1);
         try{
             $em->persist($projet);
             $em->flush();

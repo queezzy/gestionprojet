@@ -8,18 +8,18 @@ use Doctrine\ORM\Mapping as ORM;
  * Adresse
  *
  * @ORM\Table(name="adresse")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\AdresseRepository")
  */
 class Adresse
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idAdresse", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idadresse;
+    private $id;
 
     /**
      * @var string
@@ -73,13 +73,13 @@ class Adresse
 
 
     /**
-     * Get idadresse
+     * Get id
      *
      * @return integer 
      */
-    public function getIdadresse()
+    public function getId()
     {
-        return $this->idadresse;
+        return $this->id;
     }
 
     /**

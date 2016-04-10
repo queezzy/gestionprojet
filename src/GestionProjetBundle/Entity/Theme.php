@@ -7,19 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Theme
  *
- * @ORM\Table(name="theme", indexes={@ORM\Index(name="fk_Theme_Projet1_idx", columns={"idProjet"})})
- * @ORM\Entity
+ * @ORM\Table(name="theme")
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\ThemeRepository")
  */
 class Theme
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idTheme", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idtheme;
+    private $id;
 
     /**
      * @var string
@@ -47,7 +47,7 @@ class Theme
      *
      * @ORM\ManyToOne(targetEntity="Projet", inversedBy="themes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idProjet", referencedColumnName="idProjet")
+     *   @ORM\JoinColumn(name="idProjet", referencedColumnName="id")
      * })
      */
     private $idprojet;
@@ -67,13 +67,13 @@ class Theme
     }
     
     /**
-     * Get idtheme
+     * Get id
      *
      * @return integer 
      */
-    public function getIdtheme()
+    public function getId()
     {
-        return $this->idtheme;
+        return $this->id;
     }
 
     /**

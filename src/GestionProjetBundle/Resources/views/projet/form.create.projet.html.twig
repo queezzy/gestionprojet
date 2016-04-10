@@ -18,9 +18,9 @@
       </div>
       
       {# Description du projet #}
-        {{ form_label(form.intitule, "Description") }}
-        {{ form_errors(form.intitule) }}
-        {{ form_widget(form.intitule, {'attr': {'class': 'ckeditor', 'row':'10', 'cols':'50'}}) }}
+        {{ form_label(form.description, "Description") }}
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'ckeditor', 'row':'10', 'cols':'50'}}) }}
       
       {# Date début #} 
       <div class="form-group">
@@ -37,10 +37,10 @@
       
       {# Date fin #} 
       <div class="form-group">
-        {{ form_label(form.datedebut, "Date fin") }}
-        {{ form_errors(form.datedebut) }}
+        {{ form_label(form.datefin, "Date fin") }}
+        {{ form_errors(form.datefin) }}
         <div class="input-append date datetimepicker">
-           {{ form_widget(form.datedebut, {'attr': {'data-format': 'yyyy/MM/dd hh:mm:ss', 'type':'text'}}) }}
+           {{ form_widget(form.datefin, {'attr': {'data-format': 'yyyy/MM/dd hh:mm:ss', 'type':'text'}}) }}
             <span class="add-on">
               <i data-time-icon="icon-time" data-date-icon="icon-calendar">
               </i>
@@ -68,7 +68,7 @@
         {{ form_errors(form.evolutionattendu) }}
         <label for="intituleprojet">Evolution attendue</label>
         <div class="input-append" data-role="acknowledge-input">
-            {{ form_widget(form.evolutionattendu, {'attr': {'class':'input-xlarge', 'type':'text', 'placeholder':'Demandeur', 'data-type':'decimal', 'required':'required'}}) }}
+            {{ form_widget(form.evolutionattendu, {'attr': {'class':'input-xlarge', 'type':'text', 'placeholder':'Evolution attendue', 'data-type':'decimal', 'required':'required'}}) }}
             <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
                 <i class="icon-ok fa fa-check"></i>
             </div>
@@ -80,7 +80,7 @@
         {{ form_label(form.evolutionencours, "Evolution en cours") }}
         {{ form_errors(form.evolutionencours) }}
         <div class="input-append" data-role="acknowledge-input">
-           {{ form_widget(form.evolutionencours, {'attr': {'class': 'input-xlarge', 'type':'text', 'placeholder':'Demandeur', 'data-type':'decimal', 'required':'required'}}) }}
+           {{ form_widget(form.evolutionencours, {'attr': {'class': 'input-xlarge', 'type':'text', 'placeholder':'Evolution en cours', 'data-type':'decimal', 'required':'required'}}) }}
             <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
                 <i class="icon-ok fa fa-check"></i>
             </div>

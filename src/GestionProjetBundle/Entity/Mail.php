@@ -8,18 +8,18 @@ use Doctrine\ORM\Mapping as ORM;
  * Mail
  *
  * @ORM\Table(name="mail")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\MailRepository")
  */
 class Mail
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idMail", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idmail;
+    private $id;
 
     /**
      * @var string
@@ -63,7 +63,7 @@ class Mail
      * @ORM\ManyToMany(targetEntity="Utilisateur", inversedBy="mails")
      * @ORM\JoinTable(name="mail_utilisateur",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="idMail", referencedColumnName="idMail")
+     *     @ORM\JoinColumn(name="idMail", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
      *     @ORM\JoinColumn(name="id", referencedColumnName="id")
@@ -82,13 +82,13 @@ class Mail
 
 
     /**
-     * Get idmail
+     * Get id
      *
      * @return integer 
      */
-    public function getIdmail()
+    public function getId()
     {
-        return $this->idmail;
+        return $this->id;
     }
 
     /**

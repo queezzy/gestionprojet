@@ -8,18 +8,18 @@ use Doctrine\ORM\Mapping as ORM;
  * Projet
  *
  * @ORM\Table(name="projet")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\ProjetRepository")
  */
 class Projet
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idProjet", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idprojet;
+    private $id;
 
     /**
      * @var string
@@ -91,7 +91,7 @@ class Projet
      */
     private $statut;
 
-/**
+    /**
     * @ORM\OneToMany(targetEntity="Intervenant", mappedBy="idprojet", cascade={"remove", "persist"})
     */
     private $intervenants;
@@ -116,13 +116,26 @@ class Projet
     }
 
     /**
-     * Get idprojet
+     * Get id
      *
      * @return integer 
      */
-    public function getIdprojet()
+    public function getId()
     {
-        return $this->idprojet;
+        return $this->id;
+    }
+    
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Projet
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

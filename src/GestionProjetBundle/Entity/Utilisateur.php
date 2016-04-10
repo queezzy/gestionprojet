@@ -11,7 +11,7 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 /**
  * Utilisateur
  *
- * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="fk_Utilisateur_Intervenant1_idx", columns={"idIntervenant"})})
+ * @ORM\Table(name="utilisateur")
  * @ORM\Entity
  */
 
@@ -81,7 +81,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      *
      * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="utilisateurs")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
+     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="id")
      * })
      */
     private $idintervenant;
@@ -95,9 +95,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
     
      /**
      *@ORM\OneToMany(targetEntity="Actualite",mappedBy="utilisateur")
-     
      */
-    
     private $actualites;
     
 
@@ -109,7 +107,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface
      * )
      * @var Message[]|\Doctrine\Common\Collections\Collection
      */
-    protected $message;
+    protected $messages;
     
     /**
      * @ORM\OneToMany(

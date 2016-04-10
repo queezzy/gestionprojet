@@ -7,19 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tache
  *
- * @ORM\Table(name="tache", indexes={@ORM\Index(name="fk_Tache_Projet1_idx", columns={"idProjet"})})
- * @ORM\Entity
+ * @ORM\Table(name="tache")
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\TacheRepository")
  */
 class Tache
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idTache", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idtache;
+    private $id;
 
     /**
      * @var string
@@ -59,17 +59,17 @@ class Tache
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Lot", inversedBy="idtache")
+     * @ORM\ManyToMany(targetEntity="Lot", inversedBy="taches")
      * @ORM\JoinTable(name="tache_lot",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="idTache", referencedColumnName="idTache")
+     *     @ORM\JoinColumn(name="idTache", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idLot", referencedColumnName="idLot")
+     *     @ORM\JoinColumn(name="idLot", referencedColumnName="id")
      *   }
      * )
      */
-    private $idlot;
+    private $lots;
 
     /**
      * Constructor
@@ -81,13 +81,13 @@ class Tache
 
 
     /**
-     * Get idtache
+     * Get id
      *
      * @return integer 
      */
-    public function getIdtache()
+    public function getId()
     {
-        return $this->idtache;
+        return $this->id;
     }
 
     /**

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Courierenvoye
  *
- * @ORM\Table(name="courierenvoye", uniqueConstraints={@ORM\UniqueConstraint(name="CourierEnvoye_UNIQUE", columns={"idIntervenant", "idRessource", "idCourier"})}, indexes={@ORM\Index(name="fk_CourierEnvoye_Intervenant1_idx", columns={"idIntervenant"}), @ORM\Index(name="fk_CourierEnvoye_Ressource1_idx", columns={"idRessource"}), @ORM\Index(name="fk_CourierEnvoye_Courier1_idx", columns={"idCourier"})})
+ * @ORM\Table(name="courierenvoye")
  * @ORM\Entity
  */
 class Courierenvoye
@@ -15,11 +15,11 @@ class Courierenvoye
     /**
      * @var integer
      *
-     * @ORM\Column(name="idCourierEnvoye", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idcourierenvoye;
+    private $id;
 
     /**
      * @var integer
@@ -33,7 +33,7 @@ class Courierenvoye
      *
      * @ORM\ManyToOne(targetEntity="Courier", inversedBy="courierenvoyes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idCourier", referencedColumnName="idCourier")
+     *   @ORM\JoinColumn(name="idCourier", referencedColumnName="id")
      * })
      */
     private $idcourier;
@@ -43,7 +43,7 @@ class Courierenvoye
      *
      * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="courierenvoyes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="idIntervenant")
+     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="id")
      * })
      */
     private $idintervenant;
@@ -51,9 +51,9 @@ class Courierenvoye
     /**
      * @var \Ressource
      *
-     * @ORM\ManyToOne(targetEntity="Ressource", , inversedBy="courierenvoyes")
+     * @ORM\ManyToOne(targetEntity="Ressource", inversedBy="courierenvoyes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idRessource", referencedColumnName="idRessource")
+     *   @ORM\JoinColumn(name="idRessource", referencedColumnName="id")
      * })
      */
     private $idressource;
@@ -61,13 +61,13 @@ class Courierenvoye
 
 
     /**
-     * Get idcourierenvoye
+     * Get id
      *
      * @return integer 
      */
-    public function getIdcourierenvoye()
+    public function getId()
     {
-        return $this->idcourierenvoye;
+        return $this->id;
     }
 
     /**
