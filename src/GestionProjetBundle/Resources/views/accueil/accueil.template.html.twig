@@ -10,6 +10,7 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuAccueil %}class="active"{% endblock %}
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
@@ -150,7 +151,7 @@
 
     <div class="col-md-3">
         <!-- Actualités du projet start -->
-        {{render(controller('GestionProjetBundle:Actualite:getActualites', {'nbre_actualite', 10}))}}
+        {{render(controller('GestionProjetBundle:Actualite:getActualites', {'nbre_actualite':10}))}}
         <!-- Actualités du projet end -->
     </div>
 </div>

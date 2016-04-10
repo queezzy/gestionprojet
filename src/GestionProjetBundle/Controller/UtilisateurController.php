@@ -27,16 +27,22 @@ use GestionProjetBundle\Entity\Ressource;
 class UtilisateurController extends Controller{
 
     
+     /**
+     * @Route("/utilisateurs", name="gestion_projet_utilisateurs_all")
+      *@Method({"GET"})
+     */
     
     public function getAllUsersAction(){
         
-        $userManager = $container->get('fos_user.user_manager');
+        
+        $userManager = $this->container->get('fos_user.user_manager');
         
         try {
             $users=$userManager->findUsers();
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
+        return $this->render("GestionProjetBundle:utilisateurs:utilisateurs.templates.html.twig",array('utilisateurs'=>$users));
     }
     
     

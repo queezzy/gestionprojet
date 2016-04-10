@@ -8,6 +8,8 @@ use GestionProjetBundle\Form\ThemeType;
 use GestionProjetBundle\Entity\Theme;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 class ThemeController extends Controller
 {
     /**
@@ -85,7 +87,7 @@ class ThemeController extends Controller
 
 
 
-            return $this->render('GestionProjetBundle:Theme:list_theme.html.twig');
+            return $this->render('GestionProjetBundle:Theme:liste.theme.html.twig');
         
     }
     
@@ -96,23 +98,22 @@ class ThemeController extends Controller
            $theme_repo = $em->getRepository('GestionProjetBundle:Theme');
             
             try {
-                $themes = $theme_repo->findByStatut(0);
+                $themes = $theme_repo->findByStatut(1);
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             }
 
 
-            return $this->render('GestionProjetBundle:formulaire:list.theme.mini.html.twig',array("themes"=>$themes));
+            return $this->render('GestionProjetBundle:formulaire:liste.theme.mini.html.twig',array("themes"=>$themes));
     }
 
     /**
-     * @Route("/listOneTheme")
+     * @Route("/listOneTheme/{id}",name="gestion_projet_theme_unique",requirements={"id" = "\d+"})
      */
     public function listOneThemeAction(Theme $theme)
     {
         
-        return $this->render('GestionProjetBundle:Theme:list_one_theme.html.twig', array(
-            // ...
+        return $this->render('GestionProjetBundle:actualite:actualite.template.html.twig', array('actualites'=>$theme->getActualites()
         ));
     }
     

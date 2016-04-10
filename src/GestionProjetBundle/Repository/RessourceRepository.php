@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace GestionRessourceBundle\Repository;
+namespace GestionProjetBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 /**

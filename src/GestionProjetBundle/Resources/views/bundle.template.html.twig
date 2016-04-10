@@ -16,48 +16,48 @@
         <div class="col-md-9 col-md-offset-1"> 
             <!-- Menu start -->
             <ul class="nav navbar-nav navbar-left treeview treeview-menu">
-              <li class="active">
-                <a href="#">
+              <li {% block menuAccueil %}{% endblock %}>
+                <a href="{{path("homepage")}}">
                   <i class="fa fa-home"></i> <span>Accueil</span>
                 </a>
               </li>
-              <li>
+              <li {% block menuEvolution %}{% endblock %}>
                 <a href="#">
                   <i class="fa fa-pie-chart"></i>
                   <span>Evolution</span>
                 </a>
               </li>
-              <li>
+              <li {% block menuCalendrier %}{% endblock %}>
                 <a href="#">
                   <i class="fa fa-calendar"></i> 
                   <span>Calendrier</span> 
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li {% block menuActualite %}{% endblock %}>
+                <a href="{{path("gestion_projet_actualite_all")}}">
                   <i class="fa fa-newspaper-o"></i>
                   <span>Actualités</span>
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li {% block menuDocumentation %}{% endblock %}>
+                <a href="{{path("gestion_projet_ressource_all")}}">
                   <i class="fa fa-edit"></i>
                   <span>Documentation</span>
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li {% block menuUtilisateur %}{% endblock %}>
+                <a href="{{path("gestion_projet_utilisateurs_all")}}">
                   <i class="fa fa-users"></i>
                   <span>Utilisateurs</span>
                 </a>
               </li>
-              <li>
+              <li {% block menuCollaboration %}{% endblock %}>
                 <a href="#">
                   <i class="fa fa-comment"></i> 
                   <span>Collaboration</span>
                 </a>
               </li>
-              <li>
+              <li {% block menuIntervenant %}{% endblock %}>
                 <a href="#">
                   <i class="fa fa-coffee"></i> 
                   <span>Intervenants</span>
@@ -74,9 +74,9 @@
           <div class="info dropdown">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li class="center-block center"><bold>{% block contenu %}Admin{% endblock %}</bold></li>
-                    <li><a href="#"><i class="fa fa-eye"></i>Voir profil</a></li>
-                    <li><a href="#"><i class="fa fa-lock"></i>Se déconnecter</a></li>
+                    <li class="center-block center"><bold>{% if app.user.username is defined %}{{app.user.username}}{% endif%}</bold></li>
+                    <li><a href="{{path('fos_user_profile_show')}}"><i class="fa fa-eye"></i>Voir profil</a></li>
+                    <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i>Se déconnecter</a></li>
                 </ul>
           </div>
         </div>

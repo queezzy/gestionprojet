@@ -15,7 +15,7 @@
         <li class="item">
           <div class="row col-md-12">
             <div class="product-img col-md-2">
-              <img src="{{asset(actualite.path)}}" alt="{{{{actualite.titre}}}}"/>
+              <img src="{{asset('uploads/actualites/'~actualite.path)}}" alt="{{actualite.titre}}"/>
             </div>
             <div class="product-img col-md-10">                
                 <div class="product-img col-md-12">
@@ -26,10 +26,10 @@
                 </div>
                 <div class="product-info col-md-12">
                     <p>{{ actualite.description }}</p> 
-                    <p>Date</p> 
+                    <p>publié le : {{ actualite.datepublication | date('d-m-Y') }}</p> 
                 </div>
                 <div class="row product-description col-md-3 pull-right">
-                    <a><i class="fa fa-eye"></i>Voir</a>
+                    <a href="{{path('gestion_projet_actualite_unique',{'id' : actualite.idactualite})}}"><i class="fa fa-eye"></i>Détail</a>
                     <a><i class="fa fa-edit"></i>Modifier</a>
                 </div>
             </div>                      

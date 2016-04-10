@@ -15,11 +15,7 @@ use GestionProjetBundle\Entity\Projet;
 
 class ProjetController extends Controller 
 {
-    /**
-     * @Route("/")
-     * @Template()
-     * @param Request $request
-     */
+    
     public function indexAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
@@ -34,7 +30,7 @@ class ProjetController extends Controller
         $calendriers = array();
         $actualites = array();*/
         //selectionne le seul projet actif
-        $projet = $repositoryProjet->findByOne(array("status" => 1));
+        $projet = $repositoryProjet->findOneBy(array("statut" => 1));
         /*if($projet){
             //intervenants du projet
             $interventions = $projet->getIntervenants();

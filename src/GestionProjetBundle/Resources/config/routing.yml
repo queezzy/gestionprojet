@@ -1,12 +1,12 @@
 gp_index:
     pattern: /
-    defaults: { _controller: GestionProjetBundle:Projet:index }
+    defaults: { _controller: GestionProjetBundle:Default:index }
     options:
         expose: true
 
 gp_accueil:
     pattern: /accueil
-    defaults: { _controller: GestionProjetBundle:Projet:accueil }
+    defaults: { _controller: GestionProjetBundle:Default:index }
     options:
         expose: true
 

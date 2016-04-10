@@ -29,7 +29,7 @@
         <p class="login-box-msg">Authentifiez-vous pour démarrer</p>
         
         {% block fos_user_content %}
-        {% if error %}
+            {% if error is defined%}
             <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
         {% endif %}
         <form action="{{ path("fos_user_security_check") }}" method="post">

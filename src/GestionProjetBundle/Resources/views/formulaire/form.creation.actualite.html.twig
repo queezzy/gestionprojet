@@ -1,4 +1,35 @@
 {# Formulaire de création d'une actualité #}
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+    <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Actualité
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Actualités du projet
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Actualités
+{% endblock %}
+
+{% block contenupage %}
+<div class="box box-primary">
+    <div class="box-header">
+      <h3>Creer une actualité</h3>
+    </div><!-- /.box-header -->
 <form role="form">
     <div class="box-body">
         <div class="row">
@@ -33,3 +64,17 @@
       <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
     </div>
 </form>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script>
+      $(function () {
+        $(".data-table").DataTable();
+      });
+    </script>
+{% endblock %}

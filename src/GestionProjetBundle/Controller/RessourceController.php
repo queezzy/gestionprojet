@@ -87,63 +87,61 @@ class RessourceController extends Controller {
             }
     
     /**
-     * @Route("/ressource/tout", name="gestion_projet_ressource_all")
+     * @Route("/ressources", name="gestion_projet_ressource_all")
       *@Method({"GET"})
      */
     public function getAllRessourcesAction(){
         
-            $em = $this->getDoctrine()->getManager();
-
-            $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+           
             
-            $ressources=$ressources_repo->findAll();
-            
-            
-            render();
+            return $this->render("GestionProjetBundle:documentation:documentation.template.html.twig");
     }
     
-    /**
-     * @Route("/ressource/execution", name="gestion_projet_ressource_execution")
-      *@Method({"GET"})
-     */
-    public function getRessourcesExecutionAction(Request $request){
+    
+    public function getRessourcesExecution(){
         
             $em = $this->getDoctrine()->getManager();
 
             $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
             
-            $ressources=$ressources_repo->findByStatus(0);
+            $ressources=$ressources_repo->findByType(0);
             
-            render();
+            return $this->render("GestionProjetBundle:documentation:liste.documents.executifs.template.html.twig",array("ressources"=>$ressources));
     }
     
-    /**
-     * @Route("/ressource/valides", name="gestion_projet_ressource_valides")
-      *@Method({"GET"})
-     */
-    public function getRessourcesValidesAction(Request $request){
+    
+    public function getRessourcesAdministratifsAction(){
         
             $em = $this->getDoctrine()->getManager();
 
             $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
             
-            $ressources=$ressources_repo->findByStatus(1);
+            $ressources=$ressources_repo->findByType(0);
             
-            render();
+            return $this->render("GestionProjetBundle:formulaire:liste.documents.administratifs.template.html.twig",array("ressources"=>$ressources));
     }
-    /**
-     * @Route("/ressource/nonvalides", name="gestion_projet_ressource_nonvalides")
-      *@Method({"GET"})
-     */
-    public function getRessourcesNonValidesAction(Request $request){
+    
+   
+    public function getRessourcesValidesAction(){
         
             $em = $this->getDoctrine()->getManager();
 
             $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
             
-            $ressources=$ressources_repo->findByStatus(0);
+            $ressources=$ressources_repo->findBy(array('statut'=>1,'type'=>1));
             
-            render();
+            return $this->render("GestionProjetBundle:formulaire:liste.documents.valides.template.html.twig",array("ressources"=>$ressources));
+    }
+    
+    public function getRessourcesNonValidesAction(){
+        
+            $em = $this->getDoctrine()->getManager();
+
+            $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+            
+            $ressources=$ressources_repo->findBy(array('statut'=>0,'type'=>1));
+            
+            return $this->render("GestionProjetBundle:formulaire:liste.documents.nonvalides.template.html.twig",array("ressources"=>$ressources));
     }
     
     /**

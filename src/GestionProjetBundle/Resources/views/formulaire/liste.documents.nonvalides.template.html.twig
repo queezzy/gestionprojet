@@ -17,23 +17,27 @@
       </tr>
     </thead>
     <tbody>
-      
-    {% for documents in liste_documents %}
-      <tr>
-        <td>Trident</td>
-        <td>Internet</td>
-        <td>Win 95+</td>
-        <td> 4</td>
-      </tr>
-    {% else %}
-      <tr>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td> -</td>
-      </tr>
-    {% endfor %}      
-    </tbody>
+
+                {% for ressource in ressources %}
+                    <tr>
+                      <td>ressource.reference</td>
+                     
+                      <td>ressource.path</td>
+                      <td>ressource.description</td>
+                      <td>{% if ressource.idintervenant.nom is defined %}
+                      
+                          ressource.idintervenant.nom
+                      {% endif%}
+                      </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                {% endfor %}    
+              </tbody>
   </table>
 </div><!-- /.box-body -->
 </div>

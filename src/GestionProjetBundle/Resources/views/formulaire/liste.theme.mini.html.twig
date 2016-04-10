@@ -18,9 +18,9 @@
       
     {% for theme in themes %}
       <tr>
-        <td>Trident</td>
-        <td>Internet</td>
-        <td><a class="pull-right"><i class="fa fa-eye"></i>Voir actus</a></td>
+        <td>{{theme.nom}}</td>
+        <td>{{theme.description}}</td>
+        <td><a href="{{path('gestion_projet_theme_unique',{'id':theme.idtheme})}}" class="pull-right"><i class="fa fa-eye"></i>Actus</a></td>
       </tr>
     {% else %}
       <tr>

@@ -6,10 +6,10 @@
         <!-- Block contenu  Start-->
         
         <div class="col-md-12 main-contain">
-     <div>
+     <div class="pull-right">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}" class="glyphicon glyphicon-log-out">
+                <a href="{{ path('fos_user_security_logout') }}" class="fa fa-lock">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a>
             {% else %}

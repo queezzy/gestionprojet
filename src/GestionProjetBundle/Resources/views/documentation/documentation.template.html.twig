@@ -25,50 +25,12 @@
 {% block breadcrumbPosition %}
    Documentation
 {% endblock %}
-
+{% block menuDocumentation %}class="active"{% endblock %}
 {% block contenupage %}
   <!-- Documents administratifs start-->
 <div class="col-md-8">
-    <div class="box box-success">
-        <!-- /.box-header start -->
-      <div class="box-header with-border">
-        <h3 class="box-title">Documents administratifs</h3> <a class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>                     
-      </div>
-        <!-- /.box-header end -->
-
-        <!-- /.box-body start-->
-      <div class="box-body">
-          <table  class="data-table table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Référence</th>
-                    <th>Type</th>
-                    <th>URL</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                {% for intervenant in liste_intervenants %}
-                    <tr>
-                      <td>Trident</td>
-                      <td>Internet</td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td> -</td>
-                    </tr>
-                {% endfor %}    
-              </tbody>
-            </table>
-      </div>
-        <!-- /.box-body end -->
-    </div>
+   
+    {% render(controller("GestionProjetBundle:Ressource:getRessourcesAdministratifs"))%}
 </div>
 <!-- Documents administratifs end-->
 
@@ -102,8 +64,8 @@
                       </tr>
                     </thead>
                     <tbody>
-
-                    <!--{% for courrierR in liste_courrierE %}-->
+                        
+                    {#<!--{% for courrierR in liste_courrierE %}-->
                         <tr>
                           <td>Trident</td>
                           <td>Internet</td>
@@ -117,7 +79,7 @@
                       <td>-</td>
                       <td> -</td>
                     </tr>
-                  <!--{% endfor %} -->     
+                  <!--{% endfor %} -->  #}   
                   </tbody>
                 </table>
               </div>
@@ -144,7 +106,7 @@
                     </thead>
                     <tbody>
 
-                    <!--{% for courrierR in liste_courrierR %}-->
+                   {# <!--{% for courrierR in liste_courrierR %}-->
                         <tr>
                           <td>Trident</td>
                           <td>Internet</td>
@@ -158,7 +120,7 @@
                           <td>-</td>
                           <td> -</td>
                         </tr>
-                  <!--{% endfor %} -->     
+                  <!--{% endfor %} -->#}     
                   </tbody>
                 </table>
               </div>
@@ -181,87 +143,9 @@
 
         <!-- /.box-body start-->
       <div class="box-body">
-          <div class="box box-primary">
-                <!-- /.box-header start -->
-              <div class="box-header with-border">
-                <h3 class="box-title">Validés</h3>                      
-              </div>
-                <!-- /.box-header end -->
+          {% render(controller("GestionProjetBundle:Ressource:getRessourcesValides"))%}
 
-                <!-- /.box-body start-->
-              <div class="box-body">
-                  <table  class="data-table table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Référence</th>
-                        <th>Type</th>
-                        <th>URL</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    <!--{% for docV in liste_docV %}-->
-                        <tr>
-                          <td>Trident</td>
-                          <td>Internet</td>
-                          <td>Win 95+</td>
-                          <td> 4</td>
-                        </tr>
-                    <!--{% else %}-->
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td> -</td>
-                    </tr>
-                  <!--{% endfor %} -->     
-                  </tbody>
-                </table>
-              </div>
-                <!-- /.box-body end -->
-          </div>
-
-          <div class="box box-primary">
-                <!-- /.box-header start -->
-              <div class="box-header with-border">
-                <h3 class="box-title">Non validés</h3>                      
-              </div>
-                <!-- /.box-header end -->
-
-                <!-- /.box-body start-->
-              <div class="box-body">
-                  <table  class="data-table table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Référence</th>
-                        <th>Type</th>
-                        <th>URL</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    <!--{% for docNV in liste_docNV %}-->
-                        <tr>
-                          <td>Trident</td>
-                          <td>Internet</td>
-                          <td>Win 95+</td>
-                          <td> 4</td>
-                        </tr>
-                    <!--{% else %}-->
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td> -</td>
-                    </tr>
-                  <!--{% endfor %} -->     
-                  </tbody>
-                </table>
-              </div>
-                <!-- /.box-body end -->
-          </div>
+          {% render(controller("GestionProjetBundle:Ressource:getRessourcesNonValides"))%}
       </div>
         <!-- /.box-body end -->
     </div>

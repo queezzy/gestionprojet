@@ -49,16 +49,15 @@
     </thead>
     <tbody>
       
-    {% for utilisateur in liste_utilisateurs %}
+    {% for utilisateur in utilisateurs %}
       <tr>
-        <td>Trident</td>
-        <td>Internet
-          Explorer 4.0</td>
-        <td>Win 95+</td>
-        <td> 4</td>
-        <td>X</td>
-        <td> 4</td>
-        <td> 4</td>
+        <td><img src="{{asset('uploads/profils/'~utilisateur.path)}}" alt="{{utilisateur.nom}}"/></td>
+        <td>{{utilisateur.nom}}</td>
+        <td>{{utilisateur.prenom}}</td>
+        <td>{{utilisateur.fonction}}</td>
+        <td>{{utilisateur.idintervenant}}</td>
+        <td>{{utilisateur.email}}</td>
+        <td>{{utilisateur.telephone}}</td>
         <td><a><i class="fa fa-eye"></i>Voir</a></td>
       </tr>
     {% else %}

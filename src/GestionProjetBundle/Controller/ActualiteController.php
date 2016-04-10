@@ -123,7 +123,7 @@ class ActualiteController extends Controller {
             $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
             
             try {
-                $actualites = $actu_repo->findBy(array("statut"=>1), "datedebut", $nbre_actualite);
+                $actualites = $actu_repo->findBy(array("statut"=>1),null, $nbre_actualite);
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             }
