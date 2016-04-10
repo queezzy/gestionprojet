@@ -35,15 +35,12 @@
         <!-- Actualité end-->
     </div>
     <!-- Thèmes start-->
-        <div class="col-sm-4">                  
-          <div class="box box-primary">
-              <div class="box-header">
-                  <h3>Thèmes</h3>
-              </div><!-- /.box-header -->
-              <div class="box-body">
 
-              </div>
-          </div>
+    <!-- Actualité end-->
+
+    <!-- Thèmes start controleur qui affiche la liste des themes-->
+        <div class="col-sm-4">                  
+          {{render(controller("GestionProjetBundle:Theme:getAllTheme"))}}
         </div>
     <!-- Thèmes end-->
 </div>

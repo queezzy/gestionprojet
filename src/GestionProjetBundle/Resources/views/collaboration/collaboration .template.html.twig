@@ -31,49 +31,7 @@
         
 <!-- Historique start-->
 <div class="col-sm-4">                  
-    <div class="box box-primary">
-        <div class="box-header">
-          <h3>Historique</h3>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <table id="example1" class="table table-bordered table-striped">
-
-            <tbody>
-                {% for historique in liste_historiques %}
-                    <tr>
-                        <td class="item">
-                            <div class="product-img col-md-2">
-                              <img src="{{asset('images/default-50x50.gif')}}" alt="logo"/>
-                            </div>
-                            <div class="product-info col-md-10">
-                              <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
-                              <div class="product-description">
-                                Samsung 32" 1080p 60Hz LED Smart HDTV.
-                              </div>
-                            </div>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td class="item">
-                            <div class="product-img col-md-2">
-                              <img src="{{asset('images/default-50x50.gif')}}" alt="logo"/>
-                            </div>
-                            <div class="product-info col-md-10">
-                              <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
-                              <div class="product-description">
-                                Samsung 32" 1080p 60Hz LED Smart HDTV.
-                              </div>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}   
-              
-            </tbody>
-
-          </table>
-        </div><!-- /.box-body -->
-      </div>
+    {{render(controller('GestionProjetBundle:Actualite:getActualites', {'nbre_actualite', 10}))}}
 </div>
 <!-- Historique end-->
 
@@ -100,7 +58,7 @@
                   </div>
                   <div class="col-sm-4">
                       <label>Destinataires</label>
-                      <select class="form-control" MULTIPLE>
+                      <select class="form-control multiselect" multiple="multiple">
                           {% for destinataire in liste_destinataires %}
                             <option>Dest. 1</option>
                           {% else %}
