@@ -15,7 +15,11 @@ use Doctrine\ORM\EntityRepository;
  * @author TONYE
  */
 class CalendrierRepository extends EntityRepository {
+    
+    
     //put your code here
+    
+    
     public function deleteCalendrier(\GestionProjetBundle\Entity\Calendrier $calendrier) {
         $em= $this->_em;
         $calendrier->setStatut(0);
@@ -60,4 +64,28 @@ class CalendrierRepository extends EntityRepository {
             throw $ex;
         }
     }
+    
+    
+    public function getEvent($from,$to) {
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('e')
+                ->from('GestionProjetBundle:Calendrier', 'e')
+                //->join('f.adresse', 'a')
+                ->where("1=1");
+                
+        if ($from != null and $to !=null) {
+
+            $qb->andWhere('e.datedebut between :deb and :fin')
+                    ->setParameter('deb', $from)
+                    ->setParameter('fin', $to);
+        }
+        
+
+        var_dump($qb->getQuery());
+        return
+                        $qb->getQuery()
+                        ->getResult();
+    }
+
 }

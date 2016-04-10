@@ -23,12 +23,11 @@ class CalendarEventListener {
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        echo("biiiiiiiiiiiiiiiiiiiiiiiiiiiiiiitch");
+       
     }
 
     public function loadEvents(CalendarEvent $calendarEvent)
     {
-        echo("bizzzzzzzzzzzzzzzzzzziiiiiiitch");
         $startDate = $calendarEvent->getStartDatetime();
         $endDate = $calendarEvent->getEndDatetime();
 

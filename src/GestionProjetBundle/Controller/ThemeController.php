@@ -88,6 +88,22 @@ class ThemeController extends Controller
             return $this->render('GestionProjetBundle:Theme:list_theme.html.twig');
         
     }
+    
+    public function getAllThemeAction(){
+        
+        $em = $this->getDoctrine()->getManager();
+
+           $theme_repo = $em->getRepository('GestionProjetBundle:Theme');
+            
+            try {
+                $themes = $theme_repo->findByStatut(0);
+            } catch (Exception $exc) {
+                echo $exc->getTraceAsString();
+            }
+
+
+            return $this->render('GestionProjetBundle:formulaire:list.theme.mini.html.twig',array("themes"=>$themes));
+    }
 
     /**
      * @Route("/listOneTheme")

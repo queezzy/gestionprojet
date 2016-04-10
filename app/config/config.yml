@@ -82,3 +82,6 @@ fos_message:
     thread_class: GestionProjetBundle\Entity\Thread
     message_class: GestionProjetBundle\Entity\Message
     #spam_detector: fos_message.akismet_spam_detector
+    
+fos_js_routing:
+    routes_to_expose: [projet_calendrier_events]

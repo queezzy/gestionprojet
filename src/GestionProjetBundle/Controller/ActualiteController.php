@@ -15,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \GestionProjetBundle\Form\ActualiteType;
 use \GestionProjetBundle\Entity\Actualite;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 /**
  * Description of ActualiteController
  *
@@ -87,9 +89,19 @@ class ActualiteController extends Controller {
     
             }
     
-    
+    /**
+     * @Route("/actualites", name="gestion_projet_actualite_all")
+      *@Method({"GET"})
+     */
     public function getAllActualitesAction(){
         
+            return $this->render('GestionProjetBundle:actualite:actualite.template.html.twig');
+        }        
+    
+    public function getActualitesAction($nbre_actualite=0){
+        
+        if($nbre_actualite == 0){
+            
             $em = $this->getDoctrine()->getManager();
 
             $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
@@ -103,20 +115,26 @@ class ActualiteController extends Controller {
 
 
             return $this->render('GestionProjetBundle:formulaire:liste.actualite.template.html.twig',array("actualites"=>$actualites));
+    
+            
+        }else{
+             $em = $this->getDoctrine()->getManager();
+
+            $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
+            
+            try {
+                $actualites = $actu_repo->findBy(array("statut"=>1), "datedebut", $nbre_actualite);
+            } catch (Exception $exc) {
+                echo $exc->getTraceAsString();
+            }
+
+
+
+            return $this->render('GestionProjetBundle:formulaire:liste.actualite.mini.html.twig',array("actualites"=>$actualites));
+    
+        } 
     }
     
-     /**
-     * @Route("/actualites", name="gestion_projet_actualite_all")
-      *@Method({"GET"})
-     */
-    public function getActualitesAction(){
-        
-            
-
-
-
-            return $this->render('GestionProjetBundle:actualite:actualite.template.html.twig');
-    }
     
      /**
      * @Route("/actualite/{id}", name="gestion_projet_actualite_unique",requirements={"id" = "\d+"})
@@ -124,7 +142,8 @@ class ActualiteController extends Controller {
      */
     
     public function getOneActualiteAction(Actualite $actualite){
-        render();
+        
+        return $this->render('GestionProjetBundle:formulaire:form.affichage.actualite.html.twig',array("actualite"=>$actualite));
     }
     
      /**

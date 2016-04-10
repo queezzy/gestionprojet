@@ -27,6 +27,8 @@ class Calendrier
      * @ORM\Column(name="statut", type="integer", nullable=false)
      */
     private $statut;
+    
+    
 
    
      /**
@@ -56,6 +58,13 @@ class Calendrier
      * @ORM\Column(name="description", type="string", nullable=false)
      */
     private $description;
+    
+     /**
+     * @var text
+     *
+     * @ORM\Column(name="type", type="string", nullable=false)
+     */
+    private $type;
     
     
      /**
@@ -214,5 +223,28 @@ class Calendrier
     public function getEvenementlongueperiode()
     {
         return $this->evenementlongueperiode;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Calendrier
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

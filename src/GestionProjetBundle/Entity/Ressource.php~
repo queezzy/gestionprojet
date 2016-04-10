@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Ressource
  *
  * @ORM\Table(name="ressource", indexes={@ORM\Index(name="fk_Ressource_Intervenant1_idx", columns={"idIntervenant"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\RessourceRepository")
  */
 class Ressource
 {
