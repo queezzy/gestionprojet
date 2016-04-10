@@ -30,10 +30,19 @@ ul.nav {
 }
 
 ul.nav li {
-    font-size : 1.3em;
+    font-size : 1em;
     font-weight: bold;
-    background-color: #1B4F08;
-    color: #fff;
+    color: #fff ;
+}
+
+ul.nav li.active {
+   background-color: #1B4F08 !important;
+   color: #ecf0f5 !important;
+}
+
+ul.nav li.active a{
+   background-color: #1B4F08 !important;
+   color: #ecf0f5 !important;
 }
 
 ul.nav li:hover{
@@ -45,10 +54,11 @@ ul.nav li a:hover {
     color: #1B4F08 !important;
 }
 
-ul.nav li.active {
-   color:  #1B4F08 !important;
-   font-weight: bold;
+ul.nav li.active a:hover{
+   background-color: #1B4F08 !important;
+   color: #ecf0f5 !important;
 }
+
 
 .navbar {
     margin-bottom: 0 !important;

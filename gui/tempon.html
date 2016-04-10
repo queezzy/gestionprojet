@@ -6,9 +6,11 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="plugin/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
     
     <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <link href="css/style1.css" rel="stylesheet" type="text/css" />
@@ -40,7 +42,7 @@
                     <ul class="nav navbar-nav navbar-left treeview treeview-menu">
                       <li class="active">
                         <a href="#">
-                          <i class="fa fa-dashboard"></i> <span>Accueil</span>
+                          <i class="fa fa-home"></i> <span>Accueil</span>
                         </a>
                       </li>
                       <li>
@@ -51,37 +53,37 @@
                       </li>
                       <li>
                         <a href="#">
-                          <i class="fa fa-th"></i> 
+                          <i class="fa fa-calendar"></i> 
                           <span>Calendrier</span> 
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <i class="fa fa-pie-chart"></i>
+                          <i class="fa fa-newspaper-o"></i>
                           <span>Actualités</span>
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <i class="fa fa-laptop"></i>
+                          <i class="fa fa-edit"></i>
                           <span>Documentation</span>
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <i class="fa fa-edit"></i>
+                          <i class="fa fa-users"></i>
                           <span>Utilisateurs</span>
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <i class="fa fa-table"></i> 
+                          <i class="fa fa-comment"></i> 
                           <span>Collaboration</span>
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <i class="fa fa-calendar"></i> 
+                          <i class="fa fa-coffee"></i> 
                           <span>Intervenants</span>
                         </a>
                       </li>
@@ -119,49 +121,42 @@
 
           <!-- Main content Start-->
           <section class="content">
-            <div class="row">
+            <div class="row col-md-12">
                 <!--div class=""-->
+                
                 <!-- Test contain start-->
                 
-                <form role="form">
+<div class="box box-primary">
+    <div class="box-header">
+        <h3>Ressource</h3>
+    </div><!-- /.box-header -->
     <div class="box-body">
-        <div class="row">
-            <div class="col-md-12">
-                
-                <div class="form-group">
-                    <label for="">Titre</label>
-                    <input type="text" class="form-control" id="" placeholder="Titre évènement">
+        <div class="row col-md-12">
+            <div class="product-img col-md-12">
+                <div class="product-img col-md-2">
+                    <img src="dist/img/default-50x50.gif" alt="Logo intervenant"/>
+                    <h4>Nom intervenant</h4>
                 </div>
-                <div class="form-group">
-                    <label>Date de début</label>
-                    <div class="input-group">
-                      <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                      <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
-                    </div><!-- /.input group -->
+                <div class="product-img col-md-2">
+                    <h4>Reférence</h4>
                 </div>
-                <div class="form-group">
-                    <label>Date de fin</label>
-                    <div class="input-group">
-                      <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                      <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
-                    </div><!-- /.input group -->
+                <div class="product-img col-md-2">
+                    <h4>Type</h4>
                 </div>
-                <div class="form-group">
-                    <label for="">Description</label>
-                    <input type="text" class="form-control" id="" placeholder="URL">
+                <div class="product-img col-md-2">
+                    <h4>URL</h4>
                 </div>
             </div>
+            <div class="product-info col-md-12">
+                <p>Description</p>                
+            </div>            
         </div>
     </div>
     <div class="box-footer">
-      <button type="reset" class="btn btn-danger pull-left">Annuler</button>
-      <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+      <button class="btn btn-success pull-right">Modifier</button>
+      <button class="btn btn-danger pull-left">Supprimer</button>
     </div>
-</form>
+</div>
                 
                 <!-- Test contain end-->
                 
@@ -196,7 +191,8 @@
     <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
     <script src="plugins/input-mask/jquery.inputmask.js"></script>
     <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>    
+    <script src="plugin/datepicker/bootstrap-datepicker.js"></script>
     <script>
       $(function () {
         // Replace the <textarea id="ckeditor"> with a CKEditor
