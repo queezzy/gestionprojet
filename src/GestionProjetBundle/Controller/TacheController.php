@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class TacheController extends Controller 
 {
     
+    //put your code here
     /**
      * @Route("/taches")
      * @Template()
@@ -60,7 +61,7 @@ class TacheController extends Controller
                        $repositoryTache->saveTache($tache);
                        $message = $this->get('translator')->trans('Tache.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_tache_admin'));
+                       return $this->redirect($this->generateUrl('gp_tache'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Tache.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
@@ -84,20 +85,16 @@ class TacheController extends Controller
     }
     
     /**
-     * @Route("/update-tache")
+     * @Route("/update-tache/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function updatetacheAction(Request $request){
+    public function updatetacheAction(Tache $tache){
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
-        $tache = new Tache();
-        $idtache = htmlspecialchars(trim($request->request->get('tache[id]')));            
+        }*/          
         $repositoryTache = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Tache");
-        $id = (int)$idtache;
-        $tache = $repositoryTache->find(4);
         $form = $this->createForm(new TacheType(), $tache); 
+        $request = $this->get("request");
         $form->handleRequest($request);
         $user = $this->getUser();
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -107,7 +104,7 @@ class TacheController extends Controller
                        $repositoryTache->updateTache($tache);
                        $message = $this->get('translator')->trans('Tache.updated_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_tache_admin'));
+                       return $this->redirect($this->generateUrl('gp_tache'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Tache.updated_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
@@ -138,7 +135,7 @@ class TacheController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
         $request = $this->get("request");
-        $user = new Utilisateur();
+        //$user = new Utilisateur();
         $response = new JsonResponse();
         $repositoryTache = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Tache");
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -170,14 +167,11 @@ class TacheController extends Controller
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
-        //$repositoryTache = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Tache");
-        //$idtache = htmlspecialchars(trim($id));
-        //$tache = $repositoryTache->find($idtache);
         $request = $this->get("request");
          $form = $this->createForm(new TacheType(), $tache);
         $form->handleRequest($request);
  
-        return $this->render('GestionProjetBundle:Tache:form.tache.html.twig', array('form' => $form->createView()));
+        return $this->render('GestionProjetBundle:Tache:form.tache.html.twig', array('form' => $form->createView(), "idtache" => $tache->getId()));
     }
     
 

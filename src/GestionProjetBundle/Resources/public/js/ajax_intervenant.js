@@ -112,7 +112,7 @@ function execute_delete_intervenant(id_intervenant) {
             $('#loader-edit-delete'+id_intervenant).hide();
             var child = "";
             var lignetable = "";
-                if (data[0].letype === "success") {
+                if (data.letype === "sucess") {
                     $('#lignetable' + id_intervenant).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +
                             '<a href="#" class="close" data-dismiss="alert">&times;</a>'

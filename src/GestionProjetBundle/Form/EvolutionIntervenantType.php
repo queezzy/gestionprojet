@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CourierType extends AbstractType
+class IntervenantType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,11 +15,8 @@ class CourierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           // ->add('type')
-           // ->add('date', 'datetime')
-            ->add('objet')
-            ->add('statut')
-            ->add('emetteur')
+            ->add('evolutionattendu')
+            ->add('evolutionencours')
         ;
     }
     
@@ -29,7 +26,7 @@ class CourierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GestionProjetBundle\Entity\Courier'
+            'data_class' => 'GestionProjetBundle\Entity\Intervenant'
         ));
     }
 }

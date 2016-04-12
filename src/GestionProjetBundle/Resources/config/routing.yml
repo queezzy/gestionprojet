@@ -4,6 +4,12 @@ gp_index:
     options:
         expose: true
 
+gp_header_projet_actif:
+    pattern: /header-projet-actif
+    defaults: { _controller: GestionProjetBundle:Projet:headerprojetactif }
+    options:
+        expose: true
+
 gp_accueil:
     pattern: /accueil
     defaults: { _controller: GestionProjetBundle:Default:accueil }
@@ -23,7 +29,7 @@ gp_projet_add:
         expose: true
         
 gp_projet_update:
-    pattern: /update-projet
+    pattern: /update-projet/{id}
     defaults: { _controller: GestionProjetBundle:Projet:updateprojet }
     options:
         expose: true
@@ -53,8 +59,14 @@ gp_intervenant_add:
         expose: true
 
 gp_intervenant_update:
-    pattern: /update-intervenant
+    pattern: /update-intervenant/{id}
     defaults: { _controller: GestionProjetBundle:Intervenant:updateintervenant }
+    options:
+        expose: true
+        
+gp_intervenant_get:
+    pattern: /get-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Intervenant:getintervenant }
     options:
         expose: true
         
@@ -77,8 +89,14 @@ gp_tache_add:
         expose: true
 
 gp_tache_update:
-    pattern: /update-tache
+    pattern: /update-tache/{id}
     defaults: { _controller: GestionProjetBundle:Tache:updatetache }
+    options:
+        expose: true
+        
+gp_tache_get:
+    pattern: /get-tache/{id}
+    defaults: { _controller: GestionProjetBundle:Tache:gettache }
     options:
         expose: true
         
@@ -101,8 +119,14 @@ gp_lot_add:
         expose: true
 
 gp_lot_update:
-    pattern: /update-lot
+    pattern: /update-lot/{id}
     defaults: { _controller: GestionProjetBundle:Lots:updatelot }
+    options:
+        expose: true
+        
+gp_lot_get:
+    pattern: /get-lot/{id}
+    defaults: { _controller: GestionProjetBundle:Lot:getlot }
     options:
         expose: true
         
@@ -125,13 +149,49 @@ gp_courier_add:
         expose: true
 
 gp_courier_update:
-    pattern: /update-courier
+    pattern: /update-courier/{id}
     defaults: { _controller: GestionProjetBundle:Courier:updatecourier }
+    options:
+        expose: true
+        
+gp_courier_get:
+    pattern: /get-courier/{id}
+    defaults: { _controller: GestionProjetBundle:Courier:getcourier }
     options:
         expose: true
         
 gp_courier_delete:
     pattern: /delete-courier
     defaults: { _controller: GestionProjetBundle:Courier:deletecourier }
+    options:
+        expose: true
+        
+gp_evolution:
+    pattern: /evolutions
+    defaults: { _controller: GestionProjetBundle:Evolution:evolutions }
+    options:
+        expose: true
+        
+gp_evolution_intervenant_update:
+    pattern: /update-evolution-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Evolution:updateevolution_intervenant }
+    options:
+        expose: true
+        
+gp_evolution_intervenant_get:
+    pattern: /get-evolution-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Evolution:getevolution_intervenant }
+    options:
+        expose: true
+        
+gp_evolution_projet_get:
+    pattern: /get-evolution-projet/{id}
+    defaults: { _controller: GestionProjetBundle:Evolution:getprojet_intervenant }
+    options:
+        expose: true
+
+gp_evolution_projet_update:
+    pattern: /update-evolution-projet/{id}
+    defaults: { _controller: GestionProjetBundle:Intervenant:updateevolution_projet }
     options:
         expose: true

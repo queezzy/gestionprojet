@@ -8,18 +8,7 @@ $('#close_form').click(function (e) {
     e.preventDefault();
     window.location.replace(Routing.generate('gp_courier'));
 });
-/*('#form_courier').submit(function (e) {
-    e.preventDefault();
-    $('#myAlert').remove();
-    var donnees = $(this).serialize();
-    if ($('#courier_id').val() === "") {
-        $.ajax({
-            type: 'post',
-            url: Routing.generate('gp_courier_add'),
-            data: donnees
-        });
-    } 
-});*/
+
 
 function edit_courier(id_courier, gp_route) {
     $('#myAlert').remove();
@@ -34,44 +23,6 @@ function edit_courier(id_courier, gp_route) {
         $('#loader-edit-delete'+id_courier).hide();
         $('#block_table_couriers').hide();
         $('#block_form_courier').show();
-        /*$('#form_courier').submit(function (e){
-            var id_courier = parseInt($('#courier_id').val());
-            e.preventDefault();
-            $('#myAlert').remove();
-            var donnees = $(this).serialize();
-            $.ajax({
-                type: 'post',
-                data: donnees,
-                //la route pour faire le update by id
-                url: Routing.generate(gp_route, {id: id_courier}),
-                dataType: 'json',
-                beforeSend: function () {
-                    $('#actions').hide();
-                    $('#loader').show();
-                },
-                success: function (data, textStatus, jqXHR) {
-                    var child = "";
-                        if (data.letype === "error") {
-                            $('#actions').show();
-                            $('#loader').hide();
-                            child += '<div id="myAlert" class="alert alert-danger">' +
-                                    '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                                    + data.message +
-                                    '</div>';
-                            $('#message_courier').html(child);
-                        }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $('#actions').show();
-                    $('#loader').hide();
-                    var child = '<div id="myAlert" class="alert alert-danger">' +
-                            '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                            + 'EXCEPTION' +
-                            '</div>';
-                    $('#message_courier').append(child);
-                }
-            });
-        });*/
         $('#close_form').click(function (e) {
             e.preventDefault();
             window.location.replace(Routing.generate('gp_courier'));
@@ -112,7 +63,7 @@ function execute_delete_courier(id_courier) {
             $('#loader-edit-delete'+id_courier).hide();
             var child = "";
             var lignetable = "";
-                if (data[0].letype === "success") {
+                if (data.letype === "sucess") {
                     $('#lignetable' + id_courier).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +
                             '<a href="#" class="close" data-dismiss="alert">&times;</a>'

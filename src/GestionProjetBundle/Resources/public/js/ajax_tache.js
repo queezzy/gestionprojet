@@ -8,18 +8,6 @@ $('#close_form').click(function (e) {
     e.preventDefault();
     window.location.replace(Routing.generate('gp_tache'));
 });
-/*('#form_tache').submit(function (e) {
-    e.preventDefault();
-    $('#myAlert').remove();
-    var donnees = $(this).serialize();
-    if ($('#tache_id').val() === "") {
-        $.ajax({
-            type: 'post',
-            url: Routing.generate('gp_tache_add'),
-            data: donnees
-        });
-    } 
-});*/
 
 function edit_tache(id_tache, gp_route) {
     $('#myAlert').remove();
@@ -34,44 +22,6 @@ function edit_tache(id_tache, gp_route) {
         $('#loader-edit-delete'+id_tache).hide();
         $('#block_table_taches').hide();
         $('#block_form_tache').show();
-        /*$('#form_tache').submit(function (e){
-            var id_tache = parseInt($('#tache_id').val());
-            e.preventDefault();
-            $('#myAlert').remove();
-            var donnees = $(this).serialize();
-            $.ajax({
-                type: 'post',
-                data: donnees,
-                //la route pour faire le update by id
-                url: Routing.generate(gp_route, {id: id_tache}),
-                dataType: 'json',
-                beforeSend: function () {
-                    $('#actions').hide();
-                    $('#loader').show();
-                },
-                success: function (data, textStatus, jqXHR) {
-                    var child = "";
-                        if (data.letype === "error") {
-                            $('#actions').show();
-                            $('#loader').hide();
-                            child += '<div id="myAlert" class="alert alert-danger">' +
-                                    '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                                    + data.message +
-                                    '</div>';
-                            $('#message_tache').html(child);
-                        }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $('#actions').show();
-                    $('#loader').hide();
-                    var child = '<div id="myAlert" class="alert alert-danger">' +
-                            '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                            + 'EXCEPTION' +
-                            '</div>';
-                    $('#message_tache').append(child);
-                }
-            });
-        });*/
         $('#close_form').click(function (e) {
             e.preventDefault();
             window.location.replace(Routing.generate('gp_tache'));
@@ -112,7 +62,7 @@ function execute_delete_tache(id_tache) {
             $('#loader-edit-delete'+id_tache).hide();
             var child = "";
             var lignetable = "";
-                if (data[0].letype === "success") {
+                if (data.letype === "sucess") {
                     $('#lignetable' + id_tache).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +
                             '<a href="#" class="close" data-dismiss="alert">&times;</a>'

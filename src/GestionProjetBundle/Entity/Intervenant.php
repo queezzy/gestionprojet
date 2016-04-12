@@ -3,10 +3,8 @@
 namespace GestionProjetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-
-
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -14,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="intervenant")
  * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\IntervenantRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Intervenant
 {
@@ -520,7 +519,7 @@ class Intervenant
      * Set path
      *
      * @param string $path
-     * @return Intervenant
+     * @return Ressource
      */
     public function setPath($path)
     {
@@ -566,7 +565,7 @@ class Intervenant
     }
 
      protected function getUploadRootDir() {
-        return __DIR__ . '/../../../../web/uploads/intervenants';
+        return __DIR__ . '/../../../web/uploads/intervenants';
     }
 
 

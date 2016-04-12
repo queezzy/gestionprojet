@@ -17,12 +17,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class LotController extends Controller 
 {
     
+   //put your code here
     /**
      * @Route("/lots")
      * @Template()
      * @param Request $request
      */
-    public function lotAction(Request $request) {
+    public function lotsAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -60,7 +61,7 @@ class LotController extends Controller
                        $repositoryLot->saveLot($lot);
                        $message = $this->get('translator')->trans('Lot.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_lot_admin'));
+                       return $this->redirect($this->generateUrl('gp_lot'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Lot.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
@@ -84,20 +85,16 @@ class LotController extends Controller
     }
     
     /**
-     * @Route("/update-lot")
+     * @Route("/update-lot/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function updatelotAction(Request $request){
+    public function updatelotAction(Lot $lot){
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
-        $lot = new Lot();
-        $idlot = htmlspecialchars(trim($request->request->get('lot[id]')));            
+        }*/          
         $repositoryLot = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Lot");
-        $id = (int)$idlot;
-        $lot = $repositoryLot->find(4);
         $form = $this->createForm(new LotType(), $lot); 
+        $request = $this->get("request");
         $form->handleRequest($request);
         $user = $this->getUser();
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -107,7 +104,7 @@ class LotController extends Controller
                        $repositoryLot->updateLot($lot);
                        $message = $this->get('translator')->trans('Lot.updated_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_lot_admin'));
+                       return $this->redirect($this->generateUrl('gp_lot'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Lot.updated_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
@@ -138,7 +135,7 @@ class LotController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
         $request = $this->get("request");
-        $user = new Utilisateur();
+       // $user = new Utilisateur();
         $response = new JsonResponse();
         $repositoryLot = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Lot");
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -170,15 +167,13 @@ class LotController extends Controller
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
-        //$repositoryLot = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Lot");
-        //$idlot = htmlspecialchars(trim($id));
-        //$lot = $repositoryLot->find($idlot);
         $request = $this->get("request");
          $form = $this->createForm(new LotType(), $lot);
         $form->handleRequest($request);
  
-        return $this->render('GestionProjetBundle:Lot:form.lot.html.twig', array('form' => $form->createView()));
+        return $this->render('GestionProjetBundle:Lot:form.lot.html.twig', array('form' => $form->createView(), "idlot" => $lot->getId()));
     }
+    
     
 
 }

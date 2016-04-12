@@ -43,7 +43,7 @@
         <div id="message_success">
         <div id="myAlert" class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
-            {% for flash_message in app.session.flashbag.get('message_success') %}
+            {% for flash_message in app.session.flashbag.get('message_delete_failure') %}
                 {{ flash_message }}
         {% endfor %}
         </div>

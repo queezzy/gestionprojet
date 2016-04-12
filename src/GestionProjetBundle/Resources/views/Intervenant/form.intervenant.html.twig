@@ -1,7 +1,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Ajout d'un intervenant</h2>
+                <h2>Modification d'un intervenant</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -10,10 +10,11 @@
             </div>
             <div class="x_content">
                 
-                <form id="form_intervenant" class="form-horizontal form-label-left" novalidate>
+                <form id="form_intervenant" method="post" action = "{{ path('gp_intervenant_update',{'id' : idintervenant})}}" class="form-horizontal form-label-left" novalidate>
                     <span class="section">Informations sur l'intervenant</span>
                     <div class="item form-group">
                         <input id="idintervenant" value="" name="idintervenant" type="hidden">
+                        {{form_widget(form._token)}}
                     </div>
 
                     <div class="item form-group">           
@@ -132,8 +133,16 @@
                         </div>
                     </div>
                     										
+                    {% if app.session.flashbag.get('message_failure') %}										
                     <div id="message_intervenant">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
                     </div> 
+                    {% endif %}
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">

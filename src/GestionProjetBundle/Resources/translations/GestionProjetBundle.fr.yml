@@ -1,4 +1,4 @@
-Intervention:
+Intervenant:
     access_denied: Vous n'avez des droits requis pour effectuer cette action.
     exist_already: Un intervenant avec cet email existe déjà.
     created_success: Intervenant créé avec success.

@@ -19,7 +19,7 @@ class TacheType extends AbstractType
             ->add('datedebut', 'date')
             ->add('datefin', 'date')
             ->add('description')
-            ->add('statut')
+            //->add('statut')
             ->add('idprojet', 'entity', array(
                 'class' => 'GestionProjetBundle:Projet',
                 'property' => 'code',

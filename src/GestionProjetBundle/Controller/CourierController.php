@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class CourierController extends Controller 
 {
     
+    //put your code here
     /**
      * @Route("/couriers")
      * @Template()
@@ -32,10 +33,11 @@ class CourierController extends Controller
         $repositoryCourier = $em->getRepository("GestionProjetBundle:Courier");
         $courier = new Courier();
         $form = $this->createForm(new CourierType(), $courier);
+        $display_tab = 1;
         //selectionne le seul courier actif
         $couriers = $repositoryCourier->findBy(array("statut" => 1));
         
-        return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'form' => $form->createView()));
+        return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'form' => $form->createView(), "display_tab" => $display_tab));
     }
     
     /**
@@ -59,7 +61,7 @@ class CourierController extends Controller
                        $repositoryCourier->saveCourier($courier);
                        $message = $this->get('translator')->trans('Courier.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_courier_admin'));
+                       return $this->redirect($this->generateUrl('gp_courier'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Courier.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
@@ -83,20 +85,16 @@ class CourierController extends Controller
     }
     
     /**
-     * @Route("/update-courier")
+     * @Route("/update-courier/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function updatecourierAction(Request $request){
+    public function updatecourierAction(Courier $courier){
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
-        $courier = new Courier();
-        $idcourier = htmlspecialchars(trim($request->request->get('courier[id]')));            
+        }*/          
         $repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
-        $id = (int)$idcourier;
-        $courier = $repositoryCourier->find(4);
         $form = $this->createForm(new CourierType(), $courier); 
+        $request = $this->get("request");
         $form->handleRequest($request);
         $user = $this->getUser();
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -106,7 +104,7 @@ class CourierController extends Controller
                        $repositoryCourier->updateCourier($courier);
                        $message = $this->get('translator')->trans('Courier.updated_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_courier_admin'));
+                       return $this->redirect($this->generateUrl('gp_courier'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Courier.updated_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
@@ -137,7 +135,7 @@ class CourierController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
         $request = $this->get("request");
-        $user = new Utilisateur();
+        //$user = new Utilisateur();
         $response = new JsonResponse();
         $repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -169,15 +167,13 @@ class CourierController extends Controller
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
-        //$repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
-        //$idcourier = htmlspecialchars(trim($id));
-        //$courier = $repositoryCourier->find($idcourier);
         $request = $this->get("request");
          $form = $this->createForm(new CourierType(), $courier);
         $form->handleRequest($request);
  
-        return $this->render('GestionProjetBundle:Courier:form.courier.html.twig', array('form' => $form->createView()));
+        return $this->render('GestionProjetBundle:Courier:form.courier.html.twig', array('form' => $form->createView(), "idcourier" => $courier->getId()));
     }
+    
     
 
 }

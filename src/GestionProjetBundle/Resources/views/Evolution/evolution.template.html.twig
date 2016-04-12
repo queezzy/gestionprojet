@@ -38,29 +38,29 @@
           <div class="row">
             <div class="col-md-8">
               <p class="text-center">
-                <strong>Evolution: 30 Mars, 2016 - 01 Avril, 2016</strong>
+                <strong>Evolution: {{projet.datedebut|date('d/m/Y')}} - {{"now"|date('d/m/Y')}}</strong>
               </p>
-              <div class="chart">
+              <!-- <div class="chart">-->
                 <!-- Sales Chart Canvas -->
-                <canvas id="salesChart" height="200"></canvas>
-              </div><!-- /.chart-responsive -->
-            </div><!-- /.col -->
+               <!--  <canvas id="salesChart" height="200"></canvas>-->
+              <!--</div> --><!-- /.chart-responsive -->
+            <!--</div><!-- /.col -->
             <div class="col-md-4">
-              <p class="text-center">
+              <!--<p class="text-center">
                 <strong>Détails</strong>
-              </p>
+              </p>-->
               <div class="progress-group">
-                <span class="progress-text">Attendu</span>
-                <span class="progress-number"><b>30</b>/100</span>
+                <span class="progress-text">Attendue</span>
+                <span class="progress-number"><b>{{projet.evolutionattendu}}</b>/100</span>
                 <div class="progress sm">
-                  <div class="progress-bar progress-bar-aqua" style="width: 30%"></div>
+                  <div class="progress-bar progress-bar-aqua" style="width: {{projet.evolutionattendu}}%"></div>
                 </div>
               </div><!-- /.progress-group -->
               <div class="progress-group">
-                <span class="progress-text">Réalisé</span>
-                <span class="progress-number"><b>25</b>/100</span>
+                <span class="progress-text">En cours</span>
+                <span class="progress-number"><b>{{projet.evolutionencours}}</b>/100</span>
                 <div class="progress sm">
-                  <div class="progress-bar progress-bar-red" style="width: 25%"></div>
+                  <div class="progress-bar progress-bar-red" style="width: {{projet.evolutionencours}}%"></div>
                 </div>
               </div><!-- /.progress-group -->
             </div><!-- /.col -->

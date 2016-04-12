@@ -37,147 +37,153 @@ class IntervenantController extends Controller {
      */
     public function intervenantsAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-       /* if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
+        $em = $this->getDoctrine()->getManager();
+
+        $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
         $intervenant = new Intervenant();
         $form = $this->createForm(new IntervenantType(), $intervenant);
-        $em = $this->getDoctrine()->getManager();
-        $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
+        $display_tab = 1;
+        //selectionne le seul intervenant actif
         $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
-        return $this->render('GestionProjetBundle:Intervenants:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView()));
+        
+        return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
     }
-
+    
     /**
      * @Route("/add-intervenant")
      * @Template()
      * @param Request $request
      */
     public function addIntervenantAction(Request $request){
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
+        }*/
         $intervenant = new Intervenant();
         $form = $this->createForm(new IntervenantType(), $intervenant);
         $form->handleRequest($request);
-        $response = new JsonResponse();
         $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
-        $user = $this->getUser();
-        if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
-            if($request->isMethod('POST')){
+        //$user = $this->getUser();
+       // if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
+            //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
                        $repositoryIntervenant->saveIntervenant($intervenant);
-                       $intervenant = $repositoryIntervenant->findOneBy(array("nom" => $intervenant->getNom(), "idadresse" => $intervenant->getIdadresse()));
                        $message = $this->get('translator')->trans('Intervenant.created_success', array(), "GestionProjetBundle");
-                       $messages[] = array("letype" => "success", "message" => $message);
-                       $messages[] = array("id" => $intervenant->getId(), "logo" => $intervenant->getWebUrl(), "nom" => $intervenant->getNom(), "lot" => $intervenant->getIdlot()->getNom(), "localisation" => $intervenant->getIdadresse()->getIdadresse(), "email" => $intervenant->getIdadresse()->getEmail(), "telephone" => $intervenant->getIdadresse()->getTelephone());
-                       return $response->setData(array("data" => $messages));
-                       //$request->getSession()->getFlashBag()->add('message', $message);
-                      // return $this->redirect($this->generateUrl('gp_intervenants'));
+                       $request->getSession()->getFlashBag()->add('message', $message);
+                       return $this->redirect($this->generateUrl('gp_intervenant'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Intervenant.created_failure', array(), "GestionProjetBundle");
-                       //$request->getSession()->getFlashBag()->add('message', $message);
-                       $messages[] = array("letype" => "error", "message" => $message);
-                       return $response->setData(array("data" => $messages));
-                       //return $this->render('GestionProjetBundle:Intervenants:add.html.twig', array('form' => $form->createView()));
+                       $request->getSession()->getFlashBag()->add('message_success', $message);
+                       $intervenants = array();
+                       $display_tab =0;
+                       return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
-                   return $this->render('GestionProjetBundle:Intervenants:add.html.twig', array('form' => $form->createView()));
+                   $message = $this->get('translator')->trans('Intervenant.created_failure', array(), "GestionProjetBundle");
+                       $request->getSession()->getFlashBag()->add('message_failure', $message);
+                       $intervenants = array();
+                       $display_tab =0;
+                       return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
-            }
-        }else{
+           // }
+        /*}else{
             $message = $message = $this->get('translator')->trans('Intervenant.access_denied', array(), "GestionProjetBundle");
             $messages[] = array("letype" => "error", "message" => $message);
             return $response->setData(array("data" => $messages));
-        }
+        }*/
     }
     
     /**
      * @Route("/update-intervenant/{id}")
      * @Template()
      */
-    public function updateIntervenantAction(Intervenant $intervenant){
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+    public function updateintervenantAction(Intervenant $intervenant){
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
-        $form = $this->createForm(new IntervenantType(), $intervenant);
+        }*/          
+        $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
+        $form = $this->createForm(new IntervenantType(), $intervenant); 
         $request = $this->get("request");
         $form->handleRequest($request);
-        $response = new JsonResponse();
-        $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
         $user = $this->getUser();
-        if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
+        //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
             if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
                        $repositoryIntervenant->updateIntervenant($intervenant);
                        $message = $this->get('translator')->trans('Intervenant.updated_success', array(), "GestionProjetBundle");
-                       $messages[] = array("letype" => "success", "message" => $message);
-                       $messages[] = array("id" => $intervenant->getId(), "nom" => $intervenant->getNom(), "lot" => $intervenant->getIdlot()->getNom(), "localisation" => $intervenant->getIdadresse()->getIdadresse(), "email" => $intervenant->getIdadresse()->getEmail(), "telephone" => $intervenant->getIdadresse()->getTelephone());
-                       return $response->setData(array("data" => $messages));
-                       //$request->getSession()->getFlashBag()->add('message', $message);
-                      // return $this->redirect($this->generateUrl('gp_intervenants'));
+                       $request->getSession()->getFlashBag()->add('message_success', $message);
+                       return $this->redirect($this->generateUrl('gp_intervenant'));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Intervenant.updated_failure', array(), "GestionProjetBundle");
-                       //$request->getSession()->getFlashBag()->add('message', $message);
-                       $messages[] = array("letype" => "error", "message" => $message);
-                       return $response->setData(array("data" => $messages));
-                       //return $this->render('GestionProjetBundle:Intervenants:add.html.twig', array('form' => $form->createView()));
+                       $request->getSession()->getFlashBag()->add('message_failure', $message);
+                       $intervenants = array();
+                       $display_tab =0;
+                       return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
-                   return $this->render('GestionProjetBundle:Intervenants:add.html.twig', array('form' => $form->createView()));
+                    $request->getSession()->getFlashBag()->add('message_failure', $message);
+                    $intervenants = array();
+                    $display_tab =0;
+                    return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
             }
-        }else{
+       /* }else{
             $message = $message = $this->get('translator')->trans('Intervenant.access_denied', array(), "GestionProjetBundle");
             $messages[] = array("letype" => "error", "message" => $message);
             return $response->setData(array("data" => $messages));
-        }
+        }*/
+    }
+    
+    /**
+     * @Route("/delete-intervenant/{id}")
+     * @Template()
+     */
+    public function deleteintervenantAction(Intervenant $intervenant) {
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }*/
+        $request = $this->get("request");
+       // $user = new Utilisateur();
+        $response = new JsonResponse();
+        $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
+        //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
+            if ($request->isMethod('POST')) {
+                $user = $this->getUser();
+                try{
+                    $repositoryIntervenant->deleteIntervenant($intervenant);
+                    $message = $message = $this->get('translator')->trans('Intervenant.deleted_success', array(), "GestionProjetBundle");
+                    $messages = array("letype" => "sucess", "message" => $message);
+                    return $response->setData(array("data" => $messages));
+                } catch (Exception $ex) {
+                    $message = $message = $this->get('translator')->trans('Intervenant.deleted_failure', array(), "GestionProjetBundle");
+                    $messages = array("letype" => "sucess", "message" => $message);
+                    return $response->setData(array("data" => $messages));
+                }                
+            }
+       /* }else {
+            $message = $message = $this->get('translator')->trans('Intervenant.access_denied', array(), "GestionProjetBundle");
+            $messages[] = array("letype" => "error", "message" => $message);
+            return $response->setData(array("data" => $messages));
+        }*/
     }
     
     /**
      * @Route("/get-intervenant/{id}")
      * @Template()
      */
-    public function getIntervenantAction(Intervenant $intervenant) {
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+    public function getintervenantAction(Intervenant $intervenant) {
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
-        return $this->render('GestionProjetBundle:Intervenants:form.intervenant.html.twig', array('intervenant' => $intervenant));
-    }
-    
-    /**
-     * @Route("/delete-intervenant")
-     * @Template()
-     */
-    public function deleteIntervenantAction(Intervenant $intervenant) {
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
+        }*/
         $request = $this->get("request");
-        $user = new Utilisateur();
-        $response = new JsonResponse();
-        $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
-        if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
-            if ($request->isMethod('POST')) {
-                $user = $this->getUser();
-                try{
-                    $repositoryIntervenant->deleteIntervenant($intervenant);
-                    $message = $message = $this->get('translator')->trans('Intervenant.deleted_success', array(), "GestionProjetBundle");
-                    $messages[] = array("letype" => "sucess", "message" => $message);
-                    return $response->setData(array("data" => $messages));
-                } catch (Exception $ex) {
-                    $message = $message = $this->get('translator')->trans('Intervenant.deleted_failure', array(), "GestionProjetBundle");
-                    $messages[] = array("letype" => "sucess", "message" => $message);
-                    return $response->setData(array("data" => $messages));
-                }                
-            }
-        }else {
-            $message = $message = $this->get('translator')->trans('Intervenant.access_denied', array(), "GestionProjetBundle");
-            $messages[] = array("letype" => "error", "message" => $message);
-            return $response->setData(array("data" => $messages));
-        }
+         $form = $this->createForm(new IntervenantType(), $intervenant);
+        $form->handleRequest($request);
+ 
+        return $this->render('GestionProjetBundle:Intervenant:form.intervenant.html.twig', array('form' => $form->createView(), "idintervenant" => $intervenant->getId()));
     }
     
     

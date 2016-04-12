@@ -34,44 +34,6 @@ function edit_lot(id_lot, gp_route) {
         $('#loader-edit-delete'+id_lot).hide();
         $('#block_table_lots').hide();
         $('#block_form_lot').show();
-        /*$('#form_lot').submit(function (e){
-            var id_lot = parseInt($('#lot_id').val());
-            e.preventDefault();
-            $('#myAlert').remove();
-            var donnees = $(this).serialize();
-            $.ajax({
-                type: 'post',
-                data: donnees,
-                //la route pour faire le update by id
-                url: Routing.generate(gp_route, {id: id_lot}),
-                dataType: 'json',
-                beforeSend: function () {
-                    $('#actions').hide();
-                    $('#loader').show();
-                },
-                success: function (data, textStatus, jqXHR) {
-                    var child = "";
-                        if (data.letype === "error") {
-                            $('#actions').show();
-                            $('#loader').hide();
-                            child += '<div id="myAlert" class="alert alert-danger">' +
-                                    '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                                    + data.message +
-                                    '</div>';
-                            $('#message_lot').html(child);
-                        }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $('#actions').show();
-                    $('#loader').hide();
-                    var child = '<div id="myAlert" class="alert alert-danger">' +
-                            '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                            + 'EXCEPTION' +
-                            '</div>';
-                    $('#message_lot').append(child);
-                }
-            });
-        });*/
         $('#close_form').click(function (e) {
             e.preventDefault();
             window.location.replace(Routing.generate('gp_lot'));
@@ -106,13 +68,14 @@ function execute_delete_lot(id_lot) {
             $('#action-delete'+id_lot).hide();
             $('#loader-edit-delete'+id_lot).show();
         },
-        success: function (data, textStatus, jqXHR) {
+        success: function (donnees, textStatus, jqXHR) {
             $('#action-edit'+id_lot).show();
             $('#action-delete'+id_lot).show();
             $('#loader-edit-delete'+id_lot).hide();
             var child = "";
             var lignetable = "";
-                if (data[0].letype === "success") {
+			var data = donnees.data;
+                if (data.letype === "sucess") {
                     $('#lignetable' + id_lot).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +
                             '<a href="#" class="close" data-dismiss="alert">&times;</a>'

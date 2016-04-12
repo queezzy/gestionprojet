@@ -16,64 +16,77 @@
         <div class="col-md-9 col-md-offset-1"> 
             <!-- Menu start -->
             <ul class="nav navbar-nav navbar-left treeview treeview-menu">
-              <li class="active">
+              <li {% block menuAccueil %}{% endblock %}>
                 <a href="#">
-                  <i class="fa fa-dashboard"></i> <span>Accueil</span>
+                  <i class="fa fa-home"></i> <span>Accueil</span>
                 </a>
               </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-files-o"></i>
+              <li {% block menuEvolution %}{% endblock %}>
+                <a href="{{path('gp_evolution')}}">
+                  <i class="fa fa-pie-chart"></i>
                   <span>Evolution</span>
                 </a>
               </li>
-              <li>
+              <li {% block menuCalendrier %}{% endblock %}>
                 <a href="#">
-                  <i class="fa fa-th"></i> 
+                  <i class="fa fa-calendar"></i> 
                   <span>Calendrier</span> 
                 </a>
               </li>
-              <li>
+              <li {% block menuActualite %}{% endblock %}>
                 <a href="#">
-                  <i class="fa fa-pie-chart"></i>
+                  <i class="fa fa-newspaper-o"></i>
                   <span>Actualités</span>
                 </a>
               </li>
-              <li>
+              <li {% block menuDocumentation %}{% endblock %}>
                 <a href="#">
-                  <i class="fa fa-laptop"></i>
+                  <i class="fa fa-edit"></i>
                   <span>Documentation</span>
                 </a>
               </li>
-              <li>
+              <li {% block menuUtilisateur %}{% endblock %}>
                 <a href="#">
-                  <i class="fa fa-edit"></i>
+                  <i class="fa fa-users"></i>
                   <span>Utilisateurs</span>
                 </a>
               </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-table"></i> 
+              <li {% block menuCollaboration %}{% endblock %}>
+                <a href="{{path('gp_courier')}}">
+                  <i class="fa fa-comment"></i> 
                   <span>Collaboration</span>
                 </a>
               </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-calendar"></i> 
+              <li {% block menuIntervenant %}{% endblock %}>
+                <a href="{{path('gp_intervenant')}}">
+                  <i class="fa fa-coffee"></i> 
                   <span>Intervenants</span>
                 </a>
               </li>
             </ul>
             <!-- Menu end -->
         </div> 
-
         <!-- Sidebar user panel Start-->
         <div class="pull-right info col-md-2">
           <!--div class="pull-left image">
             <img src="" class="img-circle" alt="User Image" />
           </div-->
-          <div class="info">
-            <p>{% block utilisateur %}Administrateur{% endblock %}</p>
+          <div class="info dropdown col-md-3">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="center-block center"><bold>{% if app.user.username is defined %}{{app.user.username}}{% endif%}</bold></li>
+                    <li><a href="{{path('fos_user_profile_show')}}"><i class="fa fa-eye"></i>Voir profil</a></li>
+                    <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i>Se déconnecter</a></li>
+                </ul>
+          </div>
+          <div class="info dropdown col-md-6">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-gear"></i><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path('gp_projet_admin')}}">Gérer le projet</a></li>
+                    <li><a href="{{ path('gp_lot') }}">Gérer les lots</a></li>
+                    <li><a href="{{path('gp_tache')}}">Gérer les taches</a></li>
+                    <li><a href="#">Gérer les themes</a></li>
+                </ul>
           </div>
         </div>
         <!-- Sidebar user panel End-->
@@ -81,7 +94,6 @@
 </section>
 <!-- Menu End -->
 {% endblock %}
-        
 
 {% block contenu %} 
       <div class="row">

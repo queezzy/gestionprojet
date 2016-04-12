@@ -20,12 +20,18 @@ class ProjetRepository extends EntityRepository{
         $em= $this->_em;
         $projet->setStatut(0);
         $intervenant = new \GestionProjetBundle\Entity\Intervenant();
-        $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
+        $repositoryTheme = $em->getRepository("GestionProjetBundle:Theme");
+        $theme = new \GestionProjetBundle\Entity\Theme();
+        $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Theme");
         $em->getConnection()->beginTransaction();
         try{
             $intervenants = $projet->getIntervenants();
             foreach ($intervenants as $intervenant) {
                 $repositoryIntervenant->deleteIntervenant($intervenant);
+            }
+            $themes = $projet->getThemes();
+            foreach ($themes as $theme) {
+                $repositoryTheme->deleteTheme($theme);
             }
             $em->persist($projet);
             $em->flush();

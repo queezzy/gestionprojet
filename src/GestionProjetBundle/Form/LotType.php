@@ -19,7 +19,7 @@ class LotType extends AbstractType
             ->add('datedebut', 'date')
             ->add('datefin', 'date')
             ->add('description')
-            ->add('statut')
+            //->add('statut')
             ->add('taches')
         ;
     }

@@ -29,9 +29,9 @@ class Actualite
     private $titre;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="datePublication", type="string", length=255, nullable=true)
+     * @ORM\Column(name="datePublication", type="datetime", nullable=true)
      */
     private $datepublication;
 
@@ -114,7 +114,7 @@ class Actualite
     /**
      * Set datepublication
      *
-     * @param string $datepublication
+     * @param \DateTime $datepublication
      * @return Actualite
      */
     public function setDatepublication($datepublication)
@@ -127,7 +127,7 @@ class Actualite
     /**
      * Get datepublication
      *
-     * @return string 
+     * @return \DateTime 
      */
     public function getDatepublication()
     {

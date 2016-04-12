@@ -21,7 +21,7 @@ class IntervenantType extends AbstractType
             ->add('description')
             ->add('presentation')
             ->add('rolemission')
-            ->add('statut')
+            //->add('statut')
             ->add('file', 'file')
             ->add('idadresse', new AdresseType())
             ->add('idlot', 'entity', array(

@@ -15,7 +15,7 @@ class CourierenvoyeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('statut')
+           // ->add('statut')
             ->add('idcourier')
             ->add('idintervenant')
             ->add('idressource')

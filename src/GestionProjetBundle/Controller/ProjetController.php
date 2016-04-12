@@ -40,6 +40,20 @@ class ProjetController extends Controller
     }
     
     /**
+     * @Route("/header-projet-actif")
+     * @Template()
+     * @param Request $request
+     */
+    public function headerprojetactifAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
+        //selectionne le seul projet actif
+        $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        
+        return $this->render('::header.template.html.twig', array('projetactif' => $projet));
+    }
+    
+    /**
      * @Route("/add-projet")
      * @Template()
      * @param Request $request
@@ -84,23 +98,16 @@ class ProjetController extends Controller
     }
     
     /**
-     * @Route("/update-projet")
+     * @Route("/update-projet/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function updateprojetAction(Request $request){
+    public function updateprojetAction(Projet $projet){
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
-        $projet = new Projet();
-        $data = htmlspecialchars(trim($request->request->get('form'))); 
-        $idprojet = $data['id'];
         $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
-        $id = (int)$idprojet;
-        echo($idprojet + " " +$id);
-        return $this->render('GestionProjetBundle:Intervenants:intervenant.html.twig', array('id' => $id, 'idprojet' => $idprojet));
-        /*$projet = $repositoryProjet->find(4);
         $form = $this->createForm(new ProjetType(), $projet); 
+        $request = $this->get("request");
         $form->handleRequest($request);
         $user = $this->getUser();
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -124,7 +131,7 @@ class ProjetController extends Controller
                     $display_tab =0;
                     return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
-            }*/
+            }
        /* }else{
             $message = $message = $this->get('translator')->trans('Projet.access_denied', array(), "GestionProjetBundle");
             $messages[] = array("letype" => "error", "message" => $message);
@@ -141,7 +148,7 @@ class ProjetController extends Controller
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
         $request = $this->get("request");
-        $user = new Utilisateur();
+        //$user = new Utilisateur();
         $response = new JsonResponse();
         $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
         //if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
@@ -179,8 +186,7 @@ class ProjetController extends Controller
         $request = $this->get("request");
          $form = $this->createForm(new ProjetType(), $projet);
         $form->handleRequest($request);
- 
-        return $this->render('GestionProjetBundle:Projet:form.projet.html.twig', array('form' => $form->createView()));
+        return $this->render('GestionProjetBundle:Projet:form.projet.html.twig', array('form' => $form->createView(), "idprojet" => $projet->getId()));
     }
     
 

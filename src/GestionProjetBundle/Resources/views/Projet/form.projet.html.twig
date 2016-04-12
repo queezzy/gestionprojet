@@ -10,10 +10,10 @@
             </div>
             <div class="x_content">
                 
-                <form id="form_projet" method="post" action="{{ path("gp_projet_update") }}" class="form-horizontal form-label-left" novalidate>
+                <form id="form_projet" method="post" action="{{ path('gp_projet_update',{'id' : idprojet}) }}" class="form-horizontal form-label-left" novalidate>
                     <span class="section">Informations sur le projet</span>
                     <div class="item form-group">
-                        {{form_widget(form.id)}}
+                        <input type="hidden" id="idprojet" name = "idprojet" value="{{idprojet}}">
                         {{form_widget(form._token)}}
                     </div>
 
