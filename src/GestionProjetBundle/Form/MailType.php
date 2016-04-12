@@ -5,9 +5,8 @@ namespace GestionProjetBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class ActualiteType extends AbstractType
+class MailType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,13 +15,15 @@ class ActualiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre')
+            ->add('objet')
+            ->add('date', 'datetime')
             ->add('contenu')
-            ->add('description')
-            ->add('file')
-            ->add('idtheme','entity',array(
-                'class'=> 'GestionProjetBundle\Entity\Theme',
-                'property' => 'nom'
+            ->add('type')
+            ->add('statut')
+            ->add('emetteur')
+            ->add('utilisateurs','entity',array(
+                'class'=> 'UserBundle\Entity\Utilisateur',
+                'property' => 'email'
             ))
         ;
     }
@@ -33,7 +34,7 @@ class ActualiteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GestionProjetBundle\Entity\Actualite'
+            'data_class' => 'GestionProjetBundle\Entity\Mail'
         ));
     }
 }

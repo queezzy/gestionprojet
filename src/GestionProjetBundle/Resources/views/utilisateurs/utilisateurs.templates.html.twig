@@ -27,11 +27,11 @@
 {% endblock %}
 
 {% block contenupage %}
-<div class="row">
+<div class="row col-md-10 col-md-offset-1">
 <!-- Intervenants start-->
 <div class="box box-primary">
 <div class="box-header">
-  <h3 class="box-title">Liste des Utilisateurs</h3><a class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+  <h3 class="box-title">Liste des Utilisateurs</h3><a href="{{path("fos_user_registration_register")}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
 </div><!-- /.box-header -->
 <div class="box-body">
   <table id="listeintervenants" class="table table-bordered table-striped">
@@ -44,6 +44,8 @@
         <th>Entreprise</th>
         <th>Email</th>
         <th>Téléphone</th>
+        <th>Activé</th>
+        <th>Privilèges</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -51,14 +53,30 @@
       
     {% for utilisateur in utilisateurs %}
       <tr>
-        <td><img src="{{asset('uploads/profils/'~utilisateur.path)}}" alt="{{utilisateur.nom}}"/></td>
+          <td><img width="100px" height="100px" src="{{asset('uploads/profils/'~utilisateur.path)}}" alt="{{utilisateur.nom}}" /></td>
         <td>{{utilisateur.nom}}</td>
         <td>{{utilisateur.prenom}}</td>
         <td>{{utilisateur.fonction}}</td>
-        <td>{{utilisateur.idintervenant}}</td>
+        
+        <td>{% if utilisateur.idintervenant.nom is defined %}
+            {{utilisateur.idintervenant.nom}}
+            {%endif%}
+        </td>
         <td>{{utilisateur.email}}</td>
         <td>{{utilisateur.telephone}}</td>
-        <td><a><i class="fa fa-eye"></i>Voir</a></td>
+        <td>{%if utilisateur.enabled %}
+                oui
+            {%else%}
+                non
+            {%endif%}    
+        </td>
+        <td>{% for r in utilisateur.roles %}
+            {{r ~' '}}
+            {%else%}
+             -
+             {%endfor%}
+        </td>
+        <td><a href="{{path('gestion_projet_utilisateurs_bloques',{'id' : utilisateur.id})}}"><i class="fa fa-eye"></i>Bloquer/Debloquer</a></td>
       </tr>
     {% else %}
       <tr>

@@ -3,7 +3,7 @@
 
 {% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
-{% block title %}Documentation{% endblock %}
+{% block title %}Documentation {% endblock %}
 
 {% block stylesheets %} 
     {{parent()}}
@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block breadcrumbDescription %}
-   Documentation du projet
+   Documentation du projet 
 {% endblock %}
 
 {% block breadcrumbPosition %}
@@ -137,7 +137,7 @@
     <div class="box box-success">
         <!-- /.box-header start -->
       <div class="box-header with-border">
-        <h3 class="box-title">Documents d'exécution</h3>  <a class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>                     
+        <h3 class="box-title">Documents d'exécution</h3>  <a href="{{path('gestion_projet_ressource_new')}}"class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>                     
       </div>
         <!-- /.box-header end -->
 

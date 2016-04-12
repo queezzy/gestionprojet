@@ -19,6 +19,7 @@ services:
         class: UserBundle\Form\ProfileType
         tags:
             - { name: form.type, alias: app_user_profile}
+    
 #    gestionprojetbundle.calendar_listener:
 #         class: GestionProjetBundle\EventListener\CalendarEventListener
 #         arguments: ["@doctrine.orm.entity_manager"]

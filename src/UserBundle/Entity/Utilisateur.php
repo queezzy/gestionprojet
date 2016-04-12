@@ -537,7 +537,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface {
     }
 
     protected function getUploadRootDir() {
-        return __DIR__ . '/../../../../web/uploads/profils';
+        return __DIR__ . '/../../../web/uploads/profils';
     }
 
     /**

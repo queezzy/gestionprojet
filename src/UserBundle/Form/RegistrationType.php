@@ -14,6 +14,7 @@ class RegistrationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder
             ->add('nom')
             ->add('prenom')
@@ -28,7 +29,21 @@ class RegistrationType extends AbstractType
                 'class'=> 'GestionProjetBundle\Entity\Intervenant',
                 'property' => 'nom'
             ))
-        ;
+            
+            
+           ->add('roles', 'choice', array(
+                       'label' => 'Privileges',
+                       'expanded' => true,
+                       'multiple' => true,
+                       'expanded' => true,
+                       'choices' => array(
+                           'ROLE_SUPER_ADMIN' => 'Admin',
+                           'ROLE_ADMIN_ACTIF' => 'Actif',
+                           'ROLE_USER_PASSIF' => 'Passif'
+                   )
+               )
+           );
+        
     }
     
     /**

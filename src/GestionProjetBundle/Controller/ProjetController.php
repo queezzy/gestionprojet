@@ -43,11 +43,7 @@ class ProjetController extends Controller
         return $this->render('GestionProjetBundle:Projets:projet.html.twig', array('projet' => $projet));
     }
     
-    /**
-     * @Route("/accueil")
-     * @Template()
-     * @param Request $request
-     */
+   
     public function projetAction(Request $request) {
         $this->indexAction($request);
     }

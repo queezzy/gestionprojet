@@ -30,7 +30,7 @@
         <div class="box-header">
             <h3>Creer une actualité</h3>
         </div><!-- /.box-header -->
-        <form role="form" action="{{ path('gestion_projet_actualite_new') }}" {{ form_enctype(form) }} method="POST">
+        <form role="form" action="{{ path('gestion_projet_actualite_update',{'id' : idactualite})}}" {{ form_enctype(form) }} method="POST">
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">

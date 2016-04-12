@@ -32,7 +32,7 @@
         </div><!-- /.box-header -->
 
         {# Formulaire de création d'une ressource #}
-        <form role="form" action="{{ path('gestion_projet_ressource_new') }}" {{ form_enctype(form) }} method="POST" >
+        <form role="form" action="{{ path('gestion_projet_ressource_update',{'id' : idressource})}}" {{ form_enctype(form) }} method="POST" >
                 
                 <div class="box-body">
                     <div class="row">

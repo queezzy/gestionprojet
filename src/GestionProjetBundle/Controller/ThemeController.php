@@ -7,13 +7,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GestionProjetBundle\Form\ThemeType;
 use GestionProjetBundle\Entity\Theme;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ThemeController extends Controller
 {
     /**
-     * @Route("/addTheme")
+     * @Route("/theme/ajouter", name="gestion_projet_theme_new")
+       @Method({"GET","POST"})
      */
     public function addThemeAction(Request $request)
     {
@@ -34,17 +36,18 @@ class ThemeController extends Controller
             } 
 
             $request->getSession()->getFlashBag()->add('notice', 'Theme bien enregistrée.');
-            return $this->redirect($this->generateUrl('gp_accueil'));
+            return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));
         }
         
-        return $this->render('GestionProjetBundle:Theme:add_theme.html.twig', array(
+        return $this->render('GestionProjetBundle:formulaire:form.creation.theme.html.twig', array(
             'form' => $form->createView(),
         ));
        
     }
 
     /**
-     * @Route("/updateTheme")
+     * @Route("/theme/modifier/{id}", name="gestion_projet_theme_update",requirements={"id" = "\d+"})
+     * @Method({"GET","POST"})
      */
     public function updateThemeAction(Theme $theme)
     {
@@ -54,20 +57,23 @@ class ThemeController extends Controller
     $theme_repo = $em->getRepository('GestionProjetBundle:Theme');
     $form = $this->createForm(ThemeType::class, $theme);
 
-   // if ($request->getMethod() == 'POST') {
+    if ($request->getMethod() == 'POST') {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             
             try {
-                $theme_repo->updateTheme($actu);
+                $theme_repo->updateTheme($theme);
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             }
 
-            return $this->redirect($this->generateUrl('GestionProjetBundle:Theme:update_theme.html.twig'));
+            return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));
         }
-       
+    }  
+        return $this->render('GestionProjetBundle:formulaire:form.modification.theme.html.twig', array(
+                    'form' => $form->createView(),'idtheme'=>$theme->getIdtheme()
+        ));
     }
 
     /**
@@ -118,8 +124,8 @@ class ThemeController extends Controller
     }
     
      /**
-     * @Route("/theme/supprimer", name="gestion_projet_theme_delete")
-      *@Method({"POST"})
+     * @Route("/theme/supprimer/{id}", name="gestion_projet_theme_delete",requirements={"id" = "\d+"})
+      *@Method({"GET"})
      */
     
     public function deleteAThemeAction(Theme $theme){
@@ -133,7 +139,7 @@ class ThemeController extends Controller
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
-                
+        return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));        
     }
 
 }

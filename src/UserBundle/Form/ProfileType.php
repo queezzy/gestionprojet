@@ -31,7 +31,25 @@ class ProfileType extends AbstractType{
             ->add('titre')
             ->add('telephone')
             ->add('personnelcle')
-            ->add('idintervenant')
+            ->add('idintervenant','entity',array(
+                'class'=> 'GestionProjetBundle\Entity\Intervenant',
+                'property' => 'nom'
+            ))
+            ->add('roles', 'choice', array(
+                       'label' => 'Privileges',
+                       'expanded' => true,
+                       'multiple' => true,
+                       'expanded' => true,
+                       'choices' => array(
+                           'ROLE_SUPER_ADMIN' => 'Admin',
+                           'ROLE_ADMIN_ACTIF' => 'Actif',
+                           'ROLE_USER_PASSIF' => 'Passif'
+                   )
+               )
+           )
+           ->add('file',null,array(
+                'attr' => array('class'=>'inputfile')
+            ))
         ;
     }
     

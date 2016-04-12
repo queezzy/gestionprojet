@@ -76,6 +76,7 @@
                 <ul class="dropdown-menu">
                     <li class="center-block center"><bold>{% if app.user.username is defined %}{{app.user.username}}{% endif%}</bold></li>
                     <li><a href="{{path('fos_user_profile_show')}}"><i class="fa fa-eye"></i>Voir profil</a></li>
+                    <li><a href="{{path('gestion_projet_send')}}"><i class="fa fa-eye"></i>Envoyer mail</a></li>
                     <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i>Se déconnecter</a></li>
                 </ul>
           </div>

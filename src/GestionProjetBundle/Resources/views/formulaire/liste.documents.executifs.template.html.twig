@@ -11,21 +11,20 @@
     <thead>
       <tr>
         <th>Référence</th>
-        <th>URL</th>
         <th>Description</th>
+        <th>Intervenant</th>
       </tr>
     </thead>
    <tbody>
 
                 {% for ressource in ressources %}
                     <tr>
-                      <td>ressource.reference</td>
+                      <td> <a href="{{asset('uploads/ressources/'~ressource.path)}}"> {{ressource.reference}} </a</td>
                      
-                      <td>ressource.path</td>
-                      <td>ressource.description</td>
+                      <td>{{ressource.description}}</td>
                       <td>{% if ressource.idintervenant.nom is defined %}
                       
-                          ressource.idintervenant.nom
+                          {{ressource.idintervenant.nom}}
                       {% endif%}
                       </td>
                     </tr>

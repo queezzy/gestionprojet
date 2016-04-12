@@ -30,7 +30,7 @@
         <div class="box-header">
             <h3>Creer un Theme</h3>
         </div><!-- /.box-header -->
-        <form role="form" action="{{ path('gestion_projet_theme_new') }}" {{ form_enctype(form) }} method="POST">
+        <form role="form" action="{{ path('gestion_projet_theme_update',{'id' : idtheme})}}" {{ form_enctype(form) }} method="POST">
 
             <div class="box-body">
                 <div class="row">

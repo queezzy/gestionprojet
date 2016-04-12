@@ -34,6 +34,7 @@ security:
                 remember_me: true
                 always_use_default_target_path : true
                 default_target_path: /accueil
+                
             remember_me:
                 key: %secret%
             logout:       true
