@@ -27,14 +27,11 @@ class Calendrier
      * @ORM\Column(name="statut", type="integer", nullable=false)
      */
     private $statut;
-    
-    
 
-   
      /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateDebut", type="datetime", nullable=true)
+     * @ORM\Column(name="dateDebut", type="datetime", nullable=false)
      */
     private $datedebut;
 
@@ -62,20 +59,15 @@ class Calendrier
      /**
      * @var text
      *
-     * @ORM\Column(name="type", type="string", nullable=false)
+     * @ORM\Column(name="$codecouleur", type="string", nullable=true)
      */
-    private $type;
-    
-    
-     /**
-     * @var text
-     *
-     * @ORM\Column(name="evenementlongueperiode", type="boolean", nullable=false)
-     */
-    private $evenementlongueperiode;
+    private $codecouleur;
 
    
-    
+    function __construct() {
+        
+        $this->statut=1;
+    }
 
     /**
      * Get id
@@ -202,49 +194,27 @@ class Calendrier
         return $this->description;
     }
 
+
     /**
-     * Set evenementlongueperiode
+     * Set codecouleur
      *
-     * @param boolean $evenementlongueperiode
+     * @param boolean $codecouleur
      * @return Calendrier
      */
-    public function setEvenementlongueperiode($evenementlongueperiode)
+    public function setCodecouleur($codecouleur)
     {
-        $this->evenementlongueperiode = $evenementlongueperiode;
+        $this->codecouleur = $codecouleur;
 
         return $this;
     }
 
     /**
-     * Get evenementlongueperiode
+     * Get codecouleur
      *
      * @return boolean 
      */
-    public function getEvenementlongueperiode()
+    public function getCodecouleur()
     {
-        return $this->evenementlongueperiode;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Calendrier
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
+        return $this->codecouleur;
     }
 }

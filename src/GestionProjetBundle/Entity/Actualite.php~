@@ -4,12 +4,14 @@ namespace GestionProjetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Actualite
  *
  * @ORM\Table(name="actualite", indexes={@ORM\Index(name="fk_Actualite_Theme_idx", columns={"idTheme"})})
  * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\ActualiteRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Actualite
 {
@@ -87,7 +89,16 @@ class Actualite
     
     private $temp;
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->actualites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->statut=1;
+        $this->datepublication= new \DateTime('now');
+    }
+    
 
     /**
      * Get idactualite
@@ -288,7 +299,7 @@ class Actualite
     }
 
      protected function getUploadRootDir() {
-        return __DIR__ . '/../../../../web/uploads/ressources';
+        return __DIR__ . '/../../../web/uploads/actualites';
     }
 
 
@@ -347,4 +358,27 @@ class Actualite
         $this->file = null;
     }
 
+
+    /**
+     * Set datepublication
+     *
+     * @param \DateTime $datepublication
+     * @return Actualite
+     */
+    public function setDatepublication($datepublication)
+    {
+        $this->datepublication = $datepublication;
+
+        return $this;
+    }
+
+    /**
+     * Get datepublication
+     *
+     * @return \DateTime 
+     */
+    public function getDatepublication()
+    {
+        return $this->datepublication;
+    }
 }

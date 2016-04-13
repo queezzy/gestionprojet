@@ -255,4 +255,27 @@ class Mail
 
         return $this;
     }
+
+    /**
+     * Set emetteur
+     *
+     * @param \UserBundle\Entity\Utilisateur $emetteur
+     * @return Mail
+     */
+    public function setEmetteur(\UserBundle\Entity\Utilisateur $emetteur = null)
+    {
+        $this->emetteur = $emetteur;
+
+        return $this;
+    }
+
+    /**
+     * Get emetteur
+     *
+     * @return \UserBundle\Entity\Utilisateur 
+     */
+    public function getEmetteur()
+    {
+        return $this->emetteur;
+    }
 }

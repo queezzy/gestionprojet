@@ -5,6 +5,7 @@ namespace GestionProjetBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="ressource", indexes={@ORM\Index(name="fk_Ressource_Intervenant1_idx", columns={"idIntervenant"})})
  * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\RessourceRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Ressource
 {
@@ -93,6 +95,7 @@ class Ressource
     public function __construct()
     {
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setStatut(1);
     }
 
     /**
@@ -339,7 +342,7 @@ class Ressource
     }
 
      protected function getUploadRootDir() {
-        return __DIR__ . '/../../../../web/uploads/ressources';
+        return __DIR__ . '/../../../web/uploads/ressources';
     }
 
 

@@ -34,7 +34,7 @@ class Calendrier
      /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateDebut", type="datetime", nullable=true)
+     * @ORM\Column(name="dateDebut", type="datetime", nullable=false)
      */
     private $datedebut;
 
@@ -62,17 +62,9 @@ class Calendrier
      /**
      * @var text
      *
-     * @ORM\Column(name="type", type="string", nullable=false)
-     */
-    private $type;
-    
-    
-     /**
-     * @var text
-     *
      * @ORM\Column(name="evenementlongueperiode", type="boolean", nullable=false)
      */
-    private $evenementlongueperiode;
+    private $codecouleur;
 
    
     
@@ -202,49 +194,4 @@ class Calendrier
         return $this->description;
     }
 
-    /**
-     * Set evenementlongueperiode
-     *
-     * @param boolean $evenementlongueperiode
-     * @return Calendrier
-     */
-    public function setEvenementlongueperiode($evenementlongueperiode)
-    {
-        $this->evenementlongueperiode = $evenementlongueperiode;
-
-        return $this;
-    }
-
-    /**
-     * Get evenementlongueperiode
-     *
-     * @return boolean 
-     */
-    public function getEvenementlongueperiode()
-    {
-        return $this->evenementlongueperiode;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Calendrier
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 }
