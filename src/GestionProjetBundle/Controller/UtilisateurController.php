@@ -77,7 +77,7 @@ class UtilisateurController extends Controller {
      */
     public function sendMailAction(Request $request) {
         
-        $data =array();
+       /* $data =array();
         
         $form = $this->createFormBuilder($data)
                 ->add('Objet')
@@ -101,7 +101,7 @@ class UtilisateurController extends Controller {
                $message = \Swift_Message::newInstance()
                     ->setSubject($data['Objet'])
 //                    ->setFrom($user->getEmail())
-                    ->setFrom('franckquentinnfotabong@gmail.com')
+                    ->setFrom('tonye.eric@gmail.com')
 //                    ->setTo($data['Destinataires'])
                     ->setTo('franckquentinnfotabong@gmail.com')
                     ->setBody($data['Message'],'text/html');
@@ -117,7 +117,7 @@ class UtilisateurController extends Controller {
         return $this->render('GestionProjetBundle:formulaire:form.send.mail.html.twig', array(
                     'form' => $form->createView(),
         ));
-
+        */
         
     }
 

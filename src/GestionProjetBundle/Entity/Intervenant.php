@@ -89,7 +89,7 @@ class Intervenant
     /**
      * @var \Adresse 
      * @ORM\OneToOne(targetEntity="Adresse",cascade={"persist"})
-     * @ORM\JoinColumn(name="idAdresse", referencedColumnName="idAdresse")
+     * @ORM\JoinColumn(name="idAdresse", referencedColumnName="id")
      */
     private $idadresse;
 
@@ -127,16 +127,9 @@ class Intervenant
     * @ORM\OneToMany(targetEntity="Ressource", mappedBy="idintervenant", cascade={"remove", "persist"})
     */
     private $ressources;
-    
-    /**
-<<<<<<< HEAD
-=======
-     * @ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
-     */
-    private $idcalendrier ;
+
 
     /**
->>>>>>> refs/remotes/origin/back_end_testing
      * Constructor
      */
     public function __construct()
