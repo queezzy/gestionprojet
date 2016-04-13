@@ -11,16 +11,16 @@
     <link rel='stylesheet' href='{{ asset('fullcalendar/lib/cupertino/jquery-ui.min.css')}}' />
     <style>
 
-	body {
-		
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		font-size: 14px;
-	}
+        body {
 
-	#calendar {
-		max-width: 900px;
-		margin: 0 auto;
-	}
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
     </style>
     {# Fichiers css en plus #}
@@ -36,145 +36,153 @@
 {% endblock %}
 
 {% block breadcrumbDescription %}
-   Résumé du projet
+    Résumé du projet
 {% endblock %}
 
 {% block breadcrumbPosition %}
-   Accueil
+    Accueil
 {% endblock %}
 
 {% block contenupage %}
-<div class="row">
-    <!-- Left Panel start-->
-    <div class="col-md-3">
-        <!-- Présentation du projet start -->
-        <div class="box box-primary">
-            <!-- /.box-header start -->
-          <div class="box-header with-border">
-            <h3 class="box-title">Présentation</h3>                      
-          </div>
-            <!-- /.box-header end -->
+    <div class="row">
+        <!-- Left Panel start-->
+        <div class="col-md-3">
+            <!-- Présentation du projet start -->
+            <div class="box box-primary">
+                <!-- /.box-header start -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Présentation</h3>                      
+                </div>
+                <!-- /.box-header end -->
 
-            <!-- /.box-body start-->
-          <div class="box-body">
+                <!-- /.box-body start-->
+                <div class="box-body">
 
-          </div>
-            <!-- /.box-body end -->
-        </div>
-        <!-- Présentation du projet end -->
-
-        <!-- Intervenants du projet start -->
-        <div class="box box-primary">
-            <!-- /.box-header start -->
-          <div class="box-header with-border">
-            <h3 class="box-title">Intervenants</h3>                      
-          </div>
-            <!-- /.box-header end -->
-
-            <!-- /.box-body start-->
-          <div class="box-body">
-              <ul class="users-list clearfix">
-                  <li>
-                    <img src="dist/img/user1-128x128.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">Alexander Pierce</a>
-                    <span class="users-list-date">Today</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user8-128x128.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">Norman</a>
-                    <span class="users-list-date">Yesterday</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user7-128x128.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">Jane</a>
-                    <span class="users-list-date">12 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user6-128x128.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">John</a>
-                    <span class="users-list-date">12 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user2-160x160.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">Alexander</a>
-                    <span class="users-list-date">13 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user5-128x128.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">Sarah</a>
-                    <span class="users-list-date">14 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user4-128x128.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">Nora</a>
-                    <span class="users-list-date">15 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user3-128x128.jpg" alt="User Image"/>
-                    <a class="users-list-name" href="#">Nadia</a>
-                    <span class="users-list-date">15 Jan</span>
-                  </li>
-                </ul><!-- /.users-list -->
-
-
-              <div class="box-footer text-center">
-                <a href="javascript::" class="uppercase">Plus de détails</a>
-              </div><!-- /.box-footer -->
-
-          </div>
-            <!-- /.box-body end -->
-        </div>
-        <!-- Intervenants du projet end -->
-    </div>
-    <!-- Left Panel end-->
-
-    <!-- Central Panel start-->
-    <div class="col-md-6">
-        <!-- Calendrier start -->
-        <div class="box box-success">
-            <!-- /.box-header start -->
-          <div class="box-header with-border">
-            <h3 class="box-title">Calendrier</h3> <a href="{{path("gestion_projet_calendrier_new")}}" class="pull-right"><i class="fa fa-plus"></i></a>
-          </div>
-            <!-- /.box-header end -->
-
-            <!-- /.box-body start-->
-          <div class="box-body">
-            <div id='calendar' class='skin-blue'></div>
-            <div id='loading'>loading...</div>
-            <div id='script-warning' class='hide'>
-            <code class='hide-text'>Une erreur s'est produite lors du chargement des evenements</code>
+                </div>
+                <!-- /.box-body end -->
             </div>
-          </div>
-            <!-- /.box-body end -->
+            <!-- Présentation du projet end -->
+
+            <!-- Intervenants du projet start -->
+            <div class="box box-primary">
+                <!-- /.box-header start -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Intervenants</h3>                      
+                </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+                <div class="box-body">
+                    <ul class="users-list clearfix">
+                        <li>
+                            <img src="dist/img/user1-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Alexander Pierce</a>
+                            <span class="users-list-date">Today</span>
+                        </li>
+                        <li>
+                            <img src="dist/img/user8-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Norman</a>
+                            <span class="users-list-date">Yesterday</span>
+                        </li>
+                        <li>
+                            <img src="dist/img/user7-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Jane</a>
+                            <span class="users-list-date">12 Jan</span>
+                        </li>
+                        <li>
+                            <img src="dist/img/user6-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">John</a>
+                            <span class="users-list-date">12 Jan</span>
+                        </li>
+                        <li>
+                            <img src="dist/img/user2-160x160.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Alexander</a>
+                            <span class="users-list-date">13 Jan</span>
+                        </li>
+                        <li>
+                            <img src="dist/img/user5-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Sarah</a>
+                            <span class="users-list-date">14 Jan</span>
+                        </li>
+                        <li>
+                            <img src="dist/img/user4-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Nora</a>
+                            <span class="users-list-date">15 Jan</span>
+                        </li>
+                        <li>
+                            <img src="dist/img/user3-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Nadia</a>
+                            <span class="users-list-date">15 Jan</span>
+                        </li>
+                    </ul><!-- /.users-list -->
+
+
+                    <div class="box-footer text-center">
+                        <a href="javascript::" class="uppercase">Plus de détails</a>
+                    </div><!-- /.box-footer -->
+
+                </div>
+                <!-- /.box-body end -->
+            </div>
+            <!-- Intervenants du projet end -->
         </div>
-        <!-- Calendrier end -->
+        <!-- Left Panel end-->
 
-        <!-- Evolution start -->
-        <div class="box box-success">
-            <!-- /.box-header start -->
-          <div class="box-header with-border">
-            <h3 class="box-title">Evolution</h3>                      
-          </div>
-            <!-- /.box-header end -->
+        <!-- Central Panel start-->
+        <div class="col-md-6">
+            <!-- Calendrier start -->
+            <div class="box box-success">
+                <!-- /.box-header start -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Calendrier</h3> <a href="{{path("gestion_projet_calendrier_new")}}" class="pull-right"><i class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.box-header end -->
 
-            <!-- /.box-body start-->
-          <div class="box-body">
+                <!-- /.box-body start-->
+                <div class="box-body">
+                    <div id='calendar' class='skin-blue'></div>
+                    <div id="fullCalModal" class="modal fade">
+                        <div id="eventContent" title="Event Details" style="display:none;">
+                            Debut: <span id="startTime"></span><br>
+                            Fin: <span id="endTime"></span><br><br>
+                            <p id="eventInfo"></p>
+                            <p class="pull-right"><strong><a id="eventLink" href="">Modifier</a></strong></p>
+                        </div>
+                    </div>
+                    <div id='loading'>loading...</div>
+                    <div id='script-warning' class='hide'>
+                        <code class='hide-text'>Une erreur s'est produite lors du chargement des evenements</code>
+                    </div>
+                </div>
+                <!-- /.box-body end -->
+            </div>
+            <!-- Calendrier end -->
 
-          </div>
-            <!-- /.box-body end -->
+            <!-- Evolution start -->
+            <div class="box box-success">
+                <!-- /.box-header start -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Evolution</h3>                      
+                </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+                <div class="box-body">
+
+                </div>
+                <!-- /.box-body end -->
+            </div>
+            <!-- Evolution end -->
+
         </div>
-        <!-- Evolution end -->
+        <!-- Central Panel end-->
 
+        <div class="col-md-3">
+            <!-- Actualités du projet start -->
+            {{render(controller('GestionProjetBundle:Actualite:getActualites', {'nbre_actualite':10}))}}
+            <!-- Actualités du projet end -->
+        </div>
     </div>
-    <!-- Central Panel end-->
-
-    <div class="col-md-3">
-        <!-- Actualités du projet start -->
-        {{render(controller('GestionProjetBundle:Actualite:getActualites', {'nbre_actualite':10}))}}
-        <!-- Actualités du projet end -->
-    </div>
-</div>
 {% endblock %}
 
 {% block js %}
@@ -183,50 +191,62 @@
     <script src='{{ asset('fullcalendar/lib/moment.min.js')}}'></script>
     <script src='{{ asset('fullcalendar/fullcalendar.js')}}'></script>
     <script src='{{ asset('fullcalendar/lang-all.js')}}'></script>
+    <script src='{{ asset('js/jquery-ui.js')}}'></script>
+    <script src='{{ asset('js/bootstrap.min.js')}}'></script>
+    <script src='{{ asset('js/moment.js')}}'></script>
+    <script src='{{ asset('js/jquery-ui.min.js')}}'></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
 
-        $(document).ready(function () {
+                $(document).ready(function () {
 
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+        $('#calendar').fullCalendar({
+        header: {
+        left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+        },
+                eventClick: function (calEvent, jsEvent, view) {
+                $("#eventInfo").html(calEvent.description);
+                        $("#eventLink").attr('href', Routing.generate('gestion_projet_evenement_update', {'id': calEvent.id}));
+                        $("#startTime").html(moment(calEvent.start).format('MMM Do h:mm A'));
+                        $("#endTime").html(moment(calEvent.end).format('MMM Do h:mm A'));
+                        $("#eventContent").dialog({modal: true, title: calEvent.title});
+                        // change the border color just for fun
+                        $(this).css('border-color', 'red');
                 },
                 defaultDate: new Date(),
                 lang: 'fr',
-                selectable: true,
+                selectable: false,
                 selectHelper: true,
-                select: function (start, end) {
-                    var title = prompt('Event Title:');
-                    var eventData;
-                    if (title) {
-                        eventData = {
-                            title: title,
-                            start: start,
-                            end: end
-                        };
+                {#select: function (start, end) {
+                var title = prompt('Event Title:');
+                        var eventData;
+                        if (title) {
+                eventData = {
+                title: title,
+                        start: start,
+                        end: end
+                };
                         $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                    }
-                    $('#calendar').fullCalendar('unselect');
-                },
+                }
+                $('#calendar').fullCalendar('unselect');
+                },#}
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: {
-                    url: Routing.generate('projet_calendrier_events'),
-                    error: function (data) {
+                url: Routing.generate('projet_calendrier_events'),
+                        error: function (data) {
                         alert(data);
-                        $('#script-warning').show();
-                    }
+                                $('#script-warning').show();
+                        }
                 },
                 loading: function (bool) {
-                    $('#loading').toggle(bool);
+                $('#loading').toggle(bool);
                 }
 
-            });
-
+        });
         });
 
     </script>

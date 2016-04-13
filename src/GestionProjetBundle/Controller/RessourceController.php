@@ -146,6 +146,51 @@ class RessourceController extends Controller {
 
         return $this->render("GestionProjetBundle:formulaire:liste.documents.nonvalides.template.html.twig", array("ressources" => $ressources));
     }
+    
+    /**
+     * @Route("/ressource/administratifs", name="gestion_projet_ressource_administratifs")
+     * @Method({"GET"})
+     */
+    public function getAllRessourcesAdministratifsAction() {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+
+        $ressources = $ressources_repo->findBy(array('statut' => 1, 'type' => 0));
+
+        return $this->render("GestionProjetBundle:formulaire:liste.documents.administratifs.maxi.template.html.twig", array("ressources" => $ressources));
+    }
+
+    /**
+     * @Route("/ressource/valides", name="gestion_projet_ressource_valides")
+     * @Method({"GET"})
+     */
+    public function getAllRessourcesValidesAction() {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+
+        $ressources = $ressources_repo->findBy(array('statut' => 3, 'type' => 1));
+
+        return $this->render("GestionProjetBundle:formulaire:liste.documents.valides.maxi.template.html.twig", array("ressources" => $ressources));
+    }
+
+    /**
+     * @Route("/ressource/nonvalides", name="gestion_projet_ressource_nonvalides")
+     * @Method({"GET"})
+     */
+    public function getAllRessourcesNonValidesAction() {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+
+        $ressources = $ressources_repo->findBy(array('statut' => 2, 'type' => 1));
+
+        return $this->render("GestionProjetBundle:formulaire:liste.documents.nonvalides.maxi.template.html.twig", array("ressources" => $ressources));
+    }
 
     /**
      * @Route("/ressource/ref={reference}", name="gestion_projet_ressource_reference")
