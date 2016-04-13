@@ -20,6 +20,11 @@ class Mail
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idmail;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="\UserBundle\Entity\Utilisateur",cascade={"persist"})
+     */
+    private $emetteur ;
 
     /**
      * @var string
