@@ -60,9 +60,10 @@ class CalendarController extends Controller {
             foreach($events as $row) {
                 $out[] = array(
                     'title' => $row->getTitre(),
-                    //'url' => Helper::url($row->type),
+                    'id' => $row->getIdcalendrier(),
                     'start' => $row->getDatedebut()->format('c'),
                     'end' => $row->getDatefin()->format('c'),
+                    'description' => $row->getDescription(),
                     'color' => $row -> getCodecouleur()
                 );
             }
@@ -93,7 +94,7 @@ class CalendarController extends Controller {
             }
 
             $request->getSession()->getFlashBag()->add('notice', 'Evenement bien enregistrée.');
-            return $this->redirect($this->generateUrl('homepage'));
+            return $this->redirect($this->generateUrl('projet_calendrier'));
         }
 
         return $this->render('GestionProjetBundle:formulaire:form.creation.evenement.html.twig', array(
@@ -105,12 +106,12 @@ class CalendarController extends Controller {
      * @Route("/evenement/modifier/{id}", name="gestion_projet_evenement_update",requirements={"id" = "\d+"})
      * @Method({"GET","POST"})
      */
-    public function updateEvenementAction(Calendier $calendrier) {
+    public function updateEvenementAction(Calendrier $calendrier) {
 
         $request = $this->get('request');
 
         $em = $this->getDoctrine()->getEntityManager();
-        $actu_repo = $em->getRepository('GestionProjetBundle:Calendrier');
+        $cal_repo = $em->getRepository('GestionProjetBundle:Calendrier');
         $form = $this->createForm(CalendrierType::class, $calendrier);
 
         if ($request->getMethod() == 'POST') {
@@ -121,19 +122,17 @@ class CalendarController extends Controller {
 
                 try {
 
-
-
-                    $actu_repo->updateCalendrier($calendrier);
+                    $cal_repo->updateCalendrier($calendrier);
                 } catch (Exception $exc) {
                     echo $exc->getTraceAsString();
                 }
 
-                return $this->redirect($this->generateUrl('homepage'));
+                return $this->redirect($this->generateUrl('projet_calendrier'));
             }
         }
 
-        return $this->render('GestionProjetBundle:formulaire:form.modification.calendrier.html.twig', array(
-                    'form' => $form->createView(), 'idcalendrier' => $actu->getIdcalendrier()
+        return $this->render('GestionProjetBundle:formulaire:form.modification.evenement.html.twig', array(
+                    'form' => $form->createView(), 'idcalendrier' => $calendrier->getIdcalendrier()
         ));
     }
 

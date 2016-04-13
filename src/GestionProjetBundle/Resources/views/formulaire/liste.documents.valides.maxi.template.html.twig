@@ -1,10 +1,35 @@
 {# Template de la liste de documents validés #}
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
+{% block title %}Documentation {% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Documentation
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Documentation du projet 
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Documentation
+{% endblock %}
+{% block menuDocumentation %}class="active"{% endblock %}
+{% block contenupage %}
 <div class="row">
     <!-- Document start-->
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Liste des documents d'exécution validés</h3></h3><a href="{{path('gestion_projet_ressource_valides')}}" class="pull-right"><i class="fa fa-plus"></i>Voir</a>
+            <h3 class="box-title">Liste des documents d'exécution validés</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
             <table class="data-table table table-bordered table-striped">
@@ -47,3 +72,16 @@
                     </div>
                     <!-- Intervenants end-->
                 </div><!-- /.row --> 
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $(".data-table").DataTable();
+      });
+    </script>
+{% endblock %}

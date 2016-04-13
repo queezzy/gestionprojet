@@ -73,6 +73,10 @@ gp_intervenant_get:
 gp_intervenant_delete:
     pattern: /delete-intervenant
     defaults: { _controller: GestionProjetBundle:Intervenant:deleteintervenant }
+
+gp_evenement_update:
+    pattern: /evenement/modifier/{id}
+    defaults: { _controller: GestionProjetBundle:Calendar:updateEvenement }
     options:
         expose: true
         

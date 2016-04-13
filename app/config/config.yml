@@ -87,4 +87,4 @@ fos_message:
     #spam_detector: fos_message.akismet_spam_detector
     
 fos_js_routing:
-    routes_to_expose: [projet_calendrier_events]
+    routes_to_expose: [projet_calendrier_events,gestion_projet_evenement_update]
