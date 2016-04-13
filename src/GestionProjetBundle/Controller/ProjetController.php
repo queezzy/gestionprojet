@@ -33,7 +33,7 @@ class ProjetController extends Controller
         $projet = new Projet();
         $form = $this->createForm(new ProjetType(), $projet);
         $display_tab = 1;
-        //selectionne le seul projet actif
+        //selectionne les seuls projets actif
         $projets = $repositoryProjet->findBy(array("statut" => 1));
         
         return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
@@ -51,6 +51,7 @@ class ProjetController extends Controller
         $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
         
         return $this->render('::header.template.html.twig', array('projetactif' => $projet));
+
     }
     
     /**

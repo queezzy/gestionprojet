@@ -1,6 +1,6 @@
 gp_index:
     pattern: /
-    defaults: { _controller: GestionProjetBundle:Projet:index }
+    defaults: { _controller: GestionProjetBundle:Default:index }
     options:
         expose: true
 

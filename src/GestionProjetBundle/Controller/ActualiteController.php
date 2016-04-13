@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \GestionProjetBundle\Form\ActualiteType;
 use \GestionProjetBundle\Entity\Actualite;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Description of ActualiteController
@@ -22,94 +23,156 @@ use \GestionProjetBundle\Entity\Actualite;
  */
 class ActualiteController extends Controller {
 
-     /**
-     * @Route("/product/new", name="app_product_new")
+    /**
+     * @Route("/actualite/ajouter", name="gestion_projet_actualite_new")
+      @Method({"GET","POST"})
      */
-    public function newActualiteAction(Request $request,$actualite)
-    {
+    public function newActualiteAction(Request $request) {
         $actualite = new Actualite();
         $form = $this->createForm(ActualiteType::class, $actualite);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            
+
             $em = $this->getDoctrine()->getManager();
 
-            $actu_repo = $em->getRepository('GestionProjetBundle:Actualite'); 
-//            // $file stores the uploaded PDF file
-//            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-//            $file = $product->getBrochure();
-//
-//            // Generate a unique name for the file before saving it
-//            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-//
-//            // Move the file to the directory where brochures are stored
-//            $brochuresDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/brochures';
-//            $file->move($brochuresDir, $fileName);
-//
-//            // Update the 'brochure' property to store the PDF file name
-//            // instead of its contents
-//            $product->setBrochure($fileName);
+            $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
 
-            // ... persist the $product variable or any other work
-            
             try {
+                $user = $this->container->get('security.context')->getToken()->getUser();
+                $actualite->setUtilisateur($user);
                 $actu_repo->saveActualite($actualite);
-            } catch (Exception $exc) {
-                echo $exc->getTraceAsString();
-            } 
-
-            $request->getSession()->getFlashBag()->add('notice', 'Actualite bien enregistrée.');
-            return $this->redirect($this->generateUrl('gp_accueil'));
-        }
-        
-        return $this->render('product/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-    
-     public function updateActualiteAction(Actualite $actu){
-        
-    $request = $this->get('request');
-
-    $em = $this->getDoctrine()->getEntityManager();
-    $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
-    $form = $this->createForm(new \GestionProjetBundle\Form\ActualiteType(), $actu);
-
-    if ($request->getMethod() == 'POST') {
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            
-            try {
-                $actu_repo->updateActualite($actu);
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             }
 
-            return $this->redirect($this->generateUrl('MyBundle_list_testimonials'));
+            $request->getSession()->getFlashBag()->add('notice', 'Actualite bien enregistrée.');
+            return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));
         }
+
+        return $this->render('GestionProjetBundle:formulaire:form.creation.actualite.html.twig', array(
+                    'form' => $form->createView(),
+        ));
     }
 
-    return $this->render('MyBundle:Testimonial:update.html.twig', array(
-        'form' => $form->createView()
-    ));
+    /**
+     * @Route("/actualite/modifier/{id}", name="gestion_projet_actualite_update",requirements={"id" = "\d+"})
+     * @Method({"GET","POST"})
+     */
+    public function updateActualiteAction(Actualite $actu) {
+
+        $request = $this->get('request');
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
+        $form = $this->createForm(new \GestionProjetBundle\Form\ActualiteType(), $actu);
+
+        if ($request->getMethod() == 'POST') {
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+
+                try {
+
+//                    $actu_bd=$actu_repo->find($actu->getIdactualite());
+//                    
+//                    $actu_bd->setContenu($actu->getContenu());
+//                    $actu_bd->setDatepublication($actu->getDatepublication());
+//                    $actu_bd->setDescription($actu->getDescription());
+//                    $actu_bd->setIdtheme($actu->getIdtheme());
+//                    $actu_bd->setTitre($actu->getTitre());
+//                    
+//                    if($actu->getFile() != null){
+//                    
+//                        $actu_bd->setFile($actu->getFile());
+//                    }
+//                    $actu_bd->setStatut($actu->getStatut());
+//                    
+
+                    $actu_repo->updateActualite($actu);
+                } catch (Exception $exc) {
+                    echo $exc->getTraceAsString();
+                }
+
+                return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));
+            }
+        }
+
+        return $this->render('GestionProjetBundle:formulaire:form.modification.actualite.html.twig', array(
+                    'form' => $form->createView(), 'idactualite' => $actu->getIdactualite()
+        ));
     }
-    
-    public function getAllActualitesAction(Request $request){
-        
+
+    /**
+     * @Route("/actualites", name="gestion_projet_actualite_all")
+     * @Method({"GET"})
+     */
+    public function getAllActualitesAction() {
+
+        return $this->render('GestionProjetBundle:actualite:actualite.template.html.twig');
+    }
+
+    public function getActualitesAction($nbre_actualite = 0) {
+
+        if ($nbre_actualite == 0) {
+
             $em = $this->getDoctrine()->getManager();
 
             $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
-            
-            $actualites=$actu_repo->findByStatus(0);
-            
-            render();
+
+            try {
+                $actualites = $actu_repo->findByStatut(1);
+            } catch (Exception $exc) {
+                echo $exc->getTraceAsString();
+            }
+
+
+
+            return $this->render('GestionProjetBundle:formulaire:liste.actualite.template.html.twig', array("actualites" => $actualites));
+        } else {
+            $em = $this->getDoctrine()->getManager();
+
+            $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
+
+            try {
+                $actualites = $actu_repo->findBy(array("statut" => 1), null, $nbre_actualite);
+            } catch (Exception $exc) {
+                echo $exc->getTraceAsString();
+            }
+
+
+
+            return $this->render('GestionProjetBundle:formulaire:liste.actualite.mini.html.twig', array("actualites" => $actualites));
+        }
     }
-    
-    public function getOneActualiteAction(Actualite $actualite){
-        
-        
-        render();
+
+    /**
+     * @Route("/actualite/{id}", name="gestion_projet_actualite_unique",requirements={"id" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function getOneActualiteAction(Actualite $actualite) {
+
+        return $this->render('GestionProjetBundle:formulaire:form.affichage.actualite.html.twig', array("actualite" => $actualite));
     }
+
+    /**
+     * @Route("/actualite/supprimer/{id}", name="gestion_projet_actualite_delete",requirements={"id" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function deleteActualiteAction(Actualite $actualite) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
+
+        try {
+            $actu_repo->deleteActualite($actualite);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+
+        return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));
+    }
+
 }

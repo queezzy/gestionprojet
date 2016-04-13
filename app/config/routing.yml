@@ -1,3 +1,4 @@
+
 gestion_projet:
     resource: "@GestionProjetBundle/Controller/"
     type:     annotation

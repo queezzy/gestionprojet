@@ -20,7 +20,11 @@ class Mail
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
+    /**
+     * @ORM\OneToOne(targetEntity="\UserBundle\Entity\Utilisateur",cascade={"persist"})
+     */
+    private $emetteur ;
     /**
      * @var string
      *
@@ -60,7 +64,7 @@ class Mail
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Utilisateur", inversedBy="mails")
+     * @ORM\ManyToMany(targetEntity="\UserBundle\Entity\Utilisateur", inversedBy="mails")
      * @ORM\JoinTable(name="mail_utilisateur",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idMail", referencedColumnName="id")
@@ -209,10 +213,10 @@ class Mail
     /**
      * Add utilisateur
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
+     * @param \UserBundle\Entity\Utilisateur $utilisateur
      * @return Mail
      */
-    public function addUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
+    public function addUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
         $this->utilisateurs[] = $utilisateur;
 
@@ -222,9 +226,9 @@ class Mail
     /**
      * Remove utilisateur
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
+     * @param \UserBundle\Entity\Utilisateur $utilisateur
      */
-    public function removeUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
+    public function removeUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
         $this->utilisateurs->removeElement($utilisateur);
     }

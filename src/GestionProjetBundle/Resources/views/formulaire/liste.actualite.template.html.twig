@@ -1,0 +1,54 @@
+{# Template liste des actualités #}
+
+
+<div class="row">
+<!-- Document start-->
+<div class="box box-primary">
+<div class="box-header">
+    {# ajouter le thème à la place de la variable theme #}
+
+  <h3 class="box-title">Liste des actualités</h3><a href="{{path('gestion_projet_actualite_new')}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <ul class="products-list product-list-in-box">
+    {% for actualite in actualites %}
+        <li class="item">
+          <div class="row col-md-12">
+            <div class="product-img col-md-2">
+                <img width="200px" height="200px" src="{{asset('uploads/actualites/'~actualite.path)}}" alt="{{actualite.titre}}"/>
+            </div>
+            <div class="product-img col-md-10">                
+                <div class="product-img col-md-12">
+                    <h4>{{actualite.titre}}</h4>
+                </div>
+                <div class="product-img col-md-12">
+                    {% if actualite.idtheme is defined %}
+                    <h4>{{actualite.idtheme.nom}}</h4>
+                    {%endif%}
+                </div>
+                <div class="product-info col-md-12">
+                    <p>{{ actualite.description |raw}}</p> 
+                    <p>publié le : {{ actualite.datepublication | date('d-m-Y') }}</p> 
+                    {% if actualite.utilisateur is defined %}
+                    <p>par : {{ actualite.utilisateur.prenom ~ ' ' ~actualite.utilisateur.nom}}</p>
+                    {%endif%}
+                </div>
+                <div class="row product-description col-md-5 pull-right">
+                    <a href="{{path('gestion_projet_actualite_unique',{'id' : actualite.idactualite})}}"><i class="fa fa-eye"></i>Détail</a>
+                    <a href="{{path('gestion_projet_actualite_update',{'id' : actualite.idactualite})}}"><i class="fa fa-edit"></i>Modifier</a>
+                    <a href="{{path('gestion_projet_actualite_delete',{'id' : actualite.idactualite})}}"><i class="fa fa-minus"></i>Supprimer</a>
+
+                </div>
+            </div>                      
+          </div>
+        </li>
+    {% else %}
+        <li class="item">
+          Pas d'actualités disponible!
+        </li>
+    {% endfor %} 
+  </ul>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 

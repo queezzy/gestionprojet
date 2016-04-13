@@ -16,11 +16,23 @@ class RessourceType extends AbstractType
     {
         $builder
             ->add('reference')
-            ->add('type')
-            ->add('url')
+            ->add('type', 'choice',array('choices' => array(
+                0 => "Administratif",
+                1 => "Executif",
+            )))
             ->add('description')
-            ->add('statut')
-            ->add('idintervenant')
+            ->add('statut','choice',array('choices' => array(
+                1 => 'Actif',
+                2 => "Non Validé",
+                3 => "Validé",
+            )))
+            ->add('file',null,array(
+                'attr' => array('class'=>'inputfile')
+            ))
+            ->add('idintervenant','entity',array(
+                'class'=> 'GestionProjetBundle\Entity\Intervenant',
+                'property' => 'nom'
+            ))
         ;
     }
     

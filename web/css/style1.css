@@ -22,15 +22,25 @@
     padding: 5%;
 }
 
+
 ul.nav {
     margin-left: 4%;
 }
 
 ul.nav li {
-    font-size : 1.3em;
+    font-size : 1em;
     font-weight: bold;
-    background-color: #1B4F08;
-    color: #fff;
+    color: #fff ;
+}
+
+ul.nav li.active {
+   background-color: #1B4F08 !important;
+   color: #ecf0f5 !important;
+}
+
+ul.nav li.active a{
+   background-color: #1B4F08 !important;
+   color: #ecf0f5 !important;
 }
 
 ul.nav li:hover{
@@ -42,10 +52,11 @@ ul.nav li a:hover {
     color: #1B4F08 !important;
 }
 
-ul.nav li.active {
-   color:  #1B4F08 !important;
-   font-weight: bold;
+ul.nav li.active a:hover{
+   background-color: #1B4F08 !important;
+   color: #ecf0f5 !important;
 }
+
 
 .navbar {
     margin-bottom: 0 !important;
@@ -59,6 +70,10 @@ ul.nav li.active {
 .info {
     font-weight: bold;
     padding-top: 8px;
+}
+
+.space {
+    margin-top: 13%;
 }
 
 /*  Style for the menu End */
@@ -86,6 +101,23 @@ ul.nav li.active {
 
 .img-preview img {
     width: 100%;
+}
+
+.modal {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+    overflow: scroll;
+}
+
+.modal-body {
+    background-color: #ecf0f5 !important;
+}
+
+
+.box i {
+    margin-left: 10px;
 }
 /* Main contain Style End*/
 

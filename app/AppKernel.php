@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             
             new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
             new FOS\MessageBundle\FOSMessageBundle(),
+            new UserBundle\UserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

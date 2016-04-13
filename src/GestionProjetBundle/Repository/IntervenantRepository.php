@@ -21,7 +21,7 @@ class IntervenantRepository extends EntityRepository{
         $intervenant->setStatut(0);
         $calendrier = new \GestionProjetBundle\Entity\Calendrier();
         $courierenvoye = new \GestionProjetBundle\Entity\Courierenvoye();
-        $utilisateur = new \GestionProjetBundle\Entity\Utilisateur();
+        $utilisateur = new \UserBundle\Entity\Utilisateur();
         $ressource = new \GestionProjetBundle\Entity\Ressource();
         $repositoryCalendrier = $em->getRepository("GestionProjetBundle:Calendrier");
         $repositoryCourierenvoye = $em->getRepository("GestionProjetBundle:Courierenvoye");

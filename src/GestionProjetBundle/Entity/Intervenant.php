@@ -87,10 +87,9 @@ class Intervenant
     private $temp;
     
     /**
-     * @var \Adresse
-     *
+     * @var \Adresse 
      * @ORM\OneToOne(targetEntity="Adresse",cascade={"persist"})
-     
+     * @ORM\JoinColumn(name="idAdresse", referencedColumnName="idAdresse")
      */
     private $idadresse;
 
@@ -120,7 +119,7 @@ class Intervenant
     private $courierenvoyes;
     
     /**
-    * @ORM\OneToMany(targetEntity="Utilisateur", mappedBy="idintervenant", cascade={"remove", "persist"})
+    * @ORM\OneToMany(targetEntity="\UserBundle\Entity\Utilisateur", mappedBy="idintervenant", cascade={"remove", "persist"})
     */
     private $utilisateurs;
     
@@ -130,6 +129,14 @@ class Intervenant
     private $ressources;
     
     /**
+<<<<<<< HEAD
+=======
+     * @ORM\OneToOne(targetEntity="Calendrier",cascade={"persist"})
+     */
+    private $idcalendrier ;
+
+    /**
+>>>>>>> refs/remotes/origin/back_end_testing
      * Constructor
      */
     public function __construct()
@@ -417,10 +424,10 @@ class Intervenant
     /**
      * Add utilisateur
      *
-     * @param GestionProjetBundle\Entity\Utilisateur $utilisateur 
+     * @param UserBundle\Entity\Utilisateur $utilisateur 
      * @return Intervenant
      */
-    public function addUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateur)
+    public function addUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
         $this->utilisateurs[] = $utilisateur;
         return $this;
@@ -462,9 +469,9 @@ class Intervenant
     /**
      * Remove utilisateurs
      *
-     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateurs
+     * @param \UserBundle\Entity\Utilisateur $utilisateurs
      */
-    public function removeUtilisateur(\GestionProjetBundle\Entity\Utilisateur $utilisateurs)
+    public function removeUtilisateur(\UserBundle\Entity\Utilisateur $utilisateurs)
     {
         $this->utilisateurs->removeElement($utilisateurs);
     }

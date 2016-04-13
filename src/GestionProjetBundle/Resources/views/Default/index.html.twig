@@ -13,7 +13,11 @@
 {% block menu %}
 {% endblock %}
 
+
+
 {% block contenu %}
+    
+    
     <body class="login-page">
     <div class="login-box">
       <!-- Platform Name start -->
@@ -23,28 +27,35 @@
       <!-- Platform Name End -->
       <div class="login-box-body">
         <p class="login-box-msg">Authentifiez-vous pour démarrer</p>
-        <form action="#" method="#">
+        
+        {% block fos_user_content %}
+            {% if error is defined%}
+            <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+        {% endif %}
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+           <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
           <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="Nom d'utilisateur"/>
+            <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="username" name="_username" value="{{ last_username }}" required="required"/>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Mot de passe"/>
+            <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="_password" required="required" />
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
             <div class="col-xs-8">    
               <div class="checkbox icheck">
                 <label>
-                  <input type="checkbox"> Se souvenir de moi ?
+                  <input type="checkbox" id="remember_me" name="_remember_me" value="on">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
                 </label>
               </div>                        
             </div><!-- /.col -->
             <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">Connexion</button>
+              <button type="submit" class="btn btn-primary btn-block btn-flat" id="_submit">Connexion</button>
             </div><!-- /.col -->
           </div>
         </form>
+        {% endblock fos_user_content %}
 
         
 

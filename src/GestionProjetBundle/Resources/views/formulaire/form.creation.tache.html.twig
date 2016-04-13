@@ -1,0 +1,43 @@
+{# Formulaire de création d'une tâche #}
+<form role="form">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                
+                <div class="form-group">
+                    <label for="">Nom</label>
+                    <input type="text" class="form-control" id="" placeholder="Reférence">
+                </div>
+                <div class="form-group">
+                    <label>Date de début</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                    </div><!-- /.input group -->
+                </div>
+                <div class="form-group">
+                    <label>Date de fin</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                    </div><!-- /.input group -->
+                </div>
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <textarea rows="10" cols="70" class="collab-message ckeditor">
+
+                    </textarea>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+      <button type="reset" class="btn btn-danger pull-left">Annuler</button>
+      <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+    </div>
+</form>

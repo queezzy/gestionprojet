@@ -1,0 +1,40 @@
+{# Template liste des thèmes #}
+
+<!-- Actualités start-->
+<div class="box box-primary">
+<div class="box-header">
+  <h3 class="box-title">Thèmes</h3><a href="{{path('gestion_projet_theme_new')}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table class="data-table table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Thème</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    {% for theme in themes %}
+      <tr>
+        <td>{{theme.nom}}<br/>
+            <p class="text-maroon">{{theme.description}}</p>
+        </td>
+        <td><a href="{{path('gestion_projet_theme_unique',{'id':theme.idtheme})}}" class="pull-right"><i class="fa fa-eye"></i></a>
+            <a href="{{path('gestion_projet_theme_update',{'id':theme.idtheme})}}" class="pull-right"><i class="fa fa-edit"></i></a>
+            <a href="{{path('gestion_projet_theme_delete',{'id':theme.idtheme})}}" class="pull-right"><i class="fa fa-minus"></i></a>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    {% endfor %}      
+    </tbody>
+  </table>
+</div><!-- /.box-body -->
+</div>
+<!-- actualités end-->
+ 

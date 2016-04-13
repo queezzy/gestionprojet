@@ -5,6 +5,7 @@ namespace GestionProjetBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="ressource")
  * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\RessourceRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Ressource
 {
@@ -38,13 +40,13 @@ class Ressource
      */
     private $type;
 
-     /**
-     * @ORM\Column(name="url",type="string")
-     *
-     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
-     * @Assert\File(mimeTypes={ "application/pdf" })
-     */
-    private $url;
+//     /**
+//     * @ORM\Column(name="url",type="string")
+//     *
+//     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
+//     * @Assert\File(mimeTypes={ "application/pdf" })
+//     */
+//    private $url;
 
     /**
      * @var string
@@ -75,12 +77,25 @@ class Ressource
     */
     private $courierenvoyes;
     
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true) 
+     */
+    private $path;
+
+    /**
+     * @Assert\File(maxSize="6000000") 
+     */
+    private $file;
+    
+    private $temp;
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setStatut(1);
     }
 
     /**
@@ -139,28 +154,28 @@ class Ressource
         return $this->type;
     }
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return Ressource
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string 
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
+//    /**
+//     * Set url
+//     *
+//     * @param string $url
+//     * @return Ressource
+//     */
+//    public function setUrl($url)
+//    {
+//        $this->url = $url;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get url
+//     *
+//     * @return string 
+//     */
+//    public function getUrl()
+//    {
+//        return $this->url;
+//    }
 
     /**
      * Set description
@@ -276,4 +291,115 @@ class Ressource
     {
         $this->courierenvoyes->removeElement($courierenvoyes);
     }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Ressource
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+    
+    /**
+     * @param UploadedFile $file
+     * @return object
+     */
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * Get the file used for profile picture uploads
+     * 
+     * @return UploadedFile
+     */
+    public function getFile() {
+
+        return $this->file;
+    }
+
+     protected function getUploadRootDir() {
+        return __DIR__ . '/../../../web/uploads/ressources';
+    }
+
+
+    /**
+     * @ORM\PrePersist() 
+     * @ORM\PreUpdate() 
+     */
+    public function preUpload() {
+        if (null !== $this->getFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename . '.' . $this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * Generates a 32 char long random filename
+     * 
+     * @return string
+     */
+    public function generateRandomProfilePictureFilename() {
+        $count = 0;
+        do {
+            $generator = new SecureRandom();
+            $random = $generator->nextBytes(16);
+            $randomString = bin2hex($random);
+            $count++;
+        } while (file_exists($this->getUploadRootDir() . '/' . $randomString . '.' . $this->getFile()->guessExtension()) && $count < 50);
+
+        return $randomString;
+    }
+
+    /**
+     * @ORM\PostPersist() 
+     * @ORM\PostUpdate() 
+     */
+    public function upload() {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            //unlink($this->getUploadRootDir().'/'.$this->temp);
+            //ou je renomme
+            rename($this->getUploadRootDir() . '/' . $this->temp, $this->getUploadRootDir() . '/old' . $this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+    
 }

@@ -1,0 +1,79 @@
+{# Template affichage d'une actualité #}
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+    <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    Actualité
+{% endblock %}
+
+{% block breadcrumbDescription %}
+   Actualités du projet
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Actualités
+{% endblock %}
+
+{% block contenupage %}
+<div class="box box-primary">
+    <div class="box-header">
+      <h3>Actualité</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+       <div class="row col-md-12">
+            <div class="product-img col-md-3">
+                <img width="300px" height="300px" src="{{asset('uploads/actualites/'~actualite.path)}}" alt="{{actualite.titre}}"/>
+            </div>
+            <div class="product-img col-md-9">                
+                <div class="product-img col-md-12">
+                    <h4>{{actualite.titre}}</h4>
+                </div>
+                <div class="product-img col-md-12">
+                    {% if actualite.idtheme is defined %}
+                    <h4>{{actualite.idtheme.nom}}</h4>
+                    {% endif %}
+                </div>
+                <div class="product-info col-md-12">
+                    <p>{{ actualite.description |raw }}</p>
+                </div>
+                <div class="product-info col-md-12">
+                    <p>{{ actualite.contenu |raw}}</p> 
+                    <p>publié le : {{ actualite.datepublication | date('d-m-Y') }}</p> 
+                    {% if actualite.utilisateur is defined %}
+                    <p>par : {{ actualite.utilisateur.prenom ~ ' ' ~actualite.utilisateur.nom }}</p>
+                    {%endif%}
+                </div>
+                <div class="row product-description col-md-3 pull-right">
+                    <a href="{{path('gestion_projet_actualite_update',{'id' : actualite.idactualite})}}"><i class="fa fa-edit"></i>Modifier</a>
+                    <a href="{{path('gestion_projet_actualite_delete',{'id' : actualite.idactualite})}}"><i class="fa fa-minus"></i>Supprimer</a>
+
+                </div>
+            </div>                      
+          </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script>
+      $(function () {
+        $(".data-table").DataTable();
+      });
+    </script>
+{% endblock %}

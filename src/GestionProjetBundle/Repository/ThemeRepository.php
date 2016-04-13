@@ -25,7 +25,7 @@ class ThemeRepository extends EntityRepository{
         try{
             $actualites = $theme->getActualites();
             foreach ($actualites as $actualite) {
-                $repositoryActualite->deleteIntervenant($actualite);
+                $repositoryActualite->deleteActualite($actualite);
             }
             $em->persist($theme);
             $em->flush();

@@ -1,0 +1,29 @@
+<div class="col-md-offset-2 col-md-6">
+    <div class="row">
+        <div class="product-img col-md-3">
+                <img width="150px" height="150px" src="{{asset('uploads/profils/'~user.path)}}" alt="{{user.username}}"/>
+        </div>
+        <div class="fos_user_user_show col-sm-4">
+{#            <p><b>Photo</b>: {{ user.username }}</p>#}
+            <p><b>Nom d'utilisateur</b>: {{ user.username }}</p>
+            <p><b>Email</b>: {{ user.email }}</p>
+            <p><b>Nom</b>: {{ user.nom }}</p>
+            <p><b>Prenom</b>: {{ user.prenom }}</p>
+            <p><b>Intervenant</b>: {{ user.idintervenant.nom}}</p>
+            <p><b>Telephone</b>: {{ user.telephone }}</p>
+            <p><b>fonction</b>: {{ user.fonction }}</p>
+            <p><b>titre</b>: {{ user.titre }}</p>
+            <p><b>personnel cle</b>: {{ user.personnelcle }}</p>
+
+        </div>
+
+        <div class="col-sm-4 pull-right" >
+            <div>
+                <a href="{{path('fos_user_profile_edit')}}"><b>Modifier mes infos</b></a>
+            </div>
+            <div>
+                <a href = "{{path('fos_user_change_password')}}" ><b>Changer de mot de passe</b></a>
+            </div>
+        </div>
+    </div>    
+</div> 

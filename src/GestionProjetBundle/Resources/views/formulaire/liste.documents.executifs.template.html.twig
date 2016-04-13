@@ -1,0 +1,43 @@
+{# Template de la liste de documents validés #}
+
+<div class="row">
+<!-- Document start-->
+<div class="box">
+<div class="box-header">
+  <h3 class="box-title">Liste des documents d'exécution </h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table class="data-table table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Référence</th>
+        <th>Description</th>
+        <th>Intervenant</th>
+      </tr>
+    </thead>
+   <tbody>
+
+                {% for ressource in ressources %}
+                    <tr>
+                      <td> <a href="{{asset('uploads/ressources/'~ressource.path)}}"> {{ressource.reference}} </a</td>
+                     
+                      <td>{{ressource.description}}</td>
+                      <td>{% if ressource.idintervenant.nom is defined %}
+                      
+                          {{ressource.idintervenant.nom}}
+                      {% endif%}
+                      </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                {% endfor %}    
+              </tbody>
+  </table>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 

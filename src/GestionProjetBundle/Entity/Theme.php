@@ -64,6 +64,7 @@ class Theme
     public function __construct()
     {
         $this->actualites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->statut=1;
     }
     
     /**

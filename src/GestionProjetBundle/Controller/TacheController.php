@@ -13,9 +13,14 @@ use GestionProjetBundle\Entity\Tache;
 use GestionProjetBundle\Form\TacheType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use UserBundle\Entity\Utilisateur;
 
-class TacheController extends Controller 
-{
+/**
+ * Description of TacheController
+ *
+ * @author TONYE
+ */
+class TacheController extends Controller {
     
     //put your code here
     /**

@@ -2,6 +2,7 @@
 
 namespace GestionProjetBundle\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -9,13 +10,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use UserBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Lot;
+use GestionProjetBundle\Entity\Projet;
+use GestionProjetBundle\Entity\Adresse;
 use GestionProjetBundle\Form\LotType;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
-class LotController extends Controller 
-{
+/**
+ * Description of LotController
+ *
+ * @author TONYE
+ */
+class LotController extends Controller {
     
    //put your code here
     /**

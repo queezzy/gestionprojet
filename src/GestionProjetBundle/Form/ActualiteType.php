@@ -5,6 +5,7 @@ namespace GestionProjetBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class ActualiteType extends AbstractType
 {
@@ -16,11 +17,13 @@ class ActualiteType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('datepublication')
             ->add('contenu')
             ->add('description')
-            ->add('statut')
-            ->add('idtheme')
+            ->add('file')
+            ->add('idtheme','entity',array(
+                'class'=> 'GestionProjetBundle\Entity\Theme',
+                'property' => 'nom'
+            ))
         ;
     }
     
