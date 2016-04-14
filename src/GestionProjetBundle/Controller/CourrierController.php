@@ -36,13 +36,15 @@ class CourrierController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $repositoryCourier = $em->getRepository("GestionProjetBundle:Courier");
+        $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
         $courier = new Courier();
         $form = $this->createForm(new CourierType(), $courier);
         $display_tab = 1;
         //selectionne le seul courier actif
         $couriers = $repositoryCourier->findBy(array("statut" => 1));
+        $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
         
-        return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'form' => $form->createView(), "display_tab" => $display_tab));
+        return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
     }
     
     /**

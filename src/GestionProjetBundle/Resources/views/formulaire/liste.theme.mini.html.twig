@@ -20,9 +20,9 @@
         <td>{{theme.nom}}<br/>
             <p class="text-maroon">{{theme.description}}</p>
         </td>
-        <td><a href="{{path('gestion_projet_theme_unique',{'id':theme.idtheme})}}" class="pull-right"><i class="fa fa-eye"></i></a>
-            <a href="{{path('gestion_projet_theme_update',{'id':theme.idtheme})}}" class="pull-right"><i class="fa fa-edit"></i></a>
-            <a href="{{path('gestion_projet_theme_delete',{'id':theme.idtheme})}}" class="pull-right"><i class="fa fa-minus"></i></a>
+        <td><a href="{{path('gestion_projet_theme_unique',{'id':theme.id})}}" class="pull-right"><i class="fa fa-eye"></i></a>
+            <a href="{{path('gestion_projet_theme_update',{'id':theme.id})}}" class="pull-right"><i class="fa fa-edit"></i></a>
+            <a href="{{path('gestion_projet_theme_delete',{'id':theme.id})}}" class="pull-right"><i class="fa fa-minus"></i></a>
         </td>
       </tr>
     {% else %}

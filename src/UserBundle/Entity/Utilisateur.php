@@ -62,7 +62,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface {
     private $telephone;
 
     /**
-     * @var string
+     * @var boolean
      *
      * @ORM\Column(name="personnelcle", type="boolean", nullable=false)
      */
@@ -257,7 +257,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface {
     /**
      * Get telephone
      *
-     * @return string 
+     * @return integer 
      */
     public function getTelephone() {
         return $this->telephone;

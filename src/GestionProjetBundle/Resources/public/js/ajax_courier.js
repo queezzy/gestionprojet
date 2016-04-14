@@ -57,12 +57,13 @@ function execute_delete_courier(id_courier) {
             $('#action-delete'+id_courier).hide();
             $('#loader-edit-delete'+id_courier).show();
         },
-        success: function (data, textStatus, jqXHR) {
+        success: function (donnees, textStatus, jqXHR) {
             $('#action-edit'+id_courier).show();
             $('#action-delete'+id_courier).show();
             $('#loader-edit-delete'+id_courier).hide();
             var child = "";
             var lignetable = "";
+            var data = donnees.data;
                 if (data.letype === "sucess") {
                     $('#lignetable' + id_courier).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +

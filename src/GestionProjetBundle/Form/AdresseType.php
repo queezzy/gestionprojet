@@ -21,7 +21,10 @@ class AdresseType extends AbstractType
             ->add('longitude')
             ->add('boitepostale')
             ->add('lieu')
-            ->add('statut')
+             ->add('url',null,array(
+                'attr' => array('class'=>'inputfile')
+            ))
+            //->add('statut')
         ;
     }
     

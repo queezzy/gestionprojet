@@ -21,7 +21,7 @@ $('#close_form').click(function (e) {
     } 
 });*/
 
-function edit_intervenant(id_intervenant, gp_route) {
+function edit_intervenant(id_intervenant) {
     $('#myAlert').remove();
     //la route pour faire le get by id
     var url = Routing.generate('gp_intervenant_get', {id: id_intervenant});
@@ -106,12 +106,13 @@ function execute_delete_intervenant(id_intervenant) {
             $('#action-delete'+id_intervenant).hide();
             $('#loader-edit-delete'+id_intervenant).show();
         },
-        success: function (data, textStatus, jqXHR) {
+        success: function (donnees, textStatus, jqXHR) {
             $('#action-edit'+id_intervenant).show();
             $('#action-delete'+id_intervenant).show();
             $('#loader-edit-delete'+id_intervenant).hide();
             var child = "";
             var lignetable = "";
+            var data = donnees.data;
                 if (data.letype === "sucess") {
                     $('#lignetable' + id_intervenant).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +
@@ -143,9 +144,5 @@ function execute_delete_intervenant(id_intervenant) {
 }
 
 function show_details(id_intervenant) {
-    $('#block_form_intervenant').hide();
-    $('#block_table_intervenants').show();
-    $('#table_intervenants').hide();
-    $('#loader-details').show();
-    window.location.replace(Routing.generate('gp_intervenant_details', {idintervenant: id_intervenant}));
+    window.location.replace(Routing.generate('gp_intervenant_details', {id: id_intervenant}));
 }

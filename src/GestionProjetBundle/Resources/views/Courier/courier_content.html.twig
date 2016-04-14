@@ -1,6 +1,6 @@
 {% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
-{% block title %}Couriers{% endblock %}
+{% block title %}Courriers{% endblock %}
 
 {% block stylesheets %} 
     {{parent()}}
@@ -13,20 +13,103 @@
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Couriers
 {% endblock %}
 
 {% block breadcrumbDescription %}
 {% endblock %}
 
 {% block breadcrumbPosition %}
-   Liste des couriers
 {% endblock %}
 
 {% block contenupage %}
+{% if display_tab == 1 %}
+<div class="row" id="block_table_couriers">
+{% else %}
+<div class="row" style="display: none;" id="block_table_couriers">
+{% endif %}
+    {% if app.session.flashbag.get('message_success') %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div>
+    {% elseif app.session.flashbag.get('message_delete_failure')  %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_delete_failure') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div> <!-- /controls -->
+        {% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel"> 
+            <div class="x_title">
+                <h2>Liste des courriers envoyés</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="table_intervenants">
+                    <button id='nouvelcourier' class ="btn btn-success"><i class="fa fa-plus"></i> Envoyer</button>
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Date</th>
+                                <th>Réference</th>
+                                <th>Objet</th>
+                                <th>Envoyé à</th>
+                                <th>Copie</th>
+                                <th>Pièces jointes</th>
+                                <th>Courrier de reference</th>
+                                <th class=" no-link last"><span class="nobr">Actions</span>
+                                </th>
+                            </tr>
+                        </thead>
 
-
+                        <tbody id="tbodyintervenants">
+                            {%if liste_couriers%}
+                                {%for courier in liste_couriers%}
+                                    <tr id="lignetable{{intervenant.id}}" class="odd pointer" style="cursor: pointer;">
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.date|date('d/m/Y')}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.nom}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idlot.nom}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idadresse.lieu}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idadresse.email}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idadresse.telephone}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.evolutionattendu}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.evolutionencours}}</td>
+                                        <td class=" last">
+                                            <a id="action-edit{{courier.id}}" onclick="edit_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
+                                            <a id="action-delete{{courier.id}}" onclick="delete_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
+                                            <a id="loader-edit-delete{{courier.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+                                        </td>
+                                    </tr>
+                                {%endfor%} 
+                            {%endif%} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+{% if display_tab == 1 %}
+<div class="row" style="display:none;" id="block_form_courier">
+{% else %}
 <div class="row" id="block_form_courier">
+{% endif %}
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -45,11 +128,22 @@
                         {{form_widget(form._token)}}
                     </div>
                     
+                    <div class="item form-group">
+                      <label>Destinataires</label>
+                      <select class="form-control multiselect" multiple="multiple">
+                          {%if liste_intervenants%}
+                            {%for intervenant in liste_intervenants%}
+                            <option value="{{intervenant.id}}">{{intervenant.idadresse.email}}</option>
+                            {% endfor %}    
+                          {% endif %}
+                      </select>
+                  </div>
+                      
                     <div class="item form-group">           
-                        {{ form_label(form.courierenvoyes, "Destinataire: ", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
-                        {{ form_errors(form.courierenvoyes) }}
+                        {{ form_label(form.file, "Reference", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            {{ form_widget(form.courierenvoyes, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Objet du courier', 'required':'required'}}) }}
+                            {{ form_widget(form.file) }}
                         </div>
                     </div>
                     
@@ -67,6 +161,15 @@
                             {{ form_widget(form.contenu, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
                         </div>
                     </div>
+                     
+                    <div class="item form-group">           
+                        {{ form_label(form.uploadedFiles, "Pieces jointes", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.uploadedFiles) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.uploadedFiles) }}
+                        </div>
+                    </div>
+                     
                     {% if app.session.flashbag.get('message_failure') %}										
                     <div id="message_courier">
                         <div id="myAlert" class="alert alert-danger">
@@ -88,7 +191,6 @@
                         <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -100,7 +202,7 @@
     </div>
     <div class="modal-body">
         <input type="hidden" class="span3" id="idcouriertodelete" name="idsemaine"  value="">
-        <p>La suppression de cet courier supprimera aussi les d�faillances qui lui sont associ�es</p>
+        <p>La suppression de cet courier supprimera aussi les d�faillances qui lui sont associ�es</p>
         <p>Confirmez-vous cette suppression ?</p>
     </div>
     <div class="modal-footer">

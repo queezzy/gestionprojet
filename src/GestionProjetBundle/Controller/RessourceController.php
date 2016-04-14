@@ -89,7 +89,7 @@ class RessourceController extends Controller {
         }
 
         return $this->render('GestionProjetBundle:formulaire:form.modification.ressource.html.twig', array(
-                    'form' => $form->createView(), 'idressource' => $ressource->getIdressource()
+                    'form' => $form->createView(), 'idressource' => $ressource->getId()
         ));
     }
 

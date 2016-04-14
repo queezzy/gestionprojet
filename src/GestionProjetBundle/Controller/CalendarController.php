@@ -60,7 +60,7 @@ class CalendarController extends Controller {
             foreach($events as $row) {
                 $out[] = array(
                     'title' => $row->getTitre(),
-                    'id' => $row->getIdcalendrier(),
+                    'id' => $row->getId(),
                     'start' => $row->getDatedebut()->format('c'),
                     'end' => $row->getDatefin()->format('c'),
                     'description' => $row->getDescription(),
@@ -132,7 +132,7 @@ class CalendarController extends Controller {
         }
 
         return $this->render('GestionProjetBundle:formulaire:form.modification.evenement.html.twig', array(
-                    'form' => $form->createView(), 'idcalendrier' => $calendrier->getIdcalendrier()
+                    'form' => $form->createView(), 'idcalendrier' => $calendrier->getId()
         ));
     }
 

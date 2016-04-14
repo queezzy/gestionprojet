@@ -1,10 +1,33 @@
 {# Page e présentation d'un intervenant  #}
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
+{% block title %}Intervenants{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+  Intervenants
+{% endblock %}
+
+{% block contenupage %}
 <!-- Intervenant du projet start -->
 <div class="box box-primary">
     <!-- /.box-header start -->
   <div class="box-header with-border">
-    <h3 class="box-title">Nom de l'intervenant</h3>                      
+    <h3 class="box-title">{{intervenant.nom}}</h3>                      
   </div>
     <!-- /.box-header end -->
 
@@ -22,7 +45,7 @@
 
             <!-- /.box-body start-->
           <div class="box-body">
-
+              {{intervenant.presentation}}
           </div>
             <!-- /.box-body end -->
         </div>
@@ -38,7 +61,7 @@
 
             <!-- /.box-body start-->
           <div class="box-body">
-              
+              {{intervenant.description}}
 
           </div>
             <!-- /.box-body end -->
@@ -61,7 +84,7 @@
 
                 <!-- /.box-body start-->
               <div class="box-body">
-
+                  {{intervenant.rolemission}}
               </div>
                 <!-- /.box-body end -->
             </div>
@@ -79,7 +102,11 @@
 
                 <!-- /.box-body start-->
               <div class="box-body">
-
+                  {%if personnelcle%}
+                        {%for user in personnelcle%}
+                            {{user.nom}}
+                        {%endfor%}
+                   {%endif%}
               </div>
                 <!-- /.box-body end -->
             </div>
@@ -97,17 +124,17 @@
                 <!-- /.box-body start-->
               <div class="box-body">
                   <div class="progress-group">
-                        <span class="progress-text">Attendu</span>
-                        <span class="progress-number"><b>30</b>/100</span>
+                        <span class="progress-text">Attendue</span>
+                        <span class="progress-number"><b>{{intervenant.evolutionattendu}}</b>/100</span>
                         <div class="progress sm">
-                          <div class="progress-bar progress-bar-aqua" style="width: 30%"></div>
+                          <div class="progress-bar progress-bar-aqua" style="width: {{intervenant.evolutionattendu}}%"></div>
                         </div>
                     </div>
                   <div class="progress-group">
-                        <span class="progress-text">Réalisé</span>
-                        <span class="progress-number"><b>25</b>/100</span>
+                        <span class="progress-text">Réalisée</span>
+                        <span class="progress-number"><b>{{intervenant.evolutionencours}}</b>/100</span>
                         <div class="progress sm">
-                          <div class="progress-bar progress-bar-red" style="width: 25%"></div>
+                          <div class="progress-bar progress-bar-red" style="width: {{intervenant.evolutionencours}}%"></div>
                         </div>
                     </div>
               </div>
@@ -122,3 +149,19 @@
     <!-- /.box-body end -->
 </div>
 <!-- Intervenants du projet end -->
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_intervenant.js')}}"></script>
+    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
+    <script>
+      $(function () {
+        $("#listeintervenants").DataTable();
+      });
+    </script>
+{% endblock %}

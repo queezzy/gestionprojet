@@ -100,7 +100,7 @@ class ActualiteController extends Controller {
         }
 
         return $this->render('GestionProjetBundle:formulaire:form.modification.actualite.html.twig', array(
-                    'form' => $form->createView(), 'idactualite' => $actu->getIdactualite()
+                    'form' => $form->createView(), 'idactualite' => $actu->getId()
         ));
     }
 

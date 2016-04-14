@@ -18,13 +18,25 @@ class CourierType extends AbstractType
             //->add('type')
             //->add('date', 'datetime')
             ->add('objet')
+            //->add('reference')
             ->add('contenu')
-            ->add('courierenvoyes', 'collection',
-                    array('type' => new CourierenvoyeType(),
-                        'allow_add' => true,
-                        'allow_delete' => true))
             //->add('statut')
+            ->add('file',null,array(
+                'attr' => array('class'=>'inputfile')
+            ))
+            ->add('uploadedFiles', 'file', array(
+                'multiple' => true, 
+                'data_class' => null,
+                ))
             //->add('emetteur')
+            ->add('courierreference', 'entity', array(
+                'class' => 'GestionProjetBundle:Courier',
+                'property' => 'reference',
+                'empty_value' => "Courier de reference",
+                //'mapped' => false,
+                //'property_path' => "false",
+                //'data' => 2
+            ))
         ;
     }
     

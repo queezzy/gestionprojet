@@ -72,7 +72,7 @@ class ThemeController extends Controller
         }
     }  
         return $this->render('GestionProjetBundle:formulaire:form.modification.theme.html.twig', array(
-                    'form' => $form->createView(),'idtheme'=>$theme->getIdtheme()
+                    'form' => $form->createView(),'idtheme'=>$theme->getId()
         ));
     }
 

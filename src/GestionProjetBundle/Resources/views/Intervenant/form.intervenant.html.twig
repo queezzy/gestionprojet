@@ -10,8 +10,7 @@
             </div>
             <div class="x_content">
                 
-                <form id="form_intervenant" method="post" action = "{{ path('gp_intervenant_update',{'id' : idintervenant})}}" class="form-horizontal form-label-left" novalidate>
-                    <span class="section">Informations sur l'intervenant</span>
+                <form id="form_intervenant" role="form" method="post" action = "{{ path('gp_intervenant_update',{'id': idintervenant})}}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
                         <input id="idintervenant" value="" name="idintervenant" type="hidden">
                         {{form_widget(form._token)}}
@@ -69,10 +68,18 @@
                             {{ form_widget(form.idadresse.lieu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Lieu'}}) }}
                         </div>
                     </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.url, "Plan de localisation", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.url, { 'attr' : {'class' : 'inputfile' }}) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.url) }}
+                        </div>
+                    </div>
                         
                     <div class="item form-group">
                         {{ form_label(form.file, "Logo", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
-                        {{ form_errors(form.file) }}
+                        {{ form_errors(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             {{ form_widget(form.file) }}
                         </div>

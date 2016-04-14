@@ -15,7 +15,7 @@
               <img width="75px" height="75px" src="{{asset('uploads/actualites/'~actualite.path)}}" alt="{{actualite.titre}}"/>
           </div>
           <div class="product-info">
-            <a href="{{path('gestion_projet_actualite_unique',{'id' : actualite.idactualite})}}" class="product-title">{{actualite.titre}}<span class="label label-warning pull-right">{{ actualite.datepublication | date('d-m-Y') }}</span></a>
+            <a href="{{path('gestion_projet_actualite_unique',{'id' : actualite.id})}}" class="product-title">{{actualite.titre}}<span class="label label-warning pull-right">{{ actualite.datepublication | date('d-m-Y') }}</span></a>
             <span class="product-description">
                 {{ actualite.description|raw }}
             </span>

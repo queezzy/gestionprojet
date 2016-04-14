@@ -1,1 +1,0 @@
-fos.Router.setData({"base_url":"","routes":{"gp_intervenant":{"tokens":[["text","\/intervenant"]],"defaults":[],"requirements":[],"hosttokens":[]},"gp_intervenant_add":{"tokens":[["text","\/add-intervenant"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

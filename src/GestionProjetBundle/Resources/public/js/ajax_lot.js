@@ -74,7 +74,7 @@ function execute_delete_lot(id_lot) {
             $('#loader-edit-delete'+id_lot).hide();
             var child = "";
             var lignetable = "";
-			var data = donnees.data;
+            var data = donnees.data;
                 if (data.letype === "sucess") {
                     $('#lignetable' + id_lot).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +

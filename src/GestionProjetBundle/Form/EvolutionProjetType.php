@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class ProjetType extends AbstractType
+class EvolutionProjetType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

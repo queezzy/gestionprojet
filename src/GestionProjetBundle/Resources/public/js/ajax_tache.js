@@ -56,12 +56,13 @@ function execute_delete_tache(id_tache) {
             $('#action-delete'+id_tache).hide();
             $('#loader-edit-delete'+id_tache).show();
         },
-        success: function (data, textStatus, jqXHR) {
+        success: function (donnees, textStatus, jqXHR) {
             $('#action-edit'+id_tache).show();
             $('#action-delete'+id_tache).show();
             $('#loader-edit-delete'+id_tache).hide();
             var child = "";
             var lignetable = "";
+            var data = donnees.data;
                 if (data.letype === "sucess") {
                     $('#lignetable' + id_tache).remove(lignetable);
                     child += '<div id="myAlert" class="alert alert-success">' +

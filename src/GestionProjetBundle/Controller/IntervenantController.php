@@ -22,6 +22,8 @@ use GestionProjetBundle\Entity\Lot;
 use GestionProjetBundle\Entity\Adresse;
 use GestionProjetBundle\Form\IntervenantType;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Description of IntervenantController
  *
@@ -186,5 +188,26 @@ class IntervenantController extends Controller {
         return $this->render('GestionProjetBundle:Intervenant:form.intervenant.html.twig', array('form' => $form->createView(), "idintervenant" => $intervenant->getId()));
     }
     
+    
+    /**
+     * @Route("/get-details-intervenant/{id}")
+     * @Template()
+     */
+    public function getdetailsintervenantAction(Intervenant $intervenant) {
+        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }*/
+        //selectionne le personnel clé
+        $user = new Utilisateur();
+        $personnelcle = array();
+        $utilisateurs = $intervenant->getUtilisateurs();
+        foreach ($utilisateurs as $user) {
+            if($user->getPersonnelcle()== 1){
+                $personnelcle[]= $user;
+            }
+        }
+        return $this->render('GestionProjetBundle:Intervenant:intervenant.presentation.template.html.twig', array('intervenant' => $intervenant, "personnelcle" => $personnelcle));
+    }
     
 }

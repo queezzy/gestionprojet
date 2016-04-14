@@ -77,7 +77,7 @@ class UtilisateurController extends Controller {
      */
     public function sendMailAction(Request $request) {
         
-       /* $data =array();
+       $data =array();
         
         $form = $this->createFormBuilder($data)
                 ->add('Objet')
@@ -117,7 +117,7 @@ class UtilisateurController extends Controller {
         return $this->render('GestionProjetBundle:formulaire:form.send.mail.html.twig', array(
                     'form' => $form->createView(),
         ));
-        */
+        
         
     }
 

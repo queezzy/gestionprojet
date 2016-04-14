@@ -135,10 +135,10 @@ class EvolutionController extends Controller{
     
     
     /**
-     * @Route("/get-intervenant/{id}")
+     * @Route("/get-evolution-intervenant/{id}")
      * @Template()
      */
-    public function getintervenantAction(Intervenant $intervenant) {
+    public function getEvolutionintervenantAction(Intervenant $intervenant) {
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
