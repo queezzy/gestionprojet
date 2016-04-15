@@ -106,9 +106,5 @@ function execute_delete_lot(id_lot) {
 }
 
 function show_details(id_lot) {
-    $('#block_form_lot').hide();
-    $('#block_table_lots').show();
-    $('#table_lots').hide();
-    $('#loader-details').show();
     window.location.replace(Routing.generate('gp_lot_details', {idlot: id_lot}));
 }

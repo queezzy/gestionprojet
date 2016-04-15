@@ -44,7 +44,12 @@ class EvolutionController extends Controller{
         $display_tab = 1;
         $now= new \DateTime('now');
         //selectionne le seul intervenant actif
-        $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        $projets = $repositoryProjet->findBy(array("statut" => 1));
+        if($projets){
+            $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        }else{
+            $projet = null;
+        }
         //$intervenants = $repositoryIntervenant->findBy(array("statut" => 1, "idprojet" => $projet));
         $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
         

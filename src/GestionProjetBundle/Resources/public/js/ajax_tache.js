@@ -94,9 +94,5 @@ function execute_delete_tache(id_tache) {
 }
 
 function show_details(id_tache) {
-    $('#block_form_tache').hide();
-    $('#block_table_taches').show();
-    $('#table_taches').hide();
-    $('#loader-details').show();
     window.location.replace(Routing.generate('gp_tache_details', {idtache: id_tache}));
 }

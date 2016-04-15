@@ -1,0 +1,119 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Courriers{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+    courriers reçus
+{% endblock %}
+
+{% block contenupage %}
+<div class="row" id="block_table_couriers">
+    {% if app.session.flashbag.get('message_success') %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div>
+    {% elseif app.session.flashbag.get('message_delete_failure')  %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_delete_failure') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div> <!-- /controls -->
+        {% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel"> 
+            <div class="x_title">
+                <h2>Liste des courriers reçus</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="table_intervenants">
+                    <button id='nouvelcourier' class ="btn btn-success"><i class="fa fa-plus"></i> Envoyer</button>
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Date</th>
+                                <th>Réference</th>
+                                <th>Objet</th>
+                                <th>Destinataires</th>
+                                <th>Pièces jointes</th>
+                                <th>Courrier de reference</th>
+                                <th class=" no-link last"><span class="nobr">Actions</span>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbodyintervenants">
+                            {%if liste_couriers%}
+                                {%for courier in liste_couriers%}
+                                    <tr id="lignetable{{courier.id}}" class="odd pointer" style="cursor: pointer;">
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.date|date('d/m/Y')}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.objet}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierenvoyes%}{%for courierenvoye in courier.courierenvoyes%} {{courierenvoye.idintervenant.nom}} & {%endfor%}{%endif%} </td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.originalpiecesjointes%}{%for piecejointe in courier.originalpiecesjointes%} {{piecejointe}} & {%endfor%}{%endif%}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierreference%}{{courier.courierreference.reference}}{%endif%} </td>
+                                        <td class=" last">
+                                            <a id="action-edit{{courier.id}}" onclick="edit_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
+                                            <a id="action-delete{{courier.id}}" onclick="delete_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
+                                            <a id="loader-edit-delete{{courier.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+                                        </td>
+                                    </tr>
+                                {%endfor%} 
+                            {%endif%} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_courier.js')}}"></script>
+    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script>
+      $(function () {
+        $("#listecouriers").DataTable();
+      });
+    </script>
+{% endblock %}{# empty Twig template #}

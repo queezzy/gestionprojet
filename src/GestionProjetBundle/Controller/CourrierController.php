@@ -26,11 +26,11 @@ class CourrierController extends Controller {
     
     //put your code here
     /**
-     * @Route("/couriers")
+     * @Route("/couriers-envoyes")
      * @Template()
      * @param Request $request
      */
-    public function courriersAction(Request $request) {
+    public function courriersenvoyesAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -46,7 +46,26 @@ class CourrierController extends Controller {
         $couriers = $repositoryCourier->findBy(array("statut" => 1));
         $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
         
-        return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+        return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+    }
+    
+    /**
+     * @Route("/couriers-recus")
+     * @Template()
+     * @param Request $request
+     */
+    public function courriersrecusAction(Request $request) {
+        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }*/
+        $user = $this->getUser();
+        //selectionne le seul courier actif
+        $couriersenvoyes= array();
+        if(!$this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)){
+            $couriersenvoyes = $user->getIdintervenant()->getCourierenvoyes();
+        }
+        return $this->render('GestionProjetBundle:Courier:courier_content_recus.html.twig', array('liste_couriers' => $couriersenvoyes));
     }
     
     /**
@@ -197,6 +216,10 @@ class CourrierController extends Controller {
         return $this->render('GestionProjetBundle:Courier:form.courier.html.twig', array('form' => $form->createView(), "idcourier" => $courier->getId()));
     }
     
-    
+    public function sendMailForCourrier(Courier $courrier){
+        $message = \Swift_Message::newInstance()
+               ->setSubject($courrier->getObjet())
+               ->setFrom($courrier->getEmetteur()->getIdadresse()->getEmail());
+    }
 
 }

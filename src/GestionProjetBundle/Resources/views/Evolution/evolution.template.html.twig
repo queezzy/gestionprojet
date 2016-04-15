@@ -26,6 +26,7 @@
 {% endblock %}
 
 {% block contenupage %}
+{%if projet%}
 <div class="row">
     <!-- General evolution start-->
     <div class="col-md-12">
@@ -134,7 +135,7 @@
 <div id="form_evolution_intervenant" class="modal fade" tabindex="-1" role="dialog">
     
 </div> 
-
+{%endif%}
 {% endblock %}
 
 {% block js %}

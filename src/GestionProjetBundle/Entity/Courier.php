@@ -69,12 +69,22 @@ class Courier
     /**
      * @var \Intervenant
      *
-     * @ORM\ManyToOne(targetEntity="Intervenant", inversedBy="couriers")
+     * @ORM\OneToOne(targetEntity="Intervenant")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emetteur", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="emetteur", referencedColumnName="id", nullable=true)
      * })
      */
     private $emetteur;
+    
+    /**
+     * @var \Intervenant
+     *
+     * @ORM\OneToOne(targetEntity="Intervenant")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="destinataire", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $destinataire;
     
     /**
      * @var \Courier 
@@ -106,6 +116,11 @@ class Courier
     private $piecesjointes;
     
     /**
+    * @ORM\Column(type="array", nullable=true)
+    */
+    private $originalpiecesjointes;
+    
+    /**
     * @var array
     */
     private $uploadedFiles;
@@ -116,6 +131,7 @@ class Courier
     public function __construct(){
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->piecesjointes = array();
+        $this->originalpiecesjointes = array();
         $this->date = new \Datetime();
     } 
     
@@ -242,6 +258,29 @@ class Courier
     public function getEmetteur()
     {
         return $this->emetteur;
+    }
+    
+    /**
+     * Set destinataire
+     *
+     * @param \GestionProjetBundle\Entity\Intervenant $destinataire
+     * @return Courier
+     */
+    public function setDestinataire(\GestionProjetBundle\Entity\Intervenant $destinataire = null)
+    {
+        $this->destinataire = $destinataire;
+
+        return $this;
+    }
+
+    /**
+     * Get destinataire
+     *
+     * @return \GestionProjetBundle\Entity\Intervenant 
+     */
+    public function getDestinataire()
+    {
+        return $this->destinataire;
     }
     
     /**
@@ -402,7 +441,30 @@ class Courier
      */
     public function getPiecesjointes()
     {
-        return $this->path;
+        return $this->piecesjointes;
+    }
+    
+    /**
+     * Set originalpiecesjointes
+     *
+     * @param string $originalpiecesjointes
+     * @return Ressource
+     */
+    public function setOriginalpiecesjointes($originalpiecesjointes)
+    {
+        $this->originalpiecesjointes = $originalpiecesjointes;
+
+        return $this;
+    }
+
+    /**
+     * Get originalpiecesjointes
+     *
+     * @return array 
+     */
+    public function getOriginalpiecesjointes()
+    {
+        return $this->originalpiecesjointes;
     }
     
     /**
@@ -478,7 +540,9 @@ class Courier
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
         $this->getFile()->move($this->getUploadRootDir(), $this->path);
-
+        $info = pathinfo($this->getFile()->getClientOriginalName());
+        $file_name =  basename($this->getFile()->getClientOriginalName(),'.'.$info['extension']);
+        $this->setReference($file_name);
         // check if we have an old image
         if (isset($this->temp)) {
             // delete the old image
@@ -516,14 +580,22 @@ class Courier
     */
     public function uploadPiecesjointes()
     {
-        foreach($this->uploadedFiles as $file)
-        {
-            $path = sha1(uniqid(mt_rand(), true)).'.'.$file->guessExtension();
-            array_push ($this->piecesjointes, $path);
-            $file->move($this->getUploadRootDir(), $path);
-            unset($file);
+        if($this->uploadedFiles){
+            $this->piecesjointes= array();
+            $this->originalpiecesjointes= array();
+            foreach($this->uploadedFiles as $file)
+            {
+                $info = pathinfo($this->getFile()->getClientOriginalName());
+                $file_name =  basename($this->getFile()->getClientOriginalName(),'.'.$info['extension']);
+                array_push($this->originalpiecesjointes, $file_name);
+                $path = sha1(uniqid(mt_rand(), true)).'.'.$file->guessExtension();
+                array_push ($this->piecesjointes, $path);
+                $file->move($this->getUploadRootDir(), $path);
+                unset($file);
+            }
         }
-        unset($this->uploadedFiles);
+        
+        $this->uploadedFiles=array();
     } 
     
     

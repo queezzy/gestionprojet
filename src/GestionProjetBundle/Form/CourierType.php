@@ -37,6 +37,14 @@ class CourierType extends AbstractType
                 //'property_path' => "false",
                 //'data' => 2
             ))
+            ->add('destinataire', 'entity', array(
+                'class' => 'GestionProjetBundle:Intervenant',
+                'property' => 'nom',
+                'empty_value' => "Destinataire",
+                //'mapped' => false,
+                //'property_path' => "false",
+                //'data' => 2
+            ))
         ;
     }
     

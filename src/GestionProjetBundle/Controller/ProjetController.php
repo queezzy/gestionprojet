@@ -48,7 +48,12 @@ class ProjetController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
         //selectionne le seul projet actif
-        $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        $projets = $repositoryProjet->findBy(array("statut" => 1));
+        if($projets){
+            $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        }else{
+            $projet = null;
+        }
         
         return $this->render('::header.template.html.twig', array('projetactif' => $projet));
 

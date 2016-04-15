@@ -105,9 +105,5 @@ function execute_delete_projet(id_projet) {
 }
 
 function show_details(id_projet) {
-    $('#block_form_projet').hide();
-    $('#block_table_projets').show();
-    $('#table_projets').hide();
-    $('#loader-details').show();
     window.location.replace(Routing.generate('gp_projet_details', {idprojet: id_projet}));
 }

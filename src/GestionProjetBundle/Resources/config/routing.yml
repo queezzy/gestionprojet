@@ -161,19 +161,25 @@ gp_lot_delete:
         expose: true
         
 gp_courier:
-    pattern: /couriers
-    defaults: { _controller: GestionProjetBundle:Couriers:couriers }
+    pattern: /courriers-envoyes
+    defaults: { _controller: GestionProjetBundle:Couriers:couriersenvoyes }
+    options:
+        expose: true
+
+gp_courier_recus:
+    pattern: /courriers-recus
+    defaults: { _controller: GestionProjetBundle:Couriers:couriersrecus }
     options:
         expose: true
         
 gp_courier_add:
-    pattern: /add-courier
+    pattern: /add-courrier
     defaults: { _controller: GestionProjetBundle:Courier:addcourier }
     options:
         expose: true
 
 gp_courier_update:
-    pattern: /update-courier/{id}
+    pattern: /update-courrier/{id}
     defaults: { _controller: GestionProjetBundle:Courier:updatecourier }
     options:
         expose: true

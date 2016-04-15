@@ -18,10 +18,17 @@ class DefaultController extends Controller
      */
     public function accueilAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
-        return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig');
+        }
+        $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
+        $projets = $repositoryProjet->findBy(array("statut" => 1));
+        if($projets){
+            $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        }else{
+            $projet = null;
+        }
+        return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig', array("projet"=> $projet));
     }
     
     /*
@@ -32,7 +39,14 @@ class DefaultController extends Controller
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }else{
-            return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig');
+            $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
+            $projets = $repositoryProjet->findBy(array("statut" => 1));
+            if($projets){
+                $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+            }else{
+                $projet = null;
+            }
+            return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig', array("projet"=> $projet));
         }
         
     }

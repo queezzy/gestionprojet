@@ -95,9 +95,5 @@ function execute_delete_courier(id_courier) {
 }
 
 function show_details(id_courier) {
-    $('#block_form_courier').hide();
-    $('#block_table_couriers').show();
-    $('#table_couriers').hide();
-    $('#loader-details').show();
     window.location.replace(Routing.generate('gp_courier_details', {idcourier: id_courier}));
 }

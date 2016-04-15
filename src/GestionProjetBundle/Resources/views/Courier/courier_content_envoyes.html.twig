@@ -19,6 +19,7 @@
 {% endblock %}
 
 {% block breadcrumbPosition %}
+    courriers envoyés
 {% endblock %}
 
 {% block contenupage %}
@@ -53,7 +54,6 @@
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
-                    
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -66,15 +66,13 @@
                                 <th>Date</th>
                                 <th>Réference</th>
                                 <th>Objet</th>
-                                <th>Envoyé à</th>
-                                <th>Copie</th>
+                                <th>Destinataires</th>
                                 <th>Pièces jointes</th>
                                 <th>Courrier de reference</th>
                                 <th class=" no-link last"><span class="nobr">Actions</span>
                                 </th>
                             </tr>
-                        </thead>
-
+                        </thead>                        
                         <tbody id="tbodyintervenants">
                             {%if liste_couriers%}
                                 {%for courier in liste_couriers%}
@@ -82,10 +80,9 @@
                                         <td onclick="show_details({{courier.id}})" class=" ">{{courier.date|date('d/m/Y')}}</td>
                                         <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
                                         <td onclick="show_details({{courier.id}})" class=" ">{{courier.objet}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.emetteur.nom}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierenvoyes%}<div><ul >{%for courierenvoye in courier.courierenvoyes%}<li>{{courierenvoye.idintervenant.nom}}</li>{%endfor%}</ul></div> {%endif%}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.originalpiecesjointes%}<div><ul >{%for piecejointe in courier.originalpiecesjointes%}<li>{{piecejointe}}</li>{%endfor%}</ul></div> {%endif%}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierreference%}{{courier.courierreference.reference}}{%endif%} </td>
                                         <td class=" last">
                                             <a id="action-edit{{courier.id}}" onclick="edit_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
                                             <a id="action-delete{{courier.id}}" onclick="delete_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
@@ -128,16 +125,26 @@
                     </div>
                     
                     <div class="item form-group">
-                      <label>Destinataires</label>
-                      <select class="form-control multiselect" multiple="multiple" name="destinataires[]">
-                          {%if liste_intervenants%}
-                            {%for intervenant in liste_intervenants%}
-                            <option value="{{intervenant.id}}">{{intervenant.nom}}</option>
-                            {% endfor %}    
-                          {% endif %}
-                      </select>
-                  </div>
-                      
+                        {{ form_label(form.destinataire, "A", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.destinataire) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.destinataire, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Courrier de reference'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        <label>En copie</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="form-control multiselect" multiple="multiple" name="destinataires[]">
+                              {%if liste_intervenants%}
+                                {%for intervenant in liste_intervenants%}
+                                <option value="{{intervenant.id}}">{{intervenant.nom}}</option>
+                                {% endfor %}    
+                              {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                        
                     <div class="item form-group">           
                         {{ form_label(form.file, "Reference", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.file) }}
@@ -160,7 +167,13 @@
                             {{ form_widget(form.contenu, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
                         </div>
                     </div>
-                     
+                    <div class="item form-group">
+                        {{ form_label(form.courierreference, "Courrier de reference", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.courierreference) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.courierreference, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Courrier de reference'}}) }}
+                        </div>
+                    </div>
                     <div class="item form-group">           
                         {{ form_label(form.uploadedFiles, "Pieces jointes", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.uploadedFiles) }}
@@ -194,32 +207,7 @@
         </div>
     </div>
 </div>                  
-<div class="modal hide fade" id="confirmModal" data-backdrop ="false" style="display: none;">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4>Confirmation de la suppression</h4>
-    </div>
-    <div class="modal-body">
-        <input type="hidden" class="span3" id="idcouriertodelete" name="idsemaine"  value="">
-        <p>La suppression de cet courier supprimera aussi les d�faillances qui lui sont associ�es</p>
-        <p>Confirmez-vous cette suppression ?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-default" id="confirmModalNo">Non</button>
-        <button  class="btn btn-primary" id="confirmModalYes">Oui</button>
-    </div>
-</div>
-<div class="modal hide fade" id="alertModal" data-backdrop ="false" style="display: none;">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    </div>
-    <div class="modal-body">
-        <p id="message_alert"></p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-default" id="ok">OK</button>
-    </div>
-</div>
+
 {% endblock %}
 
 {% block js %}
