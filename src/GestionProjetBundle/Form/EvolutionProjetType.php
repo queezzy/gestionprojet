@@ -16,23 +16,9 @@ class EvolutionProjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', HiddenType::class)
-            ->add('code')
-            ->add('intitule')
-            ->add('description')
-            ->add('datedebut', 'date')
-            ->add('datefin', 'date')
-            ->add('budget')
-            ->add('demandeur')
-            ->add('evolutionattendu')
+            //->add('evolutionattendu')
             ->add('evolutionencours')
-            ->add('statut','choice', array('choices' => array(1 => "activé", 0 => "desactivé"),
-                                        'multiple' => false,
-                                        'expanded' => true,
-                                        'preferred_choices' => array(2),
-                                        'empty_value' => '- Choisissez un statut -',
-                                        'empty_data'  => -1
-                                        ))
+           
         ;
     }
     

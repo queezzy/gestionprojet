@@ -78,15 +78,14 @@
                         <tbody id="tbodyintervenants">
                             {%if liste_couriers%}
                                 {%for courier in liste_couriers%}
-                                    <tr id="lignetable{{intervenant.id}}" class="odd pointer" style="cursor: pointer;">
+                                    <tr id="lignetable{{courier.id}}" class="odd pointer" style="cursor: pointer;">
                                         <td onclick="show_details({{courier.id}})" class=" ">{{courier.date|date('d/m/Y')}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.nom}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idlot.nom}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idadresse.lieu}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idadresse.email}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.idadresse.telephone}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.evolutionattendu}}</td>
-                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.evolutionencours}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.objet}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.emetteur.nom}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
                                         <td class=" last">
                                             <a id="action-edit{{courier.id}}" onclick="edit_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
                                             <a id="action-delete{{courier.id}}" onclick="delete_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
@@ -122,7 +121,7 @@
             </div>
             <div class="x_content">
                 
-                <form id="form_courier" method="post" action="{{ path("gp_courier_add") }}" class="form-horizontal form-label-left" novalidate>
+                <form id="form_courier" method="post" action="{{ path("gp_courier_add") }}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
                         <input id="idcourier" value="" name="idcourier" type="hidden">
                         {{form_widget(form._token)}}
@@ -130,10 +129,10 @@
                     
                     <div class="item form-group">
                       <label>Destinataires</label>
-                      <select class="form-control multiselect" multiple="multiple">
+                      <select class="form-control multiselect" multiple="multiple" name="destinataires[]">
                           {%if liste_intervenants%}
                             {%for intervenant in liste_intervenants%}
-                            <option value="{{intervenant.id}}">{{intervenant.idadresse.email}}</option>
+                            <option value="{{intervenant.id}}">{{intervenant.nom}}</option>
                             {% endfor %}    
                           {% endif %}
                       </select>
@@ -141,9 +140,9 @@
                       
                     <div class="item form-group">           
                         {{ form_label(form.file, "Reference", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
-                        {{ form_errors(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
+                        {{ form_errors(form.file) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            {{ form_widget(form.file) }}
+                            {{ form_widget(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
                         </div>
                     </div>
                     
@@ -166,7 +165,7 @@
                         {{ form_label(form.uploadedFiles, "Pieces jointes", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.uploadedFiles) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            {{ form_widget(form.uploadedFiles) }}
+                            {{ form_widget(form.uploadedFiles, { 'attr' : {'class' : 'inputfile' }}) }}
                         </div>
                     </div>
                      

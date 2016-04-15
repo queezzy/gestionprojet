@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persons>
+    <person>
+        <birthday>1999-02-21</birthday>
+        <city>some city</city>
+        <firstName>Eric</firstName>
+        <lastName>Tonye</lastName>
+        <postalCode>1234</postalCode>
+        <street>some street</street>
+    </person>
+    <person>
+        <birthday>2003-02-13</birthday>
+        <city>some city</city>
+        <firstName>Nicolas </firstName>
+        <lastName>Lissouck</lastName>
+        <postalCode>1234</postalCode>
+        <street>Makak</street>
+    </person>
+    <person>
+        <birthday>2003-04-16</birthday>
+        <city>some city</city>
+        <firstName>Tonye</firstName>
+        <lastName>Pierre</lastName>
+        <postalCode>1234</postalCode>
+        <street>some street</street>
+    </person>
+    <person>
+        <birthday>1999-03-09</birthday>
+        <city>some city</city>
+        <firstName>Toto</firstName>
+        <lastName>Titi</lastName>
+        <postalCode>1234</postalCode>
+        <street>some street</street>
+    </person>
+</persons>

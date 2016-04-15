@@ -9,6 +9,7 @@
 namespace GestionProjetBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use GestionProjetBundle\Entity\Courierenvoye;
 /**
  * Description of CourierRepository
  *
@@ -35,11 +36,20 @@ class CourierRepository extends EntityRepository{
     public function saveCourier(\GestionProjetBundle\Entity\Courier $courier) {
         $em= $this->_em;
         $courier->setStatut(1);
+        $courierenvoye = new Courierenvoye();
+        $repositoryCourierenvoye = $em->getRepository("GestionProjetBundle:Courierenvoye");
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($courier);
             $em->flush();
-            $em->getConnection()->commit();     
+            //$idcourier = $em->getConnection()->lastInsertId();
+            $couriersenvoyes = $courier->getCourierenvoyes();
+            foreach ($couriersenvoyes as $courierenvoye) {
+                $courierenvoye->setIdcourier($courier);
+                $repositoryCourierenvoye->updateCourierenvoye($courierenvoye);
+            }
+            $em->getConnection()->commit(); 
+            
         } catch (Exception $ex) {
             $em->getConnection()->rollback();
             $em->close();

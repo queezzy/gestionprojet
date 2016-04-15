@@ -19,6 +19,7 @@ use GestionProjetBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Intervenant;
 use GestionProjetBundle\Entity\Projet;
 use GestionProjetBundle\Form\EvolutionIntervenantType;
+use GestionProjetBundle\Form\EvolutionProjetType;
 /**
  * Description of EvolutionController
  *
@@ -44,7 +45,8 @@ class EvolutionController extends Controller{
         $now= new \DateTime('now');
         //selectionne le seul intervenant actif
         $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
-        $intervenants = $repositoryIntervenant->findBy(array("statut" => 1, "idprojet" => $projet));
+        //$intervenants = $repositoryIntervenant->findBy(array("statut" => 1, "idprojet" => $projet));
+        $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
         
         return $this->render('GestionProjetBundle:Evolution:evolution.template.html.twig', array('liste_intervenants' => $intervenants, 'projet' => $projet, "display_tab" => $display_tab, "now" => $now));
     }
@@ -66,22 +68,19 @@ class EvolutionController extends Controller{
             if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
-                       $repositoryProjet->updateProjet($projet);
-                       $message = $this->get('translator')->trans('Projet.updated_success', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_projet_admin'));
+                       if($projet->getEvolutionattendu()>= $projet->getEvolutionencours()){
+                            $repositoryProjet->updateProjet($projet);
+                            $message = $this->get('translator')->trans('Projet.updated_success', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            return $this->redirect($this->generateUrl('gp_evolution'));
+                       }else{
+                            return $this->redirect($this->generateUrl('gp_evolution'));
+                       }
                    } catch (Exception $ex){
-                       $message = $this->get('translator')->trans('Projet.updated_failure', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message_failure', $message);
-                       $projets = array();
-                       $display_tab =0;
-                       return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->redirect($this->generateUrl('gp_evolution'));
                    }
                }else{
-                    $request->getSession()->getFlashBag()->add('message_failure', $message);
-                    $projets = array();
-                    $display_tab =0;
-                    return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
+                    return $this->redirect($this->generateUrl('gp_evolution'));
                }
             }
        /* }else{
@@ -108,22 +107,20 @@ class EvolutionController extends Controller{
             if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
-                       $repositoryIntervenant->updateIntervenant($intervenant);
-                       $message = $this->get('translator')->trans('Intervenant.updated_success', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_intervenant'));
+                       if($intervenant->getEvolutionattendu()>= $intervenant->getEvolutionencours()){
+                            $repositoryIntervenant->updateIntervenant($intervenant);
+                            $message = $this->get('translator')->trans('Intervenant.updated_success', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            return $this->redirect($this->generateUrl('gp_evolution'));
+                       }else{
+                            return $this->redirect($this->generateUrl('gp_evolution'));
+                       }
+                       
                    } catch (Exception $ex){
-                       $message = $this->get('translator')->trans('Intervenant.updated_failure', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message_failure', $message);
-                       $intervenants = array();
-                       $display_tab =0;
-                       return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->redirect($this->generateUrl('gp_evolution'));
                    }
                }else{
-                    $request->getSession()->getFlashBag()->add('message_failure', $message);
-                    $intervenants = array();
-                    $display_tab =0;
-                    return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+                    return $this->redirect($this->generateUrl('gp_evolution'));
                }
             }
        /* }else{
@@ -146,6 +143,20 @@ class EvolutionController extends Controller{
          $form = $this->createForm(new EvolutionIntervenantType(), $intervenant);
         $form->handleRequest($request);
  
-        return $this->render('GestionProjetBundle:Intervenant:form.intervenant.html.twig', array('form' => $form->createView(), "idintervenant" => $intervenant->getId()));
+        return $this->render('GestionProjetBundle:Evolution:form.evolution.intervenant.html.twig', array('form' => $form->createView(), "intervenant" => $intervenant));
+    }
+    
+    /**
+     * @Route("/get-evolution-projet/{id}")
+     * @Template()
+     */
+    public function getevolutionprojetAction(Projet $projet) {
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }*/
+        $request = $this->get("request");
+         $form = $this->createForm(new EvolutionProjetType(), $projet);
+        $form->handleRequest($request);
+        return $this->render('GestionProjetBundle:Evolution:form.evolution.projet.html.twig', array('form' => $form->createView(), "idprojet" => $projet->getId()));
     }
 }

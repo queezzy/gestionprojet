@@ -9,7 +9,7 @@ $('#close_form').click(function (e) {
     window.location.replace(Routing.generate('gp_tache'));
 });
 
-function edit_tache(id_tache, gp_route) {
+function edit_tache(id_tache) {
     $('#myAlert').remove();
     //la route pour faire le get by id
     var url = Routing.generate('gp_tache_get', {id: id_tache});

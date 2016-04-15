@@ -21,7 +21,7 @@ $('#close_form').click(function (e) {
     } 
 });*/
 
-function edit_projet(id_projet, gp_route) {
+function edit_projet(id_projet) {
     $('#myAlert').remove();
     //la route pour faire le get by id
     var url = Routing.generate('gp_projet_get', {id: id_projet});

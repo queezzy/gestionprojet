@@ -10,7 +10,7 @@ $('#close_form').click(function (e) {
 });
 
 
-function edit_courier(id_courier, gp_route) {
+function edit_courier(id_courier) {
     $('#myAlert').remove();
     //la route pour faire le get by id
     var url = Routing.generate('gp_courier_get', {id: id_courier});

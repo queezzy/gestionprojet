@@ -113,6 +113,8 @@ class Projet
     {
         $this->intervenants = new \Doctrine\Common\Collections\ArrayCollection();
         $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->evolutionattendu =0;
+        $this->evolutionencours = 0;
     }
 
     /**

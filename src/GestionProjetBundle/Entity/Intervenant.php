@@ -137,6 +137,8 @@ class Intervenant
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ressources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->evolutionattendu = 0;
+        $this->evolutionencours = 0;
     }
     
     /**

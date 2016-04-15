@@ -1,0 +1,28 @@
+<div class="box box-primary">
+    <!-- /.box-header start -->
+    <div class="box-header with-border">
+        <h3 class="box-title">Intervenants</h3>                      
+    </div>
+    <!-- /.box-header end -->
+
+    <!-- /.box-body start-->
+    <div class="box-body">
+        <ul class="users-list clearfix">
+            {%if liste_intervenants%}
+                {%for intervenant in liste_intervenants%}
+                    <li>
+                        <img width="25px" height="25px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"</td>
+                        <a class="users-list-name" onclick="show_details({{intervenant.id}})" style="cursor: pointer;">{{intervenant.nom}}</a>
+                    </li>
+               {%endfor%} 
+            {%endif%} 
+        </ul><!-- /.users-list -->
+
+
+        <div class="box-footer text-center">
+            <a href="{{path("gp_intervenant")}}" class="uppercase">Plus de détails</a>
+        </div><!-- /.box-footer -->
+
+    </div>
+    <!-- /.box-body end -->
+</div>

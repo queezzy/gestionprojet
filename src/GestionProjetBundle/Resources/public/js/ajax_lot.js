@@ -21,7 +21,7 @@ $('#close_form').click(function (e) {
     } 
 });*/
 
-function edit_lot(id_lot, gp_route) {
+function edit_lot(id_lot) {
     $('#myAlert').remove();
     //la route pour faire le get by id
     var url = Routing.generate('gp_lot_get', {id: id_lot});

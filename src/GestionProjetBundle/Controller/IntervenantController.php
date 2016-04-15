@@ -55,6 +55,25 @@ class IntervenantController extends Controller {
     }
     
     /**
+     * @Route("/get-intervenants-accueil")
+     * @Template()
+     * @param Request $request
+     */
+    public function getIntervenantsForAccueilAction(Request $request) {
+        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
+        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }*/
+        $em = $this->getDoctrine()->getManager();
+
+        $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
+        //selectionne le seul intervenant actif
+        $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
+        
+        return $this->render('GestionProjetBundle:accueil:accueil.intervenants.html.twig', array('liste_intervenants' => $intervenants));
+    }
+    
+    /**
      * @Route("/add-intervenant")
      * @Template()
      * @param Request $request
@@ -72,10 +91,18 @@ class IntervenantController extends Controller {
             //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
-                       $repositoryIntervenant->saveIntervenant($intervenant);
-                       $message = $this->get('translator')->trans('Intervenant.created_success', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_intervenant'));
+                       if($intervenant->getEvolutionattendu()>= $intervenant->getEvolutionencours()){
+                            $repositoryIntervenant->saveIntervenant($intervenant);
+                            $message = $this->get('translator')->trans('Intervenant.created_success', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message', $message);
+                            return $this->redirect($this->generateUrl('gp_intervenant'));
+                       }else{
+                            $message = $this->get('translator')->trans('Intervenant.created_failure', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            $intervenants = array();
+                            $display_tab =0;
+                            return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       }
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Intervenant.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
@@ -84,7 +111,7 @@ class IntervenantController extends Controller {
                        return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
-                   $message = $this->get('translator')->trans('Intervenant.created_failure', array(), "GestionProjetBundle");
+                       $message = $this->get('translator')->trans('Intervenant.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
                        $intervenants = array();
                        $display_tab =0;
@@ -115,10 +142,18 @@ class IntervenantController extends Controller {
             if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
-                       $repositoryIntervenant->updateIntervenant($intervenant);
-                       $message = $this->get('translator')->trans('Intervenant.updated_success', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_intervenant'));
+                       if($intervenant->getEvolutionattendu()>= $intervenant->getEvolutionencours()){
+                            $repositoryIntervenant->updateIntervenant($intervenant);
+                            $message = $this->get('translator')->trans('Intervenant.updated_success', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            return $this->redirect($this->generateUrl('gp_intervenant'));
+                       }else{
+                            $message = $this->get('translator')->trans('Intervenant.updated_failure', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            $intervenants = array();
+                            $display_tab =0;
+                            return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       }
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Intervenant.updated_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);

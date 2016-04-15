@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use UserBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Courier;
+use GestionProjetBundle\Entity\Courierenvoye;
 use GestionProjetBundle\Form\CourierType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Description of CourierController
@@ -57,14 +59,26 @@ class CourrierController extends Controller {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
         $courier = new Courier();
+        $courierenvoye = new Courierenvoye();
         $form = $this->createForm(new CourierType(), $courier);
         $form->handleRequest($request);
         $repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
+         $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
         //$user = $this->getUser();
        // if ($this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)) {
             //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
+                       $destinataires= $request->request->get("destinataires");
+                       foreach ($destinataires as $destinataire) {
+                            $iddestinataire = (int)$destinataire;
+                            $intervenant = $repositoryIntervenant->find($iddestinataire);
+                            $courierenvoye= new Courierenvoye();
+                            $courierenvoye->setIdintervenant($intervenant);
+                            $courier->addCourierenvoye($courierenvoye);
+                        }
+                        $emetteur = $repositoryIntervenant->find(2);
+                        $courier->setEmetteur($emetteur);
                        $repositoryCourier->saveCourier($courier);
                        $message = $this->get('translator')->trans('Courier.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);

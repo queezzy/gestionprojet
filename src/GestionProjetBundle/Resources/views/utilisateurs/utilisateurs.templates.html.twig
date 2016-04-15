@@ -54,7 +54,7 @@
       
     {% for utilisateur in utilisateurs %}
       <tr>
-          <td><img width="100px" height="100px" src="{{asset('uploads/profils/'~utilisateur.path)}}" alt="{{utilisateur.nom}}" /></td>
+          <td><img width="25px" height="25px" src="{{asset('uploads/profils/'~utilisateur.path)}}" alt="{{utilisateur.nom}}" /></td>
         <td>{{utilisateur.nom}}</td>
         <td>{{utilisateur.prenom}}</td>
         <td>{{utilisateur.fonction}}</td>

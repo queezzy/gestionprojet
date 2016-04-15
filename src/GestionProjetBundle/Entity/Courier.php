@@ -5,11 +5,13 @@ namespace GestionProjetBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Courier
  *
  * @ORM\Table(name="courier")
  * @ORM\Entity(repositoryClass="GestionProjetBundle\Repository\CourierRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Courier
 {
@@ -104,17 +106,18 @@ class Courier
     private $piecesjointes;
     
     /**
-    * @var ArrayCollection
+    * @var array
     */
     private $uploadedFiles;
     
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct(){
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+        $this->piecesjointes = array();
+        $this->date = new \Datetime();
+    } 
     
     /**
      * Get id
@@ -491,9 +494,9 @@ class Courier
     /**
      * Sets uploadedFiles.
      *
-     * @param ArrayCollection $uploadedFiles
+     * @param array $uploadedFiles
      */
-    public function setUploadedFiles(ArrayCollection $uploadedFiles = null)
+    public function setUploadedFiles(array $uploadedFiles = null)
     {
         $this->uploadedFiles = $uploadedFiles;
     }
@@ -501,7 +504,7 @@ class Courier
     /**
      * Get uploadedFiles.
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function getUploadedFiles()
     {
@@ -518,10 +521,10 @@ class Courier
             $path = sha1(uniqid(mt_rand(), true)).'.'.$file->guessExtension();
             array_push ($this->piecesjointes, $path);
             $file->move($this->getUploadRootDir(), $path);
-
             unset($file);
         }
-    }
+        unset($this->uploadedFiles);
+    } 
     
     
    

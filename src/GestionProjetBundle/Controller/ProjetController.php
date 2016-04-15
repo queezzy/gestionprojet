@@ -55,6 +55,21 @@ class ProjetController extends Controller
     }
     
     /**
+     * @Route("/get-presentation-projet-accueil")
+     * @Template()
+     * @param Request $request
+     */
+    public function getPresentationProjetAccueilAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
+        //selectionne le seul projet actif
+        $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        
+        return $this->render('GestionProjetBundle:accueil:accueil.presentation.projet.html.twig', array('projetactif' => $projet));
+
+    }
+    
+    /**
      * @Route("/add-projet")
      * @Template()
      * @param Request $request
@@ -72,10 +87,18 @@ class ProjetController extends Controller
             //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
-                       $repositoryProjet->saveProjet($projet);
-                       $message = $this->get('translator')->trans('Projet.created_success', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_projet_admin'));
+                       if($projet->getEvolutionattendu()>= $projet->getEvolutionencours()){
+                            $repositoryProjet->saveProjet($projet);
+                            $message = $this->get('translator')->trans('Projet.created_success', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message', $message);
+                            return $this->redirect($this->generateUrl('gp_projet_admin'));
+                       }else{
+                            $message = $this->get('translator')->trans('Projet.created_failure', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            $projets = array();
+                            $display_tab =0;
+                       return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       }
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Projet.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
@@ -115,10 +138,18 @@ class ProjetController extends Controller
             if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
-                       $repositoryProjet->updateProjet($projet);
-                       $message = $this->get('translator')->trans('Projet.updated_success', array(), "GestionProjetBundle");
-                       $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_projet_admin'));
+                       if($projet->getEvolutionattendu()>= $projet->getEvolutionencours()){
+                            $repositoryProjet->updateProjet($projet);
+                            $message = $this->get('translator')->trans('Projet.updated_success', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            return $this->redirect($this->generateUrl('gp_projet_admin'));
+                       }else{ 
+                            $message = $this->get('translator')->trans('Projet.updated_failure', array(), "GestionProjetBundle");
+                            $request->getSession()->getFlashBag()->add('message_failure', $message);
+                            $projets = array();
+                            $display_tab =0;
+                            return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
+                        }
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Projet.updated_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);

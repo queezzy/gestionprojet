@@ -15,6 +15,18 @@ gp_accueil:
     defaults: { _controller: GestionProjetBundle:Default:accueil }
     options:
         expose: true
+
+gp_intervenants_accueil:
+    pattern: /get-intervenants-accueil
+    defaults: { _controller: GestionProjetBundle:Intervenant:getIntervenantsForAccueil }
+    options:
+        expose: true
+        
+gp_presentation_projet_accueil:
+    pattern: /get-presentation-projet-accueil
+    defaults: { _controller: GestionProjetBundle:Intervenant:getPresentationProjetAccueil }
+    options:
+        expose: true
         
 gp_projet_admin:
     pattern: /projets-admin

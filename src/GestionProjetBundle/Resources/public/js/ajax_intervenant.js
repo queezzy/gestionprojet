@@ -34,44 +34,6 @@ function edit_intervenant(id_intervenant) {
         $('#loader-edit-delete'+id_intervenant).hide();
         $('#block_table_intervenants').hide();
         $('#block_form_intervenant').show();
-        /*$('#form_intervenant').submit(function (e){
-            var id_intervenant = parseInt($('#intervenant_id').val());
-            e.preventDefault();
-            $('#myAlert').remove();
-            var donnees = $(this).serialize();
-            $.ajax({
-                type: 'post',
-                data: donnees,
-                //la route pour faire le update by id
-                url: Routing.generate(gp_route, {id: id_intervenant}),
-                dataType: 'json',
-                beforeSend: function () {
-                    $('#actions').hide();
-                    $('#loader').show();
-                },
-                success: function (data, textStatus, jqXHR) {
-                    var child = "";
-                        if (data.letype === "error") {
-                            $('#actions').show();
-                            $('#loader').hide();
-                            child += '<div id="myAlert" class="alert alert-danger">' +
-                                    '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                                    + data.message +
-                                    '</div>';
-                            $('#message_intervenant').html(child);
-                        }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $('#actions').show();
-                    $('#loader').hide();
-                    var child = '<div id="myAlert" class="alert alert-danger">' +
-                            '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                            + 'EXCEPTION' +
-                            '</div>';
-                    $('#message_intervenant').append(child);
-                }
-            });
-        });*/
         $('#close_form').click(function (e) {
             e.preventDefault();
             window.location.replace(Routing.generate('gp_intervenant'));
