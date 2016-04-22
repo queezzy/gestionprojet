@@ -91,6 +91,8 @@ class Adresse
     public function __construct()
     {
         $this->statut=1;
+		$this->latitude=0;
+		$this->longitude=0;
     }
 
     /**

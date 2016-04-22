@@ -17,8 +17,8 @@ class AdresseType extends AbstractType
         $builder
             ->add('telephone')
             ->add('email')
-            ->add('latitude')
-            ->add('longitude')
+            //->add('latitude')
+            //->add('longitude')
             ->add('boitepostale')
             ->add('lieu')
              ->add('url',null,array(

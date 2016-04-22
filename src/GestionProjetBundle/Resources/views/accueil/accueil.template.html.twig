@@ -20,6 +20,7 @@
 {% endblock %}
 
 {% block menuAccueil %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
@@ -51,8 +52,25 @@
         </div>
         <!-- Left Panel end-->
 
-        <!-- Central Panel start-->
+        <!-- Central Panel start-->		
         <div class="col-md-6">
+			
+            <!-- Evolution start -->
+            <div class="box box-success">
+                <!-- /.box-header start -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Evolution</h3>                      
+                </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+                <div class="box-body">
+					{{render(controller('GestionProjetBundle:Projet:getEvolutionProjetAccueil'))}}	
+                </div>
+                <!-- /.box-body end -->
+            </div>
+            <!-- Evolution end -->
+
             <!-- Calendrier start -->
             <div class="box box-success">
                 <!-- /.box-header start -->
@@ -81,22 +99,6 @@
             </div>
             <!-- Calendrier end -->
 
-            <!-- Evolution start -->
-            <div class="box box-success">
-                <!-- /.box-header start -->
-                <div class="box-header with-border">
-                    <h3 class="box-title">Evolution</h3>                      
-                </div>
-                <!-- /.box-header end -->
-
-                <!-- /.box-body start-->
-                <div class="box-body">
-
-                </div>
-                <!-- /.box-body end -->
-            </div>
-            <!-- Evolution end -->
-
         </div>
         <!-- Central Panel end-->
 
@@ -115,12 +117,6 @@
     <script src='{{ asset('fullcalendar/lib/moment.min.js')}}'></script>
     <script src='{{ asset('fullcalendar/fullcalendar.js')}}'></script>
     <script src='{{ asset('fullcalendar/lang-all.js')}}'></script>
-    <script src='{{ asset('js/jquery-ui.js')}}'></script>
-    <script src='{{ asset('js/bootstrap.min.js')}}'></script>
-    <script src='{{ asset('js/moment.js')}}'></script>
-    <script src='{{ asset('js/jquery-ui.min.js')}}'></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
 
                 $(document).ready(function () {

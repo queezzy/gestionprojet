@@ -1,7 +1,7 @@
 {# Formulaire de création d'une actualité #}
 {% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
-{% block title %}Ressources{% endblock %}
+{% block title %}Documentation{% endblock %}
 
 {% block stylesheets %} 
     {{parent()}}
@@ -9,26 +9,26 @@
     <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block menuIntervenant %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Ressource
 {% endblock %}
 
 {% block breadcrumbDescription %}
-    Ressources du projet
 {% endblock %}
 
 {% block breadcrumbPosition %}
-    Ressources
+    Documentation
 {% endblock %}
 
 {% block contenupage %}
-    <div class="box box-primary col-md-offset-2 col-md-8">
+    <div class="box box-success">
         <div class="box-header">
-            <h3>Creer une ressource</h3>
+            <h3>Creer un document</h3>
         </div><!-- /.box-header -->
 
         {# Formulaire de création d'une ressource #}
@@ -48,7 +48,7 @@
                                 {{ form_widget(form.reference,{'attr':{'class':'form-control'}})}}
                             </div>
                             <div class="form-group">
-                                {{ form_label(form.type,"Type de ressources") }}
+                                {{ form_label(form.type,"Type de document") }}
                                 {{ form_errors(form.type)}}
                                 {{ form_widget(form.type,{'attr':{'class':'form-control'}})}}
                             </div>
@@ -67,11 +67,11 @@
                             <div class="col-md-3">
                                
                                 <div class="form-group">
-                                    {{ form_label(form.file, "Inserer la ressource")}}
+                                    {{ form_label(form.file, "Inserer le doucument")}}
                                     {{ form_widget(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
                                     <!--input type="file" id="" class="inputfile"-->
 
-                                    <p class="help-block">Choisissez la ressource.</p>
+                                    <p class="help-block">Choisissez le document.</p>
                                 </div>
                             </div>
                                     <div class="form-group">
@@ -81,8 +81,8 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="reset" class="btn btn-danger pull-left">Annuler</button>
-                    <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+                    <button type="reset" class="btn btn-danger">Annuler</button>
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
                 </div>
         </form>
     </div>

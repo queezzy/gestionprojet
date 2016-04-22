@@ -8,6 +8,8 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuIntervenant %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
@@ -24,7 +26,7 @@
 
 {% block contenupage %}
 <!-- Intervenant du projet start -->
-<div class="box box-primary">
+<div class="box box-success">
     <!-- /.box-header start -->
   <div class="box-header with-border">
     <h3 class="box-title">{{intervenant.nom}}</h3>                      
@@ -45,7 +47,10 @@
 
             <!-- /.box-body start-->
           <div class="box-body">
-              {{intervenant.presentation}}
+			<div><strong> <i></i>Logo :   </strong> <img width="100px" height="100px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"/></div>
+			<hr>
+			<p> {{intervenant.presentation}}</p>
+              
           </div>
             <!-- /.box-body end -->
         </div>
@@ -91,7 +96,7 @@
             </div>
             <!-- Calendrier end -->
 
-            <!-- Evolution start -->
+            <!-- Personnels clés start -->
             <div class="col-md-6">
             <div class="box box-success">
                 <!-- /.box-header start -->
@@ -102,18 +107,25 @@
 
                 <!-- /.box-body start-->
               <div class="box-body">
-                  {%if personnelcle%}
-                        {%for user in personnelcle%}
-                            {{user.nom}}
-                        {%endfor%}
-                   {%endif%}
+			  <ul class="users-list clearfix">
+					{%if personnelcle%}
+						{%for user in personnelcle%}
+							<li class="intervenant-box">
+								<img width="35px" height="35px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{user.nom}}"</td>
+								<a class="users-list-name" onclick="show_details({{intervenant.id}})" style="cursor: pointer;">{{user.nom}}</a>
+							</li>
+					   {%endfor%} 
+					{%endif%} 
+				</ul><!-- /.users-list -->
               </div>
                 <!-- /.box-body end -->
             </div>
             </div>
-            <!-- Evolution end -->
-        </div>
-        <div class="row">
+            <!-- Personnels clés end -->
+			</div><!-- row end -->
+			<div class="row"><!-- row start -->
+			<!-- Evolution  start -->
+			<div class="col-md-6">
             <div class="box box-success">
                 <!-- /.box-header start -->
               <div class="box-header with-border">
@@ -136,12 +148,32 @@
                         <div class="progress sm">
                           <div class="progress-bar progress-bar-red" style="width: {{intervenant.evolutionencours}}%"></div>
                         </div>
-                    </div>
+                   </div>
               </div>
                 <!-- /.box-body end -->
             </div>
         </div>
+		<!-- Evolution end -->	
+		
+		<!-- Documentation start -->
+			<div class="col-md-6">
+            <div class="box box-success">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Documentation</h3>                      
+              </div>
+                <!-- /.box-header end -->
 
+                <!-- /.box-body start-->
+              <div class="box-body">
+                <div><a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}" class="btn btn-primary">Acceder à la documentation</a></div>  
+              </div>
+                <!-- /.box-body end -->
+            </div>
+            </div>
+		<!-- Documentation end -->
+		
+        </div>
     </div>
     <!-- Central Panel end-->
 

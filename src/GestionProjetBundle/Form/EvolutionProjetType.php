@@ -16,7 +16,7 @@ class EvolutionProjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add('evolutionattendu')
+            ->add('evolutionattendu')
             ->add('evolutionencours')
            
         ;

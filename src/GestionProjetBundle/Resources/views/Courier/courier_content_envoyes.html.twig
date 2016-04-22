@@ -1,12 +1,13 @@
 {% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
-{% block title %}Courriers{% endblock %}
+{% block title %}Documentation{% endblock %}
 
 {% block stylesheets %} 
     {{parent()}}
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuIntervenant %}class="active"{% endblock %}
 
 {% block utilisateur %}
     {{parent()}}
@@ -19,7 +20,7 @@
 {% endblock %}
 
 {% block breadcrumbPosition %}
-    courriers envoyés
+    <a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}">Documentation</a></div>
 {% endblock %}
 
 {% block contenupage %}
@@ -48,29 +49,30 @@
         </div> <!-- /controls -->
         {% endif %}
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel"> 
-            <div class="x_title">
-                <h2>Liste des courriers envoyés</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box box-success"> 
+            <div class="box-header">
+                <h3>Courriers envoyés</h3>
             </div>
-            <div class="x_content">
-                <div id="table_intervenants">
-                    <button id='nouvelcourier' class ="btn btn-success"><i class="fa fa-plus"></i> Envoyer</button>
+            <div class="box-body">
+                <div id="table_couriers">
+				{#%if app.user %}
+					{%if app.user.idintervenant %}
+						{%if app.user.idintervenant.id == intervenant.id%}
+							<button id='nouvelcourier' class ="btn btn-success"><i class="fa fa-plus"></i> Envoyer</button>
+						{%endif%}
+					{%endif%}
+				{%endif%#}
+				<button id='nouvelcourier' class ="btn btn-success"><i class="fa fa-plus"></i> Envoyer</button>
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
                         <thead>
                             <tr class="headings">
                                 <th>Date</th>
                                 <th>Réference</th>
                                 <th>Objet</th>
-                                <th>Destinataires</th>
+                                <th>Destinataire</th>
+                                <th>En copie</th>
                                 <th>Pièces jointes</th>
                                 <th>Courrier de reference</th>
-                                <th class=" no-link last"><span class="nobr">Actions</span>
-                                </th>
                             </tr>
                         </thead>                        
                         <tbody id="tbodyintervenants">
@@ -80,14 +82,10 @@
                                         <td onclick="show_details({{courier.id}})" class=" ">{{courier.date|date('d/m/Y')}}</td>
                                         <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
                                         <td onclick="show_details({{courier.id}})" class=" ">{{courier.objet}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.destinataire.nom}}</td>
                                         <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierenvoyes%}<div><ul >{%for courierenvoye in courier.courierenvoyes%}<li>{{courierenvoye.idintervenant.nom}}</li>{%endfor%}</ul></div> {%endif%}</td>
                                         <td onclick="show_details({{courier.id}})" class=" ">{%if courier.originalpiecesjointes%}<div><ul >{%for piecejointe in courier.originalpiecesjointes%}<li>{{piecejointe}}</li>{%endfor%}</ul></div> {%endif%}</td>
                                         <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierreference%}{{courier.courierreference.reference}}{%endif%} </td>
-                                        <td class=" last">
-                                            <a id="action-edit{{courier.id}}" onclick="edit_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
-                                            <a id="action-delete{{courier.id}}" onclick="delete_courier({{courier.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
-                                            <a id="loader-edit-delete{{courier.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
-                                        </td>
                                     </tr>
                                 {%endfor%} 
                             {%endif%} 
@@ -107,16 +105,11 @@
 <div class="row" id="block_form_courier">
 {% endif %}
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Envoie d'un courier</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box box-success">
+            <div class="box-header">
+                <h3 class="">Envoie d'un courrier</h3>
             </div>
-            <div class="x_content">
+            <div class="box-body">
                 
                 <form id="form_courier" method="post" action="{{ path("gp_courier_add") }}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
@@ -134,15 +127,13 @@
                     
                     <div class="item form-group">
                         <label>En copie</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="form-control multiselect" multiple="multiple" name="destinataires[]">
-                              {%if liste_intervenants%}
-                                {%for intervenant in liste_intervenants%}
-                                <option value="{{intervenant.id}}">{{intervenant.nom}}</option>
-                                {% endfor %}    
-                              {% endif %}
-                            </select>
-                        </div>
+                        <select class="form-control multiselect" multiple="multiple" name="destinataires[]">
+                          {%if liste_intervenants%}
+                            {%for intervenant in liste_intervenants%}
+                            <option value="{{intervenant.id}}">{{intervenant.nom}}</option>
+                            {% endfor %}    
+                          {% endif %}
+                        </select>
                     </div>
                         
                     <div class="item form-group">           
@@ -195,7 +186,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <a id="send" href="{{path("gp_courier",{'id' : intervenant.id})}}" class="btn btn-danger">Annuler</a>
                             <button id="send" type="submit" class="btn btn-success">Envoyer</button>
                         </div>
                     </div>
@@ -214,15 +205,9 @@
     {{ parent()}}
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_courier.js')}}"></script>
-    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
-      $(function () {
+      /*$(function () {
         $("#listecouriers").DataTable();
-      });
+      });*/
     </script>
 {% endblock %}{# empty Twig template #}

@@ -8,16 +8,18 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuUtilisateur %} class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Utilisateurs
+   
 {% endblock %}
 
 {% block breadcrumbDescription %}
-   Le personnel du projet
+  
 {% endblock %}
 
 {% block breadcrumbPosition %}

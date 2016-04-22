@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use UserBundle\Entity\Utilisateur;
 use GestionProjetBundle\Entity\Courier;
+use GestionProjetBundle\Entity\Intervenant;
 use GestionProjetBundle\Entity\Courierenvoye;
 use GestionProjetBundle\Form\CourierType;
 
@@ -26,35 +27,34 @@ class CourrierController extends Controller {
     
     //put your code here
     /**
-     * @Route("/couriers-envoyes")
+     * @Route("/couriers-envoyes/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function courriersenvoyesAction(Request $request) {
+    public function couriersenvoyesAction(Intervenant $intervenant) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
         $em = $this->getDoctrine()->getManager();
-
         $repositoryCourier = $em->getRepository("GestionProjetBundle:Courier");
         $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
         $courier = new Courier();
+		$request = $this->get("request");
         $form = $this->createForm(new CourierType(), $courier);
         $display_tab = 1;
+		$addcourrier = 0;
         //selectionne le seul courier actif
-        $couriers = $repositoryCourier->findBy(array("statut" => 1));
+        $couriers = $repositoryCourier->findBy(array("statut" => 1, "emetteur" => $intervenant));
         $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
         
-        return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+        return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab, "intervenant" => $intervenant));
     }
     
     /**
-     * @Route("/couriers-recus")
+     * @Route("/couriers-recus/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function courriersrecusAction(Request $request) {
+    public function couriersrecusAction(Intervenant $intervenant) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -62,10 +62,12 @@ class CourrierController extends Controller {
         $user = $this->getUser();
         //selectionne le seul courier actif
         $couriersenvoyes= array();
-        if(!$this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)){
-            $couriersenvoyes = $user->getIdintervenant()->getCourierenvoyes();
-        }
-        return $this->render('GestionProjetBundle:Courier:courier_content_recus.html.twig', array('liste_couriers' => $couriersenvoyes));
+        /*if(!$this->get('gp_bundle.service.role')->isGranted('ROLE_SUPER_ADMIN', $user)){
+            //$couriersenvoyes = $user->getIdintervenant()->getCourierenvoyes();
+			$couriersenvoyes = $intervenant->getCourierenvoyes();
+        }*/
+		$couriersenvoyes = $intervenant->getCourierenvoyes();
+        return $this->render('GestionProjetBundle:Courier:courier_content_recus.html.twig', array('liste_couriers' => $couriersenvoyes, "intervenant" => $intervenant));
     }
     
     /**
@@ -89,16 +91,20 @@ class CourrierController extends Controller {
                 if($form->isValid()){           
                    try {
                        $destinataires= $request->request->get("destinataires");
-                       foreach ($destinataires as $destinataire) {
+                       if($destinataires){
+                           foreach ($destinataires as $destinataire) {
                             $iddestinataire = (int)$destinataire;
                             $intervenant = $repositoryIntervenant->find($iddestinataire);
                             $courierenvoye= new Courierenvoye();
                             $courierenvoye->setIdintervenant($intervenant);
                             $courier->addCourierenvoye($courierenvoye);
                         }
+                       }
+                       
                         $emetteur = $repositoryIntervenant->find(2);
                         $courier->setEmetteur($emetteur);
                        $repositoryCourier->saveCourier($courier);
+                       $this->sendMailForCourrier($courier);
                        $message = $this->get('translator')->trans('Courier.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
                        return $this->redirect($this->generateUrl('gp_courier'));
@@ -106,15 +112,17 @@ class CourrierController extends Controller {
                        $message = $this->get('translator')->trans('Courier.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
                        $couriers = array();
+                       $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
                    $message = $this->get('translator')->trans('Courier.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
+                       $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
                        $couriers = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
            // }
         /*}else{
@@ -219,7 +227,26 @@ class CourrierController extends Controller {
     public function sendMailForCourrier(Courier $courrier){
         $message = \Swift_Message::newInstance()
                ->setSubject($courrier->getObjet())
-               ->setFrom($courrier->getEmetteur()->getIdadresse()->getEmail());
+               ->setFrom($courrier->getEmetteur()->getIdadresse()->getEmail())
+               ->setTo($courrier->getDestinataire()->getIdadresse()->getEmail())
+               ->setBody($courrier->getContenu())
+               ;
+        $couriersenvoyes = $courrier->getCourierenvoyes();
+        foreach ($couriersenvoyes as $courierenvoye) {
+            $message->addCC($courierenvoye->getIdintervenant()->getIdadresse()->getEmail());
+        }
+        $piecesjointes = $courrier->getPiecesjointes();
+        $originalpiecesjointes = $courrier->getOriginalpiecesjointes();
+        if(count($piecesjointes) == count($originalpiecesjointes)){
+            for($i=0; $i< count($piecesjointes); $i++){
+                $attachment = Swift_Attachment::fromPath($courrier->getUploadRootDir() . '/'.$piecesjointes[$i])
+                        ->setFilename($originalpiecesjointes[$i]);
+                $message->attach($attachment);
+            }
+        }
+             $this->get('mailer')->send($message);
+        
+        
     }
 
 }

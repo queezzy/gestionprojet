@@ -10,6 +10,8 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuEvolution %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
@@ -30,34 +32,30 @@
 <div class="row">
     <!-- General evolution start-->
     <div class="col-md-12">
-      <div class="box box-primary">
+      <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Niveau d'avancement global</h3>                    
         </div><!-- /.box-header -->
         <div class="box-body">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <p class="text-center">
                 <strong>Evolution du: {{projet.datedebut|date('d/m/Y')}} - {{"now"|date('d/m/Y')}}</strong>
               </p>
-              <!-- <div class="chart">-->
-                <!-- Sales Chart Canvas -->
-               <!--  <canvas id="salesChart" height="200"></canvas>-->
-              <!--</div> --><!-- /.chart-responsive -->
-            <!--</div><!-- /.col -->
-            <div class="col-md-4">
+              
+            <div class="col-md-12">
               <!--<p class="text-center">
                 <strong>Détails</strong>
               </p>-->
-              <div class="progress-group">
+              <div class="progress-group col-md-12">
                 <span class="progress-text">Attendue</span>
                 <span class="progress-number"><b>{{projet.evolutionattendu}}</b>/100</span>
                 <div class="progress sm">
                   <div class="progress-bar progress-bar-aqua" style="width: {{projet.evolutionattendu}}%"></div>
                 </div>
               </div><!-- /.progress-group -->
-              <div class="progress-group">
-                <span class="progress-text">En cours</span>
+              <div class="progress-group col-md-12">
+                <span class="progress-text">En réelle</span>
                 <span class="progress-number"><b>{{projet.evolutionencours}}</b>/100</span>
                 <div class="progress sm">
                   <div class="progress-bar progress-bar-red" style="width: {{projet.evolutionencours}}%"></div>
@@ -82,7 +80,7 @@
 
              
   <div class="col-md-12">
-        <div class="box box-primary">
+        <div class="box box-success">
           <div class="box-header with-border">
             <h3 class="box-title">Niveau d'avancement par intervenants</h3>                    
           </div><!-- /.box-header -->
@@ -103,7 +101,7 @@
                               </div>
                           </div><!-- /.progress-group -->
                           <div class="progress-group">
-                              <span class="progress-text">En cours</span>
+                              <span class="progress-text">En réelle</span>
                               <span class="progress-number"><b>{{intervenant.evolutionencours}}</b>/100</span>
                               <div class="progress sm">
                                 <div class="progress-bar progress-bar-red" style="width: {{intervenant.evolutionencours}}%"></div>

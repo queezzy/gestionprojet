@@ -18,7 +18,7 @@ class RessourceType extends AbstractType
             ->add('reference')
             ->add('type', 'choice',array('choices' => array(
                 0 => "Administratif",
-                1 => "Executif",
+                1 => "Execution",
             )))
             ->add('description')
             ->add('statut','choice',array('choices' => array(

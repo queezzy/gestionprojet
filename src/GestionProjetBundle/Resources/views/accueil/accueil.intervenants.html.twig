@@ -1,4 +1,4 @@
-<div class="box box-primary">
+<div class="box box-success">
     <!-- /.box-header start -->
     <div class="box-header with-border">
         <h3 class="box-title">Intervenants</h3>                      
@@ -10,8 +10,8 @@
         <ul class="users-list clearfix">
             {%if liste_intervenants%}
                 {%for intervenant in liste_intervenants%}
-                    <li>
-                        <img width="25px" height="25px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"</td>
+                    <li class="intervenant-box">
+                        <img width="35px" height="35px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"</td>
                         <a class="users-list-name" onclick="show_details({{intervenant.id}})" style="cursor: pointer;">{{intervenant.nom}}</a>
                     </li>
                {%endfor%} 

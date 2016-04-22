@@ -20,7 +20,7 @@ class Actualite
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -74,7 +74,7 @@ class Actualite
      *
      * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\Utilisateur",inversedBy="actualites")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idutilisateur", referencedColumnName="id")
      * })
      */
     private $utilisateur;

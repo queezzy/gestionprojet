@@ -73,6 +73,20 @@ class ProjetController extends Controller
         return $this->render('GestionProjetBundle:accueil:accueil.presentation.projet.html.twig', array('projetactif' => $projet));
 
     }
+	
+	/**
+     * @Route("/get-evolution-projet-accueil")
+     * @Template()
+     * @param Request $request
+     */
+    public function getEvolutionProjetAccueilAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
+        //selectionne le seul projet actif
+        $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        return $this->render('GestionProjetBundle:accueil:accueil.evolution.projet.html.twig', array('projet' => $projet));
+
+    }
     
     /**
      * @Route("/add-projet")

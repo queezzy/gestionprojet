@@ -6,10 +6,11 @@ $('#nouvelcourier').click(function () {
 });
 $('#close_form').click(function (e) {
     e.preventDefault();
-    window.location.replace(Routing.generate('gp_courier'));
+    /*window.location.replace(Routing.generate('gp_courier'));*/
 });
-
-
+function annuler_envoie(id_intervenant) {
+    window.location.replace(Routing.generate('gp_courier_envoyes',{id: id_intervenant}));	
+}
 function edit_courier(id_courier) {
     $('#myAlert').remove();
     //la route pour faire le get by id

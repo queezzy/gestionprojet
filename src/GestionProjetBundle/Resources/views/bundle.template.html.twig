@@ -12,7 +12,7 @@
 <!-- Menu Start -->
 <section class="navbar navbar-default navbar-top menu-block">
     <!-- Logo End -->
-    <div class="row">               
+    <div class="row ligne-menu">               
         <div class="col-md-9 col-md-offset-1"> 
             <!-- Menu start -->
             <ul class="nav navbar-nav navbar-left treeview treeview-menu">
@@ -39,13 +39,13 @@
                   <span>Actualités</span>
                 </a>
               </li>
-              <li {% block menuDocumentation %}{% endblock %}>
+             {# <li {% block menuDocumentation %}{% endblock %}>
 
                 <a href="{{path("gestion_projet_ressource_all")}}">
                   <i class="fa fa-edit"></i>
                   <span>Documentation</span>
                 </a>
-              </li>
+              </li> #}
               <li {% block menuUtilisateur %}{% endblock %}>
                 <a href="{{path("gestion_projet_utilisateurs_all")}}">
                   <i class="fa fa-users"></i>
@@ -71,24 +71,24 @@
         <div class="pull-right info col-md-2">
           <!--div class="pull-left image">
             <img src="" class="img-circle" alt="User Image" />
+			
           </div-->
           <div class="info dropdown col-md-3">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><b class="caret"></b></a>
+                <a href="" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li class="center-block center"><bold>{% if app.user.username is defined %}{{app.user.username}}{% endif%}</bold></li>
                     <li><a href="{{path('fos_user_profile_show')}}"><i class="fa fa-eye"></i>Voir profil</a></li>
-                    <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i>Se déconnecter</a></li>
-                     <li><a href="{{path('gestion_projet_send')}}"><i class="fa fa-eye"></i>Envoyer mail</a></li>
+                     <li><a href="{{path('gestion_projet_send')}}"><i class="fa fa-envelope"></i>Envoyer mail</a></li>
                     <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i>Se déconnecter</a></li>
                 </ul>
           </div>
           <div class="info dropdown col-md-6">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-gear"></i><b class="caret"></b></a>
+                <a href="" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-gear"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="{{path('gp_projet_admin')}}">Gérer le projet</a></li>
                     <li><a href="{{ path('gp_lot') }}">Gérer les lots</a></li>
-                    <li><a href="{{path('gp_tache')}}">Gérer les taches</a></li>
-                    <li><a href="#">Gérer les themes</a></li>
+                    <!--li><a href="{{path('gp_tache')}}">Gérer les taches</a></li-->
+                    <!--li><a href="#">Gérer les themes</a></li-->
                 </ul>
           </div>
         </div>

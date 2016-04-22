@@ -7,11 +7,12 @@
 }
 
 .barniere img{
-    width: 100%;
+    width: 100%;	
 }
 
-.head img {
-    width: 80%;
+header {
+	display: block;
+	height: 10%;
 }
 /*  Style for the header End */
 
@@ -22,41 +23,81 @@
     padding: 5%;
 }
 
-
+.ligne-menu {
+	background-color: #1B4F08 !important;
+	color: #fff !important;
+}
 ul.nav {
     margin-left: 4%;
+	background-color: #1B4F08 !important;
+	color: #fff !important;
 }
 
 ul.nav li {
     font-size : 1em;
     font-weight: bold;
-    color: #fff ;
+	background-color: #1B4F08 !important;
+    color: #fff !important;
+}
+ul.nav li span {
+	color: #fff !important;
+}
+ul.nav li.active span {
+	color: #000 !important;
+}
+ul.nav li.active .fa{
+	color: #000;
 }
 
 ul.nav li.active {
-   background-color: #1B4F08 !important;
-   color: #ecf0f5 !important;
+   background-color: #ecf0f5 !important;
+   color: #000;
 }
 
 ul.nav li.active a{
-   background-color: #1B4F08 !important;
-   color: #ecf0f5 !important;
+   background-color: #ecf0f5 !important;
+   color: #000;
 }
 
 ul.nav li:hover{
-    background-color: #ecf0f5;
-    color: #1B4F08;
+    background-color: #ecf0f5 !important;
+    color: #000 !important;
 }
 
-ul.nav li a:hover {
-    color: #1B4F08 !important;
+ul.nav li:hover a {
+    color: #000 !important;
+}
+
+ul.nav li:hover span {
+   background-color: #ecf0f5 !important;
+   color: #000 !important;
+}
+
+ul.nav li:hover i{
+	color: #000 !important;
 }
 
 ul.nav li.active a:hover{
-   background-color: #1B4F08 !important;
-   color: #ecf0f5 !important;
+   background-color: #ecf0f5 !important;
+   color: #000 !important;
 }
 
+.ligne-menu .fa{
+	color: #fff;
+}
+
+.dropdown-menu .fa {
+	color: #000;
+	margin-top: 1%;
+}
+
+.caret {
+	color: #fff;
+}
+
+.dropdown-menu{
+	margin-top: 14px !important;
+}
 
 .navbar {
     margin-bottom: 0 !important;
@@ -64,7 +105,6 @@ ul.nav li.active a:hover{
 
 .menu-block {
     margin-bottom: 9%;
-    margin-top: 10%;
 }
 
 .info {
@@ -118,6 +158,23 @@ ul.nav li.active a:hover{
 
 .box i {
     margin-left: 10px;
+}
+
+.presentation p {
+	text-align: justify;
+}
+
+.users-list>li  {
+	width: 50%;
+}
+
+.spaceleft {
+	margin-left: 1%;
+}
+
+.products-list .product-img img {
+	width: 100%;
+	height: 100%;
 }
 /* Main contain Style End*/
 

@@ -96,7 +96,7 @@ class Intervenant
     /**
      * @var \Lot
      *
-     * @ORM\ManyToOne(targetEntity="Lot")
+     * @ORM\ManyToOne(targetEntity="Lot", inversedBy="intervenants")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idLot", referencedColumnName="id")
      * })

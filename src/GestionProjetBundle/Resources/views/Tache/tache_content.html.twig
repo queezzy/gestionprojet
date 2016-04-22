@@ -13,14 +13,13 @@
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Taches
 {% endblock %}
 
 {% block breadcrumbDescription %}
 {% endblock %}
 
 {% block breadcrumbPosition %}
-   Liste des taches
+   Taches
 {% endblock %}
 
 {% block contenupage %}
@@ -50,17 +49,11 @@
         </div> <!-- /controls -->
         {% endif %}
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel"> 
-                <div class="x_title">
-                    <h2>Taches</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-
-                    </ul>
-                    <div class="clearfix"></div>
+            <div class="box box box-success"> 
+                <div class="box-header">
+                    <h3>Taches</h3>
                 </div>
-                <div class="x_content">
+                <div class="box-body">
                     <div id="table_taches">
                         <button id='nouveltache' class ="btn btn-success"><i class="fa fa-plus"></i> Ajouter</button>
                         <table id="example" class="table table-striped responsive-utilities jambo_table">
@@ -82,8 +75,8 @@
                                             <td onclick="show_details({{tache.id}})" class=" ">{{tache.datedebut|date('d/m/Y')}}</td>
                                             <td onclick="show_details({{tache.id}})" class=" ">{{tache.datefin|date('d/m/Y')}}</td>
                                             <td class=" last">
-                                                <a id="action-edit{{tache.id}}" onclick="edit_tache({{tache.id}},'gp_tache_update')" style="cursor: pointer;"><i class="icon-edit icon-yellow">Edit</i></a>
-                                                <a id="action-delete{{tache.id}}" onclick="delete_tache({{tache.id}})" style="cursor: pointer;"><i class="icon-trash icon-green">Delete</i></a>
+                                                <a id="action-edit{{tache.id}}" onclick="edit_tache({{tache.id}},'gp_tache_update')" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                                <a id="action-delete{{tache.id}}" onclick="delete_tache({{tache.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
                                                 <a id="loader-edit-delete{{tache.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
                                             </td>
                                         </tr>
@@ -110,19 +103,12 @@
 <div class="row" id="block_form_tache">
 {% endif %}
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Ajout d'un tache</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box box-success">
+            <div class="box-header">
+                <h3>Ajout d'une tache</h3>
             </div>
-            <div class="x_content">
-                
+            <div class="box-body">                
                 <form id="form_tache" method="post" action="{{ path("gp_tache_add") }}" class="form-horizontal form-label-left" novalidate>
-                    <span class="section">Informations sur le tache</span>
                     <div class="item form-group">
                         <input id="idtache" value="" name="idtache" type="hidden">
                         {{form_widget(form._token)}}
@@ -188,7 +174,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <button id="close_form" class="btn btn-danger">Annuler</button>
                             <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>
@@ -233,12 +219,6 @@
     {{ parent()}}
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_tache.js')}}"></script>
-    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
       $(function () {
         $("#listetaches").DataTable();

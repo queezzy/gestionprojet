@@ -9,16 +9,18 @@
     <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block menuActualite %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Actualité
+   
 {% endblock %}
 
 {% block breadcrumbDescription %}
-    Actualités du projet
+    
 {% endblock %}
 
 {% block breadcrumbPosition %}
@@ -26,9 +28,9 @@
 {% endblock %}
 
 {% block contenupage %}
-    <div class="box box-primary">
+    <div class="box box-success">
         <div class="box-header">
-            <h3>Creer une actualité</h3>
+            <h3>Créer une actualité</h3>
         </div><!-- /.box-header -->
         <form role="form" action="{{ path('gestion_projet_actualite_new') }}" {{ form_enctype(form) }} method="POST">
             <div class="box-body">
@@ -76,8 +78,8 @@
                 </div>
             </div>
             <div class="box-footer col-md-8 col-md-offset-2">
-                <button type="reset" class="btn btn-danger pull-left">Annuler</button>
-                <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+                <button type="reset" class="btn btn-danger">Annuler</button>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
             </div>
         </form>
     </div>

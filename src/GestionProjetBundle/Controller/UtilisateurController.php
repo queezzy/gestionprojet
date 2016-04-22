@@ -72,12 +72,12 @@ class UtilisateurController extends Controller {
     }
 
     /**
-     * @Route("/sendmail/", name="gestion_projet_send")
+     * @Route("/sendmail", name="gestion_projet_send")
       @Method({"GET","POST"})
      */
     public function sendMailAction(Request $request) {
         
-       $data =array();
+      /* $data =array();
         
         $form = $this->createFormBuilder($data)
                 ->add('Objet')
@@ -116,9 +116,9 @@ class UtilisateurController extends Controller {
 
         return $this->render('GestionProjetBundle:formulaire:form.send.mail.html.twig', array(
                     'form' => $form->createView(),
-        ));
+        ));*/
         
-        
+        return $this->render('GestionProjetBundle:collaboration:collaboration.template.html.twig');
     }
 
 }

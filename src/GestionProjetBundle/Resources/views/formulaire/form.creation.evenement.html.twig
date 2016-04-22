@@ -1,6 +1,6 @@
 {% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
-{% block title %}Actualités{% endblock %}
+{% block title %}Calendrier{% endblock %}
 
 {% block stylesheets %} 
     {{parent()}}
@@ -10,24 +10,26 @@
     <link href="{{asset('bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block menuCalendrier %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Evenement
+   
 {% endblock %}
 
 {% block breadcrumbDescription %}
-    Ajouter un evenement
+    
 {% endblock %}
 
 {% block breadcrumbPosition %}
-    Evenements
+    Calendrier
 {% endblock %}
 
 {% block contenupage %}
-    <div class="box box-primary col-md-offset-2 col-md-8">
+    <div class="box box-success col-md-8">
         <div class="box-header">
             <h3>Creer un évenement</h3>
         </div><!-- /.box-header -->
@@ -69,8 +71,8 @@
                 </div>
             </div>
             <div class="box-footer col-md-8 col-md-offset-2">
-                <button type="reset" class="btn btn-danger pull-left">Annuler</button>
-                <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+                <button type="reset" class="btn btn-danger">Annuler</button>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
             </div>
         </form>
     </div>

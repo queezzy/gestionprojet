@@ -1,14 +1,9 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Envoie d'un courier</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="">Envoie d'un courier</h3>           
         </div>
-        <div class="x_content">
+        <div class="box-body">
 
             <form id="form_courier" method="post" action="{{ path("gp_courier_add") }}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
                 <div class="item form-group">
@@ -71,7 +66,7 @@
                 <div class="ln_solid"></div>
                 <div id="actions" class="form-group">
                     <div class="col-md-6 col-md-offset-3">
-                        <button id="close_form" class="btn btn-primary">Annuler</button>
+                        <button onclick = "annuler_envoie({{intervenant.id}})" class="btn btn-danger">Annuler</button>
                         <button id="send" type="submit" class="btn btn-success">Envoyer</button>
                     </div>
                 </div>

@@ -1,31 +1,25 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Ajout d'un lot</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box-body">
+            <div class="box-header">
+                <h3 class="">Modification d'une tache</h3>
             </div>
-            <div class="x_content">
+            <div class="box-body">
                 
                 <form id="form_lot" method="post" action="{{ path('gp_tache_update',{'id' : idtache}) }}" class="form-horizontal form-label-left" novalidate>
-                    <span class="section">Informations sur le lot</span>
                     <div class="item form-group">
                         <input id="idlot" value="" name="idlot" type="hidden">
                         {{form_widget(form._token)}}
                     </div>
 
                     <div class="item form-group">           
-                        {{ form_label(form.nom, "Nom du lot", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_label(form.nom, "Nom de la tache", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.nom) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Nom du lot', 'required':'required'}}) }}
                         </div>
                     </div>
                     <div class="item form-group">
-                         {{ form_label(form.datedebut, "Date debut", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}   
+                         {{ form_label(form.datedebut, "Date de debut", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}   
                          {{ form_errors(form.datedebut) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                                {{ form_widget(form.datedebut) }}
@@ -34,7 +28,7 @@
 
                       {# Date fin #} 
                       <div class="item form-group">
-                         {{ form_label(form.datefin, "Date fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                         {{ form_label(form.datefin, "Date de fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                          {{ form_errors(form.datefin) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                                {{ form_widget(form.datefin) }}
@@ -76,7 +70,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <button id="close_form" class="btn btn-danger">Annuler</button>
                             <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>

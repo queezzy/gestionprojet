@@ -8,28 +8,28 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuIntervenant %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Documentation
 {% endblock %}
 
 {% block breadcrumbDescription %}
-   Documentation du projet 
 {% endblock %}
 
 {% block breadcrumbPosition %}
    Documentation
 {% endblock %}
-{% block menuDocumentation %}class="active"{% endblock %}
+
 {% block contenupage %}
 <div class="row">
 <!-- Document start-->
-<div class="box">
+<div class="box box-success">
 <div class="box-header">
-  <h3 class="box-title">Liste des documents administratifs </h3><a href="{{path('gestion_projet_ressource_new')}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+  <h3 class="box-title">Documents administratifs </h3><a href="{{path('gestion_projet_ressource_new')}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
 </div><!-- /.box-header -->
 <div class="box-body">
   <table class="data-table table table-bordered table-striped">

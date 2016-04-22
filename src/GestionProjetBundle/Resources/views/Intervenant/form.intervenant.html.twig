@@ -1,14 +1,9 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Modification d'un intervenant</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box box-success">
+            <div class="box-header">
+                <h3 class="box-title">Modification d'un intervenant</h3>
             </div>
-            <div class="x_content">
+            <div class="box-body">
                 
                 <form id="form_intervenant" role="form" method="post" action = "{{ path('gp_intervenant_update',{'id': idintervenant})}}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
@@ -37,7 +32,7 @@
                             {{ form_widget(form.idadresse.email, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Email'}}) }}
                         </div>
                     </div>
-                    <div class="item form-group">
+                    {#<div class="item form-group">
                         {{ form_label(form.idadresse.latitude, "Latitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.idadresse.latitude) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -51,7 +46,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             {{ form_widget(form.idadresse.longitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Longitude'}}) }}
                         </div>
-                    </div>
+                    </div>#}
                     
                     <div class="item form-group">
                         {{ form_label(form.idadresse.boitepostale, "Boite de postale", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
@@ -153,7 +148,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <button id="close_form" class="btn btn-danger">Annuler</button>
                             <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>

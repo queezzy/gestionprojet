@@ -2,18 +2,15 @@
 
 <div class="row">
 <!-- Document start-->
-<div class="box">
+<div class="box box-success">
 <div class="box-header">
-  <h3 class="box-title">Liste des documents administratifs </h3><a href="{{path('gestion_projet_ressource_new')}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a></h3><a href="{{path('gestion_projet_ressource_administratifs')}}" class="pull-right"><i class="fa fa-plus"></i>Voir</a>
+  <h3 class="box-title">Documents administratifs </h3><a href="{{path('gestion_projet_ressource_new')}}" class="pull-right"><i class="fa fa-plus"></i></a></h3>
 </div><!-- /.box-header -->
 <div class="box-body">
   <table class="data-table table table-bordered table-striped">
     <thead>
       <tr>
         <th>Référence</th>
-        <th>Description</th>
-        <th>Intervenant</th>
-        <th>Action</th>
       </tr>
     </thead>
    <tbody>
@@ -21,29 +18,19 @@
                 {% for ressource in ressources %}
                     <tr>
                       <td><a href="{{asset('uploads/ressources/'~ressource.path)}}">{{ressource.reference}}</a></td>
-                     
-                      <td>{{ressource.description}}</td>
-                      <td>{% if ressource.idintervenant.nom is defined %}
-                      
-                          {{ressource.idintervenant.nom}}
-                      {% endif%}
-                      </td>
-                      <td>
-                    <a href="{{path('gestion_projet_ressource_update',{'id':ressource.id})}}" class="pull-left"><i class="fa fa-edit"></i></a>
-                    <a href="{{path('gestion_projet_ressource_delete',{'id':ressource.id})}}" class="pull-left"><i class="fa fa-minus"></i></a>
-        </td>
                     </tr>
                 {% else %}
                     <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
                       <td>-</td>
                     </tr>
                 {% endfor %}    
     </tbody>
   </table>
 </div><!-- /.box-body -->
+<div class="box-footer text-center">
+	<a href="{{path('gestion_projet_ressource_administratifs', {'id': intervenant.id})}}" class="uppercase">Plus de détails</a>
+</div><!-- /.box-footer -->
+
 </div>
 <!-- Intervenants end-->
 </div><!-- /.row --> 

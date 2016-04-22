@@ -69,7 +69,7 @@ class Courier
     /**
      * @var \Intervenant
      *
-     * @ORM\OneToOne(targetEntity="Intervenant")
+     * @ORM\ManyToOne(targetEntity="Intervenant")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="emetteur", referencedColumnName="id", nullable=true)
      * })
@@ -79,7 +79,7 @@ class Courier
     /**
      * @var \Intervenant
      *
-     * @ORM\OneToOne(targetEntity="Intervenant")
+     * @ORM\ManyToOne(targetEntity="Intervenant")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="destinataire", referencedColumnName="id", nullable=true)
      * })
@@ -88,7 +88,7 @@ class Courier
     
     /**
      * @var \Courier 
-     * @ORM\OneToOne(targetEntity="Courier")
+     * @ORM\ManyToOne(targetEntity="Courier")
      * @ORM\JoinColumn(name="courierreference", referencedColumnName="id")
      */
     private $courierreference;
@@ -585,8 +585,8 @@ class Courier
             $this->originalpiecesjointes= array();
             foreach($this->uploadedFiles as $file)
             {
-                $info = pathinfo($this->getFile()->getClientOriginalName());
-                $file_name =  basename($this->getFile()->getClientOriginalName(),'.'.$info['extension']);
+                $info = pathinfo($file->getClientOriginalName());
+                $file_name =  basename($file->getClientOriginalName(),'.'.$info['extension']);
                 array_push($this->originalpiecesjointes, $file_name);
                 $path = sha1(uniqid(mt_rand(), true)).'.'.$file->guessExtension();
                 array_push ($this->piecesjointes, $path);

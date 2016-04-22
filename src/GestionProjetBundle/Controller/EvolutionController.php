@@ -75,8 +75,6 @@ class EvolutionController extends Controller{
                    try {
                        if($projet->getEvolutionattendu()>= $projet->getEvolutionencours()){
                             $repositoryProjet->updateProjet($projet);
-                            $message = $this->get('translator')->trans('Projet.updated_success', array(), "GestionProjetBundle");
-                            $request->getSession()->getFlashBag()->add('message_success', $message);
                             return $this->redirect($this->generateUrl('gp_evolution'));
                        }else{
                             return $this->redirect($this->generateUrl('gp_evolution'));
@@ -114,8 +112,6 @@ class EvolutionController extends Controller{
                    try {
                        if($intervenant->getEvolutionattendu()>= $intervenant->getEvolutionencours()){
                             $repositoryIntervenant->updateIntervenant($intervenant);
-                            $message = $this->get('translator')->trans('Intervenant.updated_success', array(), "GestionProjetBundle");
-                            $request->getSession()->getFlashBag()->add('message_success', $message);
                             return $this->redirect($this->generateUrl('gp_evolution'));
                        }else{
                             return $this->redirect($this->generateUrl('gp_evolution'));

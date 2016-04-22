@@ -15,7 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GestionProjetBundle\Form\RessourceType;
 
 use GestionProjetBundle\Entity\Ressource;
+use GestionProjetBundle\Entity\Intervenant;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Description of RessourceControlle
@@ -94,14 +96,12 @@ class RessourceController extends Controller {
     }
 
     /**
-     * @Route("/ressources", name="gestion_projet_ressource_all")
+     * @Route("/ressources/{id}", name="gestion_projet_ressource_all",requirements={"id" = "\d+"})
      * @Method({"GET"})
      */
-    public function getAllRessourcesAction() {
-
-
-
-        return $this->render("GestionProjetBundle:documentation:documentation.template.html.twig");
+    public function getAllRessourcesAction(Intervenant $intervenant) {
+		
+        return $this->render("GestionProjetBundle:documentation:documentation.template.html.twig", array("intervenant" => $intervenant));
     }
 
     public function getRessourcesExecution() {
@@ -115,52 +115,62 @@ class RessourceController extends Controller {
         return $this->render("GestionProjetBundle:documentation:liste.documents.executifs.template.html.twig", array("ressources" => $ressources));
     }
 
-    public function getRessourcesAdministratifsAction() {
-
+    public function getRessourcesAdministratifsAction($idintervenant) {
+		$id = (int)$idintervenant;
         $em = $this->getDoctrine()->getManager();
-
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+		$repositoryIntervenant = $em->getRepository('GestionProjetBundle:Intervenant');
+		$intervenant = $repositoryIntervenant->find($id);
+        $ressources = $ressources_repo->findBy(array('statut' => 1, 'type' => 0, 'idintervenant' => $intervenant));
 
-        $ressources = $ressources_repo->findBy(array('statut' => 1, 'type' => 0));
-
-        return $this->render("GestionProjetBundle:formulaire:liste.documents.administratifs.template.html.twig", array("ressources" => $ressources));
+        return $this->render("GestionProjetBundle:formulaire:liste.documents.administratifs.template.html.twig", array("ressources" => $ressources, "intervenant" => $intervenant));
     }
-
-    public function getRessourcesValidesAction() {
-
+	
+	/**
+     * @Route("/documents-execution-valides/{id}", name="gestion_projet_documents_execution_valide",requirements={"id" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function getRessourcesValidesAction(Intervenant $intervenant) {
+		//$id = (int)$idintervenant;
         $em = $this->getDoctrine()->getManager();
 
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+		//$repositoryIntervenant = $em->getRepository('GestionProjetBundle:Intervenant');
+		//$intervenant = $repositoryIntervenant->find($id);
+        $ressources = $ressources_repo->findBy(array('statut' => 3, 'type' => 1, 'idintervenant' => $intervenant));
 
-        $ressources = $ressources_repo->findBy(array('statut' => 3, 'type' => 1));
-
-        return $this->render("GestionProjetBundle:formulaire:liste.documents.valides.template.html.twig", array("ressources" => $ressources));
+        return $this->render("GestionProjetBundle:formulaire:liste.documents.valides.maxi.template.html.twig", array("ressources" => $ressources, "intervenant" => $intervenant));
     }
-
-    public function getRessourcesNonValidesAction() {
-
+	
+	/**
+     * @Route("/documents-execution-non-valides/{id}", name="gestion_projet_documents_execution_non_valide",requirements={"id" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function getRessourcesNonValidesAction(Intervenant $intervenant) {
+		//$id = (int)$idintervenant;
         $em = $this->getDoctrine()->getManager();
 
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
+		//$repositoryIntervenant = $em->getRepository('GestionProjetBundle:Intervenant');
+		//$intervenant = $repositoryIntervenant->find($id);
+        $ressources = $ressources_repo->findBy(array('statut' => 2, 'type' => 1, 'idintervenant' => $intervenant));
 
-        $ressources = $ressources_repo->findBy(array('statut' => 2, 'type' => 1));
-
-        return $this->render("GestionProjetBundle:formulaire:liste.documents.nonvalides.template.html.twig", array("ressources" => $ressources));
+        return $this->render("GestionProjetBundle:formulaire:liste.documents.nonvalides.maxi.template.html.twig", array("ressources" => $ressources, "intervenant" => $intervenant));
     }
     
     /**
-     * @Route("/ressource/administratifs", name="gestion_projet_ressource_administratifs")
+     * @Route("/ressource/administratifs/{id}", name="gestion_projet_ressource_administratifs",requirements={"id" = "\d+"})
      * @Method({"GET"})
      */
-    public function getAllRessourcesAdministratifsAction() {
+    public function getAllRessourcesAdministratifsForIntervenantAction(Intervenant $intervenant) {
 
         $em = $this->getDoctrine()->getManager();
 
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
 
-        $ressources = $ressources_repo->findBy(array('statut' => 1, 'type' => 0));
+        $ressources = $ressources_repo->findBy(array('statut' => 1, 'type' => 0, 'idintervenant' => $intervenant));
 
-        return $this->render("GestionProjetBundle:formulaire:liste.documents.administratifs.maxi.template.html.twig", array("ressources" => $ressources));
+        return $this->render("GestionProjetBundle:formulaire:liste.documents.administratifs.maxi.template.html.twig", array("ressources" => $ressources, "intervenant" => $intervenant));
     }
 
     /**

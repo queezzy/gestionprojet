@@ -10,6 +10,8 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuIntervenant %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
@@ -50,17 +52,11 @@
         </div> <!-- /controls -->
         {% endif %}
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel"> 
-            <div class="x_title">
-                <h2>Liste des intervenants</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box box-success"> 
+            <div class="box-header">
+                <h3>Intervenants</h3>
             </div>
-            <div class="x_content">
+            <div class="box-body">
                 <div id="table_intervenants">
                     <button id='nouvelintervenant' class ="btn btn-success"><i class="fa fa-plus"></i> Ajouter</button>
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
@@ -83,17 +79,17 @@
                             {%if liste_intervenants%}
                                 {%for intervenant in liste_intervenants%}
                                     <tr id="lignetable{{intervenant.id}}" class="odd pointer" style="cursor: pointer;">
-                                        <td onclick="show_details({{intervenant.id}})" class=" "><img width="25px" height="25px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" "><img width="25px" height="25px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"/></td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.nom}}</td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idlot.nom}}</td>
-                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.lieu}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" "><a style="text-decoration:none;" href="{{asset('uploads/planslocalisation/'~intervenant.idadresse.path)}}">{{intervenant.idadresse.lieu}} </a></td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.email}}</td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.telephone}}</td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionattendu}}</td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionencours}}</td>
                                         <td class=" last">
-                                            <a id="action-edit{{intervenant.id}}" onclick="edit_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
-                                            <a id="action-delete{{intervenant.id}}" onclick="delete_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
+                                            <a id="action-edit{{intervenant.id}}" onclick="edit_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                            <a id="action-delete{{intervenant.id}}" onclick="delete_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
                                             <a id="loader-edit-delete{{intervenant.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
                                         </td>
                                     </tr>
@@ -115,16 +111,11 @@
 <div class="row" id="block_form_intervenant">
 {% endif %}
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Ajout d'un intervenant</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box box-success">
+            <div class=" box-header">
+                <h3>Ajout d'un intervenant</h3> 
             </div>
-            <div class="x_content">
+            <div class=" box-body">
                 
                 <form id="form_intervenant" role="form" method="post" action = "{{ path('gp_intervenant_add')}}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
@@ -153,7 +144,7 @@
                             {{ form_widget(form.idadresse.email, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Email'}}) }}
                         </div>
                     </div>
-                    <div class="item form-group">
+                    {#<div class="item form-group">
                         {{ form_label(form.idadresse.latitude, "Latitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.idadresse.latitude) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -167,7 +158,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             {{ form_widget(form.idadresse.longitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Longitude'}}) }}
                         </div>
-                    </div>
+                    </div>#}
                     
                     <div class="item form-group">
                         {{ form_label(form.idadresse.boitepostale, "Boite de postale", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
@@ -269,7 +260,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-primary">Annuler</button>
+                            <button id="close_form" class="btn btn-danger">Annuler</button>
                             <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>
@@ -314,10 +305,6 @@
     {{ parent()}}
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_intervenant.js')}}"></script>
-    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
     <script>
       $(function () {
         $("#listeintervenants").DataTable();

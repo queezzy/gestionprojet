@@ -10,122 +10,43 @@
     {# Fichiers css en plus #}
 {% endblock %}
 
+{% block menuIntervenant %}class="active"{% endblock %}
+
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Documentation
 {% endblock %}
 
 {% block breadcrumbDescription %}
-   Documentation du projet 
 {% endblock %}
 
 {% block breadcrumbPosition %}
    Documentation
 {% endblock %}
-{% block menuDocumentation %}class="active"{% endblock %}
 {% block contenupage %}
   <!-- Documents administratifs start-->
-<div class="col-md-8">
+<div class="col-md-6">
    
-    {% render(controller("GestionProjetBundle:Ressource:getRessourcesAdministratifs"))%}
+    {% render(controller("GestionProjetBundle:Ressource:getRessourcesAdministratifs", {'idintervenant': intervenant.id}))%}
 </div>
 <!-- Documents administratifs end-->
 
 <!-- Courrier start-->
-<div class="col-md-4">
+<div class="col-md-6">
     <div class="box box-success">
         <!-- /.box-header start -->
-      <div class="box-header with-border">
-        <h3 class="box-title">Courriers</h3> <a class="pull-right"><i class="fa fa-plus"></i>Envoyer</a>                      
+      <div class="box-header with-border">   
+		<h3 class="box-title">Courriers</h3>
       </div>
         <!-- /.box-header end -->
 
         <!-- /.box-body start-->
       <div class="box-body">
-          <div class="box box-primary">
-                <!-- /.box-header start -->
-              <div class="box-header with-border">
-                <h3 class="box-title">Courriers-Envoyés</h3>                      
-              </div>
-                <!-- /.box-header end -->
-
-                <!-- /.box-body start-->
-              <div class="box-body">
-                  <table  class="data-table table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>Objet</th>
-                        <th>Emetteur</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        
-                    {#<!--{% for courrierR in liste_courrierE %}-->
-                        <tr>
-                          <td>Trident</td>
-                          <td>Internet</td>
-                          <td>Win 95+</td>
-                          <td> 4</td>
-                        </tr>
-                    <!--{% else %}-->
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td> -</td>
-                    </tr>
-                  <!--{% endfor %} -->  #}   
-                  </tbody>
-                </table>
-              </div>
-                <!-- /.box-body end -->
-          </div>
-
-          <div class="box box-primary">
-                <!-- /.box-header start -->
-              <div class="box-header with-border">
-                <h3 class="box-title">Courriers-Reçus</h3>                      
-              </div>
-                <!-- /.box-header end -->
-
-                <!-- /.box-body start-->
-              <div class="box-body">
-                  <table  class="data-table table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>Objet</th>
-                        <th>Emetteur</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                   {# <!--{% for courrierR in liste_courrierR %}-->
-                        <tr>
-                          <td>Trident</td>
-                          <td>Internet</td>
-                          <td>Win 95+</td>
-                          <td> 4</td>
-                        </tr>
-                    <!--{% else %}-->
-                        <tr>
-                          <td>-</td>
-                          <td>-</td>
-                          <td>-</td>
-                          <td> -</td>
-                        </tr>
-                  <!--{% endfor %} -->#}     
-                  </tbody>
-                </table>
-              </div>
-                <!-- /.box-body end -->
-          </div>
+        <div class = "row"><a id="send" href="{{path("gp_courier",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers envoyés</a></div>
+		<br />
+		<div class = "row"><a id="send" href="{{path("gp_courier_recus",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers reçus</a></div>
       </div>
         <!-- /.box-body end -->
     </div>
@@ -133,19 +54,22 @@
 <!-- Courrier end-->
 
 <!-- Documents d'exécution start-->
-<div class="col-md-4">
+<div class="col-md-6">
     <div class="box box-success">
         <!-- /.box-header start -->
       <div class="box-header with-border">
-        <h3 class="box-title">Documents d'exécution</h3>  <a href="{{path('gestion_projet_ressource_new')}}"class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>                     
+        <h3 class="box-title">Documents d'exécution</h3>  <a href="{{path('gestion_projet_ressource_new')}}"class="pull-right"><i class="fa fa-plus"></i></a>                     
       </div>
         <!-- /.box-header end -->
 
         <!-- /.box-body start-->
       <div class="box-body">
-          {% render(controller("GestionProjetBundle:Ressource:getRessourcesValides"))%}
+          {#% render(controller("GestionProjetBundle:Ressource:getRessourcesValides", {'idintervenant': intervenant.id}))%#}
 
-          {% render(controller("GestionProjetBundle:Ressource:getRessourcesNonValides"))%}
+          {#% render(controller("GestionProjetBundle:Ressource:getRessourcesNonValides", {'idintervenant': intervenant.id}))%#}
+		<div class = "row"><a id="send" href="{{path("gestion_projet_documents_execution_valide",{'id' : intervenant.id})}}" class="btn btn-primary col-md-2">Validés</a></div>
+		<br />
+		<div class = "row"><a id="send" href="{{path("gestion_projet_documents_execution_non_valide",{'id' : intervenant.id})}}" class="btn btn-primary col-md-2">Non validés</a></div>
       </div>
         <!-- /.box-body end -->
     </div>

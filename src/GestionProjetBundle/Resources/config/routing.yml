@@ -24,7 +24,7 @@ gp_intervenants_accueil:
         
 gp_presentation_projet_accueil:
     pattern: /get-presentation-projet-accueil
-    defaults: { _controller: GestionProjetBundle:Intervenant:getPresentationProjetAccueil }
+    defaults: { _controller: GestionProjetBundle:Projet:getPresentationProjetAccueil }
     options:
         expose: true
         
@@ -132,19 +132,19 @@ gp_tache_delete:
     
 gp_lot:
     pattern: /lots
-    defaults: { _controller: GestionProjetBundle:Lots:lots }
+    defaults: { _controller: GestionProjetBundle:Lot:lots }
     options:
         expose: true
         
 gp_lot_add:
     pattern: /add-lot
-    defaults: { _controller: GestionProjetBundle:Lots:addlot }
+    defaults: { _controller: GestionProjetBundle:Lot:addlot }
     options:
         expose: true
 
 gp_lot_update:
     pattern: /update-lot/{id}
-    defaults: { _controller: GestionProjetBundle:Lots:updatelot }
+    defaults: { _controller: GestionProjetBundle:Lot:updatelot }
     options:
         expose: true
         
@@ -156,43 +156,43 @@ gp_lot_get:
         
 gp_lot_delete:
     pattern: /delete-lot/{id}
-    defaults: { _controller: GestionProjetBundle:Lots:deletelot }
+    defaults: { _controller: GestionProjetBundle:Lot:deletelot }
     options:
         expose: true
         
 gp_courier:
-    pattern: /courriers-envoyes
-    defaults: { _controller: GestionProjetBundle:Couriers:couriersenvoyes }
+    pattern: /courriers-envoyes/{id}
+    defaults: { _controller: GestionProjetBundle:Courrier:couriersenvoyes }
     options:
         expose: true
 
 gp_courier_recus:
-    pattern: /courriers-recus
-    defaults: { _controller: GestionProjetBundle:Couriers:couriersrecus }
+    pattern: /courriers-recus/{id}
+    defaults: { _controller: GestionProjetBundle:Courrier:couriersrecus }
     options:
         expose: true
         
 gp_courier_add:
     pattern: /add-courrier
-    defaults: { _controller: GestionProjetBundle:Courier:addcourier }
+    defaults: { _controller: GestionProjetBundle:Courrier:addcourier }
     options:
         expose: true
 
 gp_courier_update:
     pattern: /update-courrier/{id}
-    defaults: { _controller: GestionProjetBundle:Courier:updatecourier }
+    defaults: { _controller: GestionProjetBundle:Courrier:updatecourier }
     options:
         expose: true
         
 gp_courier_get:
     pattern: /get-courier/{id}
-    defaults: { _controller: GestionProjetBundle:Courier:getcourier }
+    defaults: { _controller: GestionProjetBundle:Courrier:getcourier }
     options:
         expose: true
         
 gp_courier_delete:
     pattern: /delete-courier
-    defaults: { _controller: GestionProjetBundle:Courier:deletecourier }
+    defaults: { _controller: GestionProjetBundle:Courrier:deletecourier }
     options:
         expose: true
         

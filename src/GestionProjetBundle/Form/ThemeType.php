@@ -19,7 +19,7 @@ class ThemeType extends AbstractType
             ->add('description')
             ->add('idprojet','entity',array(
                 'class'=> 'GestionProjetBundle\Entity\Projet',
-                'property' => 'intitule'
+                'property' => 'code'
             ))
         ;
     }
