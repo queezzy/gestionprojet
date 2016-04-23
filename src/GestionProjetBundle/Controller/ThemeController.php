@@ -10,10 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ThemeController extends Controller
 {
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/theme/ajouter", name="gestion_projet_theme_new")
        @Method({"GET","POST"})
      */
@@ -46,6 +48,7 @@ class ThemeController extends Controller
     }
 
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/theme/modifier/{id}", name="gestion_projet_theme_update",requirements={"id" = "\d+"})
      * @Method({"GET","POST"})
      */
@@ -77,6 +80,7 @@ class ThemeController extends Controller
     }
 
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/listTheme")
      */
     public function listThemeAction()
@@ -114,6 +118,7 @@ class ThemeController extends Controller
     }
 
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/listOneTheme/{id}",name="gestion_projet_theme_unique",requirements={"id" = "\d+"})
      */
     public function listOneThemeAction(Theme $theme)
@@ -124,7 +129,8 @@ class ThemeController extends Controller
     }
     
      /**
-     * @Route("/theme/supprimer/{id}", name="gestion_projet_theme_delete",requirements={"id" = "\d+"})
+	  * @Security("has_role('ROLE_SUPER_ADMIN')")
+      * @Route("/theme/supprimer/{id}", name="gestion_projet_theme_delete",requirements={"id" = "\d+"})
       *@Method({"GET"})
      */
     

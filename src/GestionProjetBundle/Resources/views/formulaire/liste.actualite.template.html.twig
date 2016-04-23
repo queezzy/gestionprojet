@@ -7,15 +7,22 @@
 <div class="box-header">
     {# ajouter le thème à la place de la variable theme #}
 
-  <h3 class="box-title">Liste des actualités</h3><a href="{{path('gestion_projet_actualite_new')}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+  <h3 class="box-title">Liste des actualités</h3><a href="{{path('gestion_projet_actualite_new')}}" class="pull-right btn btn-primary"><i class="fa fa-plus"></i>Ajouter</a>
 </div><!-- /.box-header -->
 <div class="box-body">
-  <ul class="products-list product-list-in-box">
+  <table id="example" class="col-md-12">
+		<thead>
+			<tr class="headings">
+				<th></th>
+			</tr>
+		</thead>
+	<tbody class="col-md-12">
     {% for actualite in actualites %}
-        <li class="item">
+	<tr class="col-md-12">
+        <td class="col-md-1">
           <div class="row col-md-12">
             <div class="product-img col-md-2">
-                <img src="{{asset('uploads/actualites/'~actualite.path)}}" alt="{{actualite.titre}}"/>
+                <img width="100px" height="100px" src="{{asset('uploads/actualites/'~actualite.path)}}" alt="{{actualite.titre}}"/>
             </div>
             <div class="product-img col-md-10">                
                 <div class="product-img col-md-12">
@@ -33,7 +40,7 @@
                     <p>par : {{ actualite.utilisateur.prenom ~ ' ' ~actualite.utilisateur.nom}}</p>
                     {%endif%}
                 </div>
-                <div class="row product-description col-md-5 pull-right">
+                <div class="row product-description col-md-6 pull-right">
                     <a href="{{path('gestion_projet_actualite_unique',{'id' : actualite.id})}}"><i class="fa fa-eye"></i>Détail</a>
                     <a href="{{path('gestion_projet_actualite_update',{'id' : actualite.id})}}"><i class="fa fa-edit"></i>Modifier</a>
                     <a href="{{path('gestion_projet_actualite_delete',{'id' : actualite.id})}}"><i class="fa fa-minus"></i>Supprimer</a>
@@ -41,13 +48,11 @@
                 </div>
             </div>                      
           </div>
-        </li>
-    {% else %}
-        <li class="item">
-          Pas d'actualités disponible!
-        </li>
+        </td>
+		</tr>
     {% endfor %} 
-  </ul>
+  </tbody>
+			</table>
 </div><!-- /.box-body -->
 </div>
 <!-- Intervenants end-->

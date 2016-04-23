@@ -28,13 +28,13 @@
 {% block contenupage %}
     <div class="box box-success">
         <div class="box-header">
-            <h3>Creer un document</h3>
+            <h3>Créer un document</h3>
         </div><!-- /.box-header -->
 
         {# Formulaire de création d'une ressource #}
         <form role="form" action="{{ path('gestion_projet_ressource_new') }}" {{ form_enctype(form) }} method="POST" >
                 
-                <div class="box-body">
+                <div class="box-body col-md-offset-2 col-md-8">
                     <div class="row">
                         <div class="">
                             <div class="form-group">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-footer">
+                <div class="box-footer col-md-offset-2 col-md-8">
                     <button type="reset" class="btn btn-danger">Annuler</button>
                     <button type="submit" class="btn btn-success">Enregistrer</button>
                 </div>

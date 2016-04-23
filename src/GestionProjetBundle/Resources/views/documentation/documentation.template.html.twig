@@ -23,8 +23,11 @@
 {% endblock %}
 
 {% block breadcrumbPosition %}
-   Documentation
+   <a href="{{path('gp_intervenant')}}">Intervenants</a>
 {% endblock %}
+
+{% block breadcrumbPlus %}<li><a href="{{path('gp_intervenant_details', {'id': intervenant.id})}}">{{intervenant.nom}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}<li>Documentation</li>{% endblock %}
 {% block contenupage %}
   <!-- Documents administratifs start-->
 <div class="col-md-6">
@@ -44,9 +47,9 @@
 
         <!-- /.box-body start-->
       <div class="box-body">
-        <div class = "row"><a id="send" href="{{path("gp_courier",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers envoyés</a></div>
+        <div class = "row"><a href="{{path("gp_courier",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers envoyés</a></div>
 		<br />
-		<div class = "row"><a id="send" href="{{path("gp_courier_recus",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers reçus</a></div>
+		<div class = "row"><a href="{{path("gp_courier_recus",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers reçus</a></div>
       </div>
         <!-- /.box-body end -->
     </div>
@@ -80,11 +83,4 @@
 {% block js %}
     {{ parent()}}
     {# Fichiers js en plus #}
-    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <script>
-      $(function () {
-        $(".data-table").DataTable();
-      });
-    </script>
 {% endblock %}

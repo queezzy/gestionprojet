@@ -16,6 +16,7 @@ use GestionProjetBundle\Entity\Lot;
 use GestionProjetBundle\Entity\Projet;
 use GestionProjetBundle\Entity\Adresse;
 use GestionProjetBundle\Form\LotType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Description of LotController
@@ -26,15 +27,16 @@ class LotController extends Controller {
     
    //put your code here
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/lots")
      * @Template()
      * @param Request $request
      */
     public function lotsAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $em = $this->getDoctrine()->getManager();
 
         $repositoryLot = $em->getRepository("GestionProjetBundle:Lot");
@@ -48,14 +50,15 @@ class LotController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/add-lot")
      * @Template()
      * @param Request $request
      */
     public function addLotAction(Request $request){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $lot = new Lot();
         $form = $this->createForm(new LotType(), $lot);
         $form->handleRequest($request);
@@ -92,13 +95,14 @@ class LotController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/update-lot/{id}")
      * @Template()
      */
     public function updatelotAction(Lot $lot){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/          
+        }          
         $repositoryLot = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Lot");
         $form = $this->createForm(new LotType(), $lot); 
         $request = $this->get("request");
@@ -134,6 +138,7 @@ class LotController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/delete-lot/{id}")
      * @Template()
      */
@@ -167,13 +172,14 @@ class LotController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/get-lot/{id}")
      * @Template()
      */
     public function getlotAction(Lot $lot) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $request = $this->get("request");
          $form = $this->createForm(new LotType(), $lot);
         $form->handleRequest($request);

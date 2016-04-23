@@ -111,6 +111,11 @@ class Mail
     * @ORM\Column(type="array", nullable=true)
     */
     private $originalpiecesjointes;
+	
+	/**
+    * @var array
+    */
+    private $uploadedFiles;
 
     /**
      * Constructor
@@ -324,7 +329,7 @@ class Mail
      * @param \UserBundle\Entity\Utilisateur $destinataire
      * @return Mail
      */
-    public function setDestinataire(\UserBundle\Entity\Utilisateur $emetteur = null)
+    public function setDestinataire(\UserBundle\Entity\Utilisateur $destinataire = null)
     {
         $this->destinataire = $destinataire;
 

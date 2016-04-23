@@ -98,3 +98,4 @@ function execute_delete_courier(id_courier) {
 function show_details(id_courier) {
     window.location.replace(Routing.generate('gp_courier_details', {idcourier: id_courier}));
 }
+

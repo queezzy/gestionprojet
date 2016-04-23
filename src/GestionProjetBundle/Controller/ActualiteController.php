@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \GestionProjetBundle\Form\ActualiteType;
 use \GestionProjetBundle\Entity\Actualite;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Description of ActualiteController
@@ -24,6 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ActualiteController extends Controller {
 
     /**
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/actualite/ajouter", name="gestion_projet_actualite_new")
       @Method({"GET","POST"})
      */
@@ -56,6 +58,7 @@ class ActualiteController extends Controller {
     }
 
     /**
+	* @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/actualite/modifier/{id}", name="gestion_projet_actualite_update",requirements={"id" = "\d+"})
      * @Method({"GET","POST"})
      */
@@ -109,6 +112,9 @@ class ActualiteController extends Controller {
      * @Method({"GET"})
      */
     public function getAllActualitesAction() {
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
 
         return $this->render('GestionProjetBundle:actualite:actualite.template.html.twig');
     }
@@ -152,11 +158,15 @@ class ActualiteController extends Controller {
      * @Method({"GET"})
      */
     public function getOneActualiteAction(Actualite $actualite) {
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
 
         return $this->render('GestionProjetBundle:formulaire:form.affichage.actualite.html.twig', array("actualite" => $actualite));
     }
 
     /**
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/actualite/supprimer/{id}", name="gestion_projet_actualite_delete",requirements={"id" = "\d+"})
      * @Method({"GET"})
      */
@@ -165,7 +175,9 @@ class ActualiteController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $actu_repo = $em->getRepository('GestionProjetBundle:Actualite');
-
+		if(! $user->getId()== $actualite->getUtilisateur()->getId()){
+             throw $this->createAccessDeniedException('Vous ne pouvez pas supprimez cette actualite!');
+        }
         try {
             $actu_repo->deleteActualite($actualite);
         } catch (Exception $exc) {

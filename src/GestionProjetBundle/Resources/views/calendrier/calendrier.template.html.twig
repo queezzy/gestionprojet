@@ -7,15 +7,15 @@
 
 {% block stylesheets %} 
     {{parent()}}
-    <link rel='stylesheet' href='{{ asset('fullcalendar/fullcalendar.css')}}' />
-    <link rel='stylesheet' href='{{ asset('fullcalendar/lib/cupertino/jquery-ui.min.css')}}' />
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.css')}}' />
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/lib/cupertino/jquery-ui.min.css')}}' />
     <style>
 
-        body {
+        /*body {
 
             font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
             font-size: 14px;
-        }
+        }*/
 
         #calendar {
             max-width: 900px;
@@ -46,7 +46,7 @@
 
 {% block contenupage %}
     <div>
-        <h3 class='center'><a href="{{path("gestion_projet_calendrier_new")}}" class="pull-right"><i class="fa fa-plus"></i></a></h3>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}<h5 class='center'><a href="{{path("gestion_projet_calendrier_new")}}" class="pull-right btn btn-primary"><i class="fa fa-plus"></i>Ajouter un évènement</a></h5>{% endif %}
         <div id='calendar' class='skin-blue'></div>
         <div id="fullCalModal" class="modal fade">
             <div id="eventContent" title="Event Details" style="display:none;">
@@ -65,15 +65,18 @@
 {% endblock %}
 
 {% block js %}
-    {{ parent()}}
-    <script src='{{ asset('fullcalendar/lib/jquery.min.js')}}'></script>
-    <script src='{{ asset('fullcalendar/lib/moment.min.js')}}'></script>
-    <script src='{{ asset('js/jquery-ui.js')}}'></script>
-    <script src='{{ asset('js/bootstrap.min.js')}}'></script>
-    <script src='{{ asset('js/moment.js')}}'></script>
-    <script src='{{ asset('js/jquery-ui.min.js')}}'></script>
-    <script src='{{ asset('fullcalendar/fullcalendar.js')}}'></script>
-    <script src='{{ asset('fullcalendar/lang-all.js')}}'></script>
+    {#{ parent()}#}
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/jquery.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/moment.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/js/jquery-ui.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/js/bootstrap.min.js')}}'></script>
+	<script src="{{asset('bundles/gestionprojet/js/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/fastclick.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/gestionprojet/js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
+	<script src='{{ asset('bundles/gestionprojet/js/moment.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/js/jquery-ui.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lang-all.js')}}'></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>

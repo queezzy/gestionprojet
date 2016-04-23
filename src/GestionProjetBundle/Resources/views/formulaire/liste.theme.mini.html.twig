@@ -3,7 +3,7 @@
 <!-- Actualités start-->
 <div class="box box-success">
 <div class="box-header">
-  <h3 class="box-title">Thèmes</h3><a href="{{path('gestion_projet_theme_new')}}" class="pull-right"><i class="fa fa-plus"></i><span>Ajouter</span></a>
+  <h3 class="box-title">Thèmes</h3>{% if is_granted('ROLE_SUPER_ADMIN') %}<a href="{{path('gestion_projet_theme_new')}}" class="pull-right btn  btn-primary"><i class="fa fa-plus"></i><span>Ajouter</span></a>{% endif %}
 </div><!-- /.box-header -->
 <div class="box-body">
 <ul class="products-list product-list-in-box">

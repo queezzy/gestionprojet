@@ -18,6 +18,7 @@ use GestionProjetBundle\Entity\Ressource;
 use GestionProjetBundle\Entity\Intervenant;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Description of RessourceControlle
@@ -27,6 +28,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class RessourceController extends Controller {
 
     /**
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/ressource/ajouter", name="gestion_projet_ressource_new")
       @Method({"GET","POST"})
      */
@@ -49,9 +51,9 @@ class RessourceController extends Controller {
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             }
-
+			$intervenant =  $ressource->getIdintervenant();
             $request->getSession()->getFlashBag()->add('notice', 'Actualite bien enregistrée.');
-            return $this->redirect($this->generateUrl('gestion_projet_ressource_all'));
+            return $this->redirect($this->generateUrl('gestion_projet_ressource_all', array('id' => $intervenant->getId())));
         }
 
         return $this->render('GestionProjetBundle:formulaire:form.creation.ressource.html.twig', array(
@@ -60,13 +62,13 @@ class RessourceController extends Controller {
     }
 
     /**
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/ressource/modifier/{id}", name="gestion_projet_ressource_update",requirements={"id" = "\d+"})
      * @Method({"GET","POST"})
      */
     public function updateRessourceAction(Ressource $ressource) {
 
         $request = $this->get('request');
-
 
         $em = $this->getDoctrine()->getEntityManager();
         $ressource_repo = $em->getRepository('GestionProjetBundle:Ressource');
@@ -100,7 +102,9 @@ class RessourceController extends Controller {
      * @Method({"GET"})
      */
     public function getAllRessourcesAction(Intervenant $intervenant) {
-		
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         return $this->render("GestionProjetBundle:documentation:documentation.template.html.twig", array("intervenant" => $intervenant));
     }
 
@@ -131,7 +135,9 @@ class RessourceController extends Controller {
      * @Method({"GET"})
      */
     public function getRessourcesValidesAction(Intervenant $intervenant) {
-		//$id = (int)$idintervenant;
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
@@ -147,7 +153,9 @@ class RessourceController extends Controller {
      * @Method({"GET"})
      */
     public function getRessourcesNonValidesAction(Intervenant $intervenant) {
-		//$id = (int)$idintervenant;
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
@@ -163,7 +171,9 @@ class RessourceController extends Controller {
      * @Method({"GET"})
      */
     public function getAllRessourcesAdministratifsForIntervenantAction(Intervenant $intervenant) {
-
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
@@ -208,7 +218,7 @@ class RessourceController extends Controller {
      * @Method({"GET"})
      */
     public function getRessourcesByReferenceAction(Request $request, $reference) {
-
+		
         $em = $this->getDoctrine()->getManager();
 
         $ressources_repo = $em->getRepository('GestionProjetBundle:Ressource');
@@ -223,18 +233,26 @@ class RessourceController extends Controller {
      * @Method({"GET"})
      */
     public function getOneRessourceAction(Ressource $ressource) {
-
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         render();
     }
 
     /**
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/ressource/supprimer/{id}", name="gestion_projet_ressource_delete",requirements={"id" = "\d+"})
      * @Method({"GET"})
      */
     public function deleteRessourceAction(Ressource $ressource) {
-
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
         $em = $this->getDoctrine()->getManager();
-
+		if(! $user->getIdintervenant()->getId()==$ressource->getIdintervenant()->getId()){
+             throw $this->createAccessDeniedException('Vous ne pouvez pas supprimez cette ressource!');
+        }
+		
         $ressource_repo = $em->getRepository('GestionProjetBundle:Ressource');
 
         try {

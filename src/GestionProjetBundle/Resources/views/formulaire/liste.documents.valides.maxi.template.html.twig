@@ -21,17 +21,21 @@
 {% endblock %}
 
 {% block breadcrumbPosition %}
-   Documentation
+   <a href="{{path('gp_intervenant')}}">Intervenants</a>
 {% endblock %}
+
+{% block breadcrumbPlus %}<li><a href="{{path('gp_intervenant_details', {'id': intervenant.id})}}">{{intervenant.nom}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}<li><a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}">Documentation</a></li>{% endblock %}
+{% block breadcrumbPlusPP %}<li>Documents d'exécution validés</li>{% endblock %}
 {% block contenupage %}
 <div class="row">
     <!-- Document start-->
     <div class="box box-success">
         <div class="box-header">
-            <h3 class="box-title">Documents d'exécution validés</h3><a href="{{path('gestion_projet_ressource_new')}}"class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+            <h3 class="box-title">Documents d'exécution validés</h3><a href="{{path('gestion_projet_ressource_new')}}"class="pull-right btn btn-primary"><i class="fa fa-plus"></i>Ajouter</a>
         </div><!-- /.box-header -->
         <div class="box-body">
-            <table class="data-table table table-bordered table-striped">
+            <table id="example" class="table table-striped responsive-utilities jambo_table">
                 <thead>
                     <tr>
                         <th>Référence</th>
@@ -57,13 +61,6 @@
                                     <a href="{{path('gestion_projet_ressource_delete',{'id':ressource.id})}}" class="pull-right"><i class="fa fa-minus"></i></a>
                                 </td>
                             </tr>
-                            {% else %}
-                                <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
                                 {% endfor %}    
                                 </tbody>
                             </table>

@@ -23,6 +23,7 @@ use GestionProjetBundle\Entity\Adresse;
 use GestionProjetBundle\Form\IntervenantType;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Description of IntervenantController
@@ -39,9 +40,9 @@ class IntervenantController extends Controller {
      */
     public function intervenantsAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $em = $this->getDoctrine()->getManager();
 
         $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
@@ -74,6 +75,7 @@ class IntervenantController extends Controller {
     }
     
     /**
+	 *@Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/add-intervenant")
      * @Template()
      * @param Request $request
@@ -126,13 +128,14 @@ class IntervenantController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/update-intervenant/{id}")
      * @Template()
      */
     public function updateintervenantAction(Intervenant $intervenant){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/          
+        }          
         $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
         $form = $this->createForm(new IntervenantType(), $intervenant); 
         $request = $this->get("request");
@@ -145,11 +148,11 @@ class IntervenantController extends Controller {
                        if($intervenant->getEvolutionattendu()>= $intervenant->getEvolutionencours()){
                             $repositoryIntervenant->updateIntervenant($intervenant);
                             $message = $this->get('translator')->trans('Intervenant.updated_success', array(), "GestionProjetBundle");
-                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            $request->getSession()->getFlashBag()->add('notice', $message);
                             return $this->redirect($this->generateUrl('gp_intervenant'));
                        }else{
                             $message = $this->get('translator')->trans('Intervenant.updated_failure', array(), "GestionProjetBundle");
-                            $request->getSession()->getFlashBag()->add('message_success', $message);
+                            $request->getSession()->getFlashBag()->add('notice', $message);
                             $intervenants = array();
                             $display_tab =0;
                             return $this->render('GestionProjetBundle:Intervenant:intervenants.template.html.twig', array('liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
@@ -176,13 +179,14 @@ class IntervenantController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/delete-intervenant/{id}")
      * @Template()
      */
     public function deleteintervenantAction(Intervenant $intervenant) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $request = $this->get("request");
        // $user = new Utilisateur();
         $response = new JsonResponse();
@@ -209,13 +213,14 @@ class IntervenantController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/get-intervenant/{id}")
      * @Template()
      */
     public function getintervenantAction(Intervenant $intervenant) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $request = $this->get("request");
          $form = $this->createForm(new IntervenantType(), $intervenant);
         $form->handleRequest($request);

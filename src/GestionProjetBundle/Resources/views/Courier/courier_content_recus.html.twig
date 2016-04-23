@@ -20,9 +20,12 @@
 {% endblock %}
 
 {% block breadcrumbPosition %}
-    <a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}">Documentation</a></div>
+   <a href="{{path('gp_intervenant')}}">Intervenants</a>
 {% endblock %}
 
+{% block breadcrumbPlus %}<li><a href="{{path('gp_intervenant_details', {'id': intervenant.id})}}">{{intervenant.nom}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}<li><a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}">Documentation</a></li>{% endblock %}
+{% block breadcrumbPlusPP %}<li>Courriers reçus</li>{% endblock %}
 {% block contenupage %}
 <div class="row" id="block_table_couriers">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -80,9 +83,4 @@
     {{ parent()}}
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_courier.js')}}"></script>
-    <script>
-      /*$(function () {
-        $("#listecouriers").DataTable();
-      });*/
-    </script>
 {% endblock %}{# empty Twig template #}

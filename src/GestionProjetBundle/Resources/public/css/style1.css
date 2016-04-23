@@ -91,7 +91,15 @@ ul.nav li.active a:hover{
 	margin-top: 1%;
 }
 
-.caret {
+.ligne-menu.caret {
+	color: #fff;
+}
+
+.dropdown-menu.caret {
+	color: #fff;
+}
+
+a.dropdown-toggle {
 	color: #fff;
 }
 

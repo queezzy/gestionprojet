@@ -29,10 +29,10 @@
 <!-- Document start-->
 <div class="box box-success">
 <div class="box-header">
-  <h3 class="box-title">Documents administratifs </h3><a href="{{path('gestion_projet_ressource_new')}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+  <h3 class="box-title">Documents administratifs </h3><a href="{{path('gestion_projet_ressource_new')}}" class="pull-right btn btn-primary"><i class="fa fa-plus"></i>Ajouter</a>
 </div><!-- /.box-header -->
 <div class="box-body">
-  <table class="data-table table table-bordered table-striped">
+  <table id="example" class="table table-striped responsive-utilities jambo_table">
     <thead>
       <tr>
         <th>Référence</th>
@@ -54,17 +54,11 @@
                       {% endif%}
                       </td>
                       <td>
-                    <a href="{{path('gestion_projet_ressource_update',{'id':ressource.id})}}" class="pull-left"><i class="fa fa-edit"></i></a>
-                    <a href="{{path('gestion_projet_ressource_delete',{'id':ressource.id})}}" class="pull-left"><i class="fa fa-minus"></i></a>
-        </td>
+						<a href="{{path('gestion_projet_ressource_update',{'id':ressource.id})}}" class="pull-left"><i class="fa fa-edit"></i></a>
+						<a href="{{path('gestion_projet_ressource_delete',{'id':ressource.id})}}" class="pull-left"><i class="fa fa-minus"></i></a>
+					  </td>
                     </tr>
-                {% else %}
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                    </tr>
+               
                 {% endfor %}    
     </tbody>
   </table>
@@ -77,11 +71,4 @@
 {% block js %}
     {{ parent()}}
     {# Fichiers js en plus #}
-    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <script>
-      $(function () {
-        $(".data-table").DataTable();
-      });
-    </script>
 {% endblock %}

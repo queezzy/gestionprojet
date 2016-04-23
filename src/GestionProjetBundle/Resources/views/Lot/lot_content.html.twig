@@ -51,11 +51,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-success"> 
                 <div class="box-header">
-                    <h3>Lots</h3>
+                    <h3 class="box-title">Lots</h3><button id='nouvellot' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
                 </div>
                 <div class="box-body">
-                    <div id="table_lots">
-                        <button id='nouvellot' class ="btn btn-success"><i class="fa fa-plus"></i> Ajouter</button>
+                    <div id="table_lots">                        
                         <table id="example" class="table table-striped responsive-utilities jambo_table">
                             <thead>
                                 <tr class="headings">
@@ -203,15 +202,4 @@
     {{ parent()}}
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_lot.js')}}"></script>
-    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-    <script>
-      $(function () {
-        $("#listelots").DataTable();
-      });
-    </script>
 {% endblock %}{# empty Twig template #}

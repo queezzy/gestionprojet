@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \GestionProjetBundle\Form\CalendrierType;
 use \GestionProjetBundle\Entity\Calendrier;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class CalendarController extends Controller {
@@ -72,6 +73,7 @@ class CalendarController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/evenement/ajouter", name="gestion_projet_calendrier_new")
       @Method({"GET","POST"})
      */
@@ -103,6 +105,7 @@ class CalendarController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/evenement/modifier/{id}", name="gestion_projet_evenement_update",requirements={"id" = "\d+"})
      * @Method({"GET","POST"})
      */

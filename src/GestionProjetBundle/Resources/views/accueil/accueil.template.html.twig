@@ -7,8 +7,8 @@
 
 {% block stylesheets %} 
     {{parent()}}
-    <link rel='stylesheet' href='{{ asset('fullcalendar/fullcalendar.css')}}' />
-    <link rel='stylesheet' href='{{ asset('fullcalendar/lib/cupertino/jquery-ui.min.css')}}' />
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.css')}}' />
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/lib/cupertino/jquery-ui.min.css')}}' />
     <style>
         #calendar {
             max-width: 900px;
@@ -113,10 +113,10 @@
 {% block js %}
     {{ parent()}}
     <script src="{{asset('bundles/gestionprojet/js/ajax_intervenant.js')}}"></script>
-    <script src='{{ asset('fullcalendar/lib/jquery.min.js')}}'></script>
-    <script src='{{ asset('fullcalendar/lib/moment.min.js')}}'></script>
-    <script src='{{ asset('fullcalendar/fullcalendar.js')}}'></script>
-    <script src='{{ asset('fullcalendar/lang-all.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/jquery.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/moment.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lang-all.js')}}'></script>
     <script>
 
                 $(document).ready(function () {

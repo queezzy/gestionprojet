@@ -13,11 +13,13 @@ use GestionProjetBundle\Entity\Projet;
 use GestionProjetBundle\Form\ProjetType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProjetController extends Controller 
 {
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/projets-admin")
      * @Template()
      * @param Request $request
@@ -89,14 +91,15 @@ class ProjetController extends Controller
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/add-projet")
      * @Template()
      * @param Request $request
      */
     public function addProjetAction(Request $request){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $projet = new Projet();
         $form = $this->createForm(new ProjetType(), $projet);
         $form->handleRequest($request);
@@ -141,13 +144,14 @@ class ProjetController extends Controller
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/update-projet/{id}")
      * @Template()
      */
     public function updateprojetAction(Projet $projet){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
         $form = $this->createForm(new ProjetType(), $projet); 
         $request = $this->get("request");
@@ -191,13 +195,14 @@ class ProjetController extends Controller
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/delete-projet/{id}")
      * @Template()
      */
     public function deleteprojetAction(Projet $projet) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $request = $this->get("request");
         //$user = new Utilisateur();
         $response = new JsonResponse();
@@ -224,13 +229,14 @@ class ProjetController extends Controller
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/get-projet/{id}")
      * @Template()
      */
     public function getprojetAction(Projet $projet) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         //$repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
         //$idprojet = htmlspecialchars(trim($id));
         //$projet = $repositoryProjet->find($idprojet);

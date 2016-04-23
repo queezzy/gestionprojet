@@ -32,3 +32,6 @@ function edit_evolution_projet(id_projet) {
     });
 }
 
+function show_details(id_intervenant) {
+    window.location.replace(Routing.generate('gp_intervenant_details', {id: id_intervenant}));
+}

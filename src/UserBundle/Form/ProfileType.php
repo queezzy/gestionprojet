@@ -37,13 +37,12 @@ class ProfileType extends AbstractType{
             ))
             ->add('roles', 'choice', array(
                        'label' => 'Privileges',
-                       'expanded' => true,
                        'multiple' => true,
                        'expanded' => true,
                        'choices' => array(
-                           'ROLE_SUPER_ADMIN' => 'Admin',
-                           'ROLE_ADMIN_ACTIF' => 'Actif',
-                           'ROLE_USER_PASSIF' => 'Passif'
+                           'ROLE_SUPER_ADMIN' => 'Super Administrateur',
+                           'ROLE_ADMIN_ACTIF' => 'Administrateur de l\'intervenant',
+                           'ROLE_USER_PASSIF' => 'Simple utilisateur'
                    )
                )
            )

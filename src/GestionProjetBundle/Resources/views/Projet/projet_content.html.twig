@@ -51,11 +51,11 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-success"> 
                 <div class="box-header">
-                    <h3>Projets</h3>
+                    <h3 class="box-title">Projets</h3><button id='nouvelprojet' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
                 </div>
-                <div class="x_content">
+                <div class="box-body">
                     <div id="table_projets">
-                        <button id='nouvelprojet' class ="btn btn-success"><i class="fa fa-plus"></i> Ajouter</button>
+                        
                         <table id="example" class="table table-striped responsive-utilities jambo_table">
                             <thead>
                                 <tr class="headings">
@@ -115,7 +115,7 @@
             <div class="box-header">
                 <h3>Ajout d'un projet</h3>
             </div>
-            <div class="x_content">
+            <div class="box-body">
                 
                 <form id="form_projet" method="post" action="{{ path("gp_projet_add") }}" class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
@@ -232,9 +232,4 @@
     {{ parent()}}
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_projet.js')}}"></script>
-    <script>
-      $(function () {
-        $("#listeprojets").DataTable();
-      });
-    </script>
 {% endblock %}{# empty Twig template #}

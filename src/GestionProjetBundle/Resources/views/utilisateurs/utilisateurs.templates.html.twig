@@ -32,10 +32,10 @@
 <!-- Intervenants start-->
 <div class="box box-success">
 <div class="box-header">
-  <h3 class="box-title">Liste des Utilisateurs</h3><a href="{{path("fos_user_registration_register")}}" class="pull-right"><i class="fa fa-plus"></i>Ajouter</a>
+  <h3 class="box-title">Liste des Utilisateurs</h3>{% if is_granted('ROLE_ADMIN_ACTIF') %}<a href="{{path("fos_user_registration_register")}}" class="pull-right btn btn-primary"><i class="fa fa-plus margin-r-5"></i>Ajouter</a>{% endif %}
 </div><!-- /.box-header -->
 <div class="box-body">
-  <table id="listeintervenants" class="table table-bordered table-striped">
+  <table id="example" class="table table-striped responsive-utilities jambo_table">
     <thead>
       <tr>
         <th>Photo</th>
@@ -47,7 +47,7 @@
         <th>Téléphone</th>
         <th>Activé</th>
         <th>Privilèges</th>
-        <th>Action</th>
+        {% if is_granted('ROLE_ADMIN_ACTIF') %}<th>Action</th>{% endif %}
       </tr>
     </thead>
     <tbody>
@@ -77,8 +77,10 @@
              -
              {%endfor%}
         </td>
-        <td><a href="{{path('gestion_projet_utilisateurs_bloques',{'id' : utilisateur.id})}}"><i class="fa fa-eye"></i>Bloquer/Debloquer</a></td>
-      </tr>
+		{% if is_granted('ROLE_ADMIN_ACTIF') %}
+        <td><a href="{{path('gestion_projet_utilisateurs_bloques',{'id' : utilisateur.id})}}">Bloquer</a>|<a href="{{path('gestion_projet_utilisateurs_bloques',{'id' : utilisateur.id})}}">Débloquer</a></td>
+		{% endif %}
+	  </tr>
     {% else %}
       <tr>
         <td>-</td>
@@ -103,13 +105,4 @@
 {% block js %}
     {{ parent()}}
     {# Fichiers js en plus #}
-    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/Chart.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/evolution.js')}}" type="text/javascript"></script>
-    <script>
-      $(function () {
-        $("#listeintervenants").DataTable();
-      });
-    </script>
 {% endblock %}

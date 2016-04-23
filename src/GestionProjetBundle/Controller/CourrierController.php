@@ -16,6 +16,7 @@ use GestionProjetBundle\Entity\Courierenvoye;
 use GestionProjetBundle\Form\CourierType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -32,9 +33,9 @@ class CourrierController extends Controller {
      */
     public function couriersenvoyesAction(Intervenant $intervenant) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $em = $this->getDoctrine()->getManager();
         $repositoryCourier = $em->getRepository("GestionProjetBundle:Courier");
         $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
@@ -56,9 +57,9 @@ class CourrierController extends Controller {
      */
     public function couriersrecusAction(Intervenant $intervenant) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $user = $this->getUser();
         //selectionne le seul courier actif
         $couriersenvoyes= array();
@@ -71,17 +72,19 @@ class CourrierController extends Controller {
     }
     
     /**
-     * @Route("/add-courier")
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
+     * @Route("/add-courier/{id}")
      * @Template()
      * @param Request $request
      */
-    public function addCourierAction(Request $request){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+    public function addCourierAction(Intervenant $intervenant){
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $courier = new Courier();
         $courierenvoye = new Courierenvoye();
         $form = $this->createForm(new CourierType(), $courier);
+		$request = $this->get("request");
         $form->handleRequest($request);
         $repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
          $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
@@ -90,31 +93,31 @@ class CourrierController extends Controller {
             //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
+					   $courierenvoye->setIdintervenant($courier->getDestinataire());
+                       $courier->addCourierenvoye($courierenvoye);
                        $destinataires= $request->request->get("destinataires");
                        if($destinataires){
                            foreach ($destinataires as $destinataire) {
                             $iddestinataire = (int)$destinataire;
-                            $intervenant = $repositoryIntervenant->find($iddestinataire);
+                            $monintervenant = $repositoryIntervenant->find($iddestinataire);
                             $courierenvoye= new Courierenvoye();
-                            $courierenvoye->setIdintervenant($intervenant);
+                            $courierenvoye->setIdintervenant($monintervenant);
                             $courier->addCourierenvoye($courierenvoye);
                         }
                        }
-                       
-                        $emetteur = $repositoryIntervenant->find(2);
-                        $courier->setEmetteur($emetteur);
+                        $courier->setEmetteur($intervenant);
                        $repositoryCourier->saveCourier($courier);
-                       $this->sendMailForCourrier($courier);
+                       //$this->sendMailForCourrier($courier);
                        $message = $this->get('translator')->trans('Courier.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_courier'));
+                       return $this->redirect($this->generateUrl('gp_courier', array('id' => $intervenant->getId())));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Courier.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
                        $couriers = array();
                        $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab, "intervenant" => $intervenant));
                    }
                }else{
                    $message = $this->get('translator')->trans('Courier.created_failure', array(), "GestionProjetBundle");
@@ -122,7 +125,7 @@ class CourrierController extends Controller {
                        $intervenants = $repositoryIntervenant->findBy(array("statut" => 1));
                        $couriers = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Courier:courier_content_envoyes.html.twig', array('liste_couriers' => $couriers, 'liste_intervenants' => $intervenants, 'form' => $form->createView(), "display_tab" => $display_tab, "intervenant" => $intervenant));
                }
            // }
         /*}else{
@@ -133,14 +136,15 @@ class CourrierController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/update-courier/{id}")
      * @Template()
      */
     public function updatecourierAction(Courier $courier){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/          
-        $repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
+        }
+        /*$repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
         $form = $this->createForm(new CourierType(), $courier); 
         $request = $this->get("request");
         $form->handleRequest($request);
@@ -166,7 +170,7 @@ class CourrierController extends Controller {
                     $display_tab =0;
                     return $this->render('GestionProjetBundle:Courier:courier_content.html.twig', array('liste_couriers' => $couriers, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
-            }
+            }*/
        /* }else{
             $message = $message = $this->get('translator')->trans('Courier.access_denied', array(), "GestionProjetBundle");
             $messages[] = array("letype" => "error", "message" => $message);
@@ -177,14 +181,15 @@ class CourrierController extends Controller {
     
     
     /**
+	 * @Security("has_role('ROLE_ADMIN_ACTIF')")
      * @Route("/delete-courier/{id}")
      * @Template()
      */
     public function deletecourierAction(Courier $courier) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
-        $request = $this->get("request");
+        }
+        /*$request = $this->get("request");
         //$user = new Utilisateur();
         $response = new JsonResponse();
         $repositoryCourier = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Courier");
@@ -210,18 +215,20 @@ class CourrierController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/get-courier/{id}")
      * @Template()
      */
     public function getcourierAction(Courier $courier) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
-        $request = $this->get("request");
+        }
+        /*$request = $this->get("request");
          $form = $this->createForm(new CourierType(), $courier);
         $form->handleRequest($request);
  
         return $this->render('GestionProjetBundle:Courier:form.courier.html.twig', array('form' => $form->createView(), "idcourier" => $courier->getId()));
+		*/
     }
     
     public function sendMailForCourrier(Courier $courrier){
@@ -239,7 +246,7 @@ class CourrierController extends Controller {
         $originalpiecesjointes = $courrier->getOriginalpiecesjointes();
         if(count($piecesjointes) == count($originalpiecesjointes)){
             for($i=0; $i< count($piecesjointes); $i++){
-                $attachment = Swift_Attachment::fromPath($courrier->getUploadRootDir() . '/'.$piecesjointes[$i])
+                $attachment = \Swift_Attachment::fromPath($courrier->getUploadRootDir() . '/'.$piecesjointes[$i])
                         ->setFilename($originalpiecesjointes[$i]);
                 $message->attach($attachment);
             }

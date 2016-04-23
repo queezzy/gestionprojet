@@ -22,6 +22,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use UserBundle\Entity\Utilisateur;
 use Symfony\Bundle\SwiftmailerBundle;
+use GestionProjetBundle\Entity\Mail;
+use GestionProjetBundle\Form\MailType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UtilisateurController extends Controller {
 
@@ -30,7 +35,9 @@ class UtilisateurController extends Controller {
      * @Method({"GET"})
      */
     public function getAllUsersAction() {
-
+		if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
 
         $userManager = $this->container->get('fos_user.user_manager');
 
@@ -43,6 +50,7 @@ class UtilisateurController extends Controller {
     }
 
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/blockutilisateur/{id}", name="gestion_projet_utilisateurs_bloques")
      * @Method({"GET"})
      */
@@ -72,53 +80,46 @@ class UtilisateurController extends Controller {
     }
 
     /**
-     * @Route("/sendmail", name="gestion_projet_send")
+     * @Route("/sendmail", name="gestion_projet_send_mail")
       @Method({"GET","POST"})
      */
     public function sendMailAction(Request $request) {
-        
-      /* $data =array();
-        
-        $form = $this->createFormBuilder($data)
-                ->add('Objet')
-                ->add('Message','textarea')
-                ->add('Destinataires', 'entity',array(
-                      'class'=> 'UserBundle\Entity\Utilisateur',
-                      'property' => 'email'
-                      ))
-                ->getForm();
-        
-            
-            
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+
+		$mail = new Mail();
+        $form = $this->createForm(new MailType(), $mail);
+		$request = $this->get("request");
         $form->handleRequest($request);
+		$userManager = $this->container->get('fos_user.user_manager');
+		$liste_utilisateurs = $userManager->findUsers();
         
         if ($form->isValid()) {
 
-           $data = $form->getData();
+           //$data = $form->getData();
            $user = $this->container->get('security.context')->getToken()->getUser();
-
             try {
                $message = \Swift_Message::newInstance()
-                    ->setSubject($data['Objet'])
+                    ->setSubject($mail->getObjet())
 //                    ->setFrom($user->getEmail())
-                    ->setFrom('tonye.eric@gmail.com')
+                    ->setFrom('issola.ruben@gmail.com')
 //                    ->setTo($data['Destinataires'])
-                    ->setTo('franckquentinnfotabong@gmail.com')
-                    ->setBody($data['Message'],'text/html');
+                    ->setTo('tonye.eric@gmail.com')
+                    ->setBody($mail->getContenu(),'text/html');
 
-                $this->get('mailer')->send($message);
+               $message = "Votre mail a été envoyé";
+			   $request->getSession()->getFlashBag()->add('notice', $message);
+			   return $this->redirect($this->generateUrl('gestion_projet_send_mail'));
             } catch (Exception $exc) {
-                echo $exc->getTraceAsString();
+                //echo $exc->getTraceAsString();
+				$message = "Echec de l'envoie du mail";
+			   $request->getSession()->getFlashBag()->add('notice', $message);
+			   return $this->redirect($this->generateUrl('gestion_projet_send_mail'));
             }
+		}
 
-            return $this->redirect($this->generateUrl('homepage'));
-        }
-
-        return $this->render('GestionProjetBundle:formulaire:form.send.mail.html.twig', array(
-                    'form' => $form->createView(),
-        ));*/
-        
-        return $this->render('GestionProjetBundle:collaboration:collaboration.template.html.twig');
+        return $this->render('GestionProjetBundle:collaboration:collaboration.template.html.twig', array('form' => $form->createView(), "liste_utilisateurs" => $liste_utilisateurs));
     }
 
 }

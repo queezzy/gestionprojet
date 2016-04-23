@@ -20,6 +20,7 @@ use GestionProjetBundle\Entity\Intervenant;
 use GestionProjetBundle\Entity\Projet;
 use GestionProjetBundle\Form\EvolutionIntervenantType;
 use GestionProjetBundle\Form\EvolutionProjetType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * Description of EvolutionController
  *
@@ -34,9 +35,9 @@ class EvolutionController extends Controller{
      */
     public function evolutionsAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $em = $this->getDoctrine()->getManager();
 
         $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Intervenant");
@@ -57,13 +58,14 @@ class EvolutionController extends Controller{
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/update-evolution-projet/{id}")
      * @Template()
      */
     public function updateevolution_projetAction(Projet $projet){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
         $form = $this->createForm(new EvolutionProjetType(), $projet); 
         $request = $this->get("request");
@@ -94,13 +96,14 @@ class EvolutionController extends Controller{
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/update-evolution-intervenant/{id}")
      * @Template()
      */
     public function updateevolution_intervenantAction(Intervenant $intervenant){
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/          
+        }          
         $repositoryIntervenant = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Intervenant");
         $form = $this->createForm(new EvolutionIntervenantType(), $intervenant); 
         $request = $this->get("request");
@@ -133,13 +136,14 @@ class EvolutionController extends Controller{
     
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/get-evolution-intervenant/{id}")
      * @Template()
      */
     public function getEvolutionintervenantAction(Intervenant $intervenant) {
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        }
         $request = $this->get("request");
          $form = $this->createForm(new EvolutionIntervenantType(), $intervenant);
         $form->handleRequest($request);

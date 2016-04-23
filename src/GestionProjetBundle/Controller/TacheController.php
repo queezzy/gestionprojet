@@ -13,6 +13,7 @@ use GestionProjetBundle\Entity\Tache;
 use GestionProjetBundle\Form\TacheType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use UserBundle\Entity\Utilisateur;
 
 /**
@@ -24,15 +25,14 @@ class TacheController extends Controller {
     
     //put your code here
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/taches")
      * @Template()
      * @param Request $request
      */
     public function tachesAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-        /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }*/
+        
         $em = $this->getDoctrine()->getManager();
 
         $repositoryTache = $em->getRepository("GestionProjetBundle:Tache");
@@ -46,6 +46,7 @@ class TacheController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/add-tache")
      * @Template()
      * @param Request $request
@@ -90,6 +91,7 @@ class TacheController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/update-tache/{id}")
      * @Template()
      */
@@ -132,6 +134,7 @@ class TacheController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/delete-tache/{id}")
      * @Template()
      */
@@ -165,6 +168,7 @@ class TacheController extends Controller {
     }
     
     /**
+	 * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/get-tache/{id}")
      * @Template()
      */

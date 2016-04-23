@@ -5,21 +5,22 @@
 {% block stylesheets %} 
     {{parent()}}
     {# Fichiers css en plus #}
-    <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('css/colorPicker.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/gestionprojet/css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/gestionprojet/css/colorPicker.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/gestionprojet/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}}" rel="stylesheet" type="text/css" />
 {% endblock %}
+
+{% block menuCalendrier %}class="active"{% endblock %}
 
 {% block utilisateur %}
     {{parent()}}
 {% endblock %}
 
 {% block breadcrumbTitle %}
-    Evenement
+
 {% endblock %}
 
 {% block breadcrumbDescription %}
-    Ajouter un evenement
 {% endblock %}
 
 {% block breadcrumbPosition %}
@@ -29,7 +30,7 @@
 {% block contenupage %}
     <div class="box box-primary">
         <div class="box-header">
-            <h3>Creer un évenement</h3>
+            <h3>Modification d'un évènement</h3>
         </div><!-- /.box-header -->
         <form role="form" action="{{ path('gestion_projet_evenement_update',{'id' : idcalendrier})}}" {{ form_enctype(form) }} method="POST">
             <div class="box-body">
@@ -69,8 +70,8 @@
                 </div>
             </div>
             <div class="box-footer col-md-8 col-md-offset-2">
-                <button type="reset" class="btn btn-danger pull-left">Annuler</button>
-                <button type="submit" class="btn btn-success pull-right">Enregistrer</button>
+                <button type="reset" class="btn btn-danger">Annuler</button>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
             </div>
         </form>
     </div>
@@ -79,9 +80,9 @@
 {% block js %}
     {{ parent()}}
     {# Fichiers js en plus #}
-    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/jquery.colorPicker.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/jquery.colorPicker.min.js')}}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {

@@ -54,11 +54,11 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="box box-success"> 
             <div class="box-header">
-                <h3>Intervenants</h3>
+                <h3 class="box-title">Intervenants</h3>{% if is_granted('ROLE_SUPER_ADMIN') %}<button id='nouvelintervenant' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>{% endif %}
             </div>
             <div class="box-body">
                 <div id="table_intervenants">
-                    <button id='nouvelintervenant' class ="btn btn-success"><i class="fa fa-plus"></i> Ajouter</button>
+                    
                     <table id="example" class="table table-striped responsive-utilities jambo_table">
                         <thead>
                             <tr class="headings">
@@ -70,7 +70,7 @@
                                 <th>Telephone</th>
                                 <th>Evolution attendue</th>
                                 <th>Evolution en cours</th>
-                                <th class=" no-link last"><span class="nobr">Actions</span>
+                               {% if is_granted('ROLE_SUPER_ADMIN') %} <th class=" no-link last"><span class="nobr">Actions</span>{% endif %}
                                 </th>
                             </tr>
                         </thead>
@@ -78,6 +78,7 @@
                         <tbody id="tbodyintervenants">
                             {%if liste_intervenants%}
                                 {%for intervenant in liste_intervenants%}
+									
                                     <tr id="lignetable{{intervenant.id}}" class="odd pointer" style="cursor: pointer;">
                                         <td onclick="show_details({{intervenant.id}})" class=" "><img width="25px" height="25px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"/></td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.nom}}</td>
@@ -87,11 +88,13 @@
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.telephone}}</td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionattendu}}</td>
                                         <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionencours}}</td>
-                                        <td class=" last">
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+										<td class=" last">
                                             <a id="action-edit{{intervenant.id}}" onclick="edit_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
                                             <a id="action-delete{{intervenant.id}}" onclick="delete_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
                                             <a id="loader-edit-delete{{intervenant.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
                                         </td>
+										{% endif %}
                                     </tr>
                                 {%endfor%} 
                             {%endif%} 

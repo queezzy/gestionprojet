@@ -16,14 +16,19 @@ class MailType extends AbstractType
     {
         $builder
             ->add('objet')
-            ->add('date', 'datetime')
+            //->add('date', 'datetime')
             ->add('contenu')
-            ->add('type')
-            ->add('statut')
-            ->add('emetteur')
-            ->add('utilisateurs','entity',array(
-                'class'=> 'UserBundle\Entity\Utilisateur',
-                'property' => 'email'
+            ->add('uploadedFiles', 'file', array(
+                'multiple' => true, 
+                'data_class' => null,
+                ))
+            ->add('destinataire', 'entity', array(
+                'class' => 'UserBundle:Utilisateur',
+                'property' => 'nom',
+                'empty_value' => "Destinataire",
+                //'mapped' => false,
+                //'property_path' => "false",
+                //'data' => 2
             ))
         ;
     }

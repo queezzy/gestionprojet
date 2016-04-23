@@ -69,7 +69,7 @@
                 <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
           </div>
           <div id="lien-evolution-projet">
-                <a id="lien-edit" class="users-list-name" onclick="edit_evolution_projet({{projet.id}})" style="cursor: pointer;">Mettre à jour</a>
+               {% if is_granted('ROLE_SUPER_ADMIN') %} <a id="lien-edit" class="users-list-name" onclick="edit_evolution_projet({{projet.id}})" style="cursor: pointer;">Mettre à jour</a>{% endif %}
           </div>
             
         </div><!-- /.box-footer -->
@@ -85,43 +85,76 @@
             <h3 class="box-title">Niveau d'avancement par intervenants</h3>                    
           </div><!-- /.box-header -->
           <div class="box-body">
+			
               {%if liste_intervenants%}
+				<table id="example1" class="col-md-12">
+					<thead>
+						<tr class="headings">
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+				<tbody class="col-md-12">
+				{%  set itr = 0 %}
                     {%for intervenant in liste_intervenants%}
-              <div class="col-sm-4">
-                  <div class="box box-default">
-                      <div class="box-header with-border">
-                        <h3 class="box-title">{{intervenant.nom}}</h3>                    
-                      </div><!-- /.box-header -->
-                      <div class="box-body">
-                         <div class="progress-group">
-                              <span class="progress-text">Attendue</span>
-                              <span class="progress-number"><b>{{intervenant.evolutionattendu}}</b>/100</span>
-                              <div class="progress sm">
-                                <div class="progress-bar progress-bar-aqua" style="width: {{intervenant.evolutionattendu}}%"></div>
-                              </div>
-                          </div><!-- /.progress-group -->
-                          <div class="progress-group">
-                              <span class="progress-text">En réelle</span>
-                              <span class="progress-number"><b>{{intervenant.evolutionencours}}</b>/100</span>
-                              <div class="progress sm">
-                                <div class="progress-bar progress-bar-red" style="width: {{intervenant.evolutionencours}}%"></div>
-                              </div>
-                          </div><!-- /.progress-group -->
-                      </div><!-- /.box-body -->
-                      <div class="box-footer text-center">
-                          <div id="loader-evolution-intervenant{{intervenant.id}}" style="display: none;">
-                                <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
-                          </div>
-                          <div id="lien-evolution-intervenant{{intervenant.id}}">
-                                <a class="users-list-name" onclick="edit_evolution_intervenant({{intervenant.id}})" style="cursor: pointer;">Mettre à jour</a>
-                          </div>
-                        
-                        
-                    </div><!-- /.box-footer -->
-                  </div>
-              </div>  
-                {%endfor%} 
+					
+						{% if itr == 0 %}
+							<tr class="col-md-12">
+						{% endif %}
+						
+							<td class="col-md-1">
+								<div>
+									  <div class="box box-default">
+										  <div class="box-header with-border">
+											<h3><a class="box-title" onclick="show_details({{intervenant.id}})" style="cursor: pointer;">{{intervenant.nom}}</a> </h3>                   
+										  </div><!-- /.box-header -->
+										  <div class="box-body">
+											 <div class="progress-group">
+												  <span class="progress-text">Attendue</span>
+												  <span class="progress-number"><b>{{intervenant.evolutionattendu}}</b>/100</span>
+												  <div class="progress sm">
+													<div class="progress-bar progress-bar-aqua" style="width: {{intervenant.evolutionattendu}}%"></div>
+												  </div>
+											  </div><!-- /.progress-group -->
+											  <div class="progress-group">
+												  <span class="progress-text">En réelle</span>
+												  <span class="progress-number"><b>{{intervenant.evolutionencours}}</b>/100</span>
+												  <div class="progress sm">
+													<div class="progress-bar progress-bar-red" style="width: {{intervenant.evolutionencours}}%"></div>
+												  </div>
+											  </div><!-- /.progress-group -->
+										  </div><!-- /.box-body -->
+										  <div class="box-footer text-center">
+											  <div id="loader-evolution-intervenant{{intervenant.id}}" style="display: none;">
+													<img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+											  </div>
+											  <div id="lien-evolution-intervenant{{intervenant.id}}">
+													{% if is_granted('ROLE_SUPER_ADMIN') %}<a class="users-list-name" onclick="edit_evolution_intervenant({{intervenant.id}})" style="cursor: pointer;">Mettre à jour</a>{% endif %}
+											  </div>
+										   </div><!-- /.box-footer -->
+									  </div>
+								  </div> 							
+							</td>
+							{% set itr = itr + 1  %}
+							{% if itr == 3 %}
+								</tr>
+								{% set itr = 0  %}
+							{% endif %}
+               
+                {%endfor%}
+					{% if itr == 1 %}
+						<td class="col-md-1"></td>
+						<td class="col-md-1"></td>
+						</tr>
+					{% elseif itr == 2  %}
+						<td class="col-md-1"></td>
+						</tr>
+					{% endif %}
+				</tbody>
+			</table>
         {%endif%}
+		
           </div>
         </div>
    </div>             

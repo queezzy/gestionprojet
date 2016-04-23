@@ -173,7 +173,7 @@ gp_courier_recus:
         expose: true
         
 gp_courier_add:
-    pattern: /add-courrier
+    pattern: /add-courrier/{id}
     defaults: { _controller: GestionProjetBundle:Courrier:addcourier }
     options:
         expose: true

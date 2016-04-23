@@ -53,7 +53,7 @@
                 </a>
               </li>
               <li {% block menuCollaboration %}{% endblock %}>
-                <a href="{{path('gestion_projet_send')}}">
+                <a href="{{path('gestion_projet_send_mail')}}">
                   <i class="fa fa-comment"></i> 
                   <span>Collaboration</span>
                 </a>
@@ -76,12 +76,13 @@
           <div class="info dropdown col-md-3">
                 <a href="" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li class="center-block center"><bold>{% if app.user.username is defined %}{{app.user.username}}{% endif%}</bold></li>
+                    <li class="center-block center" style = "color: black;"><bold>{% if app.user.username is defined %}{{app.user.username}}{% endif%}</bold></li>
                     <li><a href="{{path('fos_user_profile_show')}}"><i class="fa fa-eye"></i>Voir profil</a></li>
-                     <li><a href="{{path('gestion_projet_send')}}"><i class="fa fa-envelope"></i>Envoyer mail</a></li>
+                     <li><a href="{{path('gestion_projet_send_mail')}}"><i class="fa fa-envelope"></i>Envoyer mail</a></li>
                     <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i>Se déconnecter</a></li>
                 </ul>
           </div>
+		  {% if is_granted('ROLE_SUPER_ADMIN') %}
           <div class="info dropdown col-md-6">
                 <a href="" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-gear"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -91,6 +92,7 @@
                     <!--li><a href="#">Gérer les themes</a></li-->
                 </ul>
           </div>
+		  {%  endif %}
         </div>
         <!-- Sidebar user panel End-->
    </div>
@@ -112,8 +114,11 @@
               <small><bold>{% block breadcrumbDescription %}Résumé du projet{% endblock %}</bold></small>
             </h1>
             <ol class="breadcrumb">
-              <li><a href="#"><i class="fa fa-dashboard"></i> Projet</a></li>
-              <li><a href="#">{% block breadcrumbPosition %}Accueil{% endblock %}</a></li>
+              <li><a href="{{path("homepage")}}"><i class="fa fa-dashboard"></i> Projet</a></li>
+              <li>{% block breadcrumbPosition %}Accueil{% endblock %}</li>
+			  {% block breadcrumbPlus %}{% endblock %}
+			  {% block breadcrumbPlusP %}{% endblock %}
+			  {% block breadcrumbPlusPP %}{% endblock %}
             </ol>
           </section>
 

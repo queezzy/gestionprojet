@@ -107,3 +107,4 @@ function execute_delete_projet(id_projet) {
 function show_details(id_projet) {
     window.location.replace(Routing.generate('gp_projet_details', {idprojet: id_projet}));
 }
+

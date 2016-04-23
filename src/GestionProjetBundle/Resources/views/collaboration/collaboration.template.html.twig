@@ -56,36 +56,85 @@
           <div class="box-header">
               <h3>Envoyer un message</h3>
           </div><!-- /.box-header -->
-          <form role="form">
-              <div class="box-body">
-                  <div class="col-sm-12">
-				      <div class="form-group">
-                          <label>Destinataires</label>
-						  <select class="form-control multiselect" multiple="multiple">
-							  {#% for destinataire in liste_destinataires %#}
-								<option>Dest. 1</option>
-							  {#% else %#}
-								<option>Defaut</option>
-							  {#% endfor %#}
-						  </select>
-                      </div>
-                      <div class="form-group">
-                          <label for="">Objet</label>
-                          <input type="text" class="form-control" placeholder="Objet du message">
-                      </div>
-                      <textarea rows="10" cols="70" class="collab-message ckeditor">
-
-                      </textarea>
-                      <div class="form-group">
-                          <label for="">Attacher un fichier</label>
-                          <input type="file" id="exampleInputFile">
-                      </div>
-                  </div>
-              </div>
-              <div class="box-footer">
-                  <button type="submit" class="btn btn-success">Envoyer</button>
-              </div>
-          </form>
+		  <div class="box-body">
+				{% if app.session.flashbag.get('notice') %}										
+                    <div id="message_courier" class="col-md-6 col-sm-6 col-xs-12">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('notice') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                {% endif %}
+				<form id="form_mail" method="post" action="{{ path("gestion_projet_send_mail") }}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
+                    <div class="item form-group">
+                        {{form_widget(form._token)}}
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.destinataire, "A", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.destinataire) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.destinataire, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Courrier de reference'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">En copie</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<select class="form-control multiselect col-md-7" multiple="multiple" name="destinataires[]">
+							  {%if liste_utilisateurs%}
+								{%for user in liste_utilisateurs%}
+								<option value="{{user.id}}">{{user.nom}}</option>
+								{% endfor %}    
+							  {% endif %}
+							</select>
+							</div>
+                    </div>
+                    
+                    <div class="item form-group">           
+                        {{ form_label(form.objet, "Objet: ", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.objet) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.objet, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Objet du courier', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                     <div class="item form-group">
+                        {{ form_label(form.contenu, "Contenu: ", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.contenu) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.contenu, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+      
+                    <div class="item form-group">           
+                        {{ form_label(form.uploadedFiles, "Pieces jointes", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.uploadedFiles) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.uploadedFiles, { 'attr' : {'class' : 'inputfile' }}) }}
+                        </div>
+                    </div>
+                     
+                    {% if app.session.flashbag.get('notice') %}										
+                    <div id="message_courier">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button  type="reset" class="btn btn-danger">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Envoyer</button>
+                        </div>
+                    </div>
+                </form>
+			</div>
       </div>
     </div>
 <!-- Envoyer un message end-->
@@ -94,13 +143,6 @@
 
 {% block js %}
     {{ parent()}}
-    {# Fichiers js en plus #}
-    <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
-    <script>
-      $(function () {
-        // Replace the <textarea id="ckeditor"> with a CKEditor
-        // instance, using default configuration.
-        CKEDITOR.replace('ckeditor');
-      });
-    </script>
+    
+    
 {% endblock %}
