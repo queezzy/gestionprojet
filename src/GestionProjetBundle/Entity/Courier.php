@@ -493,7 +493,7 @@ class Courier
         return $this->file;
     }
 
-     protected function getUploadRootDir() {
+     public function getUploadRootDir() {
         return __DIR__ . '/../../../web/uploads/couriers';
     }
 

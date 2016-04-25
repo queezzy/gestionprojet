@@ -103,11 +103,11 @@ class UtilisateurController extends Controller {
                $message = \Swift_Message::newInstance()
                     ->setSubject($mail->getObjet())
 //                    ->setFrom($user->getEmail())
-                    ->setFrom('issola.ruben@gmail.com')
+                    ->setFrom('tonye.eric@gmail.com')
 //                    ->setTo($data['Destinataires'])
-                    ->setTo('tonye.eric@gmail.com')
+                    ->setTo('franckquentinnfotabong@gmail.com')
                     ->setBody($mail->getContenu(),'text/html');
-
+				$this->get('mailer')->send($message);
                $message = "Votre mail a été envoyé";
 			   $request->getSession()->getFlashBag()->add('notice', $message);
 			   return $this->redirect($this->generateUrl('gestion_projet_send_mail'));

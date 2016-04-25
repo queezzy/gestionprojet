@@ -107,7 +107,7 @@ class CourrierController extends Controller {
                         }
                        }
                        $repositoryCourier->saveCourier($courier);
-                       //$this->sendMailForCourrier($courier);
+                       $this->sendMailForCourrier($courier);
                        $message = $this->get('translator')->trans('Courier.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
                        return $this->redirect($this->generateUrl('gp_courier', array('id' => $intervenant->getId())));
