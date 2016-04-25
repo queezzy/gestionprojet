@@ -83,7 +83,7 @@
                                             <td onclick="show_details({{projet.id}})" class=" ">{{projet.evolutionattendu}}</td>
                                             <td onclick="show_details({{projet.id}})" class=" ">{{projet.evolutionencours}}</td>
                                             <td class=" last">
-                                                <a id="action-edit{{projet.id}}" onclick="edit_projet({{projet.id}},'gp_projet_update')" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
+                                                <a id="action-edit{{projet.id}}" onclick="edit_projet({{projet.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
                                                 <a id="action-delete{{projet.id}}" onclick="delete_projet({{projet.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
                                                 <a id="loader-edit-delete{{projet.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
                                             </td>
@@ -202,7 +202,7 @@
                     </div>
                     {% if app.session.flashbag.get('message_failure') %}										
                     <div id="message_projet">
-                        <div id="myAlert" class="alert alert-danger">
+                        <div id="myAlert_failure" class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert">&times;</a>
                             {% for flash_message in app.session.flashbag.get('message_failure') %}
                                 {{ flash_message }}

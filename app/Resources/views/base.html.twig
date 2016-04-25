@@ -160,6 +160,79 @@
 					this.value = asInitVals[$("tfoot input").index(this)];
 				}
 			});
+			setTimeout(function () {
+                $('#myAlert').alert("close");
+                }, 4000);
+			$('.image-caption a').tooltip();
+    $(function () {
+
+        var filterList = {
+
+            init: function () {
+
+                // MixItUp plugin
+                // http://mixitup.io
+                $('#portfoliolist').mixitup({
+                    targetSelector: '.portfolio',
+                    filterSelector: '.filter',
+                    effects: ['fade'],
+                    easing: 'snap',
+                    // call the hover effect
+                    onMixEnd: filterList.hoverEffect()
+                });
+
+            },
+
+            hoverEffect: function () {
+                $("[rel='tooltip']").tooltip();
+                // Simple parallax effect
+                $('#portfoliolist .portfolio .portfolio-hover').hover(
+        function(){
+            $(this).find('.image-caption').slideDown(250); //.fadeIn(250)
+        },
+        function(){
+            $(this).find('.image-caption').slideUp(250); //.fadeOut(205)
+        }
+    );
+
+
+
+            }
+
+        };
+
+        // Run the show!
+        filterList.init();
+
+
+    });
+
+    $( document ).ready(function() {
+
+        $('.magnefig').each(function(){
+            $(this).magnificPopup({
+                type:'image',
+                removalDelay: 300,
+                mainClass: 'mfp-fade'
+            })
+        });
+    });
+	$(document).ready(function() {
+
+        $("#owl-demo").owlCarousel({
+
+            autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+            items : 4,
+            itemsDesktop : [1199,3],
+            itemsDesktopSmall : [979,3],
+            stopOnHover : true,
+
+        });
+
+    });
+
+    new WOW().init();
 			CKEDITOR.replace('.ckeditor');
 			$('.datetimepicker').datetimepicker({
 				language: 'fr',

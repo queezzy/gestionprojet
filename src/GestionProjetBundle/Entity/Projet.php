@@ -105,6 +105,16 @@ class Projet
     * @ORM\OneToMany(targetEntity="Theme", mappedBy="idprojet", cascade={"remove", "persist"})
     */
     private $themes;
+	
+	/**
+    * @ORM\OneToMany(targetEntity="Lot", mappedBy="idprojet", cascade={"remove", "persist"})
+    */
+    private $lots;
+	
+	/**
+    * @ORM\OneToMany(targetEntity="Photo", mappedBy="idprojet", cascade={"remove", "persist"})
+    */
+    private $photos;
     
     /**
      * Constructor
@@ -475,12 +485,105 @@ class Projet
     }
 
     /**
-     * Remove themes
+     * Remove theme
      *
-     * @param \GestionProjetBundle\Entity\Theme $themes
+     * @param \GestionProjetBundle\Entity\Theme $theme
      */
-    public function removeTheme(\GestionProjetBundle\Entity\Theme $themes)
+    public function removeTheme(\GestionProjetBundle\Entity\Theme $theme)
     {
-        $this->themes->removeElement($themes);
+        $this->themes->removeElement($theme);
     }
+	
+	
+	/**
+     * Add lot
+     *
+     * @param GestionProjetBundle\Entity\Lot $lot
+     * @return Projet
+     */
+    public function addLot(\GestionProjetBundle\Entity\Lot $lot)
+    {
+        $this->lots[] = $lot;
+        return $this;
+    }
+    
+    /**
+     * Get lots
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLots()
+    {
+        return $this->lots;
+    }
+    
+    /**
+     * Set lots
+     *
+     * @param \Doctrine\Common\Collections\Collection $lots
+     * @return Projet
+     */
+    public function setLots(\Doctrine\Common\Collections\Collection $lots = null)
+    {
+        $this->lots = $lots;
+
+        return $this;
+    }
+	
+	/**
+     * Remove lot
+     *
+     * @param \GestionProjetBundle\Entity\Lot $lot
+     */
+    public function removeLot(\GestionProjetBundle\Entity\Lot $lot)
+    {
+        $this->lots->removeElement($lot);
+    }
+
+	
+	/**
+     * Add photo
+     *
+     * @param GestionProjetBundle\Entity\Photo $photo
+     * @return Projet
+     */
+    public function addPhoto(\GestionProjetBundle\Entity\Photo $photo)
+    {
+        $this->photos[] = $photo;
+        return $this;
+    }
+    
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+    
+    /**
+     * Set photos
+     *
+     * @param \Doctrine\Common\Collections\Collection $photos
+     * @return Projet
+     */
+    public function setPhotos(\Doctrine\Common\Collections\Collection $photos = null)
+    {
+        $this->photos = $photos;
+
+        return $this;
+    }
+	
+	/**
+     * Remove photo
+     *
+     * @param \GestionProjetBundle\Entity\Photo $photo
+     */
+    public function removePhoto(\GestionProjetBundle\Entity\Photo $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
 }

@@ -41,11 +41,7 @@ class ProjetController extends Controller
         return $this->render('GestionProjetBundle:Projet:projet_content.html.twig', array('liste_projets' => $projets, 'form' => $form->createView(), "display_tab" => $display_tab));
     }
     
-    /**
-     * @Route("/header-projet-actif")
-     * @Template()
-     * @param Request $request
-     */
+    
     public function headerprojetactifAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
@@ -58,6 +54,35 @@ class ProjetController extends Controller
         }
         
         return $this->render('::header.template.html.twig', array('projetactif' => $projet));
+
+    }
+	
+	public function menusgaleriephotosAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
+        //selectionne le seul projet actif
+        $projets = $repositoryProjet->findBy(array("statut" => 1));
+        if($projets){
+            $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        }else{
+            $projet = null;
+        }
+        
+        return $this->render('GestionProjetBundle::menusgaleriephotos.template.html.twig', array('projet' => $projet));
+
+    }
+	public function sousmenugestionphotoAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryProjet = $em->getRepository("GestionProjetBundle:Projet");
+        //selectionne le seul projet actif
+        $projets = $repositoryProjet->findBy(array("statut" => 1));
+        if($projets){
+            $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
+        }else{
+            $projet = null;
+        }
+        
+        return $this->render('GestionProjetBundle::sousmenugestionphoto.template.html.twig', array('projet' => $projet));
 
     }
     

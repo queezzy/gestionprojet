@@ -23,10 +23,7 @@ class TacheType extends AbstractType
             ->add('idprojet', 'entity', array(
                 'class' => 'GestionProjetBundle:Projet',
                 'property' => 'code',
-                'empty_value' => "Choisissez un projet",
-                'mapped' => false,
-                'property_path' => "false",
-                'data' => 2
+                'empty_value' => "Choisissez un projet"
             ))
             ->add('idlot', 'entity', array(
                 'class' => 'GestionProjetBundle:Lot',

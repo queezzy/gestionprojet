@@ -1,0 +1,17 @@
+	{%if photos%}
+	{% for photo in photos %}
+		<div class="portfolio photo{{photo.dateprise|date('Y')}}" data-cat="photo{{photo.dateprise|date('Y')}}">
+			<div class="portfolio-wrapper">
+				<div class="portfolio-hover">
+					<div class="image-caption">
+						<!--a href="{{asset('uploads/photoschantier/'~photo.path)}}" class="label magnefig label-info icon" data-toggle="tooltip" data-placement="center" title="Zoom"><i class="fa fa-eye"></i></a-->
+						<a href="{{path("gp_photo_details",{'id' : photo.id})}}" class="label label-info icon" data-toggle="tooltip" data-placement="top" title="Details"><i class="fa fa-link"></i></a>
+					</div>
+					<img src="{{asset('uploads/photoschantier/'~photo.path)}}" alt="{{photo.intitule}}" />
+
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	{% endif %}
+          

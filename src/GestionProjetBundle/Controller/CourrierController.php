@@ -93,6 +93,7 @@ class CourrierController extends Controller {
             //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
+					   $courier->setEmetteur($intervenant);
 					   $courierenvoye->setIdintervenant($courier->getDestinataire());
                        $courier->addCourierenvoye($courierenvoye);
                        $destinataires= $request->request->get("destinataires");
@@ -105,7 +106,6 @@ class CourrierController extends Controller {
                             $courier->addCourierenvoye($courierenvoye);
                         }
                        }
-                        $courier->setEmetteur($intervenant);
                        $repositoryCourier->saveCourier($courier);
                        //$this->sendMailForCourrier($courier);
                        $message = $this->get('translator')->trans('Courier.created_success', array(), "GestionProjetBundle");

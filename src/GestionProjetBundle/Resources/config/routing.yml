@@ -226,4 +226,48 @@ gp_evolution_projet_update:
     options:
         expose: 
             
-            
+ 
+gp_photo:
+    pattern: /photos/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:photos }
+    options:
+        expose: true
+
+
+gp_galerie_photo:
+    pattern: /galerie-photos/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:galeriephotos }
+    options:
+        expose: true
+     
+
+gp_photo_add:
+    pattern: /add-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:addphoto }
+    options:
+        expose: true
+
+gp_photo_update:
+    pattern: /update-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:updatephoto }
+    options:
+        expose: true
+        
+gp_photo_get:
+    pattern: /get-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:getphoto }
+    options:
+        expose: true
+
+gp_photo_details:
+    pattern: /get-details-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:getdetailsphoto }
+    options:
+        expose: true
+        
+gp_photo_delete:
+    pattern: /delete-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:deletephoto }
+    options:
+        expose: true
+    

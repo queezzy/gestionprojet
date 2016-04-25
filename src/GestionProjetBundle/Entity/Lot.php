@@ -55,6 +55,16 @@ class Lot
      * @ORM\Column(name="statut", type="integer", nullable=true)
      */
     private $statut;
+	
+	/**
+     * @var \Projet
+     *
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="lots")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idProjet", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $idprojet;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -315,5 +325,28 @@ class Lot
     public function removeIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenants)
     {
         $this->intervenants->removeElement($intervenants);
+    }
+	
+	/**
+     * Set idprojet
+     *
+     * @param \GestionProjetBundle\Entity\Projet $idprojet
+     * @return Lot
+     */
+    public function setIdprojet(\GestionProjetBundle\Entity\Projet $idprojet = null)
+    {
+        $this->idprojet = $idprojet;
+
+        return $this;
+    }
+
+    /**
+     * Get idprojet
+     *
+     * @return \GestionProjetBundle\Entity\Projet 
+     */
+    public function getIdprojet()
+    {
+        return $this->idprojet;
     }
 }

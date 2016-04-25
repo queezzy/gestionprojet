@@ -33,6 +33,10 @@ class ProjetRepository extends EntityRepository{
             foreach ($themes as $theme) {
                 $repositoryTheme->deleteTheme($theme);
             }
+			$phots = $projet->getPhotos();
+            foreach ($photo as $photos) {
+                $repositoryPhoto->deletePhoto($photo);
+            }
             $em->persist($projet);
             $em->flush();
             $em->getConnection()->commit();
