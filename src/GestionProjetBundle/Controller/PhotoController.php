@@ -67,11 +67,11 @@ class PhotoController extends Controller {
         $display_tab = 1;
         //selectionne le seul photo actif
         //$annees = $repositoryPhoto->getAnneesPhotos($projet->getId());
-		$annees = array(2016);
+		$annees = array();
 		$photos = $repositoryPhoto->findBy(array("statut" => 1, "idprojet" =>$projet ));
-		foreach($photo as $photos){
-			$mydate = date_parse($photo->getDateprise());
-			if(!in_array($mydate['year'], $annees)) $annees[]= $mydate['year'];
+		foreach($photos as $photo){
+			$mydate = date_format($photo->getDateprise(), 'Y');
+			if(!in_array($mydate, $annees)) array_push($annees, $mydate);
 		}
         
         return $this->render('GestionProjetBundle:Photo:galerie_photo_content.html.twig', array('projet' => $projet, 'annees' => $annees));
