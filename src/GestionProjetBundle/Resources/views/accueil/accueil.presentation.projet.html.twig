@@ -1,0 +1,32 @@
+<div class="box box-success">
+    <!-- /.box-header start -->
+    <div class="box-header with-border">
+        <h3 class="box-title">Présentation</h3>                      
+    </div>
+    <!-- /.box-header end -->
+
+    <!-- /.box-body start-->
+    <div class="box-body presentation">
+        <strong> <i></i>Intitulé</strong>
+		<p> {{projetactif.intitule}}</p>
+		<hr>
+		
+		
+		<p> <strong> <i></i>Date début : </strong>{{projetactif.datedebut|date('d/m/Y')}}</p>
+		<hr>
+		
+		
+		<p><strong> <i class="fa"></i>Date de fin : </strong> {{projetactif.datefin|date('d/m/Y')}}</p>
+		<hr>
+		
+		
+		<p> <strong> <i class="fa"></i>Demandeur : </strong>{{projetactif.demandeur}}</p>
+		<hr>
+		
+		
+		<p><strong> <i class="fa"></i>Budget : </strong> {{projetactif.budget}}</p>
+		<hr>		
+		
+    </div>
+    <!-- /.box-body end -->
+</div>

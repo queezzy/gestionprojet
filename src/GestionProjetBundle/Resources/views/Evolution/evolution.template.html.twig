@@ -1,0 +1,178 @@
+{# Page Evolution du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Evolution{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuEvolution %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Evolution
+{% endblock %}
+
+{% block contenupage %}
+{%if projet%}
+<div class="row">
+    <!-- General evolution start-->
+    <div class="col-md-12">
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Niveau d'avancement global</h3>                    
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center">
+                <strong>Evolution du: {{projet.datedebut|date('d/m/Y')}} - {{"now"|date('d/m/Y')}}</strong>
+              </p>
+              
+            <div class="col-md-12">
+              <!--<p class="text-center">
+                <strong>Détails</strong>
+              </p>-->
+              <div class="progress-group col-md-12">
+                <span class="progress-text">Attendue</span>
+                <span class="progress-number"><b>{{projet.evolutionattendu}}</b>/100</span>
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-aqua" style="width: {{projet.evolutionattendu}}%"></div>
+                </div>
+              </div><!-- /.progress-group -->
+              <div class="progress-group col-md-12">
+                <span class="progress-text">En réelle</span>
+                <span class="progress-number"><b>{{projet.evolutionencours}}</b>/100</span>
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-red" style="width: {{projet.evolutionencours}}%"></div>
+                </div>
+              </div><!-- /.progress-group -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- ./box-body -->
+        <div class="box-footer text-center">
+            <div id="loader-evolution-projet" style="display: none;">
+                <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+          </div>
+          <div id="lien-evolution-projet">
+               {% if is_granted('ROLE_SUPER_ADMIN') %} <a id="lien-edit" class="users-list-name" onclick="edit_evolution_projet({{projet.id}})" style="cursor: pointer;">Mettre à jour</a>{% endif %}
+          </div>
+            
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+    </div>
+    <!-- General evolution end-->
+</div><!-- /.row --> 
+
+             
+  <div class="col-md-12">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Niveau d'avancement par intervenants</h3>                    
+          </div><!-- /.box-header -->
+          <div class="box-body">
+			
+              {%if liste_intervenants%}
+				<table id="example1" class="col-md-12">
+					<thead>
+						<tr class="headings">
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+				<tbody class="col-md-12">
+				{%  set itr = 0 %}
+                    {%for intervenant in liste_intervenants%}
+					
+						{% if itr == 0 %}
+							<tr class="col-md-12">
+						{% endif %}
+						
+							<td class="col-md-1">
+								<div>
+									  <div class="box box-default">
+										  <div class="box-header with-border">
+											<h3><a class="box-title" onclick="show_details({{intervenant.id}})" style="cursor: pointer;">{{intervenant.nom}}</a> </h3>                   
+										  </div><!-- /.box-header -->
+										  <div class="box-body">
+											 <div class="progress-group">
+												  <span class="progress-text">Attendue</span>
+												  <span class="progress-number"><b>{{intervenant.evolutionattendu}}</b>/100</span>
+												  <div class="progress sm">
+													<div class="progress-bar progress-bar-aqua" style="width: {{intervenant.evolutionattendu}}%"></div>
+												  </div>
+											  </div><!-- /.progress-group -->
+											  <div class="progress-group">
+												  <span class="progress-text">En réelle</span>
+												  <span class="progress-number"><b>{{intervenant.evolutionencours}}</b>/100</span>
+												  <div class="progress sm">
+													<div class="progress-bar progress-bar-red" style="width: {{intervenant.evolutionencours}}%"></div>
+												  </div>
+											  </div><!-- /.progress-group -->
+										  </div><!-- /.box-body -->
+										  <div class="box-footer text-center">
+											  <div id="loader-evolution-intervenant{{intervenant.id}}" style="display: none;">
+													<img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+											  </div>
+											  <div id="lien-evolution-intervenant{{intervenant.id}}">
+													{% if is_granted('ROLE_SUPER_ADMIN') %}<a class="users-list-name" onclick="edit_evolution_intervenant({{intervenant.id}})" style="cursor: pointer;">Mettre à jour</a>{% endif %}
+											  </div>
+										   </div><!-- /.box-footer -->
+									  </div>
+								  </div> 							
+							</td>
+							{% set itr = itr + 1  %}
+							{% if itr == 3 %}
+								</tr>
+								{% set itr = 0  %}
+							{% endif %}
+               
+                {%endfor%}
+					{% if itr == 1 %}
+						<td class="col-md-1"></td>
+						<td class="col-md-1"></td>
+						</tr>
+					{% elseif itr == 2  %}
+						<td class="col-md-1"></td>
+						</tr>
+					{% endif %}
+				</tbody>
+			</table>
+        {%endif%}
+		
+          </div>
+        </div>
+   </div>             
+</div>
+
+<div id="form_evolution_projet" class="modal fade" tabindex="-1" role="dialog">
+    
+</div> 
+<div id="form_evolution_intervenant" class="modal fade" tabindex="-1" role="dialog">
+    
+</div> 
+{%endif%}
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_evolution.js')}}"></script>
+    <script src="{{asset('bundles/gestionprojet/js/Chart.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/evolution.js')}}" type="text/javascript"></script>
+{% endblock %}

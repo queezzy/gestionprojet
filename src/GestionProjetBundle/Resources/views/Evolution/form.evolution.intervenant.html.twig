@@ -1,0 +1,42 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Mise à jour de l'évolution de {{intervenant.nom}}</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_intervenant" method="post" action="{{ path('gp_evolution_intervenant_update',{'id' : intervenant.id}) }}" class="form-horizontal form-label-left" >
+            <div class="item form-group">
+           <input type="hidden" id="idintervenant" name = "idintervenant" value="{{intervenant.id}}">
+           {{form_widget(form._token)}}
+            </div>
+			<div class="item form-group">
+                {{ form_label(form.evolutionattendu, "Evolution attendue", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                {{ form_errors(form.evolutionattendu) }}
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                   {{ form_widget(form.evolutionattendu, {'attr': {'class':'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+
+                </div>
+            </div>
+            <div class="item form-group">
+                {{ form_label(form.evolutionencours, "Evolution en réelle", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                {{ form_errors(form.evolutionencours) }}
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                   {{ form_widget(form.evolutionencours, {'attr': {'class':'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+
+                </div>
+            </div>
+            <div class="ln_solid"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!--<div id="actions" class="form-group">-->
+           <!--<div class="col-md-6 col-md-offset-3">-->
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button id="send_intervenant" type="submit" class="btn btn-success">Enregistrer</button>
+           <!--</div>-->
+       <!--</div>-->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

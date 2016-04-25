@@ -1,0 +1,83 @@
+{# Template de la liste de documents validés #}
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Documentation {% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuIntervenant %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_intervenant')}}">Intervenants</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li><a href="{{path('gp_intervenant_details', {'id': intervenant.id})}}">{{intervenant.nom}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}<li><a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}">Documentation</a></li>{% endblock %}
+{% block breadcrumbPlusPP %}<li>Documents d'exécution validés</li>{% endblock %}
+{% block contenupage %}
+<div class="row">
+    <!-- Document start-->
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="box-title">Documents d'exécution validés</h3><a href="{{path('gestion_projet_ressource_new')}}"class="pull-right btn btn-primary"><i class="fa fa-plus"></i>Ajouter</a>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                <thead>
+                    <tr>
+                        <th>Référence</th>
+                        <th>Description</th>
+                        <th>Intervenant</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for ressource in ressources %}
+                        <tr>
+                            <td><a href="{{asset('uploads/ressources/'~ressource.path)}}"> {{ressource.reference}} </a></td>
+
+                            <td>{{ressource.description}}</td>
+                            <td>{% if ressource.idintervenant.nom is defined %}
+
+                                {{ressource.idintervenant.nom}}
+                                {% endif%}
+                                </td>
+                                <td>
+                                    <a href="{{path('gestion_projet_ressource_update',{'id':ressource.id})}}" class="pull-right"><i class="fa fa-edit"></i></a>
+                                    <a href="{{path('gestion_projet_ressource_delete',{'id':ressource.id})}}" class="pull-right"><i class="fa fa-minus"></i></a>
+                                </td>
+                            </tr>
+                                {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <!-- Intervenants end-->
+                </div><!-- /.row --> 
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $(".data-table").DataTable();
+      });
+    </script>
+{% endblock %}

@@ -1,0 +1,95 @@
+{# Formulaire de création d'un projet #}
+
+ {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+    <div class="box-body">
+       {# Code du projet #} 
+      <div class="form-group">
+        {{ form_label(form.code, "Code du projet") }}
+        {{ form_errors(form.code) }}
+        {{ form_widget(form.code, {'attr': {'class': 'form-control','placeholder':'Code du projet'}}) }}
+      </div>
+      
+      {# Intitulé du projet #} 
+      <div class="form-group">
+        {{ form_label(form.intitule, "Intitule") }}
+        {{ form_errors(form.intitule) }}
+        {{ form_widget(form.intitule, {'attr': {'class': 'form-control', 'placeholder':'Intitulé'}}) }}
+      </div>
+      
+      {# Description du projet #}
+        {{ form_label(form.description, "Description") }}
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'ckeditor', 'row':'10', 'cols':'50'}}) }}
+      
+      {# Date début #} 
+      <div class="form-group">
+        {{ form_label(form.datedebut, "Date debut") }}
+        {{ form_errors(form.datedebut) }}
+        <div class="input-append date datetimepicker">
+            {{ form_widget(form.datedebut, {'attr': {'data-format': 'yyyy/MM/dd hh:mm:ss', 'type':'text'}}) }}
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+        </div>
+      </div>
+      
+      {# Date fin #} 
+      <div class="form-group">
+        {{ form_label(form.datefin, "Date fin") }}
+        {{ form_errors(form.datefin) }}
+        <div class="input-append date datetimepicker">
+           {{ form_widget(form.datefin, {'attr': {'data-format': 'yyyy/MM/dd hh:mm:ss', 'type':'text'}}) }}
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+        </div>
+      </div>
+      
+      {# Budget #} 
+      <div class="form-group">
+        {{ form_label(form.budget, "Budget") }}
+        {{ form_errors(form.budget) }}
+        {{ form_widget(form.budget, {'attr': {'class': 'form-control', 'placeholder':'Budget'}}) }}
+      </div>
+      
+      {# Demandeur #} 
+      <div class="form-group">
+        {{ form_label(form.demandeur, "Demandeur") }}
+        {{ form_errors(form.demandeur) }}
+        {{ form_widget(form.demandeur, {'attr': {'class': 'form-control', 'placeholder':'Demandeur'}}) }}
+      </div>
+      
+      {# Evolution attendue #} 
+      <div class="form-group">
+        {{ form_label(form.evolutionattendu, "Evolution attendue") }}
+        {{ form_errors(form.evolutionattendu) }}
+        <label for="intituleprojet">Evolution attendue</label>
+        <div class="input-append" data-role="acknowledge-input">
+            {{ form_widget(form.evolutionattendu, {'attr': {'class':'input-xlarge', 'type':'text', 'placeholder':'Evolution attendue', 'data-type':'decimal', 'required':'required'}}) }}
+            <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
+                <i class="icon-ok fa fa-check"></i>
+            </div>
+        </div>
+      </div>
+      
+      {# Evolution en cours #} 
+      <div class="form-group">
+        {{ form_label(form.evolutionencours, "Evolution en cours") }}
+        {{ form_errors(form.evolutionencours) }}
+        <div class="input-append" data-role="acknowledge-input">
+           {{ form_widget(form.evolutionencours, {'attr': {'class': 'input-xlarge', 'type':'text', 'placeholder':'Evolution en cours', 'data-type':'decimal', 'required':'required'}}) }}
+            <div class="input-group-addon add-on" data-role="acknowledgement" style="color: #468847;">
+                <i class="icon-ok fa fa-check"></i>
+            </div>
+        </div>
+      </div>
+      
+    </div><!-- /.box-body -->
+
+    <div class="box-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+{{ form_end(form) }}

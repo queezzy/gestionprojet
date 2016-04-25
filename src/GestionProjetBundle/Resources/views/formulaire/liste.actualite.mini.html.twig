@@ -1,0 +1,33 @@
+{# Template liste des 10 dernières actualités pour l'accueil #}
+
+
+
+<!-- Actualités start-->
+<div class="box box-success">
+<div class="box-header">
+  <h3 class="box-title">Liste des actualités</h3><a href="{{path("gestion_projet_actualite_all")}}" class="pull-right"><i class="fa fa-plus"></i></a>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <ul class="products-list product-list-in-box">
+    {% for actualite in actualites %}
+        <li class="item">
+          <div class="col-md-2">
+              <img width="50px" height="50px" src="{{asset('uploads/actualites/'~actualite.path)}}" alt="{{actualite.titre}}"/>
+          </div>
+          <div class="col-md-9 col-md-offset-1">
+            <a href="{{path('gestion_projet_actualite_unique',{'id' : actualite.id})}}" class="product-title">{{actualite.titre}}<span class="label label-warning pull-right">{{ actualite.datepublication | date('d-m-Y') }}</span></a>
+            <span class="product-description">
+                {{ actualite.description|raw }}
+            </span>
+          </div>
+        </li>
+    {% else %}
+        <li class="item">
+          Pas d'actualités disponible!
+        </li>
+    {% endfor %} 
+  </ul>
+</div><!-- /.box-body -->
+</div>
+<!-- actualités end-->
+ 

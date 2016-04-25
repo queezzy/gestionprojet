@@ -1,0 +1,175 @@
+{# Page d'accueil du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.css')}}' />
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/lib/cupertino/jquery-ui.min.css')}}' />
+    <style>
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+    </style>
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuAccueil %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+
+{% endblock %}
+
+{% block breadcrumbDescription %}
+  
+{% endblock %}
+
+{% block breadcrumbPosition %}
+    Accueil
+{% endblock %}
+{%if projet%}
+{% block contenupage %}
+
+    <div class="row">
+        <!-- Left Panel start-->
+        <div class="col-md-3">
+            <!-- Présentation du projet start -->
+            
+            <!-- Présentation du projet end -->
+            {{render(controller('GestionProjetBundle:Projet:getPresentationProjetAccueil'))}}
+            <!-- Intervenants du projet start -->
+            {{render(controller('GestionProjetBundle:Intervenant:getIntervenantsForAccueil'))}}
+            <!-- Intervenants du projet end -->
+        </div>
+        <!-- Left Panel end-->
+
+        <!-- Central Panel start-->		
+        <div class="col-md-6">
+			
+            <!-- Evolution start -->
+            <div class="box box-success">
+                <!-- /.box-header start -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Evolution</h3>                      
+                </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+                <div class="box-body">
+					{{render(controller('GestionProjetBundle:Projet:getEvolutionProjetAccueil'))}}	
+                </div>
+                <!-- /.box-body end -->
+            </div>
+            <!-- Evolution end -->
+
+            <!-- Calendrier start -->
+            <div class="box box-success">
+                <!-- /.box-header start -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Calendrier</h3> <a href="{{path("gestion_projet_calendrier_new")}}" class="pull-right"><i class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+                <div class="box-body">
+                    <div id='calendar' class='skin-blue'></div>
+                    <div id="fullCalModal" class="modal fade">
+                        <div id="eventContent" title="Event Details" style="display:none;">
+                            Debut: <span id="startTime"></span><br>
+                            Fin: <span id="endTime"></span><br><br>
+                            <p id="eventInfo"></p>
+                            <p class="pull-right"><strong><a id="eventLink" href="">Modifier</a></strong></p>
+                        </div>
+                    </div>
+                    <div id='loading'>loading...</div>
+                    <div id='script-warning' class='hide'>
+                        <code class='hide-text'>Une erreur s'est produite lors du chargement des evenements</code>
+                    </div>
+                </div>
+                <!-- /.box-body end -->
+            </div>
+            <!-- Calendrier end -->
+
+        </div>
+        <!-- Central Panel end-->
+
+        <div class="col-md-3">
+            <!-- Actualités du projet start -->
+            {{render(controller('GestionProjetBundle:Actualite:getActualites', {'nbre_actualite':10}))}}
+            <!-- Actualités du projet end -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_intervenant.js')}}"></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/jquery.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/moment.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lang-all.js')}}'></script>
+    <script>
+
+                $(document).ready(function () {
+
+        $('#calendar').fullCalendar({
+        header: {
+        left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+        },
+                eventClick: function (calEvent, jsEvent, view) {
+                $("#eventInfo").html(calEvent.description);
+                        $("#eventLink").attr('href', Routing.generate('gestion_projet_evenement_update', {'id': calEvent.id}));
+                        $("#startTime").html(moment(calEvent.start).format('MMM Do h:mm A'));
+                        $("#endTime").html(moment(calEvent.end).format('MMM Do h:mm A'));
+                        $("#eventContent").dialog({modal: true, title: calEvent.title});
+                        // change the border color just for fun
+                        $(this).css('border-color', 'red');
+                },
+                defaultDate: new Date(),
+                lang: 'fr',
+                selectable: false,
+                selectHelper: true,
+                {#select: function (start, end) {
+                var title = prompt('Event Title:');
+                        var eventData;
+                        if (title) {
+                eventData = {
+                title: title,
+                        start: start,
+                        end: end
+                };
+                        $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                }
+                $('#calendar').fullCalendar('unselect');
+                },#}
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: {
+                url: Routing.generate('projet_calendrier_events'),
+                        error: function (data) {
+                        alert(data);
+                                $('#script-warning').show();
+                        }
+                },
+                loading: function (bool) {
+                $('#loading').toggle(bool);
+                }
+
+        });
+        });
+
+    </script>
+    {# Fichiers js en plus #}   
+{% endblock %}
+ {%endif%}

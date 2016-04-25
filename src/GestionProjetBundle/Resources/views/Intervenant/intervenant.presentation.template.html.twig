@@ -1,0 +1,206 @@
+{# Page e présentation d'un intervenant  #}
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Intervenants{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuIntervenant %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+  <a href="{{path('gp_intervenant')}}">Intervenants</a> 
+{% endblock %}
+
+{% block breadcrumbPlus %}
+	<li>{{intervenant.nom}}</li>
+{% endblock %}
+
+{% block contenupage %}
+<!-- Intervenant du projet start -->
+<div class="box box-success">
+    <!-- /.box-header start -->
+  <div class="box-header with-border">
+    <h3 class="box-title">{{intervenant.nom}}</h3>                      
+  </div>
+    <!-- /.box-header end -->
+
+    <!-- /.box-body start-->
+  <div class="box-body">
+      <!-- Left Panel start-->
+    <div class="col-md-4">
+        <!-- Présentation du projet start -->
+        <div class="box box-success">
+            <!-- /.box-header start -->
+          <div class="box-header with-border">
+            <h3 class="box-title">Présentation</h3>                      
+          </div>
+            <!-- /.box-header end -->
+
+            <!-- /.box-body start-->
+          <div class="box-body">
+			<div><strong> <i></i>Logo :   </strong> <img width="100px" height="100px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"/></div>
+			<hr>
+			<p> {{intervenant.presentation}}</p>
+              
+          </div>
+            <!-- /.box-body end -->
+        </div>
+        <!-- Présentation du projet end -->
+
+        <!-- Intervenants du projet start -->
+        <div class="box box-success">
+            <!-- /.box-header start -->
+          <div class="box-header with-border">
+            <h3 class="box-title">Description</h3>                      
+          </div>
+            <!-- /.box-header end -->
+
+            <!-- /.box-body start-->
+          <div class="box-body">
+              {{intervenant.description}}
+
+          </div>
+            <!-- /.box-body end -->
+        </div>
+        <!-- Intervenants du projet end -->
+    </div>
+    <!-- Left Panel end-->
+
+    <!-- Central Panel start-->
+    <div class="col-md-8">
+        <div class="row">
+            <!-- Calendrier start -->
+            <div class="col-md-6">
+            <div class="box box-success">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Rôles et missions</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+                  {{intervenant.rolemission}}
+              </div>
+                <!-- /.box-body end -->
+            </div>
+            </div>
+            <!-- Calendrier end -->
+
+            <!-- Personnels clés start -->
+            <div class="col-md-6">
+            <div class="box box-success">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Personnels clés</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+			  <ul class="users-list clearfix">
+					{%if personnelcle%}
+						{%for user in personnelcle%}
+							<li class="intervenant-box">
+								<img width="35px" height="35px" src="{{asset('uploads/profils/'~user.path)}}" alt="{{user.nom}}"</td>
+								<a class="users-list-name" onclick="show_details({{intervenant.id}})" style="cursor: pointer;">{{user.nom}}</a>
+							</li>
+					   {%endfor%} 
+					{%endif%} 
+				</ul><!-- /.users-list -->
+              </div>
+                <!-- /.box-body end -->
+            </div>
+            </div>
+            <!-- Personnels clés end -->
+			</div><!-- row end -->
+			<div class="row"><!-- row start -->
+			<!-- Evolution  start -->
+			<div class="col-md-6">
+            <div class="box box-success">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Avancements</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+                  <div class="progress-group">
+                        <span class="progress-text">Attendue</span>
+                        <span class="progress-number"><b>{{intervenant.evolutionattendu}}</b>/100</span>
+                        <div class="progress sm">
+                          <div class="progress-bar progress-bar-aqua" style="width: {{intervenant.evolutionattendu}}%"></div>
+                        </div>
+                    </div>
+                  <div class="progress-group">
+                        <span class="progress-text">Réalisée</span>
+                        <span class="progress-number"><b>{{intervenant.evolutionencours}}</b>/100</span>
+                        <div class="progress sm">
+                          <div class="progress-bar progress-bar-red" style="width: {{intervenant.evolutionencours}}%"></div>
+                        </div>
+                   </div>
+              </div>
+                <!-- /.box-body end -->
+				<div class="box-footer text-center">
+                          <div id="loader-evolution-intervenant{{intervenant.id}}" style="display: none;">
+                                <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+                          </div>
+                          <div id="lien-evolution-intervenant{{intervenant.id}}">
+                                <a class="users-list-name" onclick="edit_evolution_intervenant({{intervenant.id}})" style="cursor: pointer;">Mettre à jour</a>
+                          </div>
+					  </div><!-- /.box-footer -->
+            </div>
+        </div>
+		<!-- Evolution end -->	
+		
+		<!-- Documentation start -->
+			<div class="col-md-6">
+            <div class="box box-success">
+                <!-- /.box-header start -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Documentation</h3>                      
+              </div>
+                <!-- /.box-header end -->
+
+                <!-- /.box-body start-->
+              <div class="box-body">
+                <div><a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}" class="btn btn-primary">Acceder à la documentation</a></div>  
+              </div>
+                <!-- /.box-body end -->
+            </div>
+            </div>
+		<!-- Documentation end -->
+		
+        </div>
+    </div>
+    <!-- Central Panel end-->
+
+  </div>
+    <!-- /.box-body end -->
+</div>
+<!-- Intervenants du projet end -->
+
+<div id="form_evolution_intervenant" class="modal fade" tabindex="-1" role="dialog">
+    
+</div> 
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_evolution.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Projet" table="projet">
+    <id name="idprojet" type="bigint" column="idProjet">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="code" type="string" column="code" length="255" nullable="true"/>
+    <field name="intitule" type="string" column="intitule" length="255" nullable="true"/>
+    <field name="description" type="text" column="description" nullable="true"/>
+    <field name="datedebut" type="datetime" column="dateDebut" nullable="true"/>
+    <field name="datefin" type="datetime" column="dateFin" nullable="true"/>
+    <field name="budget" type="bigint" column="budget" nullable="true"/>
+    <field name="demandeur" type="string" column="demandeur" length="255" nullable="true"/>
+    <field name="evolutionattendu" type="float" column="evolutionAttendu" precision="10" scale="0" nullable="true"/>
+    <field name="evolutionencours" type="float" column="evolutionEncours" precision="10" scale="0" nullable="true"/>
+    <field name="statut" type="integer" column="statut" nullable="true"/>
+  </entity>
+</doctrine-mapping>

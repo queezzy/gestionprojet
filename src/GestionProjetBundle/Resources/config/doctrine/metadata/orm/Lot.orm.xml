@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Lot" table="lot">
+    <id name="idlot" type="bigint" column="idLot">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nom" type="string" column="nom" length="255" nullable="true"/>
+    <field name="datedebut" type="datetime" column="dateDebut" nullable="true"/>
+    <field name="datefin" type="datetime" column="dateFin" nullable="true"/>
+    <field name="description" type="text" column="description" nullable="true"/>
+    <field name="statut" type="integer" column="statut" nullable="true"/>
+    <many-to-many field="idtache" target-entity="Tache" mapped-by="idlot"/>
+  </entity>
+</doctrine-mapping>

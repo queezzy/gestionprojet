@@ -1,0 +1,316 @@
+{# Page Intervenants du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Intervenants{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuIntervenant %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+  Intervenants
+{% endblock %}
+
+{% block contenupage %}
+{% if display_tab == 1 %}
+<div class="row" id="block_table_intervenants">
+{% else %}
+<div class="row" style="display: none;" id="block_table_intervenants">
+{% endif %}
+    {% if app.session.flashbag.get('message_success') %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div>
+    {% elseif app.session.flashbag.get('message_delete_failure')  %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_delete_failure') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div> <!-- /controls -->
+        {% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success"> 
+            <div class="box-header">
+                <h3 class="box-title">Intervenants</h3>{% if is_granted('ROLE_SUPER_ADMIN') %}<button id='nouvelintervenant' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>{% endif %}
+            </div>
+            <div class="box-body">
+                <div id="table_intervenants">
+                    
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Logo</th>
+                                <th>Nom</th>
+                                <th>Lot</th>
+                                <th>Localisation</th>
+                                <th>Email</th>
+                                <th>Telephone</th>
+                                <th>Evolution attendue</th>
+                                <th>Evolution en cours</th>
+                               {% if is_granted('ROLE_SUPER_ADMIN') %} <th class=" no-link last"><span class="nobr">Actions</span>{% endif %}
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbodyintervenants">
+                            {%if liste_intervenants%}
+                                {%for intervenant in liste_intervenants%}
+									
+                                    <tr id="lignetable{{intervenant.id}}" class="odd pointer" style="cursor: pointer;">
+                                        <td onclick="show_details({{intervenant.id}})" class=" "><img width="25px" height="25px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"/></td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.nom}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idlot.nom}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" "><a style="text-decoration:none;" href="{{asset('uploads/planslocalisation/'~intervenant.idadresse.path)}}">{{intervenant.idadresse.lieu}} </a></td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.email}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.telephone}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionattendu}}</td>
+                                        <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionencours}}</td>
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+										<td class=" last">
+                                            <a id="action-edit{{intervenant.id}}" onclick="edit_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                            <a id="action-delete{{intervenant.id}}" onclick="delete_intervenant({{intervenant.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
+                                            <a id="loader-edit-delete{{intervenant.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+                                        </td>
+										{% endif %}
+                                    </tr>
+                                {%endfor%} 
+                            {%endif%} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+{% if display_tab == 1 %}
+<div class="row" style="display:none;" id="block_form_intervenant">
+{% else %}
+<div class="row" id="block_form_intervenant">
+{% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success">
+            <div class=" box-header">
+                <h3>Ajout d'un intervenant</h3> 
+            </div>
+            <div class=" box-body">
+                
+                <form id="form_intervenant" role="form" method="post" action = "{{ path('gp_intervenant_add')}}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
+                    <div class="item form-group">
+                        <input id="idintervenant" value="" name="idintervenant" type="hidden">
+                        {{form_widget(form._token)}}
+                    </div>
+
+                    <div class="item form-group">           
+                        {{ form_label(form.nom, "Nom", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.nom) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Nom', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.telephone, "Telephone", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.telephone) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.telephone, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Telephone'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.email, "Email", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.email) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.email, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Email'}}) }}
+                        </div>
+                    </div>
+                    {#<div class="item form-group">
+                        {{ form_label(form.idadresse.latitude, "Latitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.latitude) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.latitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Latitude'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.longitude, "Longitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.longitude) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.longitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Longitude'}}) }}
+                        </div>
+                    </div>#}
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.boitepostale, "Boite de postale", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.boitepostale) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.boitepostale, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Boite postale'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.lieu, "Lieu", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.lieu) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.lieu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Lieu'}}) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.url, "Plan de localisation", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.url, { 'attr' : {'class' : 'inputfile' }}) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.url) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.file, "Logo", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.file) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.idprojet, "Code du projet", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idprojet) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idprojet, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Code du projet'}}) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.idlot, "Nom du lot", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idlot) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idlot, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Code du projet'}}) }}
+                        </div>
+                    </div>
+                        
+                     <div class="form-group">
+                        {{ form_label(form.evolutionattendu, "Evolution attendue", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionattendu) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.evolutionattendu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                            
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.evolutionencours, "Evolution en cours", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionencours) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.evolutionencours, {'attr': {'class':'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                           
+                        </div>
+                    </div>
+                    	
+                    <div class="item form-group">
+                        {{ form_label(form.presentation, "Presentation", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.presentation) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.presentation, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.rolemission, "Rôle et mission", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.rolemission) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.rolemission, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.description) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    										
+                    {% if app.session.flashbag.get('message_failure') %}										
+                    <div id="message_intervenant">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %} 
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="close_form" class="btn btn-danger">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/dtintervenant/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal hide fade" id="confirmModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4>Confirmation de la suppression</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" class="span3" id="idintervenanttodelete" name="idsemaine"  value="">
+        <p>La suppression de cet intervenant supprimera aussi les défaillances qui lui sont associées</p>
+        <p>Confirmez-vous cette suppression ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="confirmModalNo">Non</button>
+        <button  class="btn btn-primary" id="confirmModalYes">Oui</button>
+    </div>
+</div>
+<div class="modal hide fade" id="alertModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p id="message_alert"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="ok">OK</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_intervenant.js')}}"></script>
+    <script>
+      $(function () {
+        $("#listeintervenants").DataTable();
+      });
+    </script>
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Documentation{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuIntervenant %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_intervenant')}}">Intervenants</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li><a href="{{path('gp_intervenant_details', {'id': intervenant.id})}}">{{intervenant.nom}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}<li><a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}">Documentation</a></li>{% endblock %}
+{% block breadcrumbPlusPP %}<li>Courriers envoyés</li>{% endblock %}
+{% block contenupage %}
+{% if display_tab == 1 %}
+<div class="row" id="block_table_couriers">
+{% else %}
+<div class="row" style="display: none;" id="block_table_couriers">
+{% endif %}
+    {% if app.session.flashbag.get('message_success') %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div>
+    {% elseif app.session.flashbag.get('message_delete_failure')  %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_delete_failure') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div> <!-- /controls -->
+        {% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success"> 
+            <div class="box-header">
+                <h3 class="box-title">Courriers envoyés</h3>
+				{%if app.user%}
+					{%if app.user.idintervenant%}
+						{%if app.user.idintervenant.id == intervenant.id%}
+							<button id='nouvelcourier' class ="pull-right btn btn-primary"><i class="fa fa-envelope margin-r-5"></i> Envoyer</button>
+						{%endif%}
+					{%endif%}
+				{%endif%}
+            </div>
+            <div class="box-body">
+                <div id="table_couriers">
+                    <table id="example" class="table table-striped responsive-utilities">
+                        <thead>
+                            <tr class="headings">
+                                <th>Date</th>
+                                <th>Réference</th>
+                                <th>Objet</th>
+                                <th>Destinataire</th>
+                                <th>En copie</th>
+                                <th>Pièces jointes</th>
+                                <th>Courrier de reference</th>
+                            </tr>
+                        </thead>                        
+                        <tbody id="tbodyintervenants">
+                            {%if liste_couriers%}
+                                {%for courier in liste_couriers%}
+                                    <tr id="lignetable{{courier.id}}" class="odd pointer" style="cursor: pointer;">
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.date|date('d/m/Y')}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.reference}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.objet}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{{courier.destinataire.nom}}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierenvoyes%}<div><ul >{%for courierenvoye in courier.courierenvoyes%}<li>{{courierenvoye.idintervenant.nom}}</li>{%endfor%}</ul></div> {%endif%}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.originalpiecesjointes%}<div><ul >{%for piecejointe in courier.originalpiecesjointes%}<li>{{piecejointe}}</li>{%endfor%}</ul></div> {%endif%}</td>
+                                        <td onclick="show_details({{courier.id}})" class=" ">{%if courier.courierreference%}{{courier.courierreference.reference}}{%endif%} </td>
+                                    </tr>
+                                {%endfor%} 
+                            {%endif%} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+{% if display_tab == 1 %}
+<div class="row" style="display:none;" id="block_form_courier">
+{% else %}
+<div class="row" id="block_form_courier">
+{% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <h3 class="">Envoie d'un courrier</h3>
+            </div>
+            <div class="box-body">
+                
+                <form id="form_courier" method="post" action="{{ path("gp_courier_add", {'id': intervenant.id}) }}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
+                    <div class="item form-group">
+                        <input id="idcourier" value="" name="idcourier" type="hidden">
+                        {{form_widget(form._token)}}
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.destinataire, "A", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.destinataire) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.destinataire, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Courrier de reference'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">En copie</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<select class="form-control multiselect col-md-7 col-md-offset-2" multiple="multiple" name="destinataires[]">
+							  {%if liste_intervenants%}
+								{%for intervenant in liste_intervenants%}
+								<option value="{{intervenant.id}}">{{intervenant.nom}}</option>
+								{% endfor %}    
+							  {% endif %}
+							</select>
+							</div>
+                    </div>
+                        
+                    <div class="item form-group">           
+                        {{ form_label(form.file, "Reference", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.file) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">           
+                        {{ form_label(form.objet, "Objet: ", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.objet) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.objet, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Objet du courier', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                     <div class="item form-group">
+                        {{ form_label(form.contenu, "Contenu: ", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.contenu) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.contenu, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.courierreference, "Courrier de reference", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.courierreference) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.courierreference, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Courrier de reference'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">           
+                        {{ form_label(form.uploadedFiles, "Pieces jointes", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.uploadedFiles) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.uploadedFiles, { 'attr' : {'class' : 'inputfile' }}) }}
+                        </div>
+                    </div>
+					 
+                    {% if app.session.flashbag.get('message_failure') %}										
+                    <div id="message_courier">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <a id="send" href="{{path("gp_courier",{'id' : intervenant.id})}}" class="btn btn-danger">Annuler</a>
+                            <button id="send" type="submit" class="btn btn-success">Envoyer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>                  
+
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_courier.js')}}"></script>
+{% endblock %}{# empty Twig template #}

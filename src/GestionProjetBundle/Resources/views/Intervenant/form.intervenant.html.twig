@@ -1,0 +1,162 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <h3 class="box-title">Modification d'un intervenant</h3>
+            </div>
+            <div class="box-body">
+                
+                <form id="form_intervenant" role="form" method="post" action = "{{ path('gp_intervenant_update',{'id': idintervenant})}}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
+                    <div class="item form-group">
+                        <input id="idintervenant" value="" name="idintervenant" type="hidden">
+                        {{form_widget(form._token)}}
+                    </div>
+
+                    <div class="item form-group">           
+                        {{ form_label(form.nom, "Nom", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.nom) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Nom', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.telephone, "Telephone", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.telephone) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.telephone, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Telephone'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.email, "Email", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.email) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.email, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Email'}}) }}
+                        </div>
+                    </div>
+                    {#<div class="item form-group">
+                        {{ form_label(form.idadresse.latitude, "Latitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.latitude) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.latitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Latitude'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.longitude, "Longitude", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.longitude) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.longitude, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Longitude'}}) }}
+                        </div>
+                    </div>#}
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.boitepostale, "Boite de postale", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.boitepostale) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.boitepostale, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Boite postale'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.lieu, "Lieu", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.lieu) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.lieu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Lieu'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.idadresse.url, "Plan de localisation", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idadresse.url, { 'attr' : {'class' : 'inputfile' }}) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idadresse.url) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.file, "Logo", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.file, { 'attr' : {'class' : 'inputfile' }}) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.file) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.idprojet, "Code du projet", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idprojet) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idprojet, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Code du projet'}}) }}
+                        </div>
+                    </div>
+                        
+                    <div class="item form-group">
+                        {{ form_label(form.idlot, "Nom du lot", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.idlot) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.idlot, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Code du projet'}}) }}
+                        </div>
+                    </div>
+                        
+                     <div class="form-group">
+                        {{ form_label(form.evolutionattendu, "Evolution attendue", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionattendu) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.evolutionattendu, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                            
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.evolutionencours, "Evolution en cours", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.evolutionencours) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.evolutionencours, {'attr': {'class':'form-control col-md-7 col-xs-12', 'required':'required'}}) }}
+                           
+                        </div>
+                    </div>
+                    	
+                    <div class="item form-group">
+                        {{ form_label(form.presentation, "Presentation", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.presentation) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           {{ form_widget(form.presentation, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.rolemission, "Rôle et mission", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.rolemission) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.rolemission, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.description) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    										
+                    {% if app.session.flashbag.get('message_failure') %}										
+                    <div id="message_intervenant">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="close_form" class="btn btn-danger">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/dtintervenant/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>

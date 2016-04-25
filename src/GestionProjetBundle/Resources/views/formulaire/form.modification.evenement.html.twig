@@ -1,0 +1,97 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+    <link href="{{asset('bundles/gestionprojet/css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/gestionprojet/css/colorPicker.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/gestionprojet/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block menuCalendrier %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+    Evenements
+{% endblock %}
+
+{% block contenupage %}
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3>Modification d'un évènement</h3>
+        </div><!-- /.box-header -->
+        <form role="form" action="{{ path('gestion_projet_evenement_update',{'id' : idcalendrier})}}" {{ form_enctype(form) }} method="POST">
+            <div class="box-body">
+                <div class="row col-md-8 col-md-offset-2">
+                    <div >
+
+                        <div class="form-group">
+                            {{ form_label(form.titre,"Titre") }}
+                            {{ form_errors(form.titre)}}
+                            {{ form_widget(form.titre,{'attr':{'class':'form-control'}})}}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.description,"Description") }}
+                            {{ form_errors(form.description)}}
+                            {{ form_widget(form.description,{'attr':{'class':'form-control ckeditor'}})}}
+                        </div>
+                        <div id="calendrier_codecouleur" class="form-group">
+                            {{ form_label(form.codecouleur,"Couleur") }}
+                            {{ form_errors(form.codecouleur)}}
+                            {{ form_widget(form.codecouleur,{'attr':{'class':'form-control'}})}}
+                        </div>
+
+
+                        <div class="form-group">
+                            {{ form_label(form.datedebut,"Date de debut") }}
+                            {{ form_errors(form.datedebut)}}
+                            {{ form_widget(form.datedebut)}}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.datefin,"Date de fin") }}
+                            {{ form_errors(form.datefin)}}
+                            {{ form_widget(form.datefin)}}
+                        </div>
+                        {{ form_rest(form) }}
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer col-md-8 col-md-offset-2">
+                <button type="reset" class="btn btn-danger">Annuler</button>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/jquery.colorPicker.min.js')}}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#calendrier_codecouleur').colorPicker();
+            $(".data-table").DataTable();
+
+        });
+        $(function () {
+            $('#calendrier_codecouleur').colorPicker();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,108 @@
+{# Page Utilisateurs du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    
+{% endblock %}
+
+{% block breadcrumbDescription %}
+  
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Utilisateurs
+{% endblock %}
+{% block menuUtilisateur %}class="active"{% endblock %}
+
+{% block contenupage %}
+<div class="row col-md-12">
+<!-- Intervenants start-->
+<div class="box box-success">
+<div class="box-header">
+  <h3 class="box-title">Liste des Utilisateurs</h3>{% if is_granted('ROLE_ADMIN_ACTIF') %}<a href="{{path("fos_user_registration_register")}}" class="pull-right btn btn-primary"><i class="fa fa-plus margin-r-5"></i>Ajouter</a>{% endif %}
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table id="example" class="table table-striped responsive-utilities jambo_table">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Fonction</th>
+        <th>Entreprise</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Activé</th>
+        <th>Privilèges</th>
+        {% if is_granted('ROLE_ADMIN_ACTIF') %}<th>Action</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      
+    {% for utilisateur in utilisateurs %}
+      <tr>
+          <td><img width="25px" height="25px" src="{{asset('uploads/profils/'~utilisateur.path)}}" alt="{{utilisateur.nom}}" /></td>
+        <td>{{utilisateur.nom}}</td>
+        <td>{{utilisateur.prenom}}</td>
+        <td>{{utilisateur.fonction}}</td>
+        
+        <td>{% if utilisateur.idintervenant.nom is defined %}
+            {{utilisateur.idintervenant.nom}}
+            {%endif%}
+        </td>
+        <td>{{utilisateur.email}}</td>
+        <td>{{utilisateur.telephone}}</td>
+        <td>{%if utilisateur.enabled %}
+                oui
+            {%else%}
+                non
+            {%endif%}    
+        </td>
+        <td>{% for r in utilisateur.roles %}
+            {{r ~' '}}
+            {%else%}
+             -
+             {%endfor%}
+        </td>
+		{% if is_granted('ROLE_ADMIN_ACTIF') %}
+        <td><a href="{{path('gestion_projet_utilisateurs_bloques',{'id' : utilisateur.id})}}">Bloquer</a>|<a href="{{path('gestion_projet_utilisateurs_bloques',{'id' : utilisateur.id})}}">Débloquer</a></td>
+		{% endif %}
+	  </tr>
+    {% else %}
+      <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td> -</td>
+        <td>-</td>
+        <td> -</td>
+        <td> -</td>
+        <td>-</td>
+      </tr>
+    {% endfor %}      
+    </tbody>
+  </table>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 
+
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+{% endblock %}

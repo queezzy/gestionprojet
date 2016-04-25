@@ -1,0 +1,149 @@
+{# Template de bundle de l'application #}
+{% extends "::base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menu %}
+<!-- Menu Start -->
+<section class="navbar navbar-default navbar-top menu-block">
+	<div class="row ligne-menu">               
+        <div class="col-md-9 col-md-offset-1"> 
+            <!-- Menu start -->
+            <ul class="nav navbar-nav navbar-left treeview treeview-menu">
+              <li {% block menuAccueil %}{% endblock %}>
+                <a href="{{path("homepage")}}">
+                  <i class="fa fa-home"></i> <span>Accueil</span>
+                </a>
+              </li>
+              <li {% block menuEvolution %}{% endblock %}>
+                <a href="{{path('gp_evolution')}}">
+                  <i class="fa fa-pie-chart"></i>
+                  <span>Evolution</span>
+                </a>
+              </li>
+              <li {% block menuCalendrier %}{% endblock %}>
+                <a href="{{path("projet_calendrier")}}">
+                  <i class="fa fa-calendar"></i> 
+                  <span>Calendrier</span> 
+                </a>
+              </li>
+              <li {% block menuActualite %}{% endblock %}>
+                <a href="{{path("gestion_projet_actualite_all")}}">
+                  <i class="fa fa-newspaper-o"></i>
+                  <span>Actualités</span>
+                </a>
+              </li>
+             {# <li {% block menuDocumentation %}{% endblock %}>
+
+                <a href="{{path("gestion_projet_ressource_all")}}">
+                  <i class="fa fa-edit"></i>
+                  <span>Documentation</span>
+                </a>
+              </li> #}
+              <li {% block menuUtilisateur %}{% endblock %}>
+                <a href="{{path("gestion_projet_utilisateurs_all")}}">
+                  <i class="fa fa-users"></i>
+                  <span>Utilisateurs</span>
+                </a>
+              </li>
+              <li {% block menuCollaboration %}{% endblock %}>
+                <a href="{{path('gestion_projet_send_mail')}}">
+                  <i class="fa fa-comment"></i> 
+                  <span>Collaboration</span>
+                </a>
+              </li>
+              <li {% block menuIntervenant %}{% endblock %}>
+                <a href="{{path('gp_intervenant')}}">
+                  <i class="fa fa-coffee"></i> 
+                  <span>Intervenants</span>
+                </a>
+              </li>
+			  <li {% block menuGaleriephotos %}{% endblock %}>
+			  {{render(controller('GestionProjetBundle:Projet:menusgaleriephotos'))}}
+              </li>
+            </ul>
+            <!-- Menu end -->
+        </div> 
+        <!-- Sidebar user panel Start-->
+        <div class="pull-right info col-md-2">
+          <!--div class="pull-left image">
+            <img src="" class="img-circle" alt="User Image" />
+			
+          </div-->
+          <div class="info dropdown col-md-3">
+                <a href="" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user"></i><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="center-block center" style = "color: black;"><bold>{% if app.user.username is defined %}{{app.user.username}}{% endif%}</bold></li>
+                    <li><a href="{{path('fos_user_profile_show')}}"><i class="fa fa-eye"></i>Voir profil</a></li>
+                     <li><a href="{{path('gestion_projet_send_mail')}}"><i class="fa fa-envelope"></i>Envoyer mail</a></li>
+                    <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-lock"></i>Se déconnecter</a></li>
+                </ul>
+          </div>
+		  {% if is_granted('ROLE_ADMIN_ACTIF') %}
+          <div class="info dropdown col-md-6">
+                <a href="" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-gear"></i><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{path('gp_projet_admin')}}">Gérer le projet</a></li>{% endif %}
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{ path('gp_lot') }}">Gérer les lots</a></li>{% endif %}
+					{% if is_granted('ROLE_ADMIN_ACTIF') %}{{render(controller('GestionProjetBundle:Projet:sousmenugestionphoto'))}}{% endif %}
+                    <!--li><a href="{{path('gp_tache')}}">Gérer les taches</a></li-->
+                    <!--li><a href="#">Gérer les themes</a></li-->
+                </ul>
+          </div>
+		  {%  endif %}
+        </div>
+        <!-- Sidebar user panel End-->
+   </div>
+      
+</section>
+<!-- Menu End -->
+{% endblock %}
+
+{% block contenu %} 
+      <div class="row">
+        <!-- Block contenu  Start-->
+        
+        <div class="col-md-12 main-contain">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <h1>
+               {% block breadcrumbTitle %}
+                    Accueil
+               {% endblock %}
+              <small><bold>{% block breadcrumbDescription %}Résumé du projet{% endblock %}</bold></small>
+            </h1>
+            <ol class="breadcrumb">
+              <li><a href="{{path("homepage")}}"><i class="fa fa-dashboard"></i> Projet</a></li>
+              <li>{% block breadcrumbPosition %}Accueil{% endblock %}</li>
+			  {% block breadcrumbPlus %}{% endblock %}
+			  {% block breadcrumbPlusP %}{% endblock %}
+			  {% block breadcrumbPlusPP %}{% endblock %}
+            </ol>
+          </section>
+
+          
+          <!-- Main content Start-->
+          <section class="content">
+             <div class="row col-md-offset-0 col-md-12">
+            {% block contenupage %}
+
+            {% endblock %}
+            </div>
+          </section>
+          <!-- Main content End-->
+          
+        </div>
+        
+        <!-- Block contenu End -->
+      </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+{% endblock %}

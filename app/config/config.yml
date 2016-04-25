@@ -2,15 +2,16 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@GestionProjetBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -56,6 +57,10 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            string_functions:
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -63,4 +68,27 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
+    encryption:  "%mailer_encryption%"
+    #auth_mode: "%mailer_auth_mode%"
+    port:  "%mailer_port%"
     spool:     { type: memory }
+
+fos_user:
+    db_driver:  orm
+    firewall_name:  main
+    user_class: UserBundle\Entity\Utilisateur
+    registration:
+        form:
+            type: UserBundle\Form\RegistrationType
+    profile:
+        form:
+            type: UserBundle\Form\ProfileType
+
+fos_message:
+    db_driver: orm
+    thread_class: GestionProjetBundle\Entity\Thread
+    message_class: GestionProjetBundle\Entity\Message
+    #spam_detector: fos_message.akismet_spam_detector
+    
+fos_js_routing:
+    routes_to_expose: [projet_calendrier_events,gestion_projet_evenement_update]

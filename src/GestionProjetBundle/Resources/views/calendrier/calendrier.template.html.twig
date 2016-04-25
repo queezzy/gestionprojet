@@ -1,0 +1,139 @@
+{# Page Calendrier du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Calendrier{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.css')}}' />
+    <link rel='stylesheet' href='{{ asset('bundles/gestionprojet/fullcalendar/lib/cupertino/jquery-ui.min.css')}}' />
+    <style>
+
+        /*body {
+
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }*/
+
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+    </style>
+    {# Fichiers css en plus #}
+{% endblock %}
+{% block menuCalendrier %}class="active"{% endblock %}
+
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    
+{% endblock %}
+
+{% block breadcrumbDescription %}
+    
+{% endblock %}
+
+{% block breadcrumbPosition %}
+    Calendrier 
+{% endblock %}
+
+{% block contenupage %}
+    <div>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}<h5 class='center'><a href="{{path("gestion_projet_calendrier_new")}}" class="pull-right btn btn-primary"><i class="fa fa-plus"></i>Ajouter un évènement</a></h5>{% endif %}
+        <div id='calendar' class='skin-blue'></div>
+        <div id="fullCalModal" class="modal fade">
+            <div id="eventContent" title="Event Details" style="display:none;">
+                Debut: <span id="startTime"></span><br>
+                Fin: <span id="endTime"></span><br><br>
+                <p id="eventInfo"></p>
+                <p class="pull-right"><strong><a id="eventLink" href="">Modifier</a></strong></p>
+            </div>
+        </div>
+    </div>
+    <div id='loading'>loading...</div>
+    <div id='script-warning' class='hide'>
+        <code class='hide-text'>Une erreur s'est produite lors du chargement des evenements</code>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    {#{ parent()}#}
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/jquery.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lib/moment.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/js/jquery-ui.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/js/bootstrap.min.js')}}'></script>
+	<script src="{{asset('bundles/gestionprojet/js/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/fastclick.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/gestionprojet/js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
+	<script src='{{ asset('bundles/gestionprojet/js/moment.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/js/jquery-ui.min.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/fullcalendar.js')}}'></script>
+    <script src='{{ asset('bundles/gestionprojet/fullcalendar/lang-all.js')}}'></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    $("#eventInfo").html(calEvent.description);
+                    $("#eventLink").attr('href', Routing.generate('gestion_projet_evenement_update', {'id': calEvent.id}));
+                    $("#startTime").html(moment(calEvent.start).format('Do MMM  h:mm A'));
+                    $("#endTime").html(moment(calEvent.end).format('Do MMM h:mm A'));
+                    $("#eventContent").dialog({modal: true, title: calEvent.title});
+       
+                // change the border color just for fun
+                $(this).css('border-color', 'red');
+
+            },
+            defaultDate: new Date(),
+            lang: 'fr',
+            selectable: false,
+            selectHelper: true,
+           {# select: function (start, end) {
+                var title = prompt('Event Title:');
+                var eventData;
+                if (title) {
+                    eventData = {
+                        title: title,
+                        start: start,
+                        end: end
+                    };
+                    $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                }
+                $('#calendar').fullCalendar('unselect');
+            },#}
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: {
+                url: Routing.generate('projet_calendrier_events'),
+                error: function (data) {
+                    alert(data);
+                    $('#script-warning').show();
+                }
+            },
+            loading: function (bool) {
+                $('#loading').toggle(bool);
+            }
+
+        });
+
+    });
+
+    </script>
+    {# Fichiers js en plus #}
+{% endblock %}

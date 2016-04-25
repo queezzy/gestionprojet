@@ -1,0 +1,86 @@
+{# Page Documentation du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Documentation {% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuIntervenant %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_intervenant')}}">Intervenants</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li><a href="{{path('gp_intervenant_details', {'id': intervenant.id})}}">{{intervenant.nom}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}<li>Documentation</li>{% endblock %}
+{% block contenupage %}
+  <!-- Documents administratifs start-->
+<div class="col-md-6">
+   
+    {% render(controller("GestionProjetBundle:Ressource:getRessourcesAdministratifs", {'idintervenant': intervenant.id}))%}
+</div>
+<!-- Documents administratifs end-->
+
+<!-- Courrier start-->
+<div class="col-md-6">
+    <div class="box box-success">
+        <!-- /.box-header start -->
+      <div class="box-header with-border">   
+		<h3 class="box-title">Courriers</h3>
+      </div>
+        <!-- /.box-header end -->
+
+        <!-- /.box-body start-->
+      <div class="box-body">
+        <div class = "row"><a href="{{path("gp_courier",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers envoyés</a></div>
+		<br />
+		<div class = "row"><a href="{{path("gp_courier_recus",{'id' : intervenant.id})}}" class="btn btn-primary col-md-3">Courriers reçus</a></div>
+      </div>
+        <!-- /.box-body end -->
+    </div>
+</div>
+<!-- Courrier end-->
+
+<!-- Documents d'exécution start-->
+<div class="col-md-6">
+    <div class="box box-success">
+        <!-- /.box-header start -->
+      <div class="box-header with-border">
+        <h3 class="box-title">Documents d'exécution</h3>  <a href="{{path('gestion_projet_ressource_new')}}"class="pull-right"><i class="fa fa-plus"></i></a>                     
+      </div>
+        <!-- /.box-header end -->
+
+        <!-- /.box-body start-->
+      <div class="box-body">
+          {#% render(controller("GestionProjetBundle:Ressource:getRessourcesValides", {'idintervenant': intervenant.id}))%#}
+
+          {#% render(controller("GestionProjetBundle:Ressource:getRessourcesNonValides", {'idintervenant': intervenant.id}))%#}
+		<div class = "row"><a id="send" href="{{path("gestion_projet_documents_execution_valide",{'id' : intervenant.id})}}" class="btn btn-primary col-md-2">Validés</a></div>
+		<br />
+		<div class = "row"><a id="send" href="{{path("gestion_projet_documents_execution_non_valide",{'id' : intervenant.id})}}" class="btn btn-primary col-md-2">Non validés</a></div>
+      </div>
+        <!-- /.box-body end -->
+    </div>
+</div>
+<!-- Documents d'exécution end-->  
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+{% endblock %}

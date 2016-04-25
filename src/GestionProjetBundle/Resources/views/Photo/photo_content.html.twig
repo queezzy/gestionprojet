@@ -1,0 +1,170 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Photos{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Photos
+{% endblock %}
+{% block contenupage %}
+{% if display_tab == 1 %}
+<div class="row" id="block_table_photos">
+{% else %}
+<div class="row" style="display: none;" id="block_table_photos">
+{% endif %}
+    {% if app.session.flashbag.get('message_success') %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div>
+    {% elseif app.session.flashbag.get('message_delete_failure')  %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_delete_failure') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div> <!-- /controls -->
+        {% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success"> 
+            <div class="box-header">
+                <h3 class="box-title">Photos du chantier</h3><button id='nouvelphoto' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
+            </div>
+            <div class="box-body">
+                <div id="table_photos">
+                    <table id="example" class="table table-striped responsive-utilities">
+                        <thead>
+                            <tr class="headings">
+								<th>Aperçu</th>
+                                <th>Date de prise</th>
+                                <th>Intitule</th>
+								<th class=" no-link last"><span class="nobr">Actions</span>
+                            </tr>
+                        </thead>                        
+                        <tbody id="tbodyintervenants">
+                            {%if liste_photos%}
+                                {%for photo in liste_photos%}
+                                    <tr id="lignetable{{photo.id}}" class="odd pointer" style="cursor: pointer;">
+										<td onclick="show_details({{photo.id}})" class=" "><img width="25px" height="25px" src="{{asset('uploads/photoschantier/'~photo.path)}}" alt="{{photo.intitule}}" /></td>
+                                        <td onclick="show_details({{photo.id}})" class=" ">{{photo.dateprise|date('d/m/Y')}}</td>
+                                        <td onclick="show_details({{photo.id}})" class=" ">{{photo.intitule}}</td>
+										<td class=" last">
+                                                <a id="action-edit{{photo.id}}" onclick="edit_photo({{photo.id}})" style="cursor: pointer;"><i class="fa fa-edit">Edit</i></a>
+                                                <a id="action-delete{{photo.id}}" onclick="delete_photo({{photo.id}})" style="cursor: pointer;"><i class="fa fa-trash">Delete</i></a>
+                                                <a id="loader-edit-delete{{photo.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+                                            </td>
+                                    </tr>
+                                {%endfor%} 
+                            {%endif%} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+{% if display_tab == 1 %}
+<div class="row" style="display:none;" id="block_form_photo">
+{% else %}
+<div class="row" id="block_form_photo">
+{% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <h3 class="">Ajout d'une photo</h3>
+            </div>
+            <div class="box-body">
+                
+                <form id="form_photo" method="post" action="{{ path("gp_photo_add", {'id': projet.id}) }}" {{ form_enctype(form) }} class="form-horizontal form-label-left" novalidate>
+                    <div class="item form-group">
+                        {{form_widget(form._token)}}
+                    </div>
+                    
+                    <div class="item form-group">
+                        {{ form_label(form.intitule, "Intitulé", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.intitule) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.intitule, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Intitulé de la photo'}}) }}
+                        </div>
+                    </div>
+                    
+					<div class="item form-group">           
+                        {{ form_label(form.dateprise, "Date de prise: ", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.dateprise) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                               {{ form_widget(form.dateprise) }}
+                        </div>  
+                    </div>
+					
+                    <div class="item form-group">           
+                        {{ form_label(form.url, "Photo", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.url) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.url, { 'attr' : {'class' : 'inputurl' }}) }}
+                        </div>
+                    </div>
+           
+                     <div class="item form-group">
+                        {{ form_label(form.description, "Description: ", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.description) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    {% if app.session.flashbag.get('message_failure') %}										
+                    <div id="message_photo">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <a id="send" href="{{path("gp_photo",{'id' : projet.id})}}" class="btn btn-danger">Annuler</a>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>                  
+
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_photo.js')}}"></script>
+{% endblock %}{# empty Twig template #}

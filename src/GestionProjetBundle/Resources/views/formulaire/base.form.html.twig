@@ -1,0 +1,51 @@
+{# Formulaire de base #}
+
+
+<form role="form">
+    <div class="box-body">
+       {# Un input #} 
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+      </div>
+      
+      {# Un input #} 
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      
+      {# Un file loader #}
+      <div class="form-group">
+        <label for="exampleInputFile">File input</label>
+        <input type="file" id="exampleInputFile">
+        <p class="help-block">Example block-level help text here.</p>
+      </div>
+      
+      {# Un checkbox #}
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Check me out
+        </label>
+      </div>
+      
+      {# Un select option avec son label de titre #}
+      <label>Select</label>
+        <select class="form-control">
+          <option>option 1</option>
+          <option>option 2</option>
+          <option>option 3</option>
+          <option>option 4</option>
+          <option>option 5</option>
+        </select>
+      
+      {# Une zone de saisie de texte riche ckeditor ne pas changer l'id (voir script template de base du projet) #}
+    <textarea id="ckeditor" name="editor1" rows="10" cols="80">
+          This is my textarea to be replaced with CKEditor.
+    </textarea>
+    </div><!-- /.box-body -->
+
+    <div class="box-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

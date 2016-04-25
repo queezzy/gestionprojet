@@ -1,0 +1,49 @@
+{# Template liste des documents non validés #}
+
+<div class="row">
+    <!-- Document start-->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Liste des documents d'exécution non validés</h3></h3><a href="{{path('gestion_projet_ressource_nonvalides')}}" class="pull-right"><i class="fa fa-plus"></i>Voir</a>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <table class="data-table table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Référence</th>
+                        <th>Description</th>
+                        <th>Intervenant</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for ressource in ressources %}
+                        <tr>
+                            <td><a href="{{asset('uploads/ressources/'~ressource.path)}}"> {{ressource.reference}} </a</td>
+
+                            <td>{{ressource.description}}</td>
+                            <td>{% if ressource.idintervenant.nom is defined %}
+
+                                {{ressource.idintervenant.nom}}
+                                {% endif%}
+                                </td>
+                                <td>
+                                    <a href="{{path('gestion_projet_ressource_update',{'id':ressource.id})}}" class="pull-right"><i class="fa fa-edit"></i></a>
+                                    <a href="{{path('gestion_projet_ressource_delete',{'id':ressource.id})}}" class="pull-right"><i class="fa fa-minus"></i></a>
+                                </td>
+                            </tr>
+                            {% else %}
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <!-- Intervenants end-->
+                </div><!-- /.row --> 

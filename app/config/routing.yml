@@ -1,3 +1,20 @@
-app:
-    resource: "@AppBundle/Controller/"
+
+gestion_projet:
+    resource: "@GestionProjetBundle/Controller/"
     type:     annotation
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+adesigns_calendar:
+  resource: "@ADesignsCalendarBundle/Resources/config/routing.xml"
+fos_message:
+    resource: "@FOSMessageBundle/Resources/config/routing.xml"
+    prefix: /optional_routing_prefix
+    
+
+gestion_projet_route:
+    resource: "@GestionProjetBundle/Resources/config/routing.yml"

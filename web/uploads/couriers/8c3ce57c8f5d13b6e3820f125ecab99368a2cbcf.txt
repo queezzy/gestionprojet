@@ -1,0 +1,4 @@
+var valeurs = [];
+$('input:checked[name=liste_select]').each(function() {
+  valeurs.push($(this).val());
+});

@@ -1,0 +1,205 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Lots{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Lots
+{% endblock %}
+
+{% block contenupage %}
+{% if display_tab == 1 %}
+<div class="row" >
+{% else %}
+<div class="row" style="display: none;">
+{% endif %}
+    <div class="col-md-12" id="block_table_lots">
+        {% if app.session.flashbag.get('message_success') %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div>
+        {% elseif app.session.flashbag.get('message_delete_failure')  %}
+        <div id="message_success">
+        <div id="myAlert" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {% for flash_message in app.session.flashbag.get('message_success') %}
+                {{ flash_message }}
+        {% endfor %}
+        </div>
+        </div> <!-- /controls -->
+        {% endif %}
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="box box-success"> 
+                <div class="box-header">
+                    <h3 class="box-title">Lots</h3><button id='nouvellot' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
+                </div>
+                <div class="box-body">
+                    <div id="table_lots">                        
+                        <table id="example" class="table table-striped responsive-utilities jambo_table">
+                            <thead>
+                                <tr class="headings">
+                                    <th>Nom</th>
+                                    <th>Date debut</th>
+                                    <th>Date fin</th>
+                                    <th class=" no-link last"><span class="nobr">Actions</span>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbodylots">
+                                {%if liste_lots%}
+                                    {%for lot in liste_lots%}
+                                        <tr id="lignetable{{lot.id}}" class="odd pointer" style="cursor: pointer;">                      
+                                            <td onclick="show_details({{lot.id}})" class=" ">{{lot.nom}}</td>
+                                            <td onclick="show_details({{lot.id}})" class=" ">{{lot.datedebut|date('d/m/Y')}}</td>
+                                            <td onclick="show_details({{lot.id}})" class=" ">{{lot.datefin|date('d/m/Y')}}</td>
+                                            <td class=" last">
+                                                <a id="action-edit{{lot.id}}" onclick="edit_lot({{lot.id}},'gp_lot_update')" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                                <a id="action-delete{{lot.id}}" onclick="delete_lot({{lot.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
+                                                <a id="loader-edit-delete{{lot.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+                                            </td>
+                                        </tr>
+                                    {%endfor%} 
+                                {%endif%} 
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="loader-details" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/gestionprojet/images/ajax-loader-details.gif')}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+    </div>
+</div>
+{% if display_tab == 1 %}
+<div class="row" style="display: none;" id="block_form_lot">
+{% else %}
+<div class="row" id="block_form_lot">
+{% endif %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <h3>Ajout d'un lot</h3>
+            </div>
+            <div class="box-body">
+                <form id="form_lot" method="post" action="{{ path("gp_lot_add") }}" class="form-horizontal form-label-left" novalidate>
+                    <div class="item form-group">
+                        <input id="idlot" value="" name="idlot" type="hidden">
+                        {{form_widget(form._token)}}
+                    </div>
+
+                    <div class="item form-group">           
+                        {{ form_label(form.nom, "Nom du lot", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.nom) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-7 col-xs-12','placeholder':'Nom du lot', 'required':'required'}}) }}
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                         {{ form_label(form.datedebut, "Date debut", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}   
+                         {{ form_errors(form.datedebut) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                               {{ form_widget(form.datedebut) }}
+                        </div>              
+                    </div>
+
+                      {# Date fin #} 
+                      <div class="item form-group">
+                         {{ form_label(form.datefin, "Date fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                         {{ form_errors(form.datefin) }}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                               {{ form_widget(form.datefin) }}
+                        </div>              
+                    </div>			
+           
+                    <div class="item form-group">
+                        {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
+                        {{ form_errors(form.description) }}
+                        <div class="col-md-6 col-sm-10 col-xs-12">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-6 col-xs-12'}}) }}
+                        </div>
+                    </div>
+                    {% if app.session.flashbag.get('message_failure') %}										
+                    <div id="message_lot">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button id="close_form" class="btn btn-danger">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div id="loader" style="display: none; margin-left: 50%;">
+                        <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>                  
+<div class="modal hide fade" id="confirmModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4>Confirmation de la suppression</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" class="span3" id="idlottodelete" name="idsemaine"  value="">
+        <p>La suppression de cet lot supprimera aussi les d�faillances qui lui sont associ�es</p>
+        <p>Confirmez-vous cette suppression ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="confirmModalNo">Non</button>
+        <button  class="btn btn-primary" id="confirmModalYes">Oui</button>
+    </div>
+</div>
+<div class="modal hide fade" id="alertModal" data-backdrop ="false" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p id="message_alert"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" id="ok">OK</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_lot.js')}}"></script>
+{% endblock %}{# empty Twig template #}

@@ -1,0 +1,273 @@
+homepage:
+    pattern: /
+    defaults: { _controller: GestionProjetBundle:Default:index }
+    options:
+        expose: true
+
+gp_header_projet_actif:
+    pattern: /header-projet-actif
+    defaults: { _controller: GestionProjetBundle:Projet:headerprojetactif }
+    options:
+        expose: true
+
+gp_accueil:
+    pattern: /accueil
+    defaults: { _controller: GestionProjetBundle:Default:accueil }
+    options:
+        expose: true
+
+gp_intervenants_accueil:
+    pattern: /get-intervenants-accueil
+    defaults: { _controller: GestionProjetBundle:Intervenant:getIntervenantsForAccueil }
+    options:
+        expose: true
+        
+gp_presentation_projet_accueil:
+    pattern: /get-presentation-projet-accueil
+    defaults: { _controller: GestionProjetBundle:Projet:getPresentationProjetAccueil }
+    options:
+        expose: true
+        
+gp_projet_admin:
+    pattern: /projets-admin
+    defaults: { _controller: GestionProjetBundle:Projet:projet }
+    options:
+        expose: true
+
+gp_projet_add:
+    pattern: /add-projet
+    defaults: { _controller: GestionProjetBundle:Projet:addprojet }
+    options:
+        expose: true
+        
+gp_projet_update:
+    pattern: /update-projet/{id}
+    defaults: { _controller: GestionProjetBundle:Projet:updateprojet }
+    options:
+        expose: true
+        
+gp_projet_get:
+    pattern: /get-projet/{id}
+    defaults: { _controller: GestionProjetBundle:Projet:getprojet }
+    options:
+        expose: true
+
+gp_projet_delete:
+    pattern: /delete-projet/{id} 
+    defaults: { _controller: GestionProjetBundle:Projet:deleteprojet }
+    options:
+        expose: true
+
+gp_intervenant:
+    pattern: /intervenants
+    defaults: { _controller: GestionProjetBundle:Intervenant:intervenants }
+    options:
+        expose: true
+        
+gp_intervenant_add:
+    pattern: /add-intervenant
+    defaults: { _controller: GestionProjetBundle:Intervenant:addintervenant }
+    options:
+        expose: true
+
+gp_intervenant_update:
+    pattern: /update-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Intervenant:updateintervenant }
+    options:
+        expose: true
+        
+gp_intervenant_get:
+    pattern: /get-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Intervenant:getintervenant }
+    options:
+        expose: true
+        
+gp_intervenant_delete:
+    pattern: /delete-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Intervenant:deleteintervenant }
+    options:
+        expose: true
+        
+gp_intervenant_details:
+    pattern: /get-details-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Intervenant:getdetailsintervenant }
+    options:
+        expose: true
+        
+gp_evenement_update:
+    pattern: /evenement/modifier/{id}
+    defaults: { _controller: GestionProjetBundle:Calendar:updateEvenement }
+    options:
+        expose: true
+        
+gp_tache:
+    pattern: /taches
+    defaults: { _controller: GestionProjetBundle:Tache:taches }
+    options:
+        expose: true
+        
+gp_tache_add:
+    pattern: /add-tache
+    defaults: { _controller: GestionProjetBundle:Tache:addtache }
+    options:
+        expose: true
+
+gp_tache_update:
+    pattern: /update-tache/{id}
+    defaults: { _controller: GestionProjetBundle:Tache:updatetache }
+    options:
+        expose: true
+        
+gp_tache_get:
+    pattern: /get-tache/{id}
+    defaults: { _controller: GestionProjetBundle:Tache:gettache }
+    options:
+        expose: true
+        
+gp_tache_delete:
+    pattern: /delete-tache/{id}
+    defaults: { _controller: GestionProjetBundle:Tache:deletetache }
+    options:
+        expose: true
+    
+gp_lot:
+    pattern: /lots
+    defaults: { _controller: GestionProjetBundle:Lot:lots }
+    options:
+        expose: true
+        
+gp_lot_add:
+    pattern: /add-lot
+    defaults: { _controller: GestionProjetBundle:Lot:addlot }
+    options:
+        expose: true
+
+gp_lot_update:
+    pattern: /update-lot/{id}
+    defaults: { _controller: GestionProjetBundle:Lot:updatelot }
+    options:
+        expose: true
+        
+gp_lot_get:
+    pattern: /get-lot/{id}
+    defaults: { _controller: GestionProjetBundle:Lot:getlot }
+    options:
+        expose: true
+        
+gp_lot_delete:
+    pattern: /delete-lot/{id}
+    defaults: { _controller: GestionProjetBundle:Lot:deletelot }
+    options:
+        expose: true
+        
+gp_courier:
+    pattern: /courriers-envoyes/{id}
+    defaults: { _controller: GestionProjetBundle:Courrier:couriersenvoyes }
+    options:
+        expose: true
+
+gp_courier_recus:
+    pattern: /courriers-recus/{id}
+    defaults: { _controller: GestionProjetBundle:Courrier:couriersrecus }
+    options:
+        expose: true
+        
+gp_courier_add:
+    pattern: /add-courrier/{id}
+    defaults: { _controller: GestionProjetBundle:Courrier:addcourier }
+    options:
+        expose: true
+
+gp_courier_update:
+    pattern: /update-courrier/{id}
+    defaults: { _controller: GestionProjetBundle:Courrier:updatecourier }
+    options:
+        expose: true
+        
+gp_courier_get:
+    pattern: /get-courier/{id}
+    defaults: { _controller: GestionProjetBundle:Courrier:getcourier }
+    options:
+        expose: true
+        
+gp_courier_delete:
+    pattern: /delete-courier
+    defaults: { _controller: GestionProjetBundle:Courrier:deletecourier }
+    options:
+        expose: true
+        
+gp_evolution:
+    pattern: /evolutions
+    defaults: { _controller: GestionProjetBundle:Evolution:evolutions }
+    options:
+        expose: true
+        
+gp_evolution_intervenant_update:
+    pattern: /update-evolution-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Evolution:updateevolution_intervenant }
+    options:
+        expose: true
+        
+gp_evolution_intervenant_get:
+    pattern: /get-evolution-intervenant/{id}
+    defaults: { _controller: GestionProjetBundle:Evolution:getevolution_intervenant }
+    options:
+        expose: true
+        
+gp_evolution_projet_get:
+    pattern: /get-evolution-projet/{id}
+    defaults: { _controller: GestionProjetBundle:Evolution:getprojet_intervenant }
+    options:
+        expose: true
+
+gp_evolution_projet_update:
+    pattern: /update-evolution-projet/{id}
+    defaults: { _controller: GestionProjetBundle:Intervenant:updateevolution_projet }
+    options:
+        expose: 
+            
+ 
+gp_photo:
+    pattern: /photos/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:photos }
+    options:
+        expose: true
+
+
+gp_galerie_photo:
+    pattern: /galerie-photos/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:galeriephotos }
+    options:
+        expose: true
+     
+
+gp_photo_add:
+    pattern: /add-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:addphoto }
+    options:
+        expose: true
+
+gp_photo_update:
+    pattern: /update-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:updatephoto }
+    options:
+        expose: true
+        
+gp_photo_get:
+    pattern: /get-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:getphoto }
+    options:
+        expose: true
+
+gp_photo_details:
+    pattern: /get-details-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:getdetailsphoto }
+    options:
+        expose: true
+        
+gp_photo_delete:
+    pattern: /delete-photo/{id}
+    defaults: { _controller: GestionProjetBundle:Photo:deletephoto }
+    options:
+        expose: true
+    

@@ -1,13 +1,247 @@
 <!DOCTYPE html>
+{# Template général de l'application #}
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+  <head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="SPM, Services du Premier Ministre, Cameroun, Primature" />
+    <meta name="description" content="Services du Premier Ministre - Projet de réhabilitation et de mise à niveau du batiment abritant le Secrétariat général des services du Premier Ministre" />
+    <meta name="author" content="Zebess" />
+    <meta name="robots" content="noindex,nofollow,noarchive,noimageindex,notranslate" />
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <title>{% block title %}Accueil{% endblock %}</title>
+    
+    {% block stylesheets %}
+    <!-- Bootstrap 3.3.4 -->
+    <link href="{{asset('bundles/gestionprojet/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" /> 
+    <link rel="stylesheet" href="{{asset('bundles/gestionprojet/css/font-awesome.min.css')}}">
+
+    <!-- Theme style -->
+    <link href="{{asset('bundles/gestionprojet/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />    
+    <link href="{{asset('bundles/gestionprojet/css/_all-skins.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/gestionprojet/css/ionicons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/gestionprojet/css/bootstrap-multiselect.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/gestionprojet/css/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('bundles/gestionprojet/css/style1.css')}}" rel="stylesheet" type="text/css" /> 
+    <link href="{{asset('bundles/gestionprojet/css/datatables/tools/css/dataTables.tableTools.css')}}" rel="stylesheet">
+	<link href="{{asset('bundles/gestionprojet/css/fonts.googleapis.css')}}" rel="stylesheet">
+    {% endblock %}
+	<style>
+
+        #example1_length{
+			display: none;
+		}
+		
+		#example1_info{
+			display : none;
+		}
+		
+		#example_length{
+			display: none;
+		}
+		
+		#example_info{
+			display : none;
+		}
+		
+		.paginate_active{
+			color : #000;
+		}
+
+    </style>
+	
+    
+  </head>
+  <body>
+    
+        {{render(controller('GestionProjetBundle:Projet:headerprojetactif'))}}
+	<div class="row">
+        {% block menu %}
+            {# Réservé au menu#}
+        {% endblock %}
+        
+        
+        {% block contenu %}
+            {# Réservé au contenu des pages#}
+        {% endblock %}
+        
+       {% block footer %}
+            
+       {% endblock %}
+      <div class='control-sidebar-bg'></div>
+    </div><!-- ./wrapper -->
+    <footer class="footer">        
+          <strong>Copyright &copy; 2016 <a href="">Zebess</a>.</strong> Tous droits réservés.
+    </footer> 
     </body>
+    {% block js %}
+    <!-- jQuery 2.1.4 -->
+    <script src="{{asset('bundles/gestionprojet/js/jQuery-2.1.4.min.js')}}"></script>
+    <script src='{{ asset('bundles/gestionprojet/js/jquery-ui.min.js')}}'></script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="{{asset('bundles/gestionprojet/js/bootstrap.min.js')}}" type="text/javascript"></script>    
+    <!-- SlimScroll -->
+    <script src="{{asset('bundles/gestionprojet/js/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="{{asset('bundles/gestionprojet/js/fastclick.min.js')}}" type="text/javascript"></script>
+    <!-- ckeditor -->
+	<script src="{{asset('bundles/gestionprojet/js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
+	
+	<script src="{{asset('bundles/gestionprojet/js/datatables/js/jquery.dataTables.js')}}"></script>
+    <script src="{{asset('bundles/gestionprojet/js/datatables/tools/js/dataTables.tableTools.js')}}"></script>
+	
+    <!-- bootstrap-acknolegdement for decimal number in inputs -->
+    <script src="{{asset('bundles/gestionprojet/js/bootstrap-acknowledgement.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bundles/gestionprojet/js/bootstrap-multiselect.js')}}" type="text/javascript"></script>    
+    <script src="{{asset('bundles/gestionprojet/js/gestionprojet.js')}}" type="text/javascript"></script>
+     <script src="{{asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src='{{ asset('bundles/gestionprojet/js/moment.js')}}'></script>
+    <script>
+        $().ready(function() {
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+			$('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de sélection ...',
+				enableFiltering: true,
+				includeSelectAllOption: true,
+				buttonWidth: '300px',
+				
+            });
+			var asInitVals = new Array();
+			var oTable = $('#example').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 8,
+				"sPaginationType": "full_numbers"
+			});
+			
+			var oTable = $('#example1').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 1,
+				"sPaginationType": "full_numbers"
+			});
+			
+			$("tfoot input").keyup(function () {
+				/* Filter on the column based on the index of this element's parent <th> */
+				oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+			});
+			$("tfoot input").each(function (i) {
+				asInitVals[i] = this.value;
+			});
+			$("tfoot input").focus(function () {
+				if (this.className === "search_init") {
+					this.className = "";
+					this.value = "";
+				}
+			});
+			$("tfoot input").blur(function (i) {
+				if (this.value === "") {
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			});
+			setTimeout(function () {
+                $('#myAlert').alert("close");
+                }, 4000);
+			$('.image-caption a').tooltip();
+    $(function () {
+
+        var filterList = {
+
+            init: function () {
+
+                // MixItUp plugin
+                // http://mixitup.io
+                $('#portfoliolist').mixitup({
+                    targetSelector: '.portfolio',
+                    filterSelector: '.filter',
+                    effects: ['fade'],
+                    easing: 'snap',
+                    // call the hover effect
+                    onMixEnd: filterList.hoverEffect()
+                });
+
+            },
+
+            hoverEffect: function () {
+                $("[rel='tooltip']").tooltip();
+                // Simple parallax effect
+                $('#portfoliolist .portfolio .portfolio-hover').hover(
+        function(){
+            $(this).find('.image-caption').slideDown(250); //.fadeIn(250)
+        },
+        function(){
+            $(this).find('.image-caption').slideUp(250); //.fadeOut(205)
+        }
+    );
+
+
+
+            }
+
+        };
+
+        // Run the show!
+        filterList.init();
+
+
+    });
+
+    $( document ).ready(function() {
+
+        $('.magnefig').each(function(){
+            $(this).magnificPopup({
+                type:'image',
+                removalDelay: 300,
+                mainClass: 'mfp-fade'
+            })
+        });
+    });
+	$(document).ready(function() {
+
+        $("#owl-demo").owlCarousel({
+
+            autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+            items : 4,
+            itemsDesktop : [1199,3],
+            itemsDesktopSmall : [979,3],
+            stopOnHover : true,
+
+        });
+
+    });
+
+    new WOW().init();
+			CKEDITOR.replace('.ckeditor');
+			$('.datetimepicker').datetimepicker({
+				language: 'fr',
+				pick12HourFormat: true
+			  });
+			  
+        });
+    </script>
+    {% endblock %}
+    
+    
 </html>

@@ -1,0 +1,86 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Documentation{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block menuIntervenant %}class="active"{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_intervenant')}}">Intervenants</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li><a href="{{path('gp_intervenant_details', {'id': intervenant.id})}}">{{intervenant.nom}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}<li><a href="{{path("gestion_projet_ressource_all", {'id': intervenant.id})}}">Documentation</a></li>{% endblock %}
+{% block breadcrumbPlusPP %}<li>Courriers reçus</li>{% endblock %}
+{% block contenupage %}
+<div class="row" id="block_table_couriers">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success"> 
+            <div class="box-header">
+                <h3>Courriers reçus</h3>
+            </div>
+            <div class="box-body">
+                <div id="table_intervenants">
+                    <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Date</th>
+                                <th>Réference</th>
+                                <th>Objet</th>
+                                <th>Destinataires</th>
+                                <th>Pièces jointes</th>
+                                <th>Courrier de reference</th>
+                                {#<th class=" no-link last"><span class="nobr">Actions</span>#}
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbodyintervenants">
+                            {%if liste_couriers%}
+                                {%for courierenvoye in liste_couriers%}
+                                    <tr id="lignetable{{courierenvoye.idcourier.id}}" class="odd pointer" style="cursor: pointer;">
+                                        <td onclick="show_details({{courierenvoye.idcourier.id}})" class=" ">{{courierenvoye.idcourier.date|date('d/m/Y')}}</td>
+                                        <td onclick="show_details({{courierenvoye.idcourier.id}})" class=" ">{{courierenvoye.idcourier.reference}}</td>
+                                        <td onclick="show_details({{courierenvoye.idcourier.id}})" class=" ">{{courierenvoye.idcourier.objet}}</td>
+                                        <td onclick="show_details({{courierenvoye.idcourier.id}})" class=" ">{%if courierenvoye.idcourier.courierenvoyes%}<div><ul >{%for courierenvoye1 in courierenvoye.idcourier.courierenvoyes%}<li>{{courierenvoye1.idintervenant.nom}}</li>{%endfor%}</ul></div> {%endif%} </td>
+                                        <td onclick="show_details({{courierenvoye.idcourier.id}})" class=" ">{%if courierenvoye.idcourier.originalpiecesjointes%}<div><ul >{%for piecejointe in courierenvoye.idcourier.originalpiecesjointes%}<li>{{piecejointe}}</li>{%endfor%}</ul></div>{%endif%}</td>
+                                        <td onclick="show_details({{courierenvoye.idcourier.id}})" class=" ">{%if courierenvoye.idcourier.courierreference%}{{courierenvoye.idcourier.courierreference.reference}}{%endif%} </td>
+                                        {#<td class=" last">
+                                            <a id="action-edit{{courierenvoye.idcourier.id}}" onclick="edit_courier({{courierenvoye.idcourier.id}})" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                            <a id="action-delete{{courierenvoye.idcourier.id}}" onclick="delete_courier({{courierenvoye.idcourier.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
+                                            <a id="loader-edit-delete{{courierenvoye.idcourier.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+                                        </td>#}
+                                    </tr>
+                                {%endfor%} 
+                            {%endif%} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_courier.js')}}"></script>
+{% endblock %}{# empty Twig template #}

@@ -1,0 +1,61 @@
+{# Page d'Actualites du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+    <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block menuActualite %}class="active"{% endblock %}
+
+{% block breadcrumbTitle %}
+    
+{% endblock %}
+
+{% block breadcrumbDescription %}
+  
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   Actualités
+{% endblock %}
+
+{% block contenupage %}
+<div class="row">  
+    <div class="col-sm-8">
+        <!-- Actualité start-->
+       {% render(controller("GestionProjetBundle:Actualite:getActualites",{nbre_actualite:0}))%}
+        <!-- Actualité end-->
+    </div>
+    <!-- Thèmes start-->
+
+    <!-- Actualité end-->
+
+    <!-- Thèmes start controleur qui affiche la liste des themes-->
+        <div class="col-sm-4">                  
+          {{render(controller("GestionProjetBundle:Theme:getAllTheme"))}}
+        </div>
+    <!-- Thèmes end-->
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    {# Fichiers js en plus #}
+    <script src="{{asset('js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+    <script>
+      $(function () {
+        $(".data-table").DataTable();
+      });
+    </script>
+{% endblock %}

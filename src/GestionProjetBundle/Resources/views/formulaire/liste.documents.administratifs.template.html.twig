@@ -1,0 +1,32 @@
+{# Template de la liste de documents validés #}
+
+<div class="row">
+<!-- Document start-->
+<div class="box box-success">
+<div class="box-header">
+  <h3 class="box-title">Documents administratifs </h3><a href="{{path('gestion_projet_ressource_new')}}" class="pull-right"><i class="fa fa-plus"></i></a></h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table id="example" class="table table-striped responsive-utilities">
+    <thead>
+      <tr>
+        <th>Référence</th>
+      </tr>
+    </thead>
+   <tbody>
+
+                {% for ressource in ressources %}
+                    <tr>
+                      <td><a href="{{asset('uploads/ressources/'~ressource.path)}}">{{ressource.reference}}</a></td>
+                    </tr>
+                {% endfor %}    
+    </tbody>
+  </table>
+</div><!-- /.box-body -->
+<div class="box-footer text-center">
+	<a href="{{path('gestion_projet_ressource_administratifs', {'id': intervenant.id})}}" class="uppercase">Plus de détails</a>
+</div><!-- /.box-footer -->
+
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 

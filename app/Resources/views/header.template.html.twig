@@ -1,0 +1,14 @@
+{%if projetactif%}
+<div class="row">
+<header class="main-header clearfix">
+        <!-- Logo Start -->
+        <div class="col-md-12 barniere">
+            <img src="{{asset('images/header.png')}}" alt="Barnière" />
+        </div>
+        <div class="col-md-12 head">
+            <h2>{{projetactif.intitule|upper}}</h2>
+        </div> 
+        <!-- Logo End -->
+  </header>
+ </div>
+{%endif%}
