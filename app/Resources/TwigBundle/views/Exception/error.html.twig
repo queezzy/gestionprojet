@@ -1,12 +1,15 @@
 {# Page d'authentification  #}
 {% extends "::base.html.twig" %}
 
-{% block title %}Erreur 500{% endblock %}
+{% block title %}Erreur 404{% endblock %}
 
 {% block stylesheets %} 
     {{parent()}}
     {# Fichiers css en plus #}
     <link href="{{asset('css/icheck-blue.css')}}" rel="stylesheet" type="text/css" />
+	<style>
+	 
+    </style> 
 {% endblock %}
 {% block menu %}
 {% endblock %}    
@@ -14,12 +17,12 @@
 <div class="error-box">
  <div class="box box-success">
     <div class="box-header">
-        <h3>Erreur serveur</h3>
+        <h3>Page introuvable</h3>
     </div><!-- /.box-header -->
     <div class="box-body">
-        <div class="col-md-12">
+        <div>
 			 <div class="col-md-5">
-				<h1 class="error-code">500</h1>
+				<h1 class="error-code">404</h1>
         	 </div> 
 			 <div class="col-md-7">
 				<ul class="nav navbar-nav navbar-left treeview treeview-menu">

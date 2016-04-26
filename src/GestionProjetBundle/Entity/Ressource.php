@@ -95,7 +95,7 @@ class Ressource
     public function __construct()
     {
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setStatut(1);
+        //$this->setStatut(1);
     }
 
     /**

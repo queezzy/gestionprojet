@@ -11,21 +11,75 @@
 {% block menu %}
 {% endblock %}    
 {% block contenu %}
- <body class="hold-transition login-page">
-    <div class="login-page">
-		<h1>Erreur 403</h1>
+<div class="error-box ">
+ <div class="box box-success">
+    <div class="box-header">
+        <h3>Accès refusé</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="col-md-12">
+			 <div class="col-md-5">
+				<h1 class="error-code">403</h1>
+        	 </div> 
+			 <div class="col-md-7">
+				<ul class="nav ">
+				  <li {% block menuAccueil %}{% endblock %}>
+					<a href="{{path("homepage")}}">
+					  <i class="fa fa-home"></i> <span>Accueil</span>
+					</a>
+				  </li>
+				  <li {% block menuEvolution %}{% endblock %}>
+					<a href="{{path('gp_evolution')}}">
+					  <i class="fa fa-pie-chart"></i>
+					  <span>Evolution</span>
+					</a>
+				  </li>
+				  <li {% block menuCalendrier %}{% endblock %}>
+					<a href="{{path("projet_calendrier")}}">
+					  <i class="fa fa-calendar"></i> 
+					  <span>Calendrier</span> 
+					</a>
+				  </li>
+				  <li {% block menuActualite %}{% endblock %}>
+					<a href="{{path("gestion_projet_actualite_all")}}">
+					  <i class="fa fa-newspaper-o"></i>
+					  <span>Actualités</span>
+					</a>
+				  </li>
+				 {# <li {% block menuDocumentation %}{% endblock %}>
 
-    {# example security usage, see below #}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {# ... #}
-    {% endif %}
-
-    <p>
-        Vous ne disposez pas de droits pour effectuer cette action
-         or <a href="{{ path('homepage') }}">retourner à la page d'accueil</a>.
-    </p>
-  </div>
-</body>
+					<a href="{{path("gestion_projet_ressource_all")}}">
+					  <i class="fa fa-edit"></i>
+					  <span>Documentation</span>
+					</a>
+				  </li> #}
+				  <li {% block menuUtilisateur %}{% endblock %}>
+					<a href="{{path("gestion_projet_utilisateurs_all")}}">
+					  <i class="fa fa-users"></i>
+					  <span>Utilisateurs</span>
+					</a>
+				  </li>
+				  <li {% block menuCollaboration %}{% endblock %}>
+					<a href="{{path('gestion_projet_send_mail')}}">
+					  <i class="fa fa-comment"></i> 
+					  <span>Collaboration</span>
+					</a>
+				  </li>
+				  <li {% block menuIntervenant %}{% endblock %}>
+					<a href="{{path('gp_intervenant')}}">
+					  <i class="fa fa-coffee"></i> 
+					  <span>Intervenants</span>
+					</a>
+				  </li>
+				  <li {% block menuGaleriephotos %}{% endblock %}>
+				  {{render(controller('GestionProjetBundle:Projet:menusgaleriephotos'))}}
+				  </li>
+				</ul>
+        	 </div>  
+        </div>
+    </div>
+</div>
+</div>
 {% endblock %}
 
 

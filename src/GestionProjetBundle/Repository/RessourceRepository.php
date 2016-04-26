@@ -34,7 +34,6 @@ class RessourceRepository extends EntityRepository{
 
     public function saveRessource(\GestionProjetBundle\Entity\Ressource $ressource) {
         $em= $this->_em;
-        $ressource->setStatut(1);
         $em->getConnection()->beginTransaction();
         try{
             $em->persist($ressource);
