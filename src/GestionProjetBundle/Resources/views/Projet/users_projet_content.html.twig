@@ -1,0 +1,179 @@
+{# Page Utilisateurs du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+    
+{% endblock %}
+
+{% block breadcrumbDescription %}
+  
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_projet_admin')}}">Projets</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li style="font-weight: bold;"><a href="{{path('gp_gestion_projet', {'id': projet.id})}}">Gestion du projet {{projet.code}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}
+   <li>Utilisateurs</li>
+{% endblock %}
+
+{% block contenupage %}
+<div class="row col-md-12">
+<!-- Intervenants start-->
+<div class="box box-success">
+<div class="box-header">
+  <h3 class="box-title">Liste des Utilisateurs</h3>{% if is_granted('ROLE_ADMIN_ACTIF') %}<a href="{{path("gp_user_projet_add",{"id": projet.id})}}" class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</a>{% endif %}
+</div><!-- /.box-header -->
+<div class="box-body">
+  <table id="example" class="table table-striped responsive-utilities jambo_table">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Fonction</th>
+        <th>Entreprise</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Activé</th>
+        <th>Privilèges</th>
+        {% if is_granted('ROLE_ADMIN_ACTIF') %}<th>Action</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+     {%if utilisateurs %}
+    {% for utilisateur in utilisateurs %}
+      <tr>
+          <td><img width="25px" height="25px" src="{{asset('uploads/profils/'~utilisateur.path)}}" alt="{{utilisateur.nom}}" /></td>
+        <td>{{utilisateur.nom}}</td>
+        <td>{{utilisateur.prenom}}</td>
+        <td>{{utilisateur.fonction}}</td>
+        
+        <td>{% if utilisateur.idintervenant.nom is defined %}
+            {{utilisateur.idintervenant.nom}}
+            {%endif%}
+        </td>
+        <td>{{utilisateur.email}}</td>
+        <td>{{utilisateur.telephone}}</td>
+        <td>{%if utilisateur.enabled %}
+                oui
+            {%else%}
+                non
+            {%endif%}    
+        </td>
+        <td>
+		{% if utilisateur.roles %}
+			{% for r in utilisateur.roles %}
+				{{r ~', '}}
+			{%endfor%}
+		{%endif%}
+        </td>
+		{% if is_granted('ROLE_ADMIN_ACTIF') %}
+        <td><a href="{{path('gp_user_projet_delete',{'idprojet': projet.id, 'id' : utilisateur.id})}}">supprimer</a></td>
+		{% endif %}
+	  </tr>
+    {% endfor %}
+	{%endif%}	
+    </tbody>
+  </table>
+</div><!-- /.box-body -->
+</div>
+<!-- Intervenants end-->
+</div><!-- /.row --> 
+
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+	<script>
+        $(function() {
+			$('#menuProjet').addClass('active');
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+			$('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de sélection ...',
+				enableFiltering: true,
+				includeSelectAllOption: true,
+				buttonWidth: '300px',
+				
+            });
+			var asInitVals = new Array();
+			var oTable = $('#example').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 8,
+				"sPaginationType": "full_numbers"
+			});
+			
+			var oTable = $('#example1').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 1,
+				"sPaginationType": "full_numbers"
+			});
+			
+			$("tfoot input").keyup(function () {
+				/* Filter on the column based on the index of this element's parent <th> */
+				oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+			});
+			$("tfoot input").each(function (i) {
+				asInitVals[i] = this.value;
+			});
+			$("tfoot input").focus(function () {
+				if (this.className === "search_init") {
+					this.className = "";
+					this.value = "";
+				}
+			});
+			$("tfoot input").blur(function (i) {
+				if (this.value === "") {
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			});
+			setTimeout(function () {
+                $('#myAlert').alert("close");
+                }, 4000);
+			$('.image-caption a').tooltip();
+    
+			CKEDITOR.replace('.ckeditor');
+			$('.datetimepicker').datetimepicker({
+				language: 'fr',
+				pick12HourFormat: true
+			  });
+			  
+        });
+    </script>
+{% endblock %}

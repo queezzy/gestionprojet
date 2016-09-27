@@ -1,6 +1,8 @@
-{%if projet %}
-<a href="{{path('gp_galerie_photo', {'id': projet.id})}}">
+{%if app.user%}
+{%if projetactif%}
+<a href="{{path('gp_galerie_photo')}}">
   <i class="fa fa-picture"></i> 
   <span>Galerie Photos</span>
 </a>
-{% endif %}        
+{% endif %}  
+{% endif %}       

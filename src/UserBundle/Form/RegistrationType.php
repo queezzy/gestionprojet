@@ -5,6 +5,7 @@ namespace UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use GestionProjetBundle\Repository\IntervenantRepository;
 
 class RegistrationType extends AbstractType
 {
@@ -32,7 +33,11 @@ class RegistrationType extends AbstractType
             ->add('idintervenant','entity',array(
                 'class'=> 'GestionProjetBundle\Entity\Intervenant',
                 'property' => 'nom',
-				'empty_value' => 'Choisir un intervenant'
+				'empty_value' => 'Choisir un intervenant',
+				'multiple'=>false,
+                'query_builder' => function(IntervenantRepository $repo) {
+                    return $repo->getIntervenantQueryBuilder();
+                }
             ))
             
             

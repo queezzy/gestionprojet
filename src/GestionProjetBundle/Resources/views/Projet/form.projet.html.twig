@@ -4,7 +4,6 @@
                 <h3>Modification d'un projet</h3>
             </div>
             <div class="box-body">
-                
                 <form id="form_projet" method="post" action="{{ path('gp_projet_update',{'id' : idprojet}) }}" class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
                         <input type="hidden" id="idprojet" name = "idprojet" value="{{idprojet}}">
@@ -81,14 +80,14 @@
                         </div>
                     </div>
                     
-                    <div class="item form-group">
+                    {#<div class="item form-group">
                         {{ form_label(form.statut, "", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.statut) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            {{ form_widget(form.statut, {'attr': {'required':'required'}}) }}
                            
                         </div>
-                    </div>
+                    </div>#}
                         
                     {% if app.session.flashbag.get('message_failure') %}										
                     <div id="message_projet">
@@ -111,7 +110,7 @@
                         <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
                     </div>
                 </form>
-
+				</div>
             </div>
         </div>
     </div>

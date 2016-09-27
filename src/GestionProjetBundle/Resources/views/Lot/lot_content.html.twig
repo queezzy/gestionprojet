@@ -19,7 +19,12 @@
 {% endblock %}
 
 {% block breadcrumbPosition %}
-   Lots
+   <a href="{{path('gp_projet_admin')}}">Projets</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li style="font-weight: bold;"><a href="{{path('gp_gestion_projet', {'id': projet.id})}}">Gestion du projet {{projet.code}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}
+   <li>Lots</li>
 {% endblock %}
 
 {% block contenupage %}
@@ -51,7 +56,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-success"> 
                 <div class="box-header">
-                    <h3 class="box-title">Lots</h3><button id='nouvellot' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
+                    <h3 class="box-title">Lots du projet {{projet.code}}</h3><button id='nouvellot' class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
                 </div>
                 <div class="box-body">
                     <div id="table_lots">                        
@@ -74,9 +79,22 @@
                                             <td onclick="show_details({{lot.id}})" class=" ">{{lot.datedebut|date('d/m/Y')}}</td>
                                             <td onclick="show_details({{lot.id}})" class=" ">{{lot.datefin|date('d/m/Y')}}</td>
                                             <td class=" last">
-                                                <a id="action-edit{{lot.id}}" onclick="edit_lot({{lot.id}},'gp_lot_update')" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
-                                                <a id="action-delete{{lot.id}}" onclick="delete_lot({{lot.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
-                                                <a id="loader-edit-delete{{lot.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
+												<center><div id = "actions" role="presentation" class="dropdown" >
+													<a id="" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+														<center><span class="caret" style="color:black"></span></center>
+													</a>
+													<ul class="action dropdown-menu animated fadeInDown" role="menu">
+														<li role="presentation"><a id="action-edit{{lot.id}}" onclick="edit_lot({{lot.id}},{{projet.id}})" style="cursor: pointer;"><i class="fa fa-edit"></i> Modifier</i></a>
+														</li>
+														<li role="presentation"><a id="action-delete{{lot.id}}" onclick="delete_lot({{lot.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i> Supprimer</a>
+														</li>
+														<li role="presentation"><a href="{{ path("gp_tache", {'id': lot.id}) }}" style="cursor: pointer;"><i class="fa fa-gear"></i> Gérer les taches</a>
+														</li>
+													</ul>
+												</div></center>
+                                                {#<a id="action-edit{{lot.id}}" onclick="edit_lot({{lot.id}},'gp_lot_update')" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                                <a id="action-delete{{lot.id}}" onclick="delete_lot({{lot.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>#}
+                                                <center><a id="loader-edit-delete{{lot.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a></center>
                                             </td>
                                         </tr>
                                     {%endfor%} 
@@ -107,7 +125,7 @@
                 <h3>Ajout d'un lot</h3>
             </div>
             <div class="box-body">
-                <form id="form_lot" method="post" action="{{ path("gp_lot_add") }}" class="form-horizontal form-label-left" novalidate>
+                <form id="form_lot" method="post" action="{{ path("gp_lot_add", {"id" : projet.id}) }}" class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
                         <input id="idlot" value="" name="idlot" type="hidden">
                         {{form_widget(form._token)}}
@@ -157,7 +175,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-danger">Annuler</button>
+                            <a href="{{ path('gp_lot',{'id' : projet.id}) }}" class="btn btn-danger">Annuler</a>
                             <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>
@@ -165,7 +183,6 @@
                         <img src="{{asset('bundles/gestionprojet/images/ajax-loader.gif')}}">
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -200,6 +217,83 @@
 
 {% block js %}
     {{ parent()}}
+	<script>
+        $(function() {
+			$('#menuProjet').addClass('active');
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+			$('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de sélection ...',
+				enableFiltering: true,
+				includeSelectAllOption: true,
+				buttonWidth: '300px',
+				
+            });
+			var asInitVals = new Array();
+			var oTable = $('#example').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 8,
+				"sPaginationType": "full_numbers"
+			});
+			
+			var oTable = $('#example1').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 1,
+				"sPaginationType": "full_numbers"
+			});
+			
+			$("tfoot input").keyup(function () {
+				/* Filter on the column based on the index of this element's parent <th> */
+				oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+			});
+			$("tfoot input").each(function (i) {
+				asInitVals[i] = this.value;
+			});
+			$("tfoot input").focus(function () {
+				if (this.className === "search_init") {
+					this.className = "";
+					this.value = "";
+				}
+			});
+			$("tfoot input").blur(function (i) {
+				if (this.value === "") {
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			});
+			setTimeout(function () {
+                $('#myAlert').alert("close");
+                }, 4000);
+			$('.image-caption a').tooltip();
+    
+			CKEDITOR.replace('.ckeditor');
+			$('.datetimepicker').datetimepicker({
+				language: 'fr',
+				pick12HourFormat: true
+			  });
+			  
+        });
+    </script>
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_lot.js')}}"></script>
 {% endblock %}{# empty Twig template #}

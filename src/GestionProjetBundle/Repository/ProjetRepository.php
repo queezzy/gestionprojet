@@ -20,6 +20,8 @@ class ProjetRepository extends EntityRepository{
         $em= $this->_em;
         $projet->setStatut(0);
         $intervenant = new \GestionProjetBundle\Entity\Intervenant();
+        $repositoryPhoto = $em->getRepository("GestionProjetBundle:Photo");
+        $photo = new \GestionProjetBundle\Entity\Photo();
         $repositoryTheme = $em->getRepository("GestionProjetBundle:Theme");
         $theme = new \GestionProjetBundle\Entity\Theme();
         $repositoryIntervenant = $em->getRepository("GestionProjetBundle:Theme");
@@ -33,7 +35,7 @@ class ProjetRepository extends EntityRepository{
             foreach ($themes as $theme) {
                 $repositoryTheme->deleteTheme($theme);
             }
-			$phots = $projet->getPhotos();
+            $photos = $projet->getPhotos();
             foreach ($photo as $photos) {
                 $repositoryPhoto->deletePhoto($photo);
             }

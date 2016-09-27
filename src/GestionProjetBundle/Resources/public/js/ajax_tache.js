@@ -4,12 +4,12 @@ $('#nouveltache').click(function () {
     $('#block_table_taches').hide();
     $('#block_form_tache').show();
 });
-$('#close_form').click(function (e) {
-    e.preventDefault();
-    window.location.replace(Routing.generate('gp_tache'));
-});
+//$('#close_form').click(function (e) {
+//    e.preventDefault();
+//    window.location.replace(Routing.generate('gp_tache'));
+//});
 
-function edit_tache(id_tache) {
+function edit_tache(id_tache, id_lot) {
     $('#myAlert').remove();
     //la route pour faire le get by id
     var url = Routing.generate('gp_tache_get', {id: id_tache});
@@ -24,7 +24,7 @@ function edit_tache(id_tache) {
         $('#block_form_tache').show();
         $('#close_form').click(function (e) {
             e.preventDefault();
-            window.location.replace(Routing.generate('gp_tache'));
+            window.location.replace(Routing.generate('gp_tache',{id: id_lot}));
         });
     });
 }

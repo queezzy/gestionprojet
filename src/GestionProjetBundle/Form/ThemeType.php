@@ -15,12 +15,8 @@ class ThemeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
+            ->add('intitule')
             ->add('description')
-            ->add('idprojet','entity',array(
-                'class'=> 'GestionProjetBundle\Entity\Projet',
-                'property' => 'code'
-            ))
         ;
     }
     

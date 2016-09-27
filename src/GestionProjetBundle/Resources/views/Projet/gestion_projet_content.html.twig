@@ -1,0 +1,205 @@
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Projets{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+	<link href="{{asset('bundles/gestionprojet/css/personal.css')}}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_projet_admin')}}">Projets</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li>Gestion du projet {{projet.code}}</li>{% endblock %}
+
+{% block contenupage %}
+        <div class="row" >
+            <div class="col-md-12" id="block_table_projets">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-success"> 
+                        <div class="box-header">
+                            
+                        </div>
+                        <div class="box-body">
+                            <div class="blokchoice">
+								<center><div class="row top_tiles">
+								  <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12" >
+									<a href="{{ path("gp_lot", {'id': projet.id}) }}">
+										<div class="tile-stats">
+											<div class="icon fachoice"><i class="fa fa-cubes"></i>
+											</div>
+											<div class="count">Lots</div>
+
+											<h3>{{projet.lots|length}}</h3>
+											<p>Gerer le lots du projet.</p>
+										</div>
+									</a>
+								  </div>
+								  <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+									<a href="{{ path("gp_intervenants_projet", {'id': projet.id}) }}">
+										<div class="tile-stats">
+											<div class="icon fachoice"><i class="fa fa-child"></i>
+											</div>
+											<div class="count">Intervenants</div>
+
+											<h3>{{projet.intervenants|length}}</h3>
+											<p>Gerer les intervenants du projet.</p>
+										</div>
+									</a>
+								  </div>
+								<div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+									<a href="{{ path("gp_intervenants_projet", {'id': projet.id}) }}">
+										<div class="tile-stats">
+											<div class="icon fachoice"><i class="fa fa-newspaper-o"></i>
+											</div>
+											<div class="count">Actualités</div>
+
+											<h3>00</h3>
+											<p>Gerer les actualités du projet.</p>
+										</div>
+									</a>
+								  </div>		
+								</div></center>
+								<center><div class="row top_tiles center">								
+								  <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12" >
+									<a href="{{ path("gp_users_projet", {'id': projet.id}) }}">
+										<div class="tile-stats">
+											<div class="icon fachoice"><i class="fa fa-users"></i>
+											</div>
+											<div class="count">Utilisateurs</div>
+
+											<h3>{{projet.utilisateurs|length}}</h3>
+											<p>Gerer les utilisateurs du projet.</p>
+										</div>
+									</a>
+								  </div>
+								  <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+									<a href="{{ path("gp_photo", {'id': projet.id}) }}">
+										<div class="tile-stats">
+											<div class="icon fachoice"><i class="fa fa-ticket "></i>
+											</div>
+											<div class="count">Photos</div>
+
+											<h3>{{projet.photos|length}}</h3>
+											<p>Gerer les photos du projet.</p>
+										</div>
+									</a>
+								  </div>
+								  <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+									<a href="{{ path("gestion_projet_theme_list", {'id': projet.id}) }}">
+										<div class="tile-stats">
+											<div class="icon fachoice"><i class="fa fa-task "></i>
+											</div>
+											<div class="count">Thèmes</div>
+
+											<h3>{{projet.themes|length}}</h3>
+											<p>Gerer les thèmes du projet.</p>
+										</div>
+									</a>
+								  </div>
+								</div></center>
+							  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <br />
+                <br />
+            </div>
+        </div>                
+        {% endblock %}
+
+        {% block js %}
+            {{ parent()}}
+            {# Fichiers js en plus #}
+            <script>
+                $(function () {
+                    $('#menuProjet').addClass('active');
+                    $().acknowledgeinput({
+                        success_color: '#00FF00',
+                        danger_color: '#FF0000',
+                        update_on: 'keyup'
+                    });
+                    $('.multiselect').multiselect({
+                        disableIfEmpty: true,
+                        disabledText: 'Pas de sélection ...',
+                        enableFiltering: true,
+                        includeSelectAllOption: true,
+                        buttonWidth: '300px',
+                    });
+                    var asInitVals = new Array();
+                    var oTable = $('#example').dataTable({
+                        "oLanguage": {
+                            "sSearch": "Search all columns:"
+                        },
+                        "aoColumnDefs": [
+                            {
+                                'bSortable': false,
+                                'aTargets': [0]
+                            } //disables sorting for column one
+                        ],
+                        'iDisplayLength': 8,
+                        "sPaginationType": "full_numbers"
+                    });
+
+                    var oTable = $('#example1').dataTable({
+                        "oLanguage": {
+                            "sSearch": "Search all columns:"
+                        },
+                        "aoColumnDefs": [
+                            {
+                                'bSortable': false,
+                                'aTargets': [0]
+                            } //disables sorting for column one
+                        ],
+                        'iDisplayLength': 1,
+                        "sPaginationType": "full_numbers"
+                    });
+
+                    $("tfoot input").keyup(function () {
+                        /* Filter on the column based on the index of this element's parent <th> */
+                        oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+                    });
+                    $("tfoot input").each(function (i) {
+                        asInitVals[i] = this.value;
+                    });
+                    $("tfoot input").focus(function () {
+                        if (this.className === "search_init") {
+                            this.className = "";
+                            this.value = "";
+                        }
+                    });
+                    $("tfoot input").blur(function (i) {
+                        if (this.value === "") {
+                            this.className = "search_init";
+                            this.value = asInitVals[$("tfoot input").index(this)];
+                        }
+                    });
+                    setTimeout(function () {
+                        $('#myAlert').alert("close");
+                    }, 4000);
+                    $('.image-caption a').tooltip();
+
+                    CKEDITOR.replace('.ckeditor');
+                    $('.datetimepicker').datetimepicker({
+                        language: 'fr',
+                        pick12HourFormat: true
+                    });
+
+                });
+            </script>
+            <script src="{{asset('bundles/gestionprojet/js/ajax_projet.js')}}"></script>
+        {% endblock %}{# empty Twig template #}

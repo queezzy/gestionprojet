@@ -78,9 +78,9 @@ class Utilisateur extends BaseUser implements ParticipantInterface {
     /**
      * @var \GestionProjetBundle\Intervenant
      *
-     * @ORM\ManyToOne(targetEntity="\GestionProjetBundle\Entity\Intervenant")
+     * @ORM\ManyToOne(targetEntity="\GestionProjetBundle\Entity\Intervenant", inversedBy="utilisateurs")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idIntervenant", referencedColumnName="id", nullable=true)
      * })
      */
     private $idintervenant;
@@ -134,10 +134,19 @@ class Utilisateur extends BaseUser implements ParticipantInterface {
 
     /**
      * @Assert\File(maxSize="6000000") 
-     */
+    */
     private $file;
     
     private $temp;
+	
+	private $projetActif;
+	
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="\GestionProjetBundle\Entity\Projet", mappedBy="utilisateurs")
+     */
+    private $projets;
 
     /**
      * Constructor
@@ -147,6 +156,7 @@ class Utilisateur extends BaseUser implements ParticipantInterface {
         $this->mails = new \Doctrine\Common\Collections\ArrayCollection();
         $this->statut = 1;
         $this->personnelcle = false;
+		$this->projetActif = new \GestionProjetBundle\Entity\Projet();
     }
 
     /**
@@ -593,5 +603,77 @@ class Utilisateur extends BaseUser implements ParticipantInterface {
         }
         $this->file = null;
     }
+
+	/**
+     * Add projet
+     *
+     * @param \GestionProjetBundle\Entity\Projet $projet
+     * @return Utilisateur
+     */
+    public function addProjet(\GestionProjetBundle\Entity\Projet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \GestionProjetBundle\Entity\Projet $projet
+	 * @return Utilisateur
+     */
+    public function removeProjet(\GestionProjetBundle\Entity\Projet $projet)
+    {
+        $this->projets->removeElement($projet);
+		return $this;
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjets()
+    {
+        return $this->projets;
+    }
+    
+    
+    /**
+     * Set projets
+     *
+     * @param \Doctrine\Common\Collections\Collection $projets
+     * @return Utilisateur
+     */
+    public function setProjets(\Doctrine\Common\Collections\Collection $projets = null)
+    {
+        $this->projets = $projets;
+
+        return $this;
+    }
+	
+	/**
+     * Set projetActif
+     *
+     * @param \GestionProjetBundle\Entity\Projet $projetActif
+     * @return Utilisateur
+     */
+    public function setProjetActif(\GestionProjetBundle\Entity\Projet $projetActif = null)
+    {
+        $this->projetActif = $projetActif;
+
+        return $this;
+    }
+	
+	/**
+     * Get projetActif
+     *
+     * @return \GestionProjetBundle\Entity\Projet 
+     */
+    public function getProjetActif() {
+        return $this->projetActif;
+    }
+
 
 }

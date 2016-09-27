@@ -1,0 +1,132 @@
+{# Page Collaboration du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Projet{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+   
+{% endblock %}
+
+{% block breadcrumbDescription %}
+  
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_projet_admin')}}">Projets</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li style="font-weight: bold;"><a href="{{path('gp_gestion_projet', {'id': projet.id})}}">Gestion du projet {{projet.code}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}
+   <li><a href="{{path('gp_users_projet', {'id': projet.id})}}">Utilisateurs</a></li>
+{% endblock %}
+{% block breadcrumbPlusPP %}
+   <li>Ajouter des utilisateurs</li>
+{% endblock %}
+
+{% block contenupage %}
+<div class="row">
+<!-- Envoyer message start-->
+    <div class="col-sm-12">                  
+      <div class="box box-success">
+          <div class="box-header">
+              <h3>Ajouter les utilisateurs au projet</h3>
+          </div><!-- /.box-header -->
+		  <div class="box-body">
+				{% if app.session.flashbag.get('notice') %}										
+                    <div id="message_courier" class="col-md-6 col-sm-6 col-xs-12">
+                        <div id="myAlert" class="alert alert-success">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flashMessage in app.session.flashbag.get('notice') %}
+                               <div class="flash-notice">
+									{{ flashMessage }}
+								</div>
+                        {% endfor %}
+                        </div>
+                    </div> 
+                {% endif %}
+				<form id="form_add_user_projet" method="post" action="{{ path("gp_user_projet_add",{"id": projet.id}) }}" class="form-horizontal form-label-left" novalidate>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Utilisateurs</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<select class="form-control multiselect col-md-7" multiple="multiple" name="utilisateurs[]">
+							  {%if utilisateurs%}
+								{%for user in utilisateurs%}
+								{%if user.username%}
+								<option value="{{user.username}}">{{user.username}}</option>
+								{% else %}
+								<option value="{{user.email}}">{{user.email}}</option>
+								{% endif %}
+								{% endfor %}    
+							  {% endif %}
+							</select>
+							</div>
+                    </div>
+                     
+                    {% if app.session.flashbag.get('notice') %}										
+                    <div id="message_courier">
+                        <div id="myAlert" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            {% for flash_message in app.session.flashbag.get('message_failure') %}
+                                {{ flash_message }}
+                        {% endfor %}
+                        </div>
+                    </div> 
+                    {% endif %}
+                    <div class="ln_solid"></div>
+                    <div id="actions" class="form-group">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button  type="reset" class="btn btn-danger">Annuler</button>
+                            <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+			</div>
+      </div>
+    </div>
+<!-- Envoyer un message end-->
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    
+    <script>
+        $(function() {
+			$('#menuProjet').addClass('active');
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+			$('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de sélection ...',
+				enableFiltering: true,
+				includeSelectAllOption: true,
+				buttonWidth: '300px',
+				
+            });
+			setTimeout(function () {
+                $('#myAlert').alert("close");
+                }, 4000);
+			$('.image-caption a').tooltip();
+    
+			CKEDITOR.replace('.ckeditor');
+			$('.datetimepicker').datetimepicker({
+				language: 'fr',
+				pick12HourFormat: true
+			  });
+			  
+        });
+    </script>
+{% endblock %}

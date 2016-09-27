@@ -5,7 +5,7 @@
             </div>
             <div class="box-body">
                 
-                <form id="form_lot" method="post" action="{{ path('gp_lot_update',{'id' : idlot}) }}" class="form-horizontal form-label-left" novalidate>
+                <form id="form_lot" method="post" action="{{ path('gp_lot_update',{'id' : lot.id}) }}" class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
                         <input id="idlot" value="" name="idlot" type="hidden">
                         {{form_widget(form._token)}}
@@ -55,7 +55,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-danger">Annuler</button>
+                            <a href="{{ path('gp_lot',{'id' : lot.idprojet.id}) }}" class="btn btn-danger">Annuler</a>
                             <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>

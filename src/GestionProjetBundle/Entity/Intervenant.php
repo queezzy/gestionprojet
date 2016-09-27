@@ -103,16 +103,13 @@ class Intervenant
      */
     private $idlot;
 
+    
     /**
-     * @var \Projet
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="intervenants")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idProjet", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Projet", mappedBy="intervenants")
      */
-    private $idprojet;
-
+    private $projets;
     /**
     * @ORM\OneToMany(targetEntity="Courierenvoye", mappedBy="idintervenant", cascade={"remove", "persist"})
     */
@@ -137,6 +134,7 @@ class Intervenant
         $this->courierenvoyes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ressources = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->projets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->evolutionattendu = 0;
         $this->evolutionencours = 0;
     }
@@ -462,13 +460,13 @@ class Intervenant
     }
 
     /**
-     * Remove utilisateurs
+     * Remove utilisateur
      *
-     * @param \UserBundle\Entity\Utilisateur $utilisateurs
+     * @param \UserBundle\Entity\Utilisateur $utilisateur
      */
-    public function removeUtilisateur(\UserBundle\Entity\Utilisateur $utilisateurs)
+    public function removeUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
-        $this->utilisateurs->removeElement($utilisateurs);
+        $this->utilisateurs->removeElement($utilisateur);
     }
     /**
      * Get ressources
@@ -624,6 +622,55 @@ class Intervenant
             $this->temp = null;
         }
         $this->file = null;
+    }
+	
+	/**
+     * Add projet
+     *
+     * @param \GestionProjetBundle\Entity\Projet $projet
+     * @return Intervenant
+     */
+    public function addProjet(\GestionProjetBundle\Entity\Projet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \GestionProjetBundle\Entity\Projet $projet
+	 * @return Intervenant
+     */
+    public function removeProjet(\GestionProjetBundle\Entity\Projet $projet)
+    {
+        $this->projets->removeElement($projet);
+		return $this;
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjets()
+    {
+        return $this->projets;
+    }
+    
+    
+    /**
+     * Set projets
+     *
+     * @param \Doctrine\Common\Collections\Collection $projets
+     * @return Intervenant
+     */
+    public function setProjets(\Doctrine\Common\Collections\Collection $projets = null)
+    {
+        $this->projets = $projets;
+
+        return $this;
     }
 
 }

@@ -16,7 +16,7 @@ class ProjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', HiddenType::class)
+            //->add('id', HiddenType::class)
             ->add('code')
             ->add('intitule')
             ->add('description')
@@ -26,13 +26,13 @@ class ProjetType extends AbstractType
             ->add('demandeur')
             ->add('evolutionattendu')
             ->add('evolutionencours')
-            ->add('statut','choice', array('choices' => array(1 => "activé", 0 => "desactivé"),
-                                        'multiple' => false,
-                                        'expanded' => true,
-                                        'preferred_choices' => array(2),
-                                        'empty_value' => '- Choisissez un statut -',
-                                        'empty_data'  => -1
-                                        ))
+           // ->add('statut','choice', array('choices' => array(1 => "activé", 0 => "desactivé"),
+           //                             'multiple' => false,
+           //                             'expanded' => true,
+           //                             'preferred_choices' => array(2),
+           //                             'empty_value' => '- Choisissez un statut -',
+           //                             'empty_data'  => -1
+           //                             ))
         ;
     }
     
@@ -42,11 +42,11 @@ class ProjetType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {      
         $resolver->setDefaults(array(
-            'data_class' => 'GestionProjetBundle\Entity\Projet',
+           'data_class' => 'GestionProjetBundle\Entity\Projet',
            'csrf_protection' => true,
            'csrf_field_name' => '_token',
           // a unique key to help generate the secret token
-          'intention'       => 'task_item_intention',
+          'intention'       => 'task_item_intention'
         )); 
     }
 }

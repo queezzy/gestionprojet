@@ -4,10 +4,10 @@ $('#nouvellot').click(function () {
     $('#block_table_lots').hide();
     $('#block_form_lot').show();
 });
-$('#close_form').click(function (e) {
-    e.preventDefault();
-    window.location.replace(Routing.generate('gp_lot'));
-});
+//$('#close_form').click(function (e) {
+//    e.preventDefault();
+//    window.location.replace(Routing.generate('gp_lot'));
+//});
 /*('#form_lot').submit(function (e) {
     e.preventDefault();
     $('#myAlert').remove();
@@ -21,22 +21,24 @@ $('#close_form').click(function (e) {
     } 
 });*/
 
-function edit_lot(id_lot) {
+function edit_lot(id_lot, id_projet) {
     $('#myAlert').remove();
     //la route pour faire le get by id
     var url = Routing.generate('gp_lot_get', {id: id_lot});
-    $('#action-edit'+id_lot).hide();
-    $('#action-delete'+id_lot).hide();
+	$('#actions').hide();
+    //$('#action-edit'+id_lot).hide();
+    //$('#action-delete'+id_lot).hide();
     $('#loader-edit-delete'+id_lot).show();
     $('#block_form_lot').load(url, function () {
-        $('#action-edit'+id_lot).show();
-        $('#action-delete'+id_lot).show();
+		$('#actions').show();
+        //$('#action-edit'+id_lot).show();
+        //$('#action-delete'+id_lot).show();
         $('#loader-edit-delete'+id_lot).hide();
         $('#block_table_lots').hide();
         $('#block_form_lot').show();
         $('#close_form').click(function (e) {
             e.preventDefault();
-            window.location.replace(Routing.generate('gp_lot'));
+            window.location.replace(Routing.generate('gp_lot',{id: id_projet}));
         });
     });
 }

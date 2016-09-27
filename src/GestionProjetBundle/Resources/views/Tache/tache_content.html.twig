@@ -75,7 +75,7 @@
                                             <td onclick="show_details({{tache.id}})" class=" ">{{tache.datedebut|date('d/m/Y')}}</td>
                                             <td onclick="show_details({{tache.id}})" class=" ">{{tache.datefin|date('d/m/Y')}}</td>
                                             <td class=" last">
-                                                <a id="action-edit{{tache.id}}" onclick="edit_tache({{tache.id}},'gp_tache_update')" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                                <a id="action-edit{{tache.id}}" onclick="edit_tache({{tache.id}},{{lot.id}})" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
                                                 <a id="action-delete{{tache.id}}" onclick="delete_tache({{tache.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>
                                                 <a id="loader-edit-delete{{tache.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a>
                                             </td>
@@ -108,7 +108,7 @@
                 <h3>Ajout d'une tache</h3>
             </div>
             <div class="box-body">                
-                <form id="form_tache" method="post" action="{{ path("gp_tache_add") }}" class="form-horizontal form-label-left" novalidate>
+                <form id="form_tache" method="post" action="{{ path("gp_tache_add",{'id': lot.id}) }}" class="form-horizontal form-label-left" novalidate>
                     <div class="item form-group">
                         <input id="idtache" value="" name="idtache" type="hidden">
                         {{form_widget(form._token)}}
@@ -138,21 +138,21 @@
                         </div>              
                     </div>			
            
-                    <div class="item form-group">
+                   {# <div class="item form-group">
                         {{ form_label(form.idprojet, "Code du projet", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.idprojet) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             {{ form_widget(form.idprojet, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Code du projet'}}) }}
                         </div>
-                    </div>
+                    </div>#}
                         
-                    <div class="item form-group">
+                    {#<div class="item form-group">
                         {{ form_label(form.idlot, "Nom du lot", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
                         {{ form_errors(form.idlot) }}
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             {{ form_widget(form.idlot, {'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder':'Nom du lot'}}) }}
                         </div>
-                    </div>
+                    </div>#}
                         
                     <div class="item form-group">
                         {{ form_label(form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3 col-xs-12'}}) }}
@@ -174,7 +174,7 @@
                     <div class="ln_solid"></div>
                     <div id="actions" class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="close_form" class="btn btn-danger">Annuler</button>
+                            <a href="{{ path('gp_tache',{'id' : lot.id}) }}" class="btn btn-danger">Annuler</a>
                             <button id="send" type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>
@@ -217,11 +217,83 @@
 
 {% block js %}
     {{ parent()}}
+	<script>
+        $(function() {
+			$('#menuProjet').addClass('active');
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+			$('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de sélection ...',
+				enableFiltering: true,
+				includeSelectAllOption: true,
+				buttonWidth: '300px',
+				
+            });
+			var asInitVals = new Array();
+			var oTable = $('#example').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 8,
+				"sPaginationType": "full_numbers"
+			});
+			
+			var oTable = $('#example1').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 1,
+				"sPaginationType": "full_numbers"
+			});
+			
+			$("tfoot input").keyup(function () {
+				/* Filter on the column based on the index of this element's parent <th> */
+				oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+			});
+			$("tfoot input").each(function (i) {
+				asInitVals[i] = this.value;
+			});
+			$("tfoot input").focus(function () {
+				if (this.className === "search_init") {
+					this.className = "";
+					this.value = "";
+				}
+			});
+			$("tfoot input").blur(function (i) {
+				if (this.value === "") {
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			});
+			setTimeout(function () {
+                $('#myAlert').alert("close");
+                }, 4000);
+			$('.image-caption a').tooltip();
+    
+			CKEDITOR.replace('.ckeditor');
+			$('.datetimepicker').datetimepicker({
+				language: 'fr',
+				pick12HourFormat: true
+			  });
+			  
+        });
+    </script>
     {# Fichiers js en plus #}
     <script src="{{asset('bundles/gestionprojet/js/ajax_tache.js')}}"></script>
-    <script>
-      $(function () {
-        $("#listetaches").DataTable();
-      });
-    </script>
 {% endblock %}{# empty Twig template #}

@@ -1,7 +1,172 @@
-{% extends "::base.html.twig" %}
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
 
-{% block title %}GestionProjetBundle:Theme:listTheme{% endblock %}
+{% block title %}Themes{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Theme:listTheme page</h1>
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
 {% endblock %}
+
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+    <a href="{{path('gp_projet_admin')}}">Projets</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li style="font-weight: bold;"><a href="{{path('gp_gestion_projet', {'id': projet.id})}}">Gestion du projet {{projet.code}}</a></li>{% endblock %}
+    {% block breadcrumbPlusP %}
+    <li>Themes</li>
+    {% endblock %}
+
+{% block contenupage %}
+    <div class="row" >
+        <div class="col-md-12" id="block_table_themes">
+            
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-success"> 
+                    <div class="box-header">
+                        <h3 class="box-title">Themes du projet {{projet.code}}</h3><a href="{{ path("gestion_projet_theme_new", {'id': projet.id}) }}" class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</a>
+                    </div>
+                    <div class="box-body">
+                        <div id="table_themes">                        
+                            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                                <thead>
+                                    <tr class="headings">
+                                        <th>Intitulé</th>
+                                        <th class=" no-link last"><span class="nobr">Actions</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tbodythemes">
+                                    {%if liste_themes%}
+                                        {%for theme in liste_themes%}
+                                            <tr id="lignetable{{theme.id}}" class="odd pointer" style="cursor: pointer;">                      
+                                                <td >{{theme.intitule}}</td>
+                                                <td class=" last">
+                                        <center><div id = "actions" role="presentation" class="dropdown" >
+                                                <a id="" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                                                    <center><span class="caret" style="color:black"></span></center>
+                                                </a>
+                                                <ul class="action dropdown-menu animated fadeInDown" role="menu">
+                                                    <li role="presentation"><a href="{{ path("gestion_projet_theme_update", {'id': theme.id}) }}><i class="fa fa-edit"></i> Modifier</i></a>
+                                                    </li>
+                                                    <li role="presentation"><a href="{{ path("gestion_projet_theme_delete", {'id': theme.id}) }}><i class="fa fa-trash"></i> Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div></center>
+                                            {#<a id="action-edit{{theme.id}}" onclick="edit_theme({{theme.id}},'gp_theme_update')" style="cursor: pointer;"><i class="fa fa-edit"></i>Edit</a>
+                                            <a id="action-delete{{theme.id}}" onclick="delete_theme({{theme.id}})" style="cursor: pointer;"><i class="fa fa-trash"></i>Delete</a>#}
+                                        <center><a id="loader-edit-delete{{theme.id}}" style="cursor: pointer; display: none;"><img src="{{asset('bundles/gestionprojet/images/ajax-loader-edit-delete.gif')}}"></a></center>
+                                        </td>
+                                        </tr>
+                                    {%endfor%} 
+                                {%endif%} 
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="loader-details" style="display: none; margin-left: 50%;">
+                            <img src="{{asset('bundles/gestionprojet/images/ajax-loader-details.gif')}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>  
+
+{% endblock %}
+
+{% block js %}
+    {{ parent()}}
+    <script>
+        $(function () {
+            $('#menuProjet').addClass('active');
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+            $('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de sélection ...',
+                enableFiltering: true,
+                includeSelectAllOption: true,
+                buttonWidth: '300px',
+            });
+            var asInitVals = new Array();
+            var oTable = $('#example').dataTable({
+                "oLanguage": {
+                    "sSearch": "Search all columns:"
+                },
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [0]
+                    } //disables sorting for column one
+                ],
+                'iDisplayLength': 8,
+                "sPaginationType": "full_numbers"
+            });
+
+            var oTable = $('#example1').dataTable({
+                "oLanguage": {
+                    "sSearch": "Search all columns:"
+                },
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [0]
+                    } //disables sorting for column one
+                ],
+                'iDisplayLength': 1,
+                "sPaginationType": "full_numbers"
+            });
+
+            $("tfoot input").keyup(function () {
+                /* Filter on the column based on the index of this element's parent <th> */
+                oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+            });
+            $("tfoot input").each(function (i) {
+                asInitVals[i] = this.value;
+            });
+            $("tfoot input").focus(function () {
+                if (this.className === "search_init") {
+                    this.className = "";
+                    this.value = "";
+                }
+            });
+            $("tfoot input").blur(function (i) {
+                if (this.value === "") {
+                    this.className = "search_init";
+                    this.value = asInitVals[$("tfoot input").index(this)];
+                }
+            });
+            setTimeout(function () {
+                $('#myAlert').alert("close");
+            }, 4000);
+            $('.image-caption a').tooltip();
+
+            CKEDITOR.replace('.ckeditor');
+            $('.datetimepicker').datetimepicker({
+                language: 'fr',
+                pick12HourFormat: true
+            });
+
+        });
+    </script>
+    {# Fichiers js en plus #}
+    <script src="{{asset('bundles/gestionprojet/js/ajax_theme.js')}}"></script>
+{% endblock %}{# empty Twig template #}

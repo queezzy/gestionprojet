@@ -44,17 +44,17 @@ class PhotoController extends Controller {
         $form = $this->createForm(new PhotoType(), $photo);
         $display_tab = 1;
         //selectionne le seul photo actif
-        $photos = $repositoryPhoto->findBy(array("statut" => 1, "idprojet" =>$projet ));
+        $photos = $projet->getPhotos();
         
         return $this->render('GestionProjetBundle:Photo:photo_content.html.twig', array('liste_photos' => $photos, 'form' => $form->createView(), "display_tab" => $display_tab, "projet" =>$projet ));
     }
 	
 	/**
-     * @Route("/galerie-photos/{id}")
+     * @Route("/galerie-photos")
      * @Template()
      * @param Request $request
      */
-    public function galeriephotosAction(Projet $projet) {
+    public function galeriephotosAction(Request $request) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -68,7 +68,9 @@ class PhotoController extends Controller {
         //selectionne le seul photo actif
         //$annees = $repositoryPhoto->getAnneesPhotos($projet->getId());
 		$annees = array();
-		$photos = $repositoryPhoto->findBy(array("statut" => 1, "idprojet" =>$projet ));
+		$session = $this->get("session");
+		$projet = $session->get('projetactif');
+		$photos = $projet->getPhotos();
 		foreach($photos as $photo){
 			$mydate = date_format($photo->getDateprise(), 'Y');
 			if(!in_array($mydate, $annees)) array_push($annees, $mydate);

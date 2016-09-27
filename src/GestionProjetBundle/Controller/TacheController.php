@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use GestionProjetBundle\Entity\Tache;
+use GestionProjetBundle\Entity\Lot;
 use GestionProjetBundle\Form\TacheType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -26,11 +27,10 @@ class TacheController extends Controller {
     //put your code here
     /**
 	 * @Security("has_role('ROLE_SUPER_ADMIN')")
-     * @Route("/taches")
+     * @Route("/taches/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function tachesAction(Request $request) {
+    public function tachesAction(Lot $lot) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         
         $em = $this->getDoctrine()->getManager();
@@ -40,23 +40,23 @@ class TacheController extends Controller {
         $form = $this->createForm(new TacheType(), $tache);
         $display_tab = 1;
         //selectionne le seul tache actif
-        $taches = $repositoryTache->findBy(array("statut" => 1));
+        $taches = $lot->getTaches();
         
-        return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'form' => $form->createView(), "display_tab" => $display_tab));
+        return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'lot' => $lot, 'form' => $form->createView(), "display_tab" => $display_tab));
     }
     
     /**
 	 * @Security("has_role('ROLE_SUPER_ADMIN')")
-     * @Route("/add-tache")
+     * @Route("/add-tache/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function addTacheAction(Request $request){
+    public function addTacheAction(Lot $lot){
         /*if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }*/
         $tache = new Tache();
         $form = $this->createForm(new TacheType(), $tache);
+		$request = $this->get("request");
         $form->handleRequest($request);
         $repositoryTache = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Tache");
         //$user = $this->getUser();
@@ -64,23 +64,24 @@ class TacheController extends Controller {
             //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
+					   $tache->setIdlot($lot);
                        $repositoryTache->saveTache($tache);
                        $message = $this->get('translator')->trans('Tache.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_tache'));
+                       return $this->redirect($this->generateUrl('gp_tache',array('id' => $lot->getId())));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Tache.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
                        $taches = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'lot' => $lot, 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
                    $message = $this->get('translator')->trans('Tache.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
                        $taches = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'lot' => $lot, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
            // }
         /*}else{
@@ -111,19 +112,19 @@ class TacheController extends Controller {
                        $repositoryTache->updateTache($tache);
                        $message = $this->get('translator')->trans('Tache.updated_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_tache'));
+                       return $this->redirect($this->generateUrl('gp_tache',array('id' => $lot->getId())));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Tache.updated_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
                        $taches = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'lot' => $tache->getIdlot(), 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
                     $request->getSession()->getFlashBag()->add('message_failure', $message);
                     $taches = array();
                     $display_tab =0;
-                    return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'form' => $form->createView(), "display_tab" => $display_tab));
+                    return $this->render('GestionProjetBundle:Tache:tache_content.html.twig', array('liste_taches' => $taches, 'lot' => $tache->getIdlot(), 'form' => $form->createView(), "display_tab" => $display_tab));
                }
             }
        /* }else{
@@ -180,7 +181,7 @@ class TacheController extends Controller {
          $form = $this->createForm(new TacheType(), $tache);
         $form->handleRequest($request);
  
-        return $this->render('GestionProjetBundle:Tache:form.tache.html.twig', array('form' => $form->createView(), "idtache" => $tache->getId()));
+        return $this->render('GestionProjetBundle:Tache:form.tache.html.twig', array('form' => $form->createView(), "tache" => $tache));
     }
     
 

@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use GestionProjetBundle\Entity\Projet;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController extends Controller
 {
@@ -21,14 +22,11 @@ class DefaultController extends Controller
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
-        $projets = $repositoryProjet->findBy(array("statut" => 1));
-        if($projets){
-            $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
-        }else{
-            $projet = null;
-        }
-        return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig', array("projet"=> $projet));
+		$projet = $request->getSession()->get('projetactif');
+		if($projet==null){
+			return $this->redirect($this->generateUrl('fos_user_security_login'));
+		}
+        return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig', array("projetactif"=> $projet));
     }
     
     /*
@@ -38,16 +36,14 @@ class DefaultController extends Controller
     {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }else{
-            $repositoryProjet = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Projet");
-            $projets = $repositoryProjet->findBy(array("statut" => 1));
-            if($projets){
-                $projet = $repositoryProjet->findBy(array("statut" => 1))[0];
-            }else{
-                $projet = null;
-            }
-            return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig', array("projet"=> $projet));
         }
+		
+		$request = $this->get("request");
+		$projet = $request->getSession()->get('projetactif');
+		if($projet==null){
+			return $this->redirect($this->generateUrl('fos_user_security_login'));
+		}
+        return $this->render('GestionProjetBundle:accueil:accueil.template.html.twig', array("projetactif"=> $projet));
         
     }
 }

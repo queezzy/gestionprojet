@@ -1,0 +1,191 @@
+{# Page Intervenants du projet  #}
+
+
+{% extends "GestionProjetBundle::bundle.template.html.twig" %}
+
+{% block title %}Intervenants{% endblock %}
+
+{% block stylesheets %} 
+    {{parent()}}
+    {# Fichiers css en plus #}
+{% endblock %}
+
+{% block utilisateur %}
+    {{parent()}}
+{% endblock %}
+
+{% block breadcrumbTitle %}
+{% endblock %}
+
+{% block breadcrumbDescription %}
+{% endblock %}
+
+{% block breadcrumbPosition %}
+   <a href="{{path('gp_projet_admin')}}">Projets</a>
+{% endblock %}
+
+{% block breadcrumbPlus %}<li style="font-weight: bold;"><a href="{{path('gp_gestion_projet', {'id': projet.id})}}">Gestion du projet {{projet.code}}</a></li>{% endblock %}
+{% block breadcrumbPlusP %}
+   <li>Intervenants</li>
+{% endblock %}
+
+{% block contenupage %}
+        <div class="row" id="block_table_intervenants">
+            {% if app.session.flashbag.get('message_success') %}
+                <div id="message_success">
+                    <div id="myAlert" class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        {% for flash_message in app.session.flashbag.get('message_success') %}
+                            {{ flash_message }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% elseif app.session.flashbag.get('message_delete_failure')  %}
+                <div id="message_success">
+                    <div id="myAlert" class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        {% for flash_message in app.session.flashbag.get('message_delete_failure') %}
+                            {{ flash_message }}
+                        {% endfor %}
+                    </div>
+                </div> <!-- /controls -->
+            {% endif %}
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-success"> 
+                    <div class="box-header">
+                        <h3 class="box-title">Intervenants</h3>{% if is_granted('ROLE_SUPER_ADMIN') %}<a href="{{path("gp_intervenant_projet_add",{"id":projet.id})}}" class ="pull-right btn btn-primary"><i class="fa fa-plus"></i> Ajouter</a>{% endif %}
+                    </div>
+                    <div class="box-body">
+                        <div id="table_intervenants">
+
+                            <table id="example" class="table table-striped responsive-utilities jambo_table">
+                                <thead>
+                                    <tr class="headings">
+                                        <th>Logo</th>
+                                        <th>Nom</th>
+                                        <th>Lot</th>
+                                        <th>Localisation</th>
+                                        <th>Email</th>
+                                        <th>Telephone</th>
+                                        <th>Evolution attendue</th>
+                                        <th>Evolution en cours</th>
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %} <th class=" no-link last"><span class="nobr">Actions</span>{% endif %}
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tbodyintervenants">
+                                    {%if liste_intervenants%}
+                                        {%for intervenant in liste_intervenants%}
+
+                                            <tr id="lignetable{{intervenant.id}}" class="odd pointer" style="cursor: pointer;">
+                                                <td onclick="show_details({{intervenant.id}})" class=" "><img width="25px" height="25px" src="{{asset('uploads/intervenants/'~intervenant.path)}}" alt="{{intervenant.nom}}"/></td>
+                                                <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.nom}}</td>
+                                                <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idlot.nom}}</td>
+                                                <td onclick="show_details({{intervenant.id}})" class=" "><a style="text-decoration:none;" href="{{asset('uploads/planslocalisation/'~intervenant.idadresse.path)}}">{{intervenant.idadresse.lieu}} </a></td>
+                                                <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.email}}</td>
+                                                <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.idadresse.telephone}}</td>
+                                                <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionattendu}}</td>
+                                                <td onclick="show_details({{intervenant.id}})" class=" ">{{intervenant.evolutionencours}}</td>
+                                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                                    <td class=" last">
+                                                        <a href="{{path('gp_intervenant_projet_delete',{'idprojet': projet.id, 'id' : intervenant.id})}}" style="cursor: pointer;"><i class="fa fa-trash"></i>Supprimer</a>         
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                        {%endfor%} 
+                                    {%endif%} 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+        </div>
+    {% endblock %}
+
+    {% block js %}
+        {{ parent()}}
+        {# Fichiers js en plus #}
+        <script>
+            $(function () {
+                $("#listeintervenants").DataTable();
+                $('.monMenu').removeClass('active');
+                $('#menuProjet').addClass('active');
+                $().acknowledgeinput({
+                    success_color: '#00FF00',
+                    danger_color: '#FF0000',
+                    update_on: 'keyup'
+                });
+                $('.multiselect').multiselect({
+                    disableIfEmpty: true,
+                    disabledText: 'Pas de sélection ...',
+                    enableFiltering: true,
+                    includeSelectAllOption: true,
+                    buttonWidth: '300px',
+                });
+                var asInitVals = new Array();
+                var oTable = $('#example').dataTable({
+                    "oLanguage": {
+                        "sSearch": "Search all columns:"
+                    },
+                    "aoColumnDefs": [
+                        {
+                            'bSortable': false,
+                            'aTargets': [0]
+                        } //disables sorting for column one
+                    ],
+                    'iDisplayLength': 8,
+                    "sPaginationType": "full_numbers"
+                });
+
+                var oTable = $('#example1').dataTable({
+                    "oLanguage": {
+                        "sSearch": "Search all columns:"
+                    },
+                    "aoColumnDefs": [
+                        {
+                            'bSortable': false,
+                            'aTargets': [0]
+                        } //disables sorting for column one
+                    ],
+                    'iDisplayLength': 1,
+                    "sPaginationType": "full_numbers"
+                });
+
+                $("tfoot input").keyup(function () {
+                    /* Filter on the column based on the index of this element's parent <th> */
+                    oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+                });
+                $("tfoot input").each(function (i) {
+                    asInitVals[i] = this.value;
+                });
+                $("tfoot input").focus(function () {
+                    if (this.className === "search_init") {
+                        this.className = "";
+                        this.value = "";
+                    }
+                });
+                $("tfoot input").blur(function (i) {
+                    if (this.value === "") {
+                        this.className = "search_init";
+                        this.value = asInitVals[$("tfoot input").index(this)];
+                    }
+                });
+                setTimeout(function () {
+                    $('#myAlert').alert("close");
+                }, 4000);
+                $('.image-caption a').tooltip();
+
+                CKEDITOR.replace('.ckeditor');
+                $('.datetimepicker').datetimepicker({
+                    language: 'fr',
+                    pick12HourFormat: true
+                });
+
+            });
+        </script>
+    {% endblock %}

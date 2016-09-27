@@ -20,19 +20,19 @@ class TacheType extends AbstractType
             ->add('datefin', 'date')
             ->add('description')
             //->add('statut')
-            ->add('idprojet', 'entity', array(
-                'class' => 'GestionProjetBundle:Projet',
-                'property' => 'code',
-                'empty_value' => "Choisissez un projet"
-            ))
-            ->add('idlot', 'entity', array(
-                'class' => 'GestionProjetBundle:Lot',
-                'property' => 'nom',
-                'empty_value' => "Choisissez un lot",
-                'mapped' => false,
-                'property_path' => "false",
-                'data' => 2
-            ))
+           // ->add('idprojet', 'entity', array(
+           //     'class' => 'GestionProjetBundle:Projet',
+           //     'property' => 'code',
+           //     'empty_value' => "Choisissez un projet"
+           // ))
+           // ->add('idlot', 'entity', array(
+           //     'class' => 'GestionProjetBundle:Lot',
+           //     'property' => 'nom',
+           //     'empty_value' => "Choisissez un lot",
+           //     'mapped' => false,
+           //     'property_path' => "false",
+           //     'data' => 2
+           // ))
         ;
     }
     

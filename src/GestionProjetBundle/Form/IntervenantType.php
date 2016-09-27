@@ -34,14 +34,14 @@ class IntervenantType extends AbstractType
                 //'property_path' => "false",
                 //'data' => 2
             ))
-            ->add('idprojet','entity', array(
+            /*->add('idprojet','entity', array(
                 'class' => 'GestionProjetBundle:Projet',
                 'property' => 'code',
                 'empty_value' => "Choisissez un projet",
                 //'mapped' => false,
                 //'property_path' => "false",
                 //'data' => 2
-            ))
+            ))*/
         ;
     }
     

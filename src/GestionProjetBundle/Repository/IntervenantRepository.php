@@ -80,4 +80,13 @@ class IntervenantRepository extends EntityRepository{
             throw $ex;
         }
     }
+	
+	public function getIntervenantQueryBuilder() {
+         return $this
+          ->createQueryBuilder('i')
+          ->where('i.statut = :statut')
+          ->setParameter('statut', 1);
+
+    }
+
 }

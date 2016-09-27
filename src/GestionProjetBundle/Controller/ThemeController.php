@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GestionProjetBundle\Form\ThemeType;
 use GestionProjetBundle\Entity\Theme;
+use GestionProjetBundle\Entity\Projet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,12 +17,13 @@ class ThemeController extends Controller
 {
     /**
 	 * @Security("has_role('ROLE_SUPER_ADMIN')")
-     * @Route("/theme/ajouter", name="gestion_projet_theme_new")
-       @Method({"GET","POST"})
+     * @Route("/theme/ajouter/{id}", name="gestion_projet_theme_new")
+       @Method({"GET", "POST"})
      */
-    public function addThemeAction(Request $request)
+    public function addThemeAction(Projet $projet)
     {
         $theme = new Theme();
+		$request = $this->get("request");
         $form = $this->createForm(ThemeType::class, $theme);
         $form->handleRequest($request);
 
@@ -32,17 +34,18 @@ class ThemeController extends Controller
             $theme_repo = $em->getRepository('GestionProjetBundle:Theme'); 
 
             try {
+				$theme->setIdprojet($projet);
                 $theme_repo->saveTheme($theme);
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             } 
 
             $request->getSession()->getFlashBag()->add('notice', 'Theme bien enregistrée.');
-            return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));
+            return $this->redirect($this->generateUrl('gestion_projet_theme_list', array("id" => $projet->getId())));
         }
         
         return $this->render('GestionProjetBundle:formulaire:form.creation.theme.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $form->createView(), 'projet' => $projet,
         ));
        
     }
@@ -71,33 +74,33 @@ class ThemeController extends Controller
                 echo $exc->getTraceAsString();
             }
 
-            return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));
+           return $this->redirect($this->generateUrl('gestion_projet_theme_list', array("id" => $projet->getId())));
         }
     }  
         return $this->render('GestionProjetBundle:formulaire:form.modification.theme.html.twig', array(
-                    'form' => $form->createView(),'idtheme'=>$theme->getId()
+                    'form' => $form->createView(),'theme'=>$theme
         ));
     }
 
     /**
 	 * @Security("has_role('ROLE_SUPER_ADMIN')")
-     * @Route("/listTheme")
+     * @Route("/listTheme/{id}", name="gestion_projet_theme_list",requirements={"id" = "\d+"})
      */
-    public function listThemeAction()
+    public function listThemeAction(Projet $projet)
     {
          $em = $this->getDoctrine()->getManager();
 
            $theme_repo = $em->getRepository('GestionProjetBundle:Theme');
             
             try {
-                $themes = $theme_repo->findByStatut(0);
+                $themes = $theme_repo->findBy(array("idprojet" => $projet, "statut" => 1));
             } catch (Exception $exc) {
                 echo $exc->getTraceAsString();
             }
 
 
 
-            return $this->render('GestionProjetBundle:Theme:liste.theme.html.twig');
+            return $this->render('GestionProjetBundle:Theme:list_theme.html.twig', array("liste_themes" => $themes, "projet" => $projet));
         
     }
     
@@ -123,8 +126,11 @@ class ThemeController extends Controller
      */
     public function listOneThemeAction(Theme $theme)
     {
-        
-        return $this->render('GestionProjetBundle:actualite:actualite.template.html.twig', array('actualites'=>$theme->getActualites()
+        $em = $this->getDoctrine()->getManager();
+
+           $actualite_repo = $em->getRepository('GestionProjetBundle:Actualite');
+		   $actualites = $actualite_repo->findBy(array("idtheme" => $theme, "statut" => 1));
+        return $this->render('GestionProjetBundle:actualite:actualite.template.html.twig', array('actualites'=>$actualites
         ));
     }
     
@@ -145,7 +151,7 @@ class ThemeController extends Controller
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
-        return $this->redirect($this->generateUrl('gestion_projet_actualite_all'));        
+        return $this->redirect($this->generateUrl('gestion_projet_theme_list', array("id" => $projet->getId())));        
     }
 
 }

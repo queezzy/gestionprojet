@@ -1,0 +1,17 @@
+gp_login:
+    pattern: /login-admin
+    defaults: { _controller: UserBundle:UserAdmin:login }
+    options:
+        expose: true
+
+gp_check:
+    pattern: /login-check-admin
+    defaults: { _controller: UserBundle:UserAdmin:check }
+    options:
+        expose: true
+
+gp_check_user:
+    pattern: /login-check-user
+    defaults: { _controller: UserBundle:Security:check }
+    options:
+        expose: true

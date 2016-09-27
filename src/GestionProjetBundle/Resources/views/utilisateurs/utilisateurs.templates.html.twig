@@ -104,5 +104,81 @@
 
 {% block js %}
     {{ parent()}}
-    {# Fichiers js en plus #}
+	<script>
+        $(function() {
+			$('#menuUtilisateur').addClass('active');
+            $().acknowledgeinput({
+                success_color: '#00FF00',
+                danger_color: '#FF0000',
+                update_on: 'keyup'
+            });
+			$('.multiselect').multiselect({
+                disableIfEmpty: true,
+                disabledText: 'Pas de sélection ...',
+				enableFiltering: true,
+				includeSelectAllOption: true,
+				buttonWidth: '300px',
+				
+            });
+			var asInitVals = new Array();
+			var oTable = $('#example').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 8,
+				"sPaginationType": "full_numbers"
+			});
+			
+			var oTable = $('#example1').dataTable({
+				"oLanguage": {
+					"sSearch": "Search all columns:"
+				},
+				"aoColumnDefs": [
+					{
+						'bSortable': false,
+						'aTargets': [0]
+					} //disables sorting for column one
+				],
+				'iDisplayLength': 1,
+				"sPaginationType": "full_numbers"
+			});
+			
+			$("tfoot input").keyup(function () {
+				/* Filter on the column based on the index of this element's parent <th> */
+				oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+			});
+			$("tfoot input").each(function (i) {
+				asInitVals[i] = this.value;
+			});
+			$("tfoot input").focus(function () {
+				if (this.className === "search_init") {
+					this.className = "";
+					this.value = "";
+				}
+			});
+			$("tfoot input").blur(function (i) {
+				if (this.value === "") {
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			});
+			setTimeout(function () {
+                $('#myAlert').alert("close");
+                }, 4000);
+			$('.image-caption a').tooltip();
+    
+			CKEDITOR.replace('.ckeditor');
+			$('.datetimepicker').datetimepicker({
+				language: 'fr',
+				pick12HourFormat: true
+			  });
+			  
+        });
+    </script>
 {% endblock %}

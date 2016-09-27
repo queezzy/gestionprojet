@@ -44,6 +44,7 @@
     <div class="row">
         <div class="col-md-6">
             <ul id="filters" class="clearfix">
+                {% if annees %}
 			{% set datafilter = ""%}
 			{% set i = 0%}
 			{% for annee in annees %}
@@ -57,6 +58,7 @@
 			{% for annee in annees %}
                 <li><span class="filter" data-filter="photo{{annee}}">{{annee}}</span></li>
 			{% endfor %}
+                {% endif %}
             </ul>
             </div>
         </div>
@@ -64,9 +66,11 @@
     <div class="container">
         <div class="row  mar-b-30">
         <div id="portfoliolist">
+            {% if projet %}
             <div class="col-md-12">
                 {{render(controller('GestionProjetBundle:Photo:listephotos', {'idprojet': projet.id}))}}
             </div>
+            {% endif %}
         </div>
        </div>
     </div>
@@ -86,10 +90,6 @@
     <script src="{{asset('bundles/gestionprojet/galerie/js/mixitup.js')}}"></script>
     <script src="{{asset('bundles/gestionprojet/galerie/js/jquery.easing.min.js')}}"></script>
     <script src="{{asset('bundles/gestionprojet/galerie/js/link-hover.js')}}"></script>
-
-
-
-    <!--common script for all pages-->
     <script src="{{asset('bundles/gestionprojet/galerie/js/common-scripts.js')}}"></script>
     <script src="{{asset('bundles/gestionprojet/galerie/js/revulation-slide.js')}}"></script>
     <script src="{{asset('bundles/gestionprojet/galerie/js/jquery.magnific-popup.js')}}"></script>
@@ -139,7 +139,7 @@
     });
 
     $( document ).ready(function() {
-
+        $('#menuGaleriephotos').addClass('active');
         $('.magnefig').each(function(){
             $(this).magnificPopup({
                 type:'image',
@@ -148,9 +148,6 @@
             })
         });
     });
-    </script>
-
-  <script>
 
     $(document).ready(function() {
 
@@ -174,4 +171,4 @@
     {#{ parent()}#}
     {# Fichiers js en plus #}
     
-{% endblock %}{# empty Twig template #}
+{% endblock %}

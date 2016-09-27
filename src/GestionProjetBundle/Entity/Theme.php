@@ -24,9 +24,9 @@ class Theme
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
+     * @ORM\Column(name="intitule", type="string", length=255, nullable=true)
      */
-    private $nom;
+    private $intitule;
 
     /**
      * @var string
@@ -78,26 +78,26 @@ class Theme
     }
 
     /**
-     * Set nom
+     * Set intitule
      *
-     * @param string $nom
+     * @param string $intitule
      * @return Theme
      */
-    public function setNom($nom)
+    public function setIntitule($intitule)
     {
-        $this->nom = $nom;
+        $this->intitule = $intitule;
 
         return $this;
     }
 
     /**
-     * Get nom
+     * Get intitule
      *
      * @return string 
      */
-    public function getNom()
+    public function getIntitule()
     {
-        return $this->nom;
+        return $this->intitule;
     }
 
     /**

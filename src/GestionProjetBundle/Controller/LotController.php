@@ -28,11 +28,10 @@ class LotController extends Controller {
    //put your code here
     /**
 	 * @Security("has_role('ROLE_SUPER_ADMIN')")
-     * @Route("/lots")
+     * @Route("/lots/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function lotsAction(Request $request) {
+    public function lotsAction(Projet $projet) {
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -43,24 +42,24 @@ class LotController extends Controller {
         $lot = new Lot();
         $form = $this->createForm(new LotType(), $lot);
         $display_tab = 1;
-        //selectionne le seul lot actif
-        $lots = $repositoryLot->findBy(array("statut" => 1));
+        //selectionne les lots du projet
+        $lots = $repositoryLot->findBy(array("statut" => 1, "idprojet" =>$projet ));
         
-        return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'form' => $form->createView(), "display_tab" => $display_tab));
+        return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'projet' => $projet, 'form' => $form->createView(), "display_tab" => $display_tab));
     }
     
     /**
 	 * @Security("has_role('ROLE_SUPER_ADMIN')")
-     * @Route("/add-lot")
+     * @Route("/add-lot/{id}")
      * @Template()
-     * @param Request $request
      */
-    public function addLotAction(Request $request){
+    public function addLotAction(Projet $projet){
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         $lot = new Lot();
         $form = $this->createForm(new LotType(), $lot);
+		$request = $this->get("request");
         $form->handleRequest($request);
         $repositoryLot = $this->getDoctrine()->getManager()->getRepository("GestionProjetBundle:Lot");
         //$user = $this->getUser();
@@ -68,23 +67,24 @@ class LotController extends Controller {
             //if($request->isMethod('POST')){
                 if($form->isValid()){           
                    try {
+					   $lot->setIdprojet($projet);
                        $repositoryLot->saveLot($lot);
                        $message = $this->get('translator')->trans('Lot.created_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message', $message);
-                       return $this->redirect($this->generateUrl('gp_lot'));
+                       return $this->redirect($this->generateUrl('gp_lot', array('id' => $projet->getId())));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Lot.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
                        $lots = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'projet' => $projet, 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
                    $message = $this->get('translator')->trans('Lot.created_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
                        $lots = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'projet' => $projet, 'form' => $form->createView(), "display_tab" => $display_tab));
                }
            // }
         /*}else{
@@ -115,19 +115,19 @@ class LotController extends Controller {
                        $repositoryLot->updateLot($lot);
                        $message = $this->get('translator')->trans('Lot.updated_success', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_success', $message);
-                       return $this->redirect($this->generateUrl('gp_lot'));
+                       return $this->redirect($this->generateUrl('gp_lot', array('id' => $projet->getId())));
                    } catch (Exception $ex){
                        $message = $this->get('translator')->trans('Lot.updated_failure', array(), "GestionProjetBundle");
                        $request->getSession()->getFlashBag()->add('message_failure', $message);
                        $lots = array();
                        $display_tab =0;
-                       return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'form' => $form->createView(), "display_tab" => $display_tab));
+                       return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'projet' => $lot->getIdprojet(), 'form' => $form->createView(), "display_tab" => $display_tab));
                    }
                }else{
                     $request->getSession()->getFlashBag()->add('message_failure', $message);
                     $lots = array();
                     $display_tab =0;
-                    return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'form' => $form->createView(), "display_tab" => $display_tab));
+                    return $this->render('GestionProjetBundle:Lot:lot_content.html.twig', array('liste_lots' => $lots, 'projet' => $lot->getIdprojet(), 'form' => $form->createView(), "display_tab" => $display_tab));
                }
             }
        /* }else{
@@ -184,7 +184,7 @@ class LotController extends Controller {
          $form = $this->createForm(new LotType(), $lot);
         $form->handleRequest($request);
  
-        return $this->render('GestionProjetBundle:Lot:form.lot.html.twig', array('form' => $form->createView(), "idlot" => $lot->getId()));
+        return $this->render('GestionProjetBundle:Lot:form.lot.html.twig', array('form' => $form->createView(), "lot" => $lot));
     }
     
     

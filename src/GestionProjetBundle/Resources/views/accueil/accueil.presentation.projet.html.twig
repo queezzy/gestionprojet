@@ -7,6 +7,7 @@
 
     <!-- /.box-body start-->
     <div class="box-body presentation">
+	{%if projetactif %}
         <strong> <i></i>Intitulé</strong>
 		<p> {{projetactif.intitule}}</p>
 		<hr>
@@ -26,7 +27,7 @@
 		
 		<p><strong> <i class="fa"></i>Budget : </strong> {{projetactif.budget}}</p>
 		<hr>		
-		
+	{%endif%}
     </div>
     <!-- /.box-body end -->
 </div>

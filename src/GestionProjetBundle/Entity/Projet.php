@@ -91,10 +91,36 @@ class Projet
      */
     private $statut;
 
-    /**
-    * @ORM\OneToMany(targetEntity="Intervenant", mappedBy="idprojet", cascade={"remove", "persist"})
-    */
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Intervenant", inversedBy="projets")
+     * @ORM\JoinTable(name="intervenant_projet",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idprojet", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idintervenant", referencedColumnName="id")
+     *   }
+     * )
+     */
     private $intervenants;
+	
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="\UserBundle\Entity\Utilisateur", inversedBy="projets")
+     * @ORM\JoinTable(name="utilisateur_projet",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idprojet", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idutilisateur", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $utilisateurs;
+
     
     /**
     * @ORM\OneToOne(targetEntity="Calendrier", cascade={"remove", "persist"})
@@ -122,9 +148,11 @@ class Projet
     public function __construct()
     {
         $this->intervenants = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->utilisateurs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->evolutionattendu =0;
+        $this->evolutionattendu = 0;
         $this->evolutionencours = 0;
+		$this->statut = 1;
     }
 
     /**
@@ -383,24 +411,38 @@ class Projet
     /**
      * Add intervenant
      *
-     * @param GestionProjetBundle\Entity\Intervenant $intervenant 
+     * @param \GestionProjetBundle\Entity\Intervenant $intervenant
      * @return Projet
      */
     public function addIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant)
     {
         $this->intervenants[] = $intervenant;
+
         return $this;
     }
-    
+
+    /**
+     * Remove intervenant
+     *
+     * @param \GestionProjetBundle\Entity\Intervenant $intervenant
+	 * @return Projet
+     */
+    public function removeIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenant)
+    {
+        $this->intervenants->removeElement($intervenant);
+		return $this;
+    }
+
     /**
      * Get intervenants
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getIntervenants()
     {
         return $this->intervenants;
     }
+    
     
     /**
      * Set intervenants
@@ -414,15 +456,54 @@ class Projet
 
         return $this;
     }
+	
+	/**
+     * Add utilisateur
+     *
+     * @param \UserBundle\Entity\Utilisateur $utilisateur
+     * @return Projet
+     */
+    public function addUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateurs[] = $utilisateur;
+
+        return $this;
+    }
 
     /**
-     * Remove intervenants
+     * Remove utilisateur
      *
-     * @param \GestionProjetBundle\Entity\Intervenant $intervenants
+     * @param \GestionProjetBundle\Entity\Utilisateur $utilisateur
+	 * @return Projet
      */
-    public function removeIntervenant(\GestionProjetBundle\Entity\Intervenant $intervenants)
+    public function removeUtilisateur(\UserBundle\Entity\Utilisateur $utilisateur)
     {
-        $this->intervenants->removeElement($intervenants);
+        $this->utilisateurs->removeElement($utilisateur);
+		return $this;
+    }
+
+    /**
+     * Get utilisateurs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateurs()
+    {
+        return $this->utilisateurs;
+    }
+    
+    
+    /**
+     * Set utilisateurs
+     *
+     * @param \Doctrine\Common\Collections\Collection $utilisateurs
+     * @return Projet
+     */
+    public function setUtilisateurs(\Doctrine\Common\Collections\Collection $utilisateurs = null)
+    {
+        $this->utilisateurs = $utilisateurs;
+
+        return $this;
     }
 
     
